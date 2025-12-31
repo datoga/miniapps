@@ -1,8 +1,34 @@
 # Contributing to Mini Apps
 
-## 🎯 Golden Rule
+## 🎯 Golden Rules
 
-**Use `apps/whitelabel-demo` as your reference implementation.** This app demonstrates all features and patterns used in this monorepo.
+### 1. Reference Implementation
+**Use `apps/whitelabel-demo` as your reference.** This app demonstrates all features and patterns.
+
+### 2. Always Latest Versions
+**Use the latest stable versions of all dependencies.**
+```bash
+# Check latest version before adding
+npm view <package> version
+
+# Update all dependencies
+npm update
+```
+
+### 3. Reuse Components (DRY)
+**Never create duplicate components.**
+- Check `@miniapps/ui` before creating new UI components
+- If reusable, add to shared packages
+- Search codebase for existing solutions first
+
+### 4. Serverless Architecture
+**No backend components. Static/client-only by default.**
+- ❌ No `app/api/` routes
+- ❌ No database connections
+- ❌ No server-side state
+- ✅ Use IndexedDB (`@miniapps/storage`) for persistence
+- ✅ Use external APIs fetched from client
+- ✅ Deploy as static sites on Vercel
 
 ## 🚀 Creating a New Mini App
 
@@ -55,6 +81,9 @@ npm run dev --workspace=my-new-app
 - Use shared packages (`@miniapps/ui`, `@miniapps/i18n`, etc.)
 - Use Tailwind CSS with `dark:` variants
 - Access env vars with brackets: `process.env["VAR_NAME"]`
+- Use `React.memo` for presentational components
+- Use `useCallback` for callbacks passed to children
+- Keep apps static/client-only
 
 ### ❌ Don't
 
@@ -63,6 +92,8 @@ npm run dev --workspace=my-new-app
 - Create duplicate components (check `@miniapps/ui` first)
 - Use inline styles
 - Skip i18n for "temporary" text
+- Create API routes or backend logic
+- Use outdated package versions
 
 ## 📦 Shared Packages
 
@@ -72,6 +103,7 @@ npm run dev --workspace=my-new-app
 | `@miniapps/i18n` | Internationalization | `locales`, `defaultLocale`, `mergeMessages` |
 | `@miniapps/analytics` | Google Analytics | `trackEvent`, `trackAppView`, `GoogleAnalyticsScript` |
 | `@miniapps/storage` | Browser Storage | `getJSON`, `setJSON`, `remove` |
+| `@miniapps/config` | Shared Configs | `sharedNextConfig`, Tailwind, PostCSS |
 
 ## 🔧 Development Commands
 
@@ -93,6 +125,9 @@ npm run format
 
 # Build specific app
 npm run build --workspace=my-app
+
+# Check for outdated packages
+npm outdated
 ```
 
 ## 🚢 Deployment
@@ -115,15 +150,24 @@ apps/whitelabel-demo/
 │   ├── globals.css         # Global styles + Tailwind
 │   ├── icon.svg            # Favicon
 │   └── apple-icon.svg      # Apple touch icon
-├── components/             # App-specific components
+├── components/             # App-specific components (only if not reusable)
 ├── messages/
 │   ├── en.json             # English translations
 │   └── es.json             # Spanish translations
 ├── i18n/request.ts         # i18n config
 ├── proxy.ts                # Locale routing middleware
-├── next.config.ts          # Next.js config
+├── next.config.ts          # Next.js config (extends shared)
 ├── tailwind.config.js      # Tailwind config (extends shared)
 ├── tsconfig.json           # TypeScript config (extends shared)
 └── package.json
 ```
 
+## ⚡ Performance Checklist
+
+- [ ] Using `React.memo` for presentational components
+- [ ] Using `useCallback` for callbacks
+- [ ] No unnecessary re-renders
+- [ ] Images optimized with Next.js Image
+- [ ] Static generation with `generateStaticParams`
+- [ ] No blocking resources
+- [ ] No backend/API routes (unless Edge)

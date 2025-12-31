@@ -4,6 +4,36 @@
 
 **Always use `apps/whitelabel-demo` as the reference implementation** when creating or modifying mini apps.
 
+## Core Principles
+
+### 1. Always Use Latest Versions
+- **ALWAYS** use the latest stable versions of all dependencies
+- When adding new packages, check npm for the latest version: `npm view <package> version`
+- Regularly update dependencies with `npm update`
+- Prefer packages that are actively maintained
+- Use Node.js 24.x (specified in `.nvmrc`)
+
+### 2. Reuse Components - DRY Principle
+- **NEVER** create duplicate components - check `@miniapps/ui` first
+- Before creating a new component, search the codebase for existing solutions
+- If a component could be reused across apps, add it to `packages/ui`
+- Shared utilities go in the appropriate package:
+  - UI components → `@miniapps/ui`
+  - i18n utilities → `@miniapps/i18n`
+  - Analytics → `@miniapps/analytics`
+  - Storage → `@miniapps/storage`
+- Use composition over duplication
+
+### 3. Serverless Architecture - No Backend
+- **NO** custom API routes (`app/api/`) unless absolutely necessary
+- **NO** database connections or server-side state
+- **NO** authentication backends - use third-party services if needed
+- Apps should be **static/client-only** by default
+- Use browser storage (IndexedDB via `@miniapps/storage`) for persistence
+- Use external APIs/services for data (fetch from client)
+- All apps should be deployable as static sites on Vercel
+- Prefer Edge functions over serverless functions when server logic is unavoidable
+
 ## Project Structure
 
 When creating a new mini app, copy the structure from `apps/whitelabel-demo`:
@@ -17,7 +47,7 @@ apps/your-app/
 │   ├── globals.css         # Copy as-is
 │   ├── icon.svg            # Create unique icon
 │   └── apple-icon.svg      # Create unique icon
-├── components/             # App-specific components
+├── components/             # App-specific components (only if not reusable)
 ├── messages/
 │   ├── en.json             # English translations
 │   └── es.json             # Spanish translations
@@ -43,8 +73,10 @@ apps/your-app/
 ### React/Next.js
 - Use Next.js App Router conventions
 - Use `"use client"` directive only when needed
-- Prefer Server Components when possible
+- Prefer Server Components for static content
 - Use `next-intl` for all user-facing strings
+- Use `React.memo` for components that don't need frequent re-renders
+- Use `useCallback` for event handlers passed to child components
 
 ### Internationalization
 - **NO hardcoded strings** in components
@@ -63,11 +95,21 @@ Use these packages instead of creating duplicates:
 - `@miniapps/i18n` - i18n utilities: locales, defaultLocale, mergeMessages
 - `@miniapps/analytics` - GA4: trackEvent, GoogleAnalyticsScript
 - `@miniapps/storage` - Persistence: getJSON, setJSON, remove (IndexedDB)
+- `@miniapps/config` - Shared Next.js, Tailwind, and PostCSS configs
 
 ### File Naming
 - Components: PascalCase (`MyComponent.tsx`)
 - Utilities: camelCase (`myUtil.ts`)
 - Config files: lowercase (`tailwind.config.js`)
+
+## Performance Guidelines
+
+- Use `React.memo` for presentational components
+- Use `useCallback` for callbacks passed to children
+- Leverage Next.js `generateStaticParams` for static generation
+- Use `display: "swap"` for fonts
+- Optimize images with Next.js Image component
+- Cache static assets with appropriate headers (configured in next.config)
 
 ## Commands
 
@@ -91,4 +133,3 @@ npm run format
 ## Deployment
 
 Each app deploys separately to Vercel. Set `NEXT_PUBLIC_GA_ID` in Vercel Environment Variables.
-

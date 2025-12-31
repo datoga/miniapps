@@ -11,8 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@miniapps/eslint-config": "workspace:*",
-    "@miniapps/typescript-config": "workspace:*",
+    "@miniapps/eslint-config": "*",
+    "@miniapps/typescript-config": "*",
     "typescript": "^5.9.3"
   },
   "dependencies": {

@@ -4,7 +4,7 @@ A Turborepo-based monorepo template for building and deploying "1 mini app per d
 
 ## Features
 
-- **Turborepo + pnpm workspaces** - Fast, efficient monorepo management
+- **Turborepo + npm workspaces** - Fast, efficient monorepo management
 - **Next.js 15 App Router** - Modern React framework with TypeScript
 - **Internationalization (ES/EN)** - Full i18n support with `next-intl` and localized routing
 - **Theme Support** - Light, dark, and system themes with `next-themes`
@@ -16,7 +16,6 @@ A Turborepo-based monorepo template for building and deploying "1 mini app per d
 ## Requirements
 
 - **Node.js**: `>=24.0.0` (v24.12.0 LTS recommended)
-- **pnpm**: `>=10.0.0`
 
 > ℹ️ **Note**: This template requires Node.js 24 or later. Install with `nvm install 24 && nvm use 24`.
 
@@ -25,7 +24,7 @@ A Turborepo-based monorepo template for building and deploying "1 mini app per d
 ### Installation
 
 ```bash
-pnpm install
+npm install
 ```
 
 ### Development
@@ -33,14 +32,14 @@ pnpm install
 Run all apps in development mode:
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 Run a specific app:
 
 ```bash
-pnpm --filter whitelabel-demo dev
-pnpm --filter day1-mentoring dev
+npm run dev --workspace=whitelabel-demo
+npm run dev --workspace=day1-mentoring
 ```
 
 ### Build
@@ -48,25 +47,25 @@ pnpm --filter day1-mentoring dev
 Build all apps:
 
 ```bash
-pnpm build
+npm run build
 ```
 
 Build a specific app:
 
 ```bash
-pnpm --filter whitelabel-demo build
+npm run build --workspace=whitelabel-demo
 ```
 
 ### Type Checking
 
 ```bash
-pnpm typecheck
+npm run typecheck
 ```
 
 ### Linting
 
 ```bash
-pnpm lint
+npm run lint
 ```
 
 ## Project Structure
@@ -90,8 +89,7 @@ pnpm lint
 │   ├── eslint-config/       # Shared ESLint configuration
 │   └── typescript-config/   # Shared TypeScript configuration
 ├── turbo.json               # Turborepo configuration
-├── pnpm-workspace.yaml      # pnpm workspace configuration
-└── package.json             # Root package.json
+└── package.json             # Root package.json with workspaces
 ```
 
 ## Internationalization (i18n)
@@ -228,13 +226,13 @@ cp -r apps/whitelabel-demo apps/my-new-app
 6. **Install dependencies**:
 
 ```bash
-pnpm install
+npm install
 ```
 
 7. **Run the app**:
 
 ```bash
-pnpm --filter my-new-app dev
+npm run dev --workspace=my-new-app
 ```
 
 ## Vercel Deployment
@@ -253,9 +251,9 @@ Each app can be deployed as a separate Vercel project.
 
 Vercel will automatically detect the Next.js app. The recommended settings are:
 
-- **Build Command**: `pnpm build`
+- **Build Command**: `npm run build`
 - **Output Directory**: `.next`
-- **Install Command**: `pnpm install`
+- **Install Command**: `npm install`
 
 ### Deploy Multiple Apps
 

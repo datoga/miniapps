@@ -1,4 +1,5 @@
 import createMiddleware from "next-intl/middleware";
+import { NextRequest } from "next/server";
 import { locales, defaultLocale } from "@miniapps/i18n";
 
 const intlMiddleware = createMiddleware({
@@ -7,7 +8,7 @@ const intlMiddleware = createMiddleware({
   localePrefix: "always",
 });
 
-export function proxy(request: Request) {
+export function proxy(request: NextRequest) {
   return intlMiddleware(request);
 }
 
@@ -22,4 +23,3 @@ export const config = {
     "/((?!api|_next|_vercel|static|.*\\..*).*)",
   ],
 };
-

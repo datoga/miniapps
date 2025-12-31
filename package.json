@@ -1,6 +1,10 @@
 {
   "name": "miniapps-monorepo",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -31,15 +35,8 @@
     "react-dom": "^19.2.3",
     "tailwind-merge": "^3.4.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "sharp"
-    ]
-  },
-  "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=24.0.0"
-  }
+  },
+  "packageManager": "npm@11.6.2"
 }

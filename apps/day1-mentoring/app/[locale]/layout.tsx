@@ -45,7 +45,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   setRequestLocale(locale);
 
   const messages = await getMessages();
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const gaId = process.env["NEXT_PUBLIC_GA_ID"];
 
   return (
     <html lang={locale} suppressHydrationWarning>

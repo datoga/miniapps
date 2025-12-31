@@ -31,10 +31,10 @@ function DocsContent({ locale }: { locale: string }) {
     {
       title: t("sections.commands.title"),
       items: [
-        "pnpm install - Instalar dependencias",
-        "pnpm dev - Iniciar desarrollo",
-        "pnpm build - Construir para producción",
-        "pnpm --filter <app> dev - Iniciar app específica",
+        "npm install - Instalar dependencias",
+        "npm run dev - Iniciar desarrollo",
+        "npm run build - Construir para producción",
+        "npm run dev --workspace=<app> - Iniciar app específica",
       ],
     },
     {
@@ -87,7 +87,7 @@ function DocsContent({ locale }: { locale: string }) {
           <Button variant="outline">{t("backHome")}</Button>
         </Link>
         <a
-          href="https://github.com"
+          href="https://github.com/datoga/miniapps"
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -56,11 +56,11 @@
       },
       "install": {
         "title": "Instalar dependencias",
-        "description": "Ejecuta pnpm install para instalar todas las dependencias"
+        "description": "Ejecuta npm install para instalar todas las dependencias"
       },
       "run": {
         "title": "Iniciar desarrollo",
-        "description": "Ejecuta pnpm --filter whitelabel-demo dev para iniciar el servidor"
+        "description": "Ejecuta npm run dev --workspace=whitelabel-demo para iniciar el servidor"
       },
       "customize": {
         "title": "Personaliza tu app",

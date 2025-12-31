@@ -56,11 +56,11 @@
       },
       "install": {
         "title": "Install dependencies",
-        "description": "Run pnpm install to install all dependencies"
+        "description": "Run npm install to install all dependencies"
       },
       "run": {
         "title": "Start development",
-        "description": "Run pnpm --filter whitelabel-demo dev to start the development server"
+        "description": "Run npm run dev --workspace=whitelabel-demo to start the development server"
       },
       "customize": {
         "title": "Customize your app",

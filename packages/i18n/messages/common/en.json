@@ -1,0 +1,39 @@
+{
+  "common": {
+    "appTitle": "Mini Apps",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "clear": "Clear",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "This mini app is currently under development. Check back soon!"
+  },
+  "theme": {
+    "label": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "locale": {
+    "label": "Language",
+    "en": "English",
+    "es": "Español"
+  },
+  "footer": {
+    "contact": "Contact",
+    "copyright": "© {year} datoga.es"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "demo": "Demo",
+    "about": "About"
+  }
+}
+

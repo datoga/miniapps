@@ -1,0 +1,119 @@
+{
+  "app": {
+    "title": "White-label Demo",
+    "subtitle": "A beautiful template for your next mini app project",
+    "description": "This demo showcases all the features available in the miniapps monorepo template, including internationalization, theming, analytics, and browser storage.",
+    "cta": {
+      "getStarted": "Get Started",
+      "learnMore": "Learn More",
+      "viewDocs": "View Documentation"
+    }
+  },
+  "demo": {
+    "loremTitle": "Sample Content",
+    "loremParagraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "loremParagraph2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "loremParagraph3": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+  },
+  "persistence": {
+    "title": "Storage Demo",
+    "description": "Enter some text and save it. It will persist in your browser using IndexedDB.",
+    "inputPlaceholder": "Enter text to save...",
+    "savedValue": "Saved value",
+    "noSavedValue": "No saved value yet",
+    "saveButton": "Save to IndexedDB",
+    "clearButton": "Clear Storage",
+    "savedSuccess": "Value saved successfully!",
+    "clearedSuccess": "Storage cleared!"
+  },
+  "features": {
+    "title": "Features",
+    "i18n": {
+      "title": "Internationalization",
+      "description": "Full ES/EN support with localized routing"
+    },
+    "theming": {
+      "title": "Theme Support",
+      "description": "Light, dark, and system themes with toggle"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "description": "Google Analytics GA4 integration"
+    },
+    "storage": {
+      "title": "Persistence",
+      "description": "IndexedDB and localStorage helpers"
+    }
+  },
+  "getStarted": {
+    "title": "Get Started",
+    "subtitle": "Follow these steps to create your first mini app",
+    "backHome": "Back to Home",
+    "steps": {
+      "clone": {
+        "title": "Clone the repository",
+        "description": "Clone this template to your local machine using git clone"
+      },
+      "install": {
+        "title": "Install dependencies",
+        "description": "Run pnpm install to install all dependencies"
+      },
+      "run": {
+        "title": "Start development",
+        "description": "Run pnpm --filter whitelabel-demo dev to start the development server"
+      },
+      "customize": {
+        "title": "Customize your app",
+        "description": "Edit the files in apps/whitelabel-demo to create your own mini app"
+      }
+    }
+  },
+  "learnMore": {
+    "title": "Learn More",
+    "subtitle": "Discover all the features included in this template",
+    "backHome": "Back to Home",
+    "features": {
+      "turborepo": {
+        "title": "Turborepo",
+        "description": "Monorepo management with caching and parallel execution for fast builds"
+      },
+      "i18n": {
+        "title": "Internationalization",
+        "description": "Full support for ES/EN with next-intl and localized routing"
+      },
+      "themes": {
+        "title": "Theme System",
+        "description": "Light, dark, and system themes with next-themes"
+      },
+      "analytics": {
+        "title": "Google Analytics",
+        "description": "GA4 integration ready to track your app usage"
+      },
+      "storage": {
+        "title": "Browser Storage",
+        "description": "IndexedDB and localStorage helpers for data persistence"
+      },
+      "vercel": {
+        "title": "Vercel Deploy",
+        "description": "Ready to deploy each app as a separate Vercel project"
+      }
+    }
+  },
+  "docs": {
+    "title": "Documentation",
+    "subtitle": "Quick reference for the template structure",
+    "backHome": "Back to Home",
+    "viewGithub": "View on GitHub",
+    "sections": {
+      "structure": {
+        "title": "Project Structure"
+      },
+      "commands": {
+        "title": "Commands"
+      },
+      "i18n": {
+        "title": "Internationalization"
+      }
+    }
+  }
+}

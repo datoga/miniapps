@@ -1,0 +1,13 @@
+{
+  "name": "@miniapps/config",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./tailwind.config.js",
+  "exports": {
+    "./tailwind": "./tailwind.config.js",
+    "./postcss": "./postcss.config.js"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "app": {
+    "title": "Demo Marca Blanca",
+    "subtitle": "Una plantilla elegante para tu próximo proyecto de mini app",
+    "description": "Esta demo muestra todas las funcionalidades disponibles en la plantilla monorepo de miniapps, incluyendo internacionalización, temas, analíticas y almacenamiento en el navegador.",
+    "cta": {
+      "getStarted": "Empezar",
+      "learnMore": "Saber Más",
+      "viewDocs": "Ver Documentación"
+    }
+  },
+  "demo": {
+    "loremTitle": "Contenido de Ejemplo",
+    "loremParagraph1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "loremParagraph2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "loremParagraph3": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
+  },
+  "persistence": {
+    "title": "Demo de Almacenamiento",
+    "description": "Escribe un texto y guárdalo. Persistirá en tu navegador usando IndexedDB.",
+    "inputPlaceholder": "Escribe texto para guardar...",
+    "savedValue": "Valor guardado",
+    "noSavedValue": "Aún no hay valor guardado",
+    "saveButton": "Guardar en IndexedDB",
+    "clearButton": "Limpiar Almacenamiento",
+    "savedSuccess": "¡Valor guardado correctamente!",
+    "clearedSuccess": "¡Almacenamiento limpiado!"
+  },
+  "features": {
+    "title": "Funcionalidades",
+    "i18n": {
+      "title": "Internacionalización",
+      "description": "Soporte completo ES/EN con rutas localizadas"
+    },
+    "theming": {
+      "title": "Soporte de Temas",
+      "description": "Temas claro, oscuro y sistema con selector"
+    },
+    "analytics": {
+      "title": "Analíticas",
+      "description": "Integración con Google Analytics GA4"
+    },
+    "storage": {
+      "title": "Persistencia",
+      "description": "Helpers para IndexedDB y localStorage"
+    }
+  },
+  "getStarted": {
+    "title": "Empezar",
+    "subtitle": "Sigue estos pasos para crear tu primera mini app",
+    "backHome": "Volver al Inicio",
+    "steps": {
+      "clone": {
+        "title": "Clonar el repositorio",
+        "description": "Clona esta plantilla en tu máquina local usando git clone"
+      },
+      "install": {
+        "title": "Instalar dependencias",
+        "description": "Ejecuta pnpm install para instalar todas las dependencias"
+      },
+      "run": {
+        "title": "Iniciar desarrollo",
+        "description": "Ejecuta pnpm --filter whitelabel-demo dev para iniciar el servidor"
+      },
+      "customize": {
+        "title": "Personaliza tu app",
+        "description": "Edita los archivos en apps/whitelabel-demo para crear tu propia mini app"
+      }
+    }
+  },
+  "learnMore": {
+    "title": "Saber Más",
+    "subtitle": "Descubre todas las funcionalidades incluidas en esta plantilla",
+    "backHome": "Volver al Inicio",
+    "features": {
+      "turborepo": {
+        "title": "Turborepo",
+        "description": "Gestión de monorepo con caché y ejecución paralela para builds rápidos"
+      },
+      "i18n": {
+        "title": "Internacionalización",
+        "description": "Soporte completo para ES/EN con next-intl y rutas localizadas"
+      },
+      "themes": {
+        "title": "Sistema de Temas",
+        "description": "Temas claro, oscuro y sistema con next-themes"
+      },
+      "analytics": {
+        "title": "Google Analytics",
+        "description": "Integración GA4 lista para rastrear el uso de tu app"
+      },
+      "storage": {
+        "title": "Almacenamiento",
+        "description": "Helpers de IndexedDB y localStorage para persistencia de datos"
+      },
+      "vercel": {
+        "title": "Deploy en Vercel",
+        "description": "Listo para desplegar cada app como proyecto Vercel separado"
+      }
+    }
+  },
+  "docs": {
+    "title": "Documentación",
+    "subtitle": "Referencia rápida de la estructura de la plantilla",
+    "backHome": "Volver al Inicio",
+    "viewGithub": "Ver en GitHub",
+    "sections": {
+      "structure": {
+        "title": "Estructura del Proyecto"
+      },
+      "commands": {
+        "title": "Comandos"
+      },
+      "i18n": {
+        "title": "Internacionalización"
+      }
+    }
+  }
+}

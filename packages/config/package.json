@@ -5,7 +5,8 @@
   "main": "./tailwind.config.js",
   "exports": {
     "./tailwind": "./tailwind.config.js",
-    "./postcss": "./postcss.config.js"
+    "./postcss": "./postcss.config.js",
+    "./next.shared": "./next.shared.ts"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.19"

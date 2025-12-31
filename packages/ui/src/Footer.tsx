@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "./utils";
 
@@ -7,7 +8,7 @@ interface FooterProps {
   className?: string;
 }
 
-export function Footer({ className }: FooterProps) {
+export const Footer = memo(function Footer({ className }: FooterProps) {
   const t = useTranslations("footer");
   const currentYear = new Date().getFullYear();
 
@@ -35,4 +36,4 @@ export function Footer({ className }: FooterProps) {
       </div>
     </footer>
   );
-}
+});

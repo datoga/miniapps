@@ -1,21 +1,26 @@
-import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider, AppShell } from "@miniapps/ui";
 import { GoogleAnalyticsScript } from "@miniapps/analytics";
 import { locales, type Locale } from "@miniapps/i18n";
+import { AppShell, ThemeProvider } from "@miniapps/ui";
+import type { Metadata, Viewport } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { Geist, Geist_Mono } from "next/font/google";
+import { notFound } from "next/navigation";
 import "../globals.css";
 
+// Optimize fonts with display swap and preload
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -24,8 +29,24 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.svg",
   },
+  // SEO optimizations
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
+// Viewport optimization
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
+
+// Generate static params for all locales at build time
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -49,13 +70,18 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             <AppShell>{children}</AppShell>
           </NextIntlClientProvider>
         </ThemeProvider>
-        <GoogleAnalyticsScript gaId={gaId} />
+        {gaId && <GoogleAnalyticsScript gaId={gaId} />}
       </body>
     </html>
   );

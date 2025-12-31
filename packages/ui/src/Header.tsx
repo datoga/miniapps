@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { useTranslations } from "next-intl";
 import { ThemeToggle } from "./ThemeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -22,7 +23,11 @@ const defaultNavItems: NavItem[] = [
   { href: "#about", labelKey: "nav.about" },
 ];
 
-export function Header({ title, navItems = defaultNavItems, className }: HeaderProps) {
+export const Header = memo(function Header({
+  title,
+  navItems = defaultNavItems,
+  className,
+}: HeaderProps) {
   const t = useTranslations();
 
   return (
@@ -35,7 +40,7 @@ export function Header({ title, navItems = defaultNavItems, className }: HeaderP
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         {/* Logo / Title */}
         <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-          {title || t("common.appTitle")}
+          {title ?? t("common.appTitle")}
         </h1>
 
         {/* Navigation */}
@@ -60,4 +65,4 @@ export function Header({ title, navItems = defaultNavItems, className }: HeaderP
       </div>
     </header>
   );
-}
+});

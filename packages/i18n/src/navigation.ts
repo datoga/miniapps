@@ -19,4 +19,3 @@ export function getLocalizedPathname(pathname: string, locale: Locale): string {
   const normalizedPath = cleanPath === "/" ? "" : cleanPath;
   return `/${locale}${normalizedPath}`;
 }
-

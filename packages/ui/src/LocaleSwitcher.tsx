@@ -40,9 +40,7 @@ export function LocaleSwitcher({ className }: LocaleSwitcherProps) {
           onClick={() => switchLocale(loc)}
           className={cn(
             "rounded-md p-1.5 text-xl transition-all",
-            locale === loc
-              ? "bg-gray-100 dark:bg-gray-800"
-              : "opacity-50 hover:opacity-100"
+            locale === loc ? "bg-gray-100 dark:bg-gray-800" : "opacity-50 hover:opacity-100"
           )}
           title={loc.toUpperCase()}
         >

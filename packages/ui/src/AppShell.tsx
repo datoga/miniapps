@@ -20,4 +20,3 @@ export function AppShell({ children, title, className }: AppShellProps) {
     </div>
   );
 }
-

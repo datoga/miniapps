@@ -28,7 +28,9 @@ export function StorageDemo() {
   }, []);
 
   const handleSave = async () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim()) {
+      return;
+    }
 
     await setJSON(STORAGE_KEY, inputValue);
     setSavedValue(inputValue);
@@ -60,9 +62,7 @@ export function StorageDemo() {
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-      <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
-        {t("title")}
-      </h2>
+      <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">{t("title")}</h2>
       <p className="mb-6 text-gray-600 dark:text-gray-300">{t("description")}</p>
 
       <div className="space-y-4">
@@ -89,14 +89,10 @@ export function StorageDemo() {
         )}
 
         <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-900">
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            {t("savedValue")}:
-          </p>
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t("savedValue")}:</p>
           <p className="mt-1 text-gray-900 dark:text-white">
             {savedValue || (
-              <span className="italic text-gray-400 dark:text-gray-500">
-                {t("noSavedValue")}
-              </span>
+              <span className="italic text-gray-400 dark:text-gray-500">{t("noSavedValue")}</span>
             )}
           </p>
         </div>
@@ -104,4 +100,3 @@ export function StorageDemo() {
     </div>
   );
 }
-

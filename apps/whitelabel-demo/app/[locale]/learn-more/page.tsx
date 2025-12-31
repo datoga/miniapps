@@ -18,23 +18,39 @@ function LearnMoreContent({ locale }: { locale: string }) {
   const t = useTranslations("learnMore");
 
   const features = [
-    { icon: "🚀", title: t("features.turborepo.title"), description: t("features.turborepo.description") },
+    {
+      icon: "🚀",
+      title: t("features.turborepo.title"),
+      description: t("features.turborepo.description"),
+    },
     { icon: "🌐", title: t("features.i18n.title"), description: t("features.i18n.description") },
-    { icon: "🎨", title: t("features.themes.title"), description: t("features.themes.description") },
-    { icon: "📊", title: t("features.analytics.title"), description: t("features.analytics.description") },
-    { icon: "💾", title: t("features.storage.title"), description: t("features.storage.description") },
-    { icon: "☁️", title: t("features.vercel.title"), description: t("features.vercel.description") },
+    {
+      icon: "🎨",
+      title: t("features.themes.title"),
+      description: t("features.themes.description"),
+    },
+    {
+      icon: "📊",
+      title: t("features.analytics.title"),
+      description: t("features.analytics.description"),
+    },
+    {
+      icon: "💾",
+      title: t("features.storage.title"),
+      description: t("features.storage.description"),
+    },
+    {
+      icon: "☁️",
+      title: t("features.vercel.title"),
+      description: t("features.vercel.description"),
+    },
   ];
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
-          {t("title")}
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
-          {t("subtitle")}
-        </p>
+        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">{t("title")}</h1>
+        <p className="text-xl text-gray-600 dark:text-gray-300">{t("subtitle")}</p>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
@@ -47,9 +63,7 @@ function LearnMoreContent({ locale }: { locale: string }) {
             <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
               {feature.title}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              {feature.description}
-            </p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{feature.description}</p>
           </div>
         ))}
       </div>
@@ -62,4 +76,3 @@ function LearnMoreContent({ locale }: { locale: string }) {
     </div>
   );
 }
-

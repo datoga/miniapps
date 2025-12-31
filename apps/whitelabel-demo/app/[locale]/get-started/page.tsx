@@ -21,18 +21,18 @@ function GetStartedContent({ locale }: { locale: string }) {
     { number: "01", title: t("steps.clone.title"), description: t("steps.clone.description") },
     { number: "02", title: t("steps.install.title"), description: t("steps.install.description") },
     { number: "03", title: t("steps.run.title"), description: t("steps.run.description") },
-    { number: "04", title: t("steps.customize.title"), description: t("steps.customize.description") },
+    {
+      number: "04",
+      title: t("steps.customize.title"),
+      description: t("steps.customize.description"),
+    },
   ];
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
-          {t("title")}
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
-          {t("subtitle")}
-        </p>
+        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">{t("title")}</h1>
+        <p className="text-xl text-gray-600 dark:text-gray-300">{t("subtitle")}</p>
       </div>
 
       <div className="space-y-8">
@@ -62,4 +62,3 @@ function GetStartedContent({ locale }: { locale: string }) {
     </div>
   );
 }
-

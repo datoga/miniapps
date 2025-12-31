@@ -6,15 +6,13 @@ const locales = ["es", "en"] as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
-  
+
   if (!locale || !hasLocale(locales, locale)) {
     locale = "es";
   }
 
   // Load common messages
-  const commonMessages = (
-    await import(`@miniapps/i18n/messages/common/${locale}.json`)
-  ).default;
+  const commonMessages = (await import(`@miniapps/i18n/messages/common/${locale}.json`)).default;
 
   // Load app-specific messages
   const appMessages = (await import(`../messages/${locale}.json`)).default;
@@ -24,4 +22,3 @@ export default getRequestConfig(async ({ requestLocale }) => {
     messages: mergeMessages(commonMessages, appMessages),
   };
 });
-

@@ -38,9 +38,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
           onClick={() => setTheme(option.value)}
           className={cn(
             "rounded-md p-1.5 text-lg transition-all",
-            theme === option.value
-              ? "bg-gray-100 dark:bg-gray-800"
-              : "opacity-50 hover:opacity-100"
+            theme === option.value ? "bg-gray-100 dark:bg-gray-800" : "opacity-50 hover:opacity-100"
           )}
           title={option.title}
         >

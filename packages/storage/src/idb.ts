@@ -75,4 +75,3 @@ export async function remove(key: string): Promise<void> {
     // Silently fail
   }
 }
-

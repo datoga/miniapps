@@ -36,4 +36,3 @@ export function Footer({ className }: FooterProps) {
     </footer>
   );
 }
-

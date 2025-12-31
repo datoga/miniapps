@@ -50,12 +50,8 @@ function DocsContent({ locale }: { locale: string }) {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
-          {t("title")}
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300">
-          {t("subtitle")}
-        </p>
+        <h1 className="mb-4 text-4xl font-bold text-gray-900 dark:text-white">{t("title")}</h1>
+        <p className="text-xl text-gray-600 dark:text-gray-300">{t("subtitle")}</p>
       </div>
 
       <div className="space-y-8">
@@ -69,10 +65,7 @@ function DocsContent({ locale }: { locale: string }) {
             </h3>
             <ul className="space-y-2">
               {section.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2 text-gray-600 dark:text-gray-400"
-                >
+                <li key={item} className="flex items-start gap-2 text-gray-600 dark:text-gray-400">
                   <span className="text-primary-500">•</span>
                   <code className="text-sm">{item}</code>
                 </li>
@@ -86,15 +79,10 @@ function DocsContent({ locale }: { locale: string }) {
         <Link href={`/${locale}`}>
           <Button variant="outline">{t("backHome")}</Button>
         </Link>
-        <a
-          href="https://github.com/datoga/miniapps"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://github.com/datoga/miniapps" target="_blank" rel="noopener noreferrer">
           <Button variant="primary">{t("viewGithub")}</Button>
         </a>
       </div>
     </div>
   );
 }
-

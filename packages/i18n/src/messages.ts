@@ -5,22 +5,15 @@ export type Messages = Record<string, unknown>;
  */
 function deepMerge(target: Messages, source: Messages): Messages {
   const result = { ...target };
-  
+
   for (const key of Object.keys(source)) {
-    if (
-      source[key] !== null &&
-      typeof source[key] === "object" &&
-      !Array.isArray(source[key])
-    ) {
-      result[key] = deepMerge(
-        (result[key] as Messages) || {},
-        source[key] as Messages
-      );
+    if (source[key] !== null && typeof source[key] === "object" && !Array.isArray(source[key])) {
+      result[key] = deepMerge((result[key] as Messages) || {}, source[key] as Messages);
     } else {
       result[key] = source[key];
     }
   }
-  
+
   return result;
 }
 
@@ -30,4 +23,3 @@ function deepMerge(target: Messages, source: Messages): Messages {
 export function mergeMessages(common: Messages, app: Messages): Messages {
   return deepMerge(common, app);
 }
-

@@ -16,4 +16,3 @@ export function GoogleAnalyticsScript({ gaId }: GoogleAnalyticsScriptProps) {
 
   return <GoogleAnalytics gaId={gaId} />;
 }
-

@@ -1,0 +1,94 @@
+# Mini Apps Monorepo - Development Rules
+
+## Reference Project
+
+**Always use `apps/whitelabel-demo` as the reference implementation** when creating or modifying mini apps.
+
+## Project Structure
+
+When creating a new mini app, copy the structure from `apps/whitelabel-demo`:
+
+```
+apps/your-app/
+├── app/
+│   ├── [locale]/
+│   │   ├── layout.tsx      # Copy from whitelabel-demo, update metadata
+│   │   └── page.tsx        # Your main page
+│   ├── globals.css         # Copy as-is
+│   ├── icon.svg            # Create unique icon
+│   └── apple-icon.svg      # Create unique icon
+├── components/             # App-specific components
+├── messages/
+│   ├── en.json             # English translations
+│   └── es.json             # Spanish translations
+├── i18n/
+│   └── request.ts          # Copy as-is from whitelabel-demo
+├── eslint.config.mjs       # Copy as-is
+├── next.config.ts          # Copy as-is
+├── package.json            # Update name and port
+├── postcss.config.js       # Copy as-is
+├── proxy.ts                # Copy as-is
+├── tailwind.config.js      # Copy as-is
+└── tsconfig.json           # Copy as-is
+```
+
+## Code Standards
+
+### TypeScript
+- Use strict TypeScript (already configured in tsconfig)
+- Use `type` imports: `import type { X } from "y"`
+- Access env vars with bracket notation: `process.env["NEXT_PUBLIC_GA_ID"]`
+- No `any` types - use proper typing
+
+### React/Next.js
+- Use Next.js App Router conventions
+- Use `"use client"` directive only when needed
+- Prefer Server Components when possible
+- Use `next-intl` for all user-facing strings
+
+### Internationalization
+- **NO hardcoded strings** in components
+- All UI text must be in `messages/en.json` and `messages/es.json`
+- Use `useTranslations()` hook to access messages
+- Common translations are in `packages/i18n/messages/common/`
+
+### Styling
+- Use Tailwind CSS classes
+- Dark mode: use `dark:` prefix for dark theme styles
+- Shared theme colors are in `packages/config/tailwind.config.js`
+
+### Shared Packages
+Use these packages instead of creating duplicates:
+- `@miniapps/ui` - Components: AppShell, Header, Footer, Button, ThemeToggle, LocaleSwitcher
+- `@miniapps/i18n` - i18n utilities: locales, defaultLocale, mergeMessages
+- `@miniapps/analytics` - GA4: trackEvent, GoogleAnalyticsScript
+- `@miniapps/storage` - Persistence: getJSON, setJSON, remove (IndexedDB)
+
+### File Naming
+- Components: PascalCase (`MyComponent.tsx`)
+- Utilities: camelCase (`myUtil.ts`)
+- Config files: lowercase (`tailwind.config.js`)
+
+## Commands
+
+```bash
+# Development
+npm run dev --workspace=your-app
+
+# Build
+npm run build --workspace=your-app
+
+# Lint
+npm run lint
+
+# Type check
+npm run typecheck
+
+# Format
+npm run format
+```
+
+## Deployment
+
+Each app deploys separately to Vercel. Set `NEXT_PUBLIC_GA_ID` in Vercel Environment Variables.
+

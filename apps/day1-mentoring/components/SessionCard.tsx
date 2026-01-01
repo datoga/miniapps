@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import { memo, useMemo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import type { Session } from "../lib/schemas";
 
@@ -9,6 +9,7 @@ interface SessionCardProps {
   menteeName: string;
   onEdit: () => void;
   onDelete: () => void;
+  onToggleStep?: (stepId: string, done: boolean) => void;
 }
 
 export const SessionCard = memo(function SessionCard({
@@ -16,6 +17,7 @@ export const SessionCard = memo(function SessionCard({
   menteeName,
   onEdit,
   onDelete,
+  onToggleStep,
 }: SessionCardProps) {
   const t = useTranslations();
 
@@ -120,24 +122,33 @@ export const SessionCard = memo(function SessionCard({
             />
           </div>
           <ul className="mt-2 space-y-1">
-            {session.nextSteps.slice(0, 2).map((step) => (
+            {session.nextSteps.slice(0, 3).map((step) => (
               <li key={step.id} className="flex items-center gap-2 text-sm">
-                {step.done ? (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                    <polyline points="22 4 12 14.01 9 11.01" />
-                  </svg>
-                ) : (
-                  <div className="w-3.5 h-3.5 rounded-full border-2 border-gray-300 dark:border-gray-600" />
-                )}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleStep?.(step.id, !step.done);
+                  }}
+                  className="flex-shrink-0 hover:scale-110 transition-transform"
+                >
+                  {step.done ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                  ) : (
+                    <div className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-500 transition-colors" />
+                  )}
+                </button>
                 <span className={step.done ? "text-gray-400 line-through" : "text-gray-700 dark:text-gray-300"}>
                   {step.text}
                 </span>
               </li>
             ))}
-            {totalSteps > 2 && (
-              <li className="text-xs text-gray-400 dark:text-gray-500 pl-5">
-                +{totalSteps - 2} más
+            {totalSteps > 3 && (
+              <li className="text-xs text-gray-400 dark:text-gray-500 pl-6">
+                +{totalSteps - 3} más
               </li>
             )}
           </ul>

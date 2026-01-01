@@ -17,6 +17,7 @@ interface MenteeDetailProps {
   onNewSession: () => void;
   onEditSession: (session: Session) => void;
   onDeleteSession: (session: Session) => void;
+  onToggleStep: (sessionId: string, stepId: string, done: boolean) => void;
 }
 
 export const MenteeDetail = memo(function MenteeDetail({
@@ -28,6 +29,7 @@ export const MenteeDetail = memo(function MenteeDetail({
   onNewSession,
   onEditSession,
   onDeleteSession,
+  onToggleStep,
 }: MenteeDetailProps) {
   const t = useTranslations();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -268,6 +270,7 @@ export const MenteeDetail = memo(function MenteeDetail({
                 menteeName={mentee.name}
                 onEdit={() => onEditSession(session)}
                 onDelete={() => onDeleteSession(session)}
+                onToggleStep={(stepId, done) => onToggleStep(session.id, stepId, done)}
               />
             ))}
             {/* Add new session card */}

@@ -227,6 +227,20 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
     [data, t]
   );
 
+  const handleToggleStep = useCallback(
+    async (sessionId: string, stepId: string, done: boolean) => {
+      const session = data.sessions.find((s) => s.id === sessionId);
+      if (!session) return;
+
+      const updatedNextSteps = session.nextSteps.map((step) =>
+        step.id === stepId ? { ...step, done } : step
+      );
+
+      await data.updateSession(sessionId, { nextSteps: updatedNextSteps });
+    },
+    [data]
+  );
+
   const handleBackToList = useCallback(() => {
     handleSelectMentee(null);
   }, [handleSelectMentee]);
@@ -258,12 +272,15 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
             <MenteeDetail
               mentee={selectedMentee}
               sessions={menteeSessions}
-              onEdit={() => handleOpenEditMentee(selectedMentee)}
+              onUpdate={async (updates) => {
+                await data.updateMentee(selectedMentee.id, updates);
+              }}
               onArchive={() => handleArchiveMentee(selectedMentee)}
               onDelete={() => handleDeleteMentee(selectedMentee)}
               onNewSession={handleOpenNewSession}
               onEditSession={handleOpenEditSession}
               onDeleteSession={handleDeleteSession}
+              onToggleStep={handleToggleStep}
             />
           </div>
         ) : (

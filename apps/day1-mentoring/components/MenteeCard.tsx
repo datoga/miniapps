@@ -48,7 +48,7 @@ export const MenteeCard = memo(function MenteeCard({
                 ? "bg-gradient-to-br from-amber-300 to-amber-500 text-amber-900"
                 : "bg-gradient-to-br from-primary-400 to-primary-600 text-white"
             }`}>
-              {mentee.name.charAt(0).toUpperCase()}
+              {mentee.name?.charAt(0)?.toUpperCase() || "?"}
             </div>
           )}
           <div>
@@ -118,8 +118,8 @@ export const MenteeCard = memo(function MenteeCard({
           )}
         </div>
         <div className="flex items-center gap-2">
-          {(mentee.location || mentee.inPersonNotes) && (
-            <span className="cursor-help text-sm" title={mentee.location || mentee.inPersonNotes}>🌐</span>
+          {mentee.location && (
+            <span className="cursor-help text-sm" title={mentee.location}>🌐</span>
           )}
           {mentee.inPersonAvailable && (
             <span className="cursor-help text-sm text-green-600 dark:text-green-500" title={mentee.availabilityNotes || "Disponible presencial"}>🤝</span>

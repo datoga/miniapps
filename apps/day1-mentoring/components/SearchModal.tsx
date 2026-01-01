@@ -1,7 +1,7 @@
 "use client";
 
-import { memo, useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Mentee, Session } from "../lib/schemas";
 
 interface SearchModalProps {

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { getDB } from "../db";
-import type { Session, SessionFormInput, NextStep } from "../schemas";
+import type { NextStep, Session, SessionFormInput } from "../schemas";
 
 /**
  * List all sessions

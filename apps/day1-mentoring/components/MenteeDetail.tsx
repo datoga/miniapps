@@ -156,20 +156,26 @@ export const MenteeDetail = memo(function MenteeDetail({
                     </a>
                   )
                 )}
+                {/* Actions */}
+                <span className="text-gray-300 dark:text-gray-600">|</span>
+                <button
+                  onClick={onArchive}
+                  className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                  title={mentee.archived ? t("actions.unarchive") : t("actions.archive")}
+                >
+                  {mentee.archived ? "📤" : "📦"}
+                </button>
+                {mentee.archived && (
+                  <button
+                    onClick={onDelete}
+                    className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+                    title={t("actions.delete")}
+                  >
+                    🗑️
+                  </button>
+                )}
               </div>
             </div>
-          </div>
-
-          {/* Actions - right side */}
-          <div className="flex gap-2">
-            <Button variant="ghost" size="sm" onClick={onArchive}>
-              {mentee.archived ? "📤" : "📦"}
-            </Button>
-            {mentee.archived && (
-              <Button variant="ghost" size="sm" onClick={onDelete} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
-                🗑️
-              </Button>
-            )}
           </div>
         </div>
       </div>

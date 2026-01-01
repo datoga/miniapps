@@ -7,6 +7,7 @@ import { SessionCard } from "./SessionCard";
 import { EditableField } from "./EditableField";
 import { NoteInput } from "./NoteInput";
 import { GoalInput } from "./GoalInput";
+import { TagInput } from "./TagInput";
 import { resizeImage } from "../lib/imageUtils";
 
 interface MenteeDetailProps {
@@ -233,18 +234,16 @@ export const MenteeDetail = memo(function MenteeDetail({
         </div>
 
         {/* Tags */}
-        {mentee.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {mentee.tags.map((tag, i) => (
-              <span
-                key={i}
-                className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+        <div>
+          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            🏷️ {t("mentee.tags")}
+          </h3>
+          <TagInput
+            tags={mentee.tags || []}
+            onChange={(tags) => onUpdate({ tags })}
+            placeholder={t("mentee.tagsPlaceholder")}
+          />
+        </div>
 
         {/* Divider */}
         <div className="border-t border-gray-200 dark:border-gray-700" />

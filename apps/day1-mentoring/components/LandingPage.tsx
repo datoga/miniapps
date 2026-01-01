@@ -15,7 +15,7 @@ export const LandingPage = memo(function LandingPage({ onEnterApp }: LandingPage
     <div className="min-h-[calc(100vh-120px)] flex flex-col relative overflow-hidden">
       {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-accent-50/30 dark:from-primary-950/20 dark:via-transparent dark:to-accent-950/10" />
-      
+
       {/* Decorative circles */}
       <div className="absolute top-20 -left-32 w-64 h-64 bg-primary-200/20 dark:bg-primary-800/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 -right-32 w-80 h-80 bg-accent-200/20 dark:bg-accent-800/10 rounded-full blur-3xl" />

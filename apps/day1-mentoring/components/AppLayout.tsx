@@ -5,8 +5,11 @@ import { AppShell } from "@miniapps/ui";
 import { Dashboard } from "./Dashboard";
 import { LandingPage } from "./LandingPage";
 
-// No nav items for MentorFlow - clean header
-const mentorFlowNavItems: { href: string; labelKey: string }[] = [];
+// MentorFlow nav items
+const mentorFlowNavItems = [
+  { href: "#", labelKey: "nav.dashboard" },
+  { href: "#about", labelKey: "nav.about" },
+];
 
 // Search icon SVG component
 function SearchIcon() {

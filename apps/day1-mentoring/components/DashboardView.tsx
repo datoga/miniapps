@@ -177,8 +177,7 @@ export function DashboardView() {
                 </span>
               </div>
               <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
-                {t("dashboard.subtitle") ||
-                  "Gestiona tus sesiones de mentoría y el crecimiento de tus mentees."}
+                {t("dashboard.subtitle")}
               </p>
             </div>
 
@@ -238,7 +237,7 @@ export function DashboardView() {
                 {t("dashboard.newMentee")}
               </p>
               <p className="text-sm text-gray-500 max-w-[200px] mt-1">
-                {t("dashboard.newMenteeLabel") || "Añade un nuevo mentee para empezar"}
+                {t("dashboard.newMenteeLabel")}
               </p>
             </button>
           </div>

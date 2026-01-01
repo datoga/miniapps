@@ -2,5 +2,103 @@
   "app": {
     "title": "MentorFlow",
     "description": "Connect, grow, and thrive with your mentor"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "allMentees": "All Mentees",
+    "searchPlaceholder": "Search mentees, sessions, notes...",
+    "newMentee": "New Mentee",
+    "showArchived": "Show archived",
+    "noMentees": "No mentees yet",
+    "noMenteesDescription": "Create your first mentee to get started",
+    "noResults": "No results found",
+    "noResultsDescription": "Try adjusting your search terms",
+    "selectMentee": "Select a mentee",
+    "selectMenteeDescription": "Choose a mentee from the sidebar or create a new one",
+    "menteesGroup": "Mentees",
+    "sessionsGroup": "Sessions"
+  },
+  "mentee": {
+    "name": "Name",
+    "namePlaceholder": "Enter mentee name",
+    "age": "Age",
+    "agePlaceholder": "Enter age",
+    "inPersonAvailable": "In-person available",
+    "inPersonNotes": "In-person notes",
+    "inPersonNotesPlaceholder": "Location, availability...",
+    "goal": "Goal",
+    "goalPlaceholder": "What does the mentee want to achieve?",
+    "notes": "Notes",
+    "notesPlaceholder": "General notes about the mentee...",
+    "tags": "Tags",
+    "tagsPlaceholder": "Add a tag",
+    "archived": "Archived",
+    "createdAt": "Created",
+    "updatedAt": "Last updated",
+    "sessions": "Sessions",
+    "noSessions": "No sessions yet",
+    "noSessionsDescription": "Add a session to track your mentoring",
+    "newSession": "New Session"
+  },
+  "menteeModal": {
+    "createTitle": "New Mentee",
+    "editTitle": "Edit Mentee",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "session": {
+    "date": "Date",
+    "title": "Title",
+    "titlePlaceholder": "Session title (optional)",
+    "notes": "Notes",
+    "notesPlaceholder": "What did you discuss?",
+    "nextSteps": "Next Steps",
+    "nextStepsPlaceholder": "Add a next step",
+    "addNextStep": "Add step",
+    "tags": "Tags",
+    "tagsPlaceholder": "Add a tag",
+    "rating": "Rating",
+    "ratingPlaceholder": "Rate this session (1-5)"
+  },
+  "sessionModal": {
+    "createTitle": "New Session",
+    "editTitle": "Edit Session",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "actions": {
+    "edit": "Edit",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "delete": "Delete"
+  },
+  "confirm": {
+    "archiveTitle": "Archive Mentee",
+    "archiveMessage": "Are you sure you want to archive this mentee? They will be hidden from the main list.",
+    "unarchiveTitle": "Unarchive Mentee",
+    "unarchiveMessage": "Are you sure you want to unarchive this mentee? They will appear in the main list again.",
+    "deleteMenteeTitle": "Delete Mentee",
+    "deleteMenteeMessage": "Are you sure you want to delete this mentee? This will also delete all their sessions. This action cannot be undone.",
+    "deleteSessionTitle": "Delete Session",
+    "deleteSessionMessage": "Are you sure you want to delete this session? This action cannot be undone.",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "backup": {
+    "title": "Backup & Restore",
+    "export": "Export Data",
+    "exportDescription": "Download all your data as a JSON file",
+    "import": "Import Data",
+    "importDescription": "Replace all data from a backup file",
+    "importConfirmTitle": "Import Backup",
+    "importConfirmMessage": "This will replace all your current data. Are you sure?",
+    "importSuccess": "Data imported successfully",
+    "importError": "Failed to import data. Invalid file format.",
+    "selectFile": "Select file"
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "invalidDate": "Invalid date format",
+    "invalidRating": "Rating must be between 1 and 5"
   }
 }

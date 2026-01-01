@@ -2,5 +2,103 @@
   "app": {
     "title": "MentorFlow",
     "description": "Conecta, crece y prospera con tu mentor"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "allMentees": "Todos los mentees",
+    "searchPlaceholder": "Buscar mentees, sesiones, notas...",
+    "newMentee": "Nuevo Mentee",
+    "showArchived": "Mostrar archivados",
+    "noMentees": "No hay mentees todavía",
+    "noMenteesDescription": "Crea tu primer mentee para empezar",
+    "noResults": "Sin resultados",
+    "noResultsDescription": "Intenta ajustar los términos de búsqueda",
+    "selectMentee": "Selecciona un mentee",
+    "selectMenteeDescription": "Elige un mentee de la barra lateral o crea uno nuevo",
+    "menteesGroup": "Mentees",
+    "sessionsGroup": "Sesiones"
+  },
+  "mentee": {
+    "name": "Nombre",
+    "namePlaceholder": "Nombre del mentee",
+    "age": "Edad",
+    "agePlaceholder": "Introduce la edad",
+    "inPersonAvailable": "Disponible presencial",
+    "inPersonNotes": "Notas presenciales",
+    "inPersonNotesPlaceholder": "Ubicación, disponibilidad...",
+    "goal": "Objetivo",
+    "goalPlaceholder": "¿Qué quiere lograr el mentee?",
+    "notes": "Notas",
+    "notesPlaceholder": "Notas generales sobre el mentee...",
+    "tags": "Etiquetas",
+    "tagsPlaceholder": "Añadir etiqueta",
+    "archived": "Archivado",
+    "createdAt": "Creado",
+    "updatedAt": "Última actualización",
+    "sessions": "Sesiones",
+    "noSessions": "Sin sesiones",
+    "noSessionsDescription": "Añade una sesión para registrar tu mentoría",
+    "newSession": "Nueva Sesión"
+  },
+  "menteeModal": {
+    "createTitle": "Nuevo Mentee",
+    "editTitle": "Editar Mentee",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "session": {
+    "date": "Fecha",
+    "title": "Título",
+    "titlePlaceholder": "Título de la sesión (opcional)",
+    "notes": "Notas",
+    "notesPlaceholder": "¿Qué habéis discutido?",
+    "nextSteps": "Próximos pasos",
+    "nextStepsPlaceholder": "Añadir próximo paso",
+    "addNextStep": "Añadir paso",
+    "tags": "Etiquetas",
+    "tagsPlaceholder": "Añadir etiqueta",
+    "rating": "Valoración",
+    "ratingPlaceholder": "Valora esta sesión (1-5)"
+  },
+  "sessionModal": {
+    "createTitle": "Nueva Sesión",
+    "editTitle": "Editar Sesión",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "actions": {
+    "edit": "Editar",
+    "archive": "Archivar",
+    "unarchive": "Desarchivar",
+    "delete": "Eliminar"
+  },
+  "confirm": {
+    "archiveTitle": "Archivar Mentee",
+    "archiveMessage": "¿Estás seguro de que quieres archivar este mentee? Se ocultará de la lista principal.",
+    "unarchiveTitle": "Desarchivar Mentee",
+    "unarchiveMessage": "¿Estás seguro de que quieres desarchivar este mentee? Aparecerá de nuevo en la lista principal.",
+    "deleteMenteeTitle": "Eliminar Mentee",
+    "deleteMenteeMessage": "¿Estás seguro de que quieres eliminar este mentee? También se eliminarán todas sus sesiones. Esta acción no se puede deshacer.",
+    "deleteSessionTitle": "Eliminar Sesión",
+    "deleteSessionMessage": "¿Estás seguro de que quieres eliminar esta sesión? Esta acción no se puede deshacer.",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+  "backup": {
+    "title": "Copia de seguridad",
+    "export": "Exportar datos",
+    "exportDescription": "Descarga todos tus datos como archivo JSON",
+    "import": "Importar datos",
+    "importDescription": "Reemplazar todos los datos desde un archivo de respaldo",
+    "importConfirmTitle": "Importar respaldo",
+    "importConfirmMessage": "Esto reemplazará todos tus datos actuales. ¿Estás seguro?",
+    "importSuccess": "Datos importados correctamente",
+    "importError": "Error al importar datos. Formato de archivo inválido.",
+    "selectFile": "Seleccionar archivo"
+  },
+  "validation": {
+    "nameRequired": "El nombre es obligatorio",
+    "invalidDate": "Formato de fecha inválido",
+    "invalidRating": "La valoración debe estar entre 1 y 5"
   }
 }

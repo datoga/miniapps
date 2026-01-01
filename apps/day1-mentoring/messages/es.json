@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "MentorFlow",
-    "description": "Registra tus sesiones de mentoría, define objetivos y ayuda a crecer a tus mentees"
+    "description": "Registra tus sesiones de mentoría, define objetivos y ayuda a crecer a las personas que acompañas"
   },
   "common": {
     "appTitle": "MentorFlow"
@@ -11,8 +11,8 @@
     "about": "Acerca de"
   },
   "landing": {
-    "feature1Title": "Gestiona Mentees",
-    "feature1Desc": "Lleva un registro de todos tus mentees, sus objetivos y progreso en un solo lugar",
+    "feature1Title": "Gestiona personas",
+    "feature1Desc": "Lleva un registro de todas las personas, sus objetivos y progreso en un solo lugar",
     "feature2Title": "Registra Sesiones",
     "feature2Desc": "Documenta sesiones, añade notas y define próximos pasos para cada reunión",
     "feature3Title": "100% Privado",
@@ -22,26 +22,26 @@
   },
   "dashboard": {
     "title": "Panel",
-    "allMentees": "Todos los mentees",
+    "allMentees": "Todas las personas",
     "programNamePlaceholder": "Nombre del programa",
-    "searchPlaceholder": "Buscar mentees, sesiones, notas...",
-    "newMentee": "Nuevo Mentee",
-    "newMenteeLabel": "Añade un nuevo mentee para empezar",
-    "subtitle": "Gestiona tus sesiones de mentoría y el crecimiento de tus mentees.",
+    "searchPlaceholder": "Buscar personas, sesiones, notas...",
+    "newMentee": "Nueva persona",
+    "newMenteeLabel": "Añade una nueva persona para empezar",
+    "subtitle": "Gestiona tus sesiones de mentoría y el crecimiento de las personas a las que acompañas.",
     "showArchived": "Mostrar archivados",
-    "noMentees": "No hay mentees todavía",
-    "noMenteesDescription": "Crea tu primer mentee para empezar",
+    "noMentees": "No hay personas todavía",
+    "noMenteesDescription": "Crea tu primera persona para empezar",
     "noResults": "Sin resultados",
     "noResultsDescription": "Intenta ajustar los términos de búsqueda",
-    "selectMentee": "Selecciona un mentee",
-    "selectMenteeDescription": "Elige un mentee de la barra lateral o crea uno nuevo",
-    "menteesGroup": "Mentees",
+    "selectMentee": "Selecciona una persona",
+    "selectMenteeDescription": "Elige una persona de la barra lateral o crea una nueva",
+    "menteesGroup": "Personas",
     "sessionsGroup": "Sesiones"
   },
   "mentee": {
-    "notFound": "Mentee no encontrado",
+    "notFound": "Persona no encontrada",
     "name": "Nombre",
-    "namePlaceholder": "Nombre del mentee",
+    "namePlaceholder": "Nombre de la persona",
     "image": "Foto",
     "changeImage": "Cambiar imagen",
     "imageTooLarge": "La imagen es demasiado grande (máx. 500KB)",
@@ -79,8 +79,8 @@
     "no": "NO"
   },
   "menteeModal": {
-    "createTitle": "Nuevo Mentee",
-    "editTitle": "Editar Mentee",
+    "createTitle": "Nueva persona",
+    "editTitle": "Editar persona",
     "save": "Guardar",
     "cancel": "Cancelar"
   },
@@ -119,12 +119,12 @@
     "addToCalendar": "Añadir al calendario"
   },
   "confirm": {
-    "archiveTitle": "Archivar Mentee",
-    "archiveMessage": "¿Estás seguro de que quieres archivar este mentee? Se ocultará de la lista principal.",
-    "unarchiveTitle": "Desarchivar Mentee",
-    "unarchiveMessage": "¿Estás seguro de que quieres desarchivar este mentee? Aparecerá de nuevo en la lista principal.",
-    "deleteMenteeTitle": "Eliminar Mentee",
-    "deleteMenteeMessage": "¿Estás seguro de que quieres eliminar este mentee? También se eliminarán todas sus sesiones. Esta acción no se puede deshacer.",
+    "archiveTitle": "Archivar persona",
+    "archiveMessage": "¿Estás seguro de que quieres archivar esta persona? Se ocultará de la lista principal.",
+    "unarchiveTitle": "Desarchivar persona",
+    "unarchiveMessage": "¿Estás seguro de que quieres desarchivar esta persona? Aparecerá de nuevo en la lista principal.",
+    "deleteMenteeTitle": "Eliminar persona",
+    "deleteMenteeMessage": "¿Estás seguro de que quieres eliminar esta persona? También se eliminarán todas sus sesiones. Esta acción no se puede deshacer.",
     "deleteSessionTitle": "Eliminar Sesión",
     "deleteSessionMessage": "¿Estás seguro de que quieres eliminar esta sesión? Esta acción no se puede deshacer.",
     "confirm": "Confirmar",
@@ -149,7 +149,7 @@
   },
   "about": {
     "title": "Acerca de MentorFlow",
-    "description": "Una aplicación simple y privada para gestionar tus sesiones de mentoría y el progreso de tus mentees.",
+    "description": "Una aplicación simple y privada para gestionar tus sesiones de mentoría y el progreso de las personas que acompañas.",
     "feature1Title": "100% Privado",
     "feature1Desc": "Todos los datos se guardan localmente en tu navegador",
     "feature2Title": "Sin cuenta",

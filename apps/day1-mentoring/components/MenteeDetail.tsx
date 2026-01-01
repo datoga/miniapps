@@ -349,12 +349,12 @@ export const MenteeDetail = memo(function MenteeDetail({
         </section>
 
         {/* Metadata Info - Bottom */}
-        <div className="p-6 rounded-3xl border border-gray-100 bg-gray-50/30 space-y-3 opacity-60 hover:opacity-100 transition-opacity">
-          <div className="flex justify-between text-xs text-gray-500">
+        <div className="p-6 rounded-3xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 space-y-3 opacity-70 hover:opacity-100 transition-opacity">
+          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>{t("mentee.createdAt")}</span>
             <span>{new Date(mentee.createdAt).toLocaleDateString()}</span>
           </div>
-          <div className="flex justify-between text-xs text-gray-500">
+          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
             <span>{t("mentee.updatedAt")}</span>
             <span>{new Date(mentee.updatedAt).toLocaleDateString()}</span>
           </div>

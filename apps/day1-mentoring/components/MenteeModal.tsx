@@ -213,34 +213,19 @@ export const MenteeModal = memo(function MenteeModal({
           />
         </div>
 
-        {/* In-person available */}
+        {/* Location */}
         <div>
-          <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-            <input
-              type="checkbox"
-              checked={formData.inPersonAvailable ?? false}
-              onChange={(e) => handleChange("inPersonAvailable", e.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500"
-            />
-            {t("mentee.inPersonAvailable")}
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            📍 {t("mentee.location")}
           </label>
+          <input
+            type="text"
+            value={formData.inPersonNotes ?? ""}
+            onChange={(e) => handleChange("inPersonNotes", e.target.value)}
+            placeholder={t("mentee.locationPlaceholder")}
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          />
         </div>
-
-        {/* In-person notes */}
-        {formData.inPersonAvailable && (
-          <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              {t("mentee.inPersonNotes")}
-            </label>
-            <input
-              type="text"
-              value={formData.inPersonNotes ?? ""}
-              onChange={(e) => handleChange("inPersonNotes", e.target.value)}
-              placeholder={t("mentee.inPersonNotesPlaceholder")}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-            />
-          </div>
-        )}
 
         {/* Goal */}
         <div>

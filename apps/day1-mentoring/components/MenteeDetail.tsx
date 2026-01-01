@@ -1,15 +1,16 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@miniapps/ui";
-import type { Mentee, Session } from "../lib/schemas";
+import type { Mentee, Session, MenteeFormInput } from "../lib/schemas";
 import { SessionCard } from "./SessionCard";
+import { EditableField } from "./EditableField";
 
 interface MenteeDetailProps {
   mentee: Mentee;
   sessions: Session[];
-  onEdit: () => void;
+  onUpdate: (updates: Partial<MenteeFormInput>) => void;
   onArchive: () => void;
   onDelete: () => void;
   onNewSession: () => void;
@@ -20,7 +21,7 @@ interface MenteeDetailProps {
 export const MenteeDetail = memo(function MenteeDetail({
   mentee,
   sessions,
-  onEdit,
+  onUpdate,
   onArchive,
   onDelete,
   onNewSession,
@@ -28,6 +29,13 @@ export const MenteeDetail = memo(function MenteeDetail({
   onDeleteSession,
 }: MenteeDetailProps) {
   const t = useTranslations();
+
+  const handleFieldChange = useCallback(
+    (field: keyof MenteeFormInput, value: string | number | undefined) => {
+      onUpdate({ [field]: value });
+    },
+    [onUpdate]
+  );
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -48,7 +56,12 @@ export const MenteeDetail = memo(function MenteeDetail({
           )}
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{mentee.name}</h2>
+              <EditableField
+                value={mentee.name}
+                onChange={(value) => handleFieldChange("name", value)}
+                placeholder={t("mentee.namePlaceholder")}
+                className="text-2xl font-bold text-gray-900 dark:text-white"
+              />
               {mentee.archived && (
                 <span className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-0.5 rounded-full">
                   {t("mentee.archived")}
@@ -56,11 +69,17 @@ export const MenteeDetail = memo(function MenteeDetail({
               )}
             </div>
             <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-              {mentee.age && <span>{mentee.age} años</span>}
-              {mentee.inPersonAvailable && (
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-green-500" />
-                  Presencial
+              <EditableField
+                value={mentee.age?.toString() || ""}
+                onChange={(value) => handleFieldChange("age", value ? parseInt(value) : undefined)}
+                placeholder={t("mentee.agePlaceholder")}
+              />
+              {mentee.inPersonNotes && (
+                <span 
+                  className="cursor-help" 
+                  title={mentee.inPersonNotes}
+                >
+                  📍
                 </span>
               )}
             </div>
@@ -69,9 +88,6 @@ export const MenteeDetail = memo(function MenteeDetail({
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={onEdit}>
-            ✏️ {t("actions.edit")}
-          </Button>
           <Button variant="ghost" size="sm" onClick={onArchive}>
             {mentee.archived ? "📤 " + t("actions.unarchive") : "📦 " + t("actions.archive")}
           </Button>
@@ -86,14 +102,18 @@ export const MenteeDetail = memo(function MenteeDetail({
       {/* Content */}
       <div className="space-y-6">
         {/* Goal */}
-        {mentee.goal && (
-          <div>
-            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {t("mentee.goal")}
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{mentee.goal}</p>
-          </div>
-        )}
+        <div>
+          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            🎯 {t("mentee.goal")}
+          </h3>
+          <EditableField
+            value={mentee.goal || ""}
+            onChange={(value) => handleFieldChange("goal", value)}
+            placeholder={t("mentee.goalPlaceholder")}
+            multiline
+            className="text-gray-700 dark:text-gray-300 leading-relaxed"
+          />
+        </div>
 
         {/* Notes (post-its) */}
         {mentee.notes && mentee.notes.length > 0 && (
@@ -124,15 +144,18 @@ export const MenteeDetail = memo(function MenteeDetail({
           </div>
         )}
 
-        {/* In-person notes */}
-        {mentee.inPersonNotes && (
-          <div>
-            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {t("mentee.inPersonNotes")}
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{mentee.inPersonNotes}</p>
-          </div>
-        )}
+        {/* Location */}
+        <div>
+          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            📍 {t("mentee.location")}
+          </h3>
+          <EditableField
+            value={mentee.inPersonNotes || ""}
+            onChange={(value) => handleFieldChange("inPersonNotes", value)}
+            placeholder={t("mentee.locationPlaceholder")}
+            className="text-gray-700 dark:text-gray-300 leading-relaxed"
+          />
+        </div>
 
         {/* Tags */}
         {mentee.tags.length > 0 && (

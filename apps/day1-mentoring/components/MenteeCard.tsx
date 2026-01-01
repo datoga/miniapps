@@ -104,8 +104,8 @@ export const MenteeCard = memo(function MenteeCard({
             </span>
           )}
         </div>
-        {mentee.inPersonAvailable && (
-          <span className={`w-2 h-2 rounded-full ${isArchived ? "bg-amber-500" : "bg-green-500"}`} title="Disponible presencial" />
+        {mentee.inPersonNotes && (
+          <span className="cursor-help text-sm" title={mentee.inPersonNotes}>📍</span>
         )}
       </div>
 

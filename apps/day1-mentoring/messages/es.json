@@ -26,6 +26,7 @@
     "programNamePlaceholder": "Nombre del programa",
     "searchPlaceholder": "Buscar personas, sesiones, notas...",
     "newMentee": "Nueva persona",
+    "newMenteeDefaultName": "Nueva persona",
     "newMenteeLabel": "Añade una nueva persona para empezar",
     "subtitle": "Gestiona tus sesiones de mentoría y el crecimiento de las personas a las que acompañas.",
     "showArchived": "Mostrar archivados",

@@ -26,6 +26,7 @@
     "programNamePlaceholder": "Program name",
     "searchPlaceholder": "Search mentees, sessions, notes...",
     "newMentee": "New Mentee",
+    "newMenteeDefaultName": "New Mentee",
     "newMenteeLabel": "Add a new mentee to get started",
     "subtitle": "Manage your mentoring sessions and your mentees' growth.",
     "showArchived": "Show archived",

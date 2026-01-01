@@ -104,7 +104,7 @@ export function DashboardView() {
 
   const handleNewMentee = useCallback(async () => {
     const mentee = await data.createMentee({
-      name: "Nuevo Mentee",
+      name: t("dashboard.newMenteeDefaultName"),
       goals: [],
       notes: [],
       tags: [],
@@ -118,7 +118,7 @@ export function DashboardView() {
       // Navigate to the new mentee
       router.push(`/${locale}/dashboard/${buildMenteeSlug(mentee)}?new=true`);
     }
-  }, [data, router, locale]);
+  }, [data, router, locale, t]);
 
   const handleArchiveMentee = useCallback(
     async (mentee: Mentee) => {

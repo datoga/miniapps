@@ -269,29 +269,31 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
         ) : (
           // Mentee list view
           <div>
-            {/* Header */}
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {t("dashboard.allMentees")}
-                </h2>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  {filteredMentees.length} mentee{filteredMentees.length !== 1 ? "s" : ""}
-                </p>
+            {/* Header - only show full header when there are mentees */}
+            {filteredMentees.length > 0 && (
+              <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {t("dashboard.allMentees")}
+                  </h2>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    {filteredMentees.length} mentee{filteredMentees.length !== 1 ? "s" : ""}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={data.settings.showArchived}
+                      onChange={(e) => handleToggleShowArchived(e.target.checked)}
+                      className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800"
+                    />
+                    {t("dashboard.showArchived")}
+                  </label>
+                  <Button onClick={handleOpenNewMentee}>+ {t("dashboard.newMentee")}</Button>
+                </div>
               </div>
-              <div className="flex items-center gap-4">
-                <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={data.settings.showArchived}
-                    onChange={(e) => handleToggleShowArchived(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800"
-                  />
-                  {t("dashboard.showArchived")}
-                </label>
-                <Button onClick={handleOpenNewMentee}>+ {t("dashboard.newMentee")}</Button>
-              </div>
-            </div>
+            )}
 
             {/* Mentee grid */}
             {filteredMentees.length === 0 ? (

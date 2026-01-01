@@ -19,7 +19,6 @@ interface HeaderProps {
 
 const defaultNavItems: NavItem[] = [
   { href: "#features", labelKey: "nav.features" },
-  { href: "#demo", labelKey: "nav.demo" },
   { href: "#about", labelKey: "nav.about" },
 ];
 

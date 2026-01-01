@@ -1,17 +1,19 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import type { Session } from "../lib/schemas";
 
 interface SessionCardProps {
   session: Session;
+  menteeName: string;
   onEdit: () => void;
   onDelete: () => void;
 }
 
 export const SessionCard = memo(function SessionCard({
   session,
+  menteeName,
   onEdit,
   onDelete,
 }: SessionCardProps) {
@@ -19,6 +21,46 @@ export const SessionCard = memo(function SessionCard({
 
   const completedSteps = session.nextSteps.filter((s) => s.done).length;
   const totalSteps = session.nextSteps.length;
+
+  // Check if session is in the future
+  const isFutureSession = useMemo(() => {
+    const sessionDate = new Date(session.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return sessionDate >= today;
+  }, [session.date]);
+
+  // Generate Google Calendar URL
+  const calendarUrl = useMemo(() => {
+    const sessionDate = new Date(session.date);
+    // Format: YYYYMMDD
+    const dateStr = session.date.replace(/-/g, "");
+    // Default 1 hour session
+    const startDate = dateStr;
+    const endDate = dateStr;
+    
+    const title = encodeURIComponent(
+      session.title 
+        ? `${session.title} - ${menteeName}` 
+        : `Sesión con ${menteeName}`
+    );
+    
+    const details = encodeURIComponent(
+      [
+        session.notes,
+        session.nextSteps.length > 0 
+          ? `\n\nPróximos pasos:\n${session.nextSteps.map(s => `- ${s.text}`).join("\n")}` 
+          : ""
+      ].filter(Boolean).join("")
+    );
+
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${details}`;
+  }, [session, menteeName]);
+
+  const handleAddToCalendar = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.open(calendarUrl, "_blank");
+  };
 
   return (
     <div
@@ -31,6 +73,15 @@ export const SessionCard = memo(function SessionCard({
             <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
               {session.date}
             </span>
+            {isFutureSession && (
+              <button
+                onClick={handleAddToCalendar}
+                className="flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"
+                title={t("session.addToCalendar")}
+              >
+                📅
+              </button>
+            )}
           </div>
           {session.title && (
             <h4 className="font-medium text-gray-900 dark:text-white">{session.title}</h4>

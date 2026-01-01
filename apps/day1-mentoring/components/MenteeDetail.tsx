@@ -284,6 +284,7 @@ export const MenteeDetail = memo(function MenteeDetail({
                 <SessionCard
                   key={session.id}
                   session={session}
+                  menteeName={mentee.name}
                   onEdit={() => onEditSession(session)}
                   onDelete={() => onDeleteSession(session)}
                 />

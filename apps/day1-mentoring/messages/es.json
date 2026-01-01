@@ -84,7 +84,8 @@
     "tags": "Etiquetas",
     "tagsPlaceholder": "Añadir etiqueta",
     "rating": "Valoración",
-    "ratingPlaceholder": "Valora esta sesión (1-5)"
+    "ratingPlaceholder": "Valora esta sesión (1-5)",
+    "addToCalendar": "Añadir al calendario"
   },
   "sessionModal": {
     "createTitle": "Nueva Sesión",

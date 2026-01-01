@@ -4,12 +4,12 @@ import { useState, useCallback, useEffect } from "react";
 import { AppShell } from "@miniapps/ui";
 import { Dashboard } from "./Dashboard";
 import { LandingPage } from "./LandingPage";
+import { AboutSection } from "./AboutSection";
 
-// MentorFlow nav items
-const mentorFlowNavItems = [
-  { href: "#", labelKey: "nav.dashboard" },
-  { href: "#about", labelKey: "nav.about" },
-];
+type View = "landing" | "dashboard" | "about";
+
+// MentorFlow nav items - we'll handle clicks manually
+const mentorFlowNavItems: { href: string; labelKey: string }[] = [];
 
 // Search icon SVG component
 function SearchIcon() {
@@ -33,8 +33,31 @@ function SearchIcon() {
 
 const STORAGE_KEY = "mentorflow_entered_app";
 
+// Dashboard icon
+function DashboardIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" />
+      <rect x="14" y="3" width="7" height="7" />
+      <rect x="14" y="14" width="7" height="7" />
+      <rect x="3" y="14" width="7" height="7" />
+    </svg>
+  );
+}
+
+// Info icon
+function InfoIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 16v-4" />
+      <path d="M12 8h.01" />
+    </svg>
+  );
+}
+
 export function AppLayout() {
-  const [view, setView] = useState<"landing" | "dashboard">("landing");
+  const [view, setView] = useState<View>("landing");
   const [searchOpen, setSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -56,6 +79,15 @@ export function AppLayout() {
     setView("landing");
   }, []);
 
+  const handleGoToDashboard = useCallback(() => {
+    localStorage.setItem(STORAGE_KEY, "true");
+    setView("dashboard");
+  }, []);
+
+  const handleGoToAbout = useCallback(() => {
+    setView("about");
+  }, []);
+
   const handleSearchOpen = useCallback(() => {
     setSearchOpen(true);
   }, []);
@@ -75,32 +107,61 @@ export function AppLayout() {
     );
   }
 
-  // Header actions - search only (home is via title click)
+  // Header actions with navigation buttons
   const headerActions = (
-    <button
-      onClick={handleSearchOpen}
-      className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-      aria-label="Search"
-    >
-      <SearchIcon />
-    </button>
+    <div className="flex items-center gap-1">
+      {view !== "dashboard" && (
+        <button
+          onClick={handleGoToDashboard}
+          className={`rounded-lg p-2 transition-colors ${
+            view === "dashboard"
+              ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
+              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+          }`}
+          aria-label="Dashboard"
+          title="Dashboard"
+        >
+          <DashboardIcon />
+        </button>
+      )}
+      {view === "dashboard" && (
+        <button
+          onClick={handleSearchOpen}
+          className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+          aria-label="Search"
+          title="Search"
+        >
+          <SearchIcon />
+        </button>
+      )}
+      <button
+        onClick={handleGoToAbout}
+        className={`rounded-lg p-2 transition-colors ${
+          view === "about"
+            ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
+            : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+        }`}
+        aria-label="About"
+        title="About"
+      >
+        <InfoIcon />
+      </button>
+    </div>
   );
 
-  if (view === "landing") {
-    return (
-      <AppShell navItems={mentorFlowNavItems} headerActions={headerActions}>
-        <LandingPage onEnterApp={handleEnterApp} />
-      </AppShell>
-    );
-  }
+  const handleTitleClick = view === "dashboard" ? handleGoToLanding : view === "about" ? handleGoToDashboard : undefined;
 
   return (
-    <AppShell navItems={mentorFlowNavItems} headerActions={headerActions} onTitleClick={handleGoToLanding}>
-      <Dashboard
-        searchOpen={searchOpen}
-        onSearchOpen={handleSearchOpen}
-        onSearchClose={handleSearchClose}
-      />
+    <AppShell navItems={mentorFlowNavItems} headerActions={headerActions} onTitleClick={handleTitleClick}>
+      {view === "landing" && <LandingPage onEnterApp={handleEnterApp} />}
+      {view === "dashboard" && (
+        <Dashboard
+          searchOpen={searchOpen}
+          onSearchOpen={handleSearchOpen}
+          onSearchClose={handleSearchClose}
+        />
+      )}
+      {view === "about" && <AboutSection />}
     </AppShell>
   );
 }

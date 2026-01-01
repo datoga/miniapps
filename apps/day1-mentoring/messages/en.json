@@ -117,5 +117,25 @@
     "nameRequired": "Name is required",
     "invalidDate": "Invalid date format",
     "invalidRating": "Rating must be between 1 and 5"
+  },
+  "about": {
+    "title": "About MentorFlow",
+    "description": "A simple and private app for managing your mentoring sessions and tracking your mentees' progress.",
+    "feature1Title": "100% Private",
+    "feature1Desc": "All data is stored locally in your browser",
+    "feature2Title": "No Account",
+    "feature2Desc": "No registration or account required",
+    "feature3Title": "Always Available",
+    "feature3Desc": "Works offline once loaded",
+    "faqTitle": "Frequently Asked Questions",
+    "faq1Question": "Where is my data stored?",
+    "faq1Answer": "All your data is stored locally in your browser using IndexedDB. It is never sent to any server.",
+    "faq2Question": "Can I use MentorFlow on multiple devices?",
+    "faq2Answer": "Each device maintains its own data. You can export and import data manually if you need to transfer it.",
+    "faq3Question": "What happens if I clear browser data?",
+    "faq3Answer": "If you clear your browser data or switch browsers, you will lose your data. We recommend making periodic exports.",
+    "faq4Question": "Is MentorFlow free?",
+    "faq4Answer": "Yes, MentorFlow is completely free and open source.",
+    "madeWith": "Made with ❤️ for mentors"
   }
 }

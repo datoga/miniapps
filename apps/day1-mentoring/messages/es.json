@@ -1,15 +1,24 @@
 {
   "app": {
     "title": "MentorFlow",
-    "description": "Conecta, crece y prospera con tu mentor"
+    "description": "Registra tus sesiones de mentoría, define objetivos y ayuda a crecer a tus mentees"
   },
   "common": {
     "appTitle": "MentorFlow"
   },
   "nav": {
     "dashboard": "Panel",
-    "mentees": "Mentees",
-    "backup": "Respaldo"
+    "mentees": "Mentees"
+  },
+  "landing": {
+    "feature1Title": "Gestiona Mentees",
+    "feature1Desc": "Lleva un registro de todos tus mentees, sus objetivos y progreso en un solo lugar",
+    "feature2Title": "Registra Sesiones",
+    "feature2Desc": "Documenta sesiones, añade notas y define próximos pasos para cada reunión",
+    "feature3Title": "100% Privado",
+    "feature3Desc": "Todos los datos permanecen en tu dispositivo. Sin cuenta, sin sincronización en la nube",
+    "cta": "Abrir Dashboard",
+    "privacyNote": "Tus datos se almacenan localmente en tu navegador. Nada se envía a ningún servidor."
   },
   "dashboard": {
     "title": "Panel",

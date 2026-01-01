@@ -1,15 +1,24 @@
 {
   "app": {
     "title": "MentorFlow",
-    "description": "Connect, grow, and thrive with your mentor"
+    "description": "Track your mentoring sessions, set goals, and help your mentees grow"
   },
   "common": {
     "appTitle": "MentorFlow"
   },
   "nav": {
     "dashboard": "Dashboard",
-    "mentees": "Mentees",
-    "backup": "Backup"
+    "mentees": "Mentees"
+  },
+  "landing": {
+    "feature1Title": "Manage Mentees",
+    "feature1Desc": "Keep track of all your mentees, their goals, and progress in one place",
+    "feature2Title": "Track Sessions",
+    "feature2Desc": "Log sessions, add notes, and define next steps for each meeting",
+    "feature3Title": "100% Private",
+    "feature3Desc": "All data stays on your device. No account needed, no cloud sync",
+    "cta": "Open Dashboard",
+    "privacyNote": "Your data is stored locally in your browser. Nothing is sent to any server."
   },
   "dashboard": {
     "title": "Dashboard",

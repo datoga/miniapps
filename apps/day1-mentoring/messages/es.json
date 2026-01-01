@@ -37,6 +37,7 @@
     "sessionsGroup": "Sesiones"
   },
   "mentee": {
+    "notFound": "Mentee no encontrado",
     "name": "Nombre",
     "namePlaceholder": "Nombre del mentee",
     "image": "Foto",

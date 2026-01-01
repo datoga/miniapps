@@ -2,7 +2,6 @@
 
 import { memo, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
 import type { Mentee, Session, MenteeFormInput } from "../lib/schemas";
 import { SessionCard } from "./SessionCard";
 import { EditableField } from "./EditableField";
@@ -269,44 +268,41 @@ export const MenteeDetail = memo(function MenteeDetail({
 
         {/* Sessions section */}
         <div>
-          <div className="flex items-center justify-between mb-4">
+          <div className="mb-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               {t("mentee.sessions")}
               <span className="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
                 ({sessions.length})
               </span>
             </h3>
-            <Button size="sm" onClick={onNewSession}>
-              + {t("mentee.newSession")}
-            </Button>
           </div>
 
-          {sessions.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray-400">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                  <line x1="16" y1="2" x2="16" y2="6" />
-                  <line x1="8" y1="2" x2="8" y2="6" />
-                  <line x1="3" y1="10" x2="21" y2="10" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {sessions.map((session) => (
+              <SessionCard
+                key={session.id}
+                session={session}
+                menteeName={mentee.name}
+                onEdit={() => onEditSession(session)}
+                onDelete={() => onDeleteSession(session)}
+              />
+            ))}
+            {/* Add new session card */}
+            <button
+              onClick={onNewSession}
+              className="group w-full rounded-xl p-4 text-left transition-all duration-200 border-2 border-dashed border-gray-200 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-500 hover:bg-primary-50/50 dark:hover:bg-primary-900/10 min-h-[120px] flex flex-col items-center justify-center gap-2"
+            >
+              <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/30 flex items-center justify-center transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400 dark:text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
               </div>
-              <p className="text-gray-500 dark:text-gray-400 mb-1">{t("mentee.noSessions")}</p>
-              <p className="text-sm text-gray-400 dark:text-gray-500">{t("mentee.noSessionsDescription")}</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {sessions.map((session) => (
-                <SessionCard
-                  key={session.id}
-                  session={session}
-                  menteeName={mentee.name}
-                  onEdit={() => onEditSession(session)}
-                  onDelete={() => onDeleteSession(session)}
-                />
-              ))}
-            </div>
-          )}
+              <span className="text-sm font-medium text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                {t("mentee.newSession")}
+              </span>
+            </button>
+          </div>
         </div>
       </div>
 

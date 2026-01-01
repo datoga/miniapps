@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "./utils";
@@ -8,9 +8,9 @@ import { cn } from "./utils";
 const locales = ["es", "en"] as const;
 type Locale = (typeof locales)[number];
 
-const flags: Record<Locale, string> = {
-  es: "🇪🇸",
-  en: "🇬🇧",
+const localeLabels: Record<Locale, string> = {
+  es: "ES",
+  en: "EN",
 };
 
 interface LocaleSwitcherProps {
@@ -21,6 +21,11 @@ export const LocaleSwitcher = memo(function LocaleSwitcher({ className }: Locale
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const switchLocale = useCallback(
     (newLocale: Locale) => {
@@ -36,6 +41,14 @@ export const LocaleSwitcher = memo(function LocaleSwitcher({ className }: Locale
     [pathname, router]
   );
 
+  if (!mounted) {
+    return (
+      <div className={cn("flex items-center gap-1", className)}>
+        <div className="h-8 w-16 animate-pulse rounded-md bg-gray-200 dark:bg-gray-700" />
+      </div>
+    );
+  }
+
   return (
     <div className={cn("flex items-center gap-1", className)}>
       {locales.map((loc) => (
@@ -43,13 +56,15 @@ export const LocaleSwitcher = memo(function LocaleSwitcher({ className }: Locale
           key={loc}
           onClick={() => switchLocale(loc)}
           className={cn(
-            "rounded-md p-1.5 text-xl transition-all",
-            locale === loc ? "bg-gray-100 dark:bg-gray-800" : "opacity-50 hover:opacity-100"
+            "rounded-md px-2 py-1.5 text-xs font-semibold transition-all",
+            locale === loc
+              ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
+              : "text-gray-500 opacity-60 hover:opacity-100 dark:text-gray-400"
           )}
           title={loc.toUpperCase()}
           type="button"
         >
-          {flags[loc]}
+          {localeLabels[loc]}
         </button>
       ))}
     </div>

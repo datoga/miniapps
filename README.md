@@ -6,6 +6,7 @@ A Turborepo-based monorepo template for building and deploying "1 mini app per d
 
 - **Turborepo + npm workspaces** - Fast, efficient monorepo management
 - **Next.js 15 App Router** - Modern React framework with TypeScript
+- **PWA Installable** - Web App Manifest and dynamic icons for every miniapp
 - **Internationalization (ES/EN)** - Full i18n support with `next-intl` and localized routing
 - **Theme Support** - Light, dark, and system themes with `next-themes`
 - **Google Analytics GA4** - Optional analytics integration
@@ -167,6 +168,45 @@ import { trackEvent } from "@miniapps/analytics";
 trackEvent("button_click", { button_name: "signup" });
 ```
 
+## PWA (Progressive Web App)
+
+Every mini app is installable as a PWA with a Web App Manifest and dynamically generated icons.
+
+### How It Works
+
+- Each app exposes a manifest at `/manifest.webmanifest` (generated from `app/manifest.ts`)
+- Icons are dynamically generated using `next/og` ImageResponse (no binary PNG files in the repo)
+- Apple touch icons are provided for iOS home screen installation
+
+### Files Per App
+
+```
+app/
+├── manifest.ts      # Web App Manifest (name, icons, theme_color, etc.)
+├── icon.tsx         # Dynamic icon generation (32x32, 192x192, 512x512)
+└── apple-icon.tsx   # Apple touch icon (180x180)
+```
+
+### Testing PWA Installability
+
+1. Run the app in development mode:
+
+```bash
+npm run dev --workspace=whitelabel-demo
+```
+
+2. Open Chrome DevTools > Application > Manifest
+3. Verify:
+   - Manifest is detected
+   - Icons (192x192 and 512x512) load successfully
+   - "Install" button appears in the browser address bar
+
+### Notes
+
+- **No Service Worker**: This iteration intentionally does not include offline caching or service workers
+- **start_url**: Set to `/` which works with locale routing (redirects to default locale)
+- **Icons**: Generated on-the-fly with app initials and unique theme colors per app
+
 ## Browser Storage
 
 The `@miniapps/storage` package provides browser persistence helpers.
@@ -220,8 +260,10 @@ cp -r apps/whitelabel-demo apps/my-new-app
 4. **Update metadata**:
    - Edit `app/[locale]/layout.tsx` to update title and description
 
-5. **Create your app icon**:
-   - Replace `app/icon.svg` with your custom icon
+5. **Update PWA files**:
+   - Edit `app/manifest.ts` to update app name, description, and theme_color
+   - Edit `app/icon.tsx` to update APP_INITIALS and BG_COLOR
+   - Edit `app/apple-icon.tsx` to match icon.tsx colors
 
 6. **Install dependencies**:
 

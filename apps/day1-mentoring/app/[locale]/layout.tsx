@@ -21,9 +21,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Mentoring App",
   description: "A mini app for mentoring sessions",
-  icons: {
-    icon: "/icon.svg",
-  },
 };
 
 export function generateStaticParams() {

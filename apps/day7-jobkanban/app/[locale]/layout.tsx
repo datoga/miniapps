@@ -1,11 +1,11 @@
+import { GoogleAnalyticsScript } from "@miniapps/analytics";
+import { locales, type Locale } from "@miniapps/i18n";
+import { AppShell, ThemeProvider } from "@miniapps/ui";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider, AppShell } from "@miniapps/ui";
-import { GoogleAnalyticsScript } from "@miniapps/analytics";
-import { locales, type Locale } from "@miniapps/i18n";
+import { notFound } from "next/navigation";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -21,9 +21,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Job Kanban",
   description: "A mini app for job application tracking",
-  icons: {
-    icon: "/icon.svg",
-  },
 };
 
 export function generateStaticParams() {

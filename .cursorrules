@@ -45,8 +45,9 @@ apps/your-app/
 │   │   ├── layout.tsx      # Copy from whitelabel-demo, update metadata
 │   │   └── page.tsx        # Your main page
 │   ├── globals.css         # Copy as-is
-│   ├── icon.svg            # Create unique icon
-│   └── apple-icon.svg      # Create unique icon
+│   ├── manifest.ts         # PWA manifest - update name, description, theme_color
+│   ├── icon.tsx            # Dynamic icon generation - update APP_INITIALS, BG_COLOR
+│   └── apple-icon.tsx      # Apple touch icon - match icon.tsx colors
 ├── components/             # App-specific components (only if not reusable)
 ├── messages/
 │   ├── en.json             # English translations

@@ -26,9 +26,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "White-label Demo",
   description: "A mini app template demo showcasing all features",
-  icons: {
-    icon: "/icon.svg",
-  },
   // SEO optimizations
   robots: {
     index: true,

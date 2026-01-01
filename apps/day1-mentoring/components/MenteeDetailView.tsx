@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMenteeSessions, useMentoringData } from "../lib/hooks/useMentoringData";
 import type { Mentee, Session, SessionFormInput } from "../lib/schemas";
+import { extractMenteeId } from "../lib/slug";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { MenteeDetail } from "./MenteeDetail";
 
@@ -13,10 +14,10 @@ import { MenteeDetail } from "./MenteeDetail";
 let hasTrackedFirstValue = false;
 
 interface MenteeDetailViewProps {
-  menteeId: string;
+  menteeSlug: string;
 }
 
-export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
+export function MenteeDetailView({ menteeSlug }: MenteeDetailViewProps) {
   const t = useTranslations();
   const router = useRouter();
   const locale = useLocale();
@@ -29,6 +30,12 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
     message: string;
     onConfirm: () => void;
   }>({ open: false, title: "", message: "", onConfirm: () => {} });
+
+  // Resolve menteeId from slug using mentees list
+  const menteeId = useMemo(
+    () => extractMenteeId(menteeSlug, data.mentees),
+    [menteeSlug, data.mentees]
+  );
 
   // Get the mentee
   const mentee = useMemo(

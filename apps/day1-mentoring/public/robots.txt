@@ -2,6 +2,10 @@
 User-agent: *
 Allow: /
 
+# Dashboard is private/dynamic content - don't index
+Disallow: /*/dashboard
+Disallow: /*/dashboard/*
+
 # Sitemaps
 Sitemap: https://mentorflow.space/sitemap.xml
 

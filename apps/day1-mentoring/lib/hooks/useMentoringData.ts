@@ -54,7 +54,7 @@ export function useMentoringData(): MentoringDataState & MentoringDataActions {
   const [settings, setSettings] = useState<Settings>({
     lastSelectedMenteeId: null,
     showArchived: false,
-    programName: "Mi Programa",
+    programName: "MentorFlow",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

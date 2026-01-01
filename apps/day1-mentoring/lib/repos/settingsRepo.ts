@@ -6,7 +6,7 @@ const SETTINGS_KEY = "app_settings";
 const defaultSettings: Settings = {
   lastSelectedMenteeId: null,
   showArchived: false,
-  programName: "Mi Programa",
+  programName: "MentorFlow",
 };
 
 /**

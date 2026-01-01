@@ -21,7 +21,7 @@ export const SessionCard = memo(function SessionCard({
   const totalSteps = session.nextSteps.length;
 
   return (
-    <div 
+    <div
       className="group rounded-xl bg-gray-50 dark:bg-gray-800/50 p-4 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
       onClick={onEdit}
     >
@@ -31,24 +31,6 @@ export const SessionCard = memo(function SessionCard({
             <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
               {session.date}
             </span>
-            {session.rating && (
-              <div className="flex gap-0.5">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <svg
-                    key={star}
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill={star <= session.rating! ? "currentColor" : "none"}
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className={star <= session.rating! ? "text-amber-400" : "text-gray-300 dark:text-gray-600"}
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                ))}
-              </div>
-            )}
           </div>
           {session.title && (
             <h4 className="font-medium text-gray-900 dark:text-white">{session.title}</h4>

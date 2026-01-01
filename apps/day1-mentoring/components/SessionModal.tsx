@@ -251,29 +251,6 @@ export const SessionModal = memo(function SessionModal({
           />
         </div>
 
-        {/* Rating */}
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t("session.rating")}
-          </label>
-          <div className="flex gap-2">
-            {[1, 2, 3, 4, 5].map((r) => (
-              <button
-                key={r}
-                type="button"
-                onClick={() => handleChange("rating", formData.rating === r ? undefined : r)}
-                className={`h-10 w-10 rounded-lg text-xl transition-colors ${
-                  formData.rating && formData.rating >= r
-                    ? "bg-yellow-100 text-yellow-500"
-                    : "bg-gray-100 text-gray-400 dark:bg-gray-700"
-                } hover:bg-yellow-100 hover:text-yellow-500`}
-              >
-                ⭐
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Actions */}
         <div className="flex justify-end gap-3 pt-4">
           <Button type="button" variant="secondary" onClick={onClose}>

@@ -17,17 +17,6 @@ export const sharedNextConfig: Partial<NextConfig> = {
     removeConsole: process.env["NODE_ENV"] === "production",
   },
 
-  // Experimental performance features
-  experimental: {
-    optimizePackageImports: [
-      "@miniapps/ui",
-      "@miniapps/i18n",
-      "@miniapps/analytics",
-      "clsx",
-      "tailwind-merge",
-    ],
-  },
-
   // Image optimization
   images: {
     formats: ["image/avif", "image/webp"],

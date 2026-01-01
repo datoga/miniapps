@@ -122,6 +122,9 @@ export const MenteeCard = memo(function MenteeCard({
               <span className="cursor-help text-sm" title={mentee.phone}>📞</span>
             )
           )}
+          {mentee.email && (
+            <span className="cursor-help text-sm" title={mentee.email}>✉️</span>
+          )}
         </div>
       </div>
 

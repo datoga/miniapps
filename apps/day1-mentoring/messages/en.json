@@ -46,6 +46,8 @@
     "agePlaceholder": "Enter age",
     "phone": "Phone",
     "phonePlaceholder": "+1 555 123 4567",
+    "email": "Email",
+    "emailPlaceholder": "email@example.com",
     "location": "Location",
     "locationPlaceholder": "City, country, timezone...",
     "inPersonAvailable": "In-person available",

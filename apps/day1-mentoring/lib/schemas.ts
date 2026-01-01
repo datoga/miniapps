@@ -25,6 +25,7 @@ export const MenteeSchema = z.object({
   name: z.string().min(1, "Name is required"),
   age: z.number().int().positive().optional(),
   image: z.string().optional(), // Base64 encoded image
+  email: z.string().email().optional().or(z.literal("")), // Email address
   phone: z.string().optional(), // Phone number
   hasWhatsapp: z.boolean().optional(), // Has WhatsApp
   location: z.string().optional(), // Location (city, country)
@@ -47,6 +48,7 @@ export const MenteeFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   age: z.union([z.number().int().positive(), z.literal(""), z.undefined()]).optional(),
   image: z.string().optional(),
+  email: z.string().email().optional().or(z.literal("")),
   phone: z.string().optional(),
   hasWhatsapp: z.boolean().optional(),
   location: z.string().optional(),

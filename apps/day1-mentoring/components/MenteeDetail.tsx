@@ -152,6 +152,15 @@ export const MenteeDetail = memo(function MenteeDetail({
                     </a>
                   )
                 )}
+                {mentee.email && (
+                  <a
+                    href={`mailto:${mentee.email}`}
+                    className="flex items-center gap-1 hover:text-gray-700 dark:hover:text-gray-300"
+                  >
+                    <span>✉️</span>
+                    <span>{mentee.email}</span>
+                  </a>
+                )}
                 {/* Actions */}
                 <span className="text-gray-300 dark:text-gray-600">|</span>
                 <button

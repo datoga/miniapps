@@ -3,7 +3,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { trackEvent } from "@miniapps/analytics";
-import { Button } from "@miniapps/ui";
 import {
   useMentoringData,
   useFilteredMentees,
@@ -269,7 +268,7 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
         ) : (
           // Mentee list view
           <div>
-            {/* Header - always show */}
+            {/* Header */}
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -279,51 +278,44 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
                   {filteredMentees.length} mentee{filteredMentees.length !== 1 ? "s" : ""}
                 </p>
               </div>
-              <div className="flex items-center gap-4">
-                <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={data.settings.showArchived}
-                    onChange={(e) => handleToggleShowArchived(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800"
-                  />
-                  {t("dashboard.showArchived")}
-                </label>
-                <Button onClick={handleOpenNewMentee}>+ {t("dashboard.newMentee")}</Button>
-              </div>
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={data.settings.showArchived}
+                  onChange={(e) => handleToggleShowArchived(e.target.checked)}
+                  className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800"
+                />
+                {t("dashboard.showArchived")}
+              </label>
             </div>
 
-            {/* Mentee grid */}
-            {filteredMentees.length === 0 ? (
-              <div className="flex flex-col items-center justify-center py-16 text-center">
-                <div className="w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/30 dark:to-primary-800/30 flex items-center justify-center">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-primary-600 dark:text-primary-400">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            {/* Mentee grid - always show with add card */}
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredMentees.map((mentee) => (
+                <MenteeCard
+                  key={mentee.id}
+                  mentee={mentee}
+                  sessionsCount={sessionCounts[mentee.id] || 0}
+                  lastSession={lastSessions[mentee.id]}
+                  onClick={() => handleSelectMentee(mentee.id)}
+                />
+              ))}
+              {/* Add new mentee card */}
+              <button
+                onClick={handleOpenNewMentee}
+                className="group w-full rounded-2xl p-5 text-left transition-all duration-200 border-2 border-dashed border-gray-200 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-500 hover:bg-primary-50/50 dark:hover:bg-primary-900/10 min-h-[180px] flex flex-col items-center justify-center gap-3"
+              >
+                <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/30 flex items-center justify-center transition-colors">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400 dark:text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                  {t("dashboard.noMentees")}
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 max-w-sm">
-                  {t("dashboard.noMenteesDescription")}
-                </p>
-              </div>
-            ) : (
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredMentees.map((mentee) => (
-                  <MenteeCard
-                    key={mentee.id}
-                    mentee={mentee}
-                    sessionsCount={sessionCounts[mentee.id] || 0}
-                    lastSession={lastSessions[mentee.id]}
-                    onClick={() => handleSelectMentee(mentee.id)}
-                  />
-                ))}
-              </div>
-            )}
+                <span className="text-sm font-medium text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  {t("dashboard.newMentee")}
+                </span>
+              </button>
+            </div>
           </div>
         )}
       </div>

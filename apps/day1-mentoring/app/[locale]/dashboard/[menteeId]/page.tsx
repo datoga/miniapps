@@ -6,7 +6,7 @@ import { MenteeDetailView } from "../../../../components/MenteeDetailView";
 
 export default function MenteeDetailPage() {
   const params = useParams();
-  const menteeId = params.menteeId as string;
+  const menteeId = params["menteeId"] as string;
 
   return (
     <AppShellWrapper currentPath="mentee-detail">

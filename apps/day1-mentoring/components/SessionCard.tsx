@@ -47,7 +47,7 @@ export const SessionCard = memo(function SessionCard({
     );
 
     // Build description with notes and next steps
-    let descriptionParts: string[] = [];
+    const descriptionParts: string[] = [];
 
     if (isRemote) {
       descriptionParts.push("📹 Sesión virtual - Añadir Google Meet desde el evento");
@@ -93,7 +93,7 @@ export const SessionCard = memo(function SessionCard({
   }, [isRemote, onUpdate]);
 
   const handleAddStep = useCallback(() => {
-    if (!newStepText.trim()) return;
+    if (!newStepText.trim()) {return;}
 
     const newStep: NextStep = {
       id: uuidv4(),

@@ -84,7 +84,7 @@ export const MenteeModal = memo(function MenteeModal({
 
   const handleImageChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {return;}
 
     try {
       // Resize image to 256px max dimension with 80% quality

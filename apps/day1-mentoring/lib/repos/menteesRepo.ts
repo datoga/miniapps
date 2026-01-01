@@ -45,10 +45,15 @@ export async function createMentee(input: MenteeFormInput): Promise<Mentee> {
     id: uuidv4(),
     name: input.name,
     age: typeof input.age === "number" ? input.age : undefined,
+    image: input.image,
+    email: input.email,
+    phone: input.phone,
+    hasWhatsapp: input.hasWhatsapp,
+    location: input.location,
     inPersonAvailable: input.inPersonAvailable,
-    inPersonNotes: input.inPersonNotes,
-    goal: input.goal,
-    notes: input.notes,
+    availabilityNotes: input.availabilityNotes,
+    goals: input.goals ?? [],
+    notes: input.notes ?? [],
     tags: input.tags ?? [],
     archived: false,
     createdAt: now,
@@ -62,7 +67,7 @@ export async function createMentee(input: MenteeFormInput): Promise<Mentee> {
 /**
  * Update an existing mentee
  */
-export async function updateMentee(id: string, input: MenteeFormInput): Promise<Mentee | null> {
+export async function updateMentee(id: string, input: Partial<MenteeFormInput>): Promise<Mentee | null> {
   const db = await getDB();
   const existing = await db.get("mentees", id);
 
@@ -72,13 +77,9 @@ export async function updateMentee(id: string, input: MenteeFormInput): Promise<
 
   const updated: Mentee = {
     ...existing,
-    name: input.name,
-    age: typeof input.age === "number" ? input.age : undefined,
-    inPersonAvailable: input.inPersonAvailable,
-    inPersonNotes: input.inPersonNotes,
-    goal: input.goal,
-    notes: input.notes,
-    tags: input.tags ?? [],
+    ...input,
+    // Ensure age is properly handled
+    age: input.age !== undefined ? (typeof input.age === "number" ? input.age : undefined) : existing.age,
     updatedAt: new Date().toISOString(),
   };
 
@@ -160,4 +161,3 @@ export async function replaceAllMentees(mentees: Mentee[]): Promise<void> {
 
   await tx.done;
 }
-

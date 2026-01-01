@@ -9,7 +9,8 @@ import {
   useMentoringData,
   useFilteredMentees,
 } from "../lib/hooks/useMentoringData";
-import type { Mentee, MenteeFormInput, Session } from "../lib/schemas";
+import type { Mentee, MenteeFormInput } from "../lib/schemas";
+import type { Session } from "../lib/schemas";
 import { MenteeCard } from "./MenteeCard";
 import { MenteeModal } from "./MenteeModal";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -87,7 +88,7 @@ export function DashboardView() {
         if (mentee) {
           trackEvent("mentee_created", {
             hasTags: input.tags.length > 0,
-            hasGoal: !!input.goal,
+            hasGoals: (input.goals?.length ?? 0) > 0,
           });
           // Navigate to the new mentee
           router.push(`/${locale}/dashboard/${mentee.id}`);

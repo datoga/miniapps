@@ -23,9 +23,9 @@ export default function AppleIcon() {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: BG_COLOR,
-          borderRadius: borderRadius,
+          borderRadius,
           color: TEXT_COLOR,
-          fontSize: fontSize,
+          fontSize,
           fontWeight: 700,
           fontFamily: "system-ui, sans-serif",
         }}

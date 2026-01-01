@@ -42,7 +42,7 @@ export async function createSession(menteeId: string, input: SessionFormInput): 
     notes: input.notes,
     nextSteps: input.nextSteps ?? [],
     tags: input.tags ?? [],
-    rating: typeof input.rating === "number" ? input.rating : undefined,
+    isRemote: input.isRemote ?? true,
     createdAt: now,
     updatedAt: now,
   };
@@ -54,7 +54,7 @@ export async function createSession(menteeId: string, input: SessionFormInput): 
 /**
  * Update an existing session
  */
-export async function updateSession(id: string, input: SessionFormInput): Promise<Session | null> {
+export async function updateSession(id: string, input: Partial<SessionFormInput>): Promise<Session | null> {
   const db = await getDB();
   const existing = await db.get("sessions", id);
 
@@ -64,12 +64,7 @@ export async function updateSession(id: string, input: SessionFormInput): Promis
 
   const updated: Session = {
     ...existing,
-    date: input.date,
-    title: input.title,
-    notes: input.notes,
-    nextSteps: input.nextSteps ?? [],
-    tags: input.tags ?? [],
-    rating: typeof input.rating === "number" ? input.rating : undefined,
+    ...input,
     updatedAt: new Date().toISOString(),
   };
 
@@ -144,4 +139,3 @@ export function createNextStep(text: string): NextStep {
 export function getTodayDate(): string {
   return new Date().toISOString().split("T")[0] as string;
 }
-

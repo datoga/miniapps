@@ -17,7 +17,7 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
   const [newActionTexts, setNewActionTexts] = useState<Record<string, string>>({});
 
   const handleAddGoal = useCallback(() => {
-    if (!newGoalText.trim()) return;
+    if (!newGoalText.trim()) {return;}
 
     const newGoal: Goal = {
       id: uuidv4(),
@@ -61,7 +61,7 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
   const handleAddAction = useCallback(
     (goalId: string) => {
       const actionText = newActionTexts[goalId]?.trim();
-      if (!actionText) return;
+      if (!actionText) {return;}
 
       const newAction: ActionStep = {
         id: uuidv4(),

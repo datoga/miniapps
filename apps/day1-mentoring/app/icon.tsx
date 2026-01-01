@@ -14,9 +14,16 @@ export function generateImageMetadata() {
   ];
 }
 
+// Size lookup map
+const SIZES: Record<string, number> = {
+  "32": 32,
+  "192": 192,
+  "512": 512,
+};
+
 // Generate the icon image
 export default function Icon({ id }: { id: string }) {
-  const size = id === "32" ? 32 : id === "192" ? 192 : 512;
+  const size = SIZES[id] ?? 512;
   const fontSize = Math.round(size * 0.4);
   const borderRadius = Math.round(size * 0.18);
 
@@ -30,9 +37,9 @@ export default function Icon({ id }: { id: string }) {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: BG_COLOR,
-          borderRadius: borderRadius,
+          borderRadius,
           color: TEXT_COLOR,
-          fontSize: fontSize,
+          fontSize,
           fontWeight: 700,
           fontFamily: "system-ui, sans-serif",
         }}

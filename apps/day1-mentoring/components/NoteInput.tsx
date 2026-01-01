@@ -35,7 +35,7 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
   const [selectedColor, setSelectedColor] = useState<NoteColor>("yellow");
 
   const handleAddNote = useCallback(() => {
-    if (!newNoteText.trim()) return;
+    if (!newNoteText.trim()) {return;}
 
     const newNote: Note = {
       id: uuidv4(),

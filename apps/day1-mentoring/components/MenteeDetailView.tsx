@@ -9,7 +9,7 @@ import {
   useMentoringData,
   useMenteeSessions,
 } from "../lib/hooks/useMentoringData";
-import type { Mentee, Session, MenteeFormInput, SessionFormInput } from "../lib/schemas";
+import type { Mentee, Session, SessionFormInput } from "../lib/schemas";
 import { MenteeDetail } from "./MenteeDetail";
 import { SessionModal } from "./SessionModal";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -143,7 +143,7 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
   const handleToggleStep = useCallback(
     async (sessionId: string, stepId: string, done: boolean) => {
       const session = data.sessions.find((s) => s.id === sessionId);
-      if (!session) return;
+      if (!session) {return;}
 
       const updatedNextSteps = session.nextSteps.map((step) =>
         step.id === stepId ? { ...step, done } : step

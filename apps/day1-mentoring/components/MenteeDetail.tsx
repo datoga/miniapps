@@ -49,7 +49,7 @@ export const MenteeDetail = memo(function MenteeDetail({
   const handleImageChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
-      if (!file) return;
+      if (!file) {return;}
 
       try {
         // Resize image to 256px max dimension with 80% quality
@@ -119,10 +119,10 @@ export const MenteeDetail = memo(function MenteeDetail({
                   onChange={(value) => handleFieldChange("age", value ? parseInt(value) : undefined)}
                   placeholder={t("mentee.agePlaceholder")}
                 />
-                {(mentee.location || mentee.inPersonNotes) && (
+                {mentee.location && (
                   <span
                     className="cursor-help"
-                    title={mentee.location || mentee.inPersonNotes}
+                    title={mentee.location}
                   >
                     🌐
                   </span>
@@ -225,8 +225,8 @@ export const MenteeDetail = memo(function MenteeDetail({
             📍 {t("mentee.location")}
           </h3>
           <EditableField
-            value={mentee.inPersonNotes || ""}
-            onChange={(value) => handleFieldChange("inPersonNotes", value)}
+            value={mentee.location || ""}
+            onChange={(value) => handleFieldChange("location", value)}
             placeholder={t("mentee.locationPlaceholder")}
             className="text-gray-700 dark:text-gray-300 leading-relaxed"
           />

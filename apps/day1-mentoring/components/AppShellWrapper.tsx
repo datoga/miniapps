@@ -1,7 +1,8 @@
 "use client";
 
-import { ReactNode, useState, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import type { ReactNode} from "react";
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { AppShell } from "@miniapps/ui";
 import { SearchModal } from "./SearchModal";
@@ -59,7 +60,6 @@ function InfoIcon() {
 
 export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps) {
   const router = useRouter();
-  const pathname = usePathname();
   const locale = useLocale();
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -71,7 +71,7 @@ export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps)
   }, [router, locale]);
 
   const handleTitleClick = useCallback(() => {
-    if (currentPath === "landing") return;
+    if (currentPath === "landing") {return;}
     navigateTo("");
   }, [currentPath, navigateTo]);
 

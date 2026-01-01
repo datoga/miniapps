@@ -34,13 +34,23 @@ export const MenteeCard = memo(function MenteeCard({
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           {/* Avatar */}
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm shadow-sm ${
-            isArchived
-              ? "bg-gradient-to-br from-amber-300 to-amber-500 text-amber-900"
-              : "bg-gradient-to-br from-primary-400 to-primary-600 text-white"
-          }`}>
-            {mentee.name.charAt(0).toUpperCase()}
-          </div>
+          {mentee.image ? (
+            <img
+              src={mentee.image}
+              alt={mentee.name}
+              className={`w-10 h-10 rounded-full object-cover shadow-sm ${
+                isArchived ? "opacity-70" : ""
+              }`}
+            />
+          ) : (
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm shadow-sm ${
+              isArchived
+                ? "bg-gradient-to-br from-amber-300 to-amber-500 text-amber-900"
+                : "bg-gradient-to-br from-primary-400 to-primary-600 text-white"
+            }`}>
+              {mentee.name.charAt(0).toUpperCase()}
+            </div>
+          )}
           <div>
             <h3 className={`font-semibold transition-colors ${
               isArchived

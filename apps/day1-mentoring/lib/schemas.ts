@@ -9,15 +9,26 @@ export const NextStepSchema = z.object({
 
 export type NextStep = z.infer<typeof NextStepSchema>;
 
+// Note schema (for post-it style notes)
+export const NoteSchema = z.object({
+  id: z.string().uuid(),
+  text: z.string().min(1),
+  color: z.enum(["yellow", "pink", "blue", "green", "purple"]).default("yellow"),
+  createdAt: z.string().datetime(),
+});
+
+export type Note = z.infer<typeof NoteSchema>;
+
 // Mentee schema
 export const MenteeSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1, "Name is required"),
   age: z.number().int().positive().optional(),
+  image: z.string().optional(), // Base64 encoded image
   inPersonAvailable: z.boolean().optional(),
   inPersonNotes: z.string().optional(),
   goal: z.string().optional(),
-  notes: z.string().optional(),
+  notes: z.array(NoteSchema).default([]), // Changed to array of notes
   tags: z.array(z.string()).default([]),
   archived: z.boolean().default(false),
   createdAt: z.string().datetime(),
@@ -30,10 +41,11 @@ export type Mentee = z.infer<typeof MenteeSchema>;
 export const MenteeFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   age: z.union([z.number().int().positive(), z.literal(""), z.undefined()]).optional(),
+  image: z.string().optional(),
   inPersonAvailable: z.boolean().optional(),
   inPersonNotes: z.string().optional(),
   goal: z.string().optional(),
-  notes: z.string().optional(),
+  notes: z.array(NoteSchema).default([]),
   tags: z.array(z.string()).default([]),
 });
 

@@ -38,6 +38,7 @@
   "mentee": {
     "name": "Name",
     "namePlaceholder": "Enter mentee name",
+    "image": "Photo",
     "age": "Age",
     "agePlaceholder": "Enter age",
     "inPersonAvailable": "In-person available",

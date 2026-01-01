@@ -1,12 +1,15 @@
 "use client";
 
-import { memo, useState, useEffect, useCallback } from "react";
+import { memo, useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@miniapps/ui";
 import { Modal } from "./Modal";
 import { TagInput } from "./TagInput";
-import type { Mentee, MenteeFormInput } from "../lib/schemas";
+import { NoteInput } from "./NoteInput";
+import type { Mentee, MenteeFormInput, Note } from "../lib/schemas";
 import { MenteeFormSchema } from "../lib/schemas";
+
+const MAX_IMAGE_SIZE = 500 * 1024; // 500KB max
 
 interface MenteeModalProps {
   open: boolean;
@@ -27,6 +30,7 @@ export const MenteeModal = memo(function MenteeModal({
   const [formData, setFormData] = useState<MenteeFormInput>({
     name: "",
     age: undefined,
+    image: undefined,
     inPersonAvailable: false,
     inPersonNotes: "",
     goal: "",
@@ -35,6 +39,7 @@ export const MenteeModal = memo(function MenteeModal({
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Reset form when opening/closing or when mentee changes
   useEffect(() => {
@@ -43,6 +48,7 @@ export const MenteeModal = memo(function MenteeModal({
         setFormData({
           name: mentee.name,
           age: mentee.age,
+          image: mentee.image,
           inPersonAvailable: mentee.inPersonAvailable ?? false,
           inPersonNotes: mentee.inPersonNotes ?? "",
           goal: mentee.goal ?? "",
@@ -53,6 +59,7 @@ export const MenteeModal = memo(function MenteeModal({
         setFormData({
           name: "",
           age: undefined,
+          image: undefined,
           inPersonAvailable: false,
           inPersonNotes: "",
           goal: "",
@@ -64,8 +71,33 @@ export const MenteeModal = memo(function MenteeModal({
     }
   }, [open, mentee]);
 
+  const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      setErrors((prev) => ({ ...prev, image: "Image too large (max 500KB)" }));
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      setFormData((prev) => ({ ...prev, image: result }));
+      setErrors((prev) => ({ ...prev, image: "" }));
+    };
+    reader.readAsDataURL(file);
+  }, []);
+
+  const handleRemoveImage = useCallback(() => {
+    setFormData((prev) => ({ ...prev, image: undefined }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }, []);
+
   const handleChange = useCallback(
-    (field: keyof MenteeFormInput, value: string | number | boolean | string[] | undefined) => {
+    (field: keyof MenteeFormInput, value: string | number | boolean | string[] | Note[] | undefined) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
       setErrors((prev) => ({ ...prev, [field]: "" }));
     },
@@ -102,23 +134,67 @@ export const MenteeModal = memo(function MenteeModal({
       title={isEdit ? t("menteeModal.editTitle") : t("menteeModal.createTitle")}
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name */}
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t("mentee.name")} *
-          </label>
-          <input
-            type="text"
-            value={formData.name}
-            onChange={(e) => handleChange("name", e.target.value)}
-            placeholder={t("mentee.namePlaceholder")}
-            className={`w-full rounded-lg border px-3 py-2 text-gray-900 dark:bg-gray-700 dark:text-white ${
-              errors["name"]
-                ? "border-red-500 focus:ring-red-500"
-                : "border-gray-300 focus:ring-primary-500 dark:border-gray-600"
-            } focus:outline-none focus:ring-1`}
-          />
-          {errors["name"] && <p className="mt-1 text-sm text-red-500">{errors["name"]}</p>}
+        {/* Image and Name row */}
+        <div className="flex gap-4">
+          {/* Image */}
+          <div className="flex-shrink-0">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+            {formData.image ? (
+              <div className="relative">
+                <img
+                  src={formData.image}
+                  alt="Mentee"
+                  className="w-20 h-20 rounded-xl object-cover border-2 border-gray-200 dark:border-gray-600"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+                >
+                  ✕
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-20 h-20 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-500 flex flex-col items-center justify-center gap-1 transition-colors"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray-400">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                <span className="text-[10px] text-gray-400">{t("mentee.image")}</span>
+              </button>
+            )}
+            {errors["image"] && <p className="mt-1 text-xs text-red-500">{errors["image"]}</p>}
+          </div>
+
+          {/* Name */}
+          <div className="flex-1">
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t("mentee.name")} *
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              placeholder={t("mentee.namePlaceholder")}
+              className={`w-full rounded-lg border px-3 py-2 text-gray-900 dark:bg-gray-700 dark:text-white ${
+                errors["name"]
+                  ? "border-red-500 focus:ring-red-500"
+                  : "border-gray-300 focus:ring-primary-500 dark:border-gray-600"
+              } focus:outline-none focus:ring-1`}
+            />
+            {errors["name"] && <p className="mt-1 text-sm text-red-500">{errors["name"]}</p>}
+          </div>
         </div>
 
         {/* Age */}
@@ -180,17 +256,14 @@ export const MenteeModal = memo(function MenteeModal({
           />
         </div>
 
-        {/* Notes */}
+        {/* Notes (post-its) */}
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
             {t("mentee.notes")}
           </label>
-          <textarea
-            value={formData.notes ?? ""}
-            onChange={(e) => handleChange("notes", e.target.value)}
-            placeholder={t("mentee.notesPlaceholder")}
-            rows={3}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          <NoteInput
+            notes={formData.notes ?? []}
+            onChange={(notes) => handleChange("notes", notes)}
           />
         </div>
 

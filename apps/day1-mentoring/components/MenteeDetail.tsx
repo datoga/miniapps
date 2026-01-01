@@ -35,9 +35,17 @@ export const MenteeDetail = memo(function MenteeDetail({
       <div className="mb-8">
         <div className="flex items-start gap-4 mb-4">
           {/* Avatar */}
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary-500/20">
-            {mentee.name.charAt(0).toUpperCase()}
-          </div>
+          {mentee.image ? (
+            <img
+              src={mentee.image}
+              alt={mentee.name}
+              className="w-14 h-14 rounded-2xl object-cover shadow-lg"
+            />
+          ) : (
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary-500/20">
+              {mentee.name.charAt(0).toUpperCase()}
+            </div>
+          )}
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{mentee.name}</h2>
@@ -62,14 +70,14 @@ export const MenteeDetail = memo(function MenteeDetail({
         {/* Actions */}
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={onEdit}>
-            {t("actions.edit")}
+            ✏️ {t("actions.edit")}
           </Button>
           <Button variant="ghost" size="sm" onClick={onArchive}>
-            {mentee.archived ? t("actions.unarchive") : t("actions.archive")}
+            {mentee.archived ? "📤 " + t("actions.unarchive") : "📦 " + t("actions.archive")}
           </Button>
           {mentee.archived && (
             <Button variant="ghost" size="sm" onClick={onDelete} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
-              {t("actions.delete")}
+              🗑️ {t("actions.delete")}
             </Button>
           )}
         </div>
@@ -87,15 +95,32 @@ export const MenteeDetail = memo(function MenteeDetail({
           </div>
         )}
 
-        {/* Notes */}
-        {mentee.notes && (
+        {/* Notes (post-its) */}
+        {mentee.notes && mentee.notes.length > 0 && (
           <div>
-            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
               {t("mentee.notes")}
             </h3>
-            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
-              {mentee.notes}
-            </p>
+            <div className="flex flex-wrap gap-3">
+              {mentee.notes.map((note) => {
+                const colorClasses: Record<string, { bg: string; border: string; text: string }> = {
+                  yellow: { bg: "bg-yellow-100", border: "border-yellow-300", text: "text-yellow-900" },
+                  pink: { bg: "bg-pink-100", border: "border-pink-300", text: "text-pink-900" },
+                  blue: { bg: "bg-blue-100", border: "border-blue-300", text: "text-blue-900" },
+                  green: { bg: "bg-green-100", border: "border-green-300", text: "text-green-900" },
+                  purple: { bg: "bg-purple-100", border: "border-purple-300", text: "text-purple-900" },
+                };
+                const colors = colorClasses[note.color] || colorClasses["yellow"];
+                return (
+                  <div
+                    key={note.id}
+                    className={`p-3 rounded-lg shadow-md border-2 ${colors.bg} ${colors.border} max-w-[200px] min-w-[120px] transform hover:-rotate-1 transition-transform`}
+                  >
+                    <p className={`text-sm ${colors.text} whitespace-pre-wrap`}>{note.text}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 

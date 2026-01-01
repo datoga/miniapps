@@ -38,6 +38,7 @@
   "mentee": {
     "name": "Nombre",
     "namePlaceholder": "Nombre del mentee",
+    "image": "Foto",
     "age": "Edad",
     "agePlaceholder": "Introduce la edad",
     "inPersonAvailable": "Disponible presencial",

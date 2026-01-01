@@ -43,6 +43,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "MentorFlow" }],
   creator: "MentorFlow",
+  verification: {
+    google: "izINkAr2XR6DHwLVBNWaU3D1gCZzWqrWEqeyR0UEAwc",
+  },
   publisher: "MentorFlow",
   robots: {
     index: true,

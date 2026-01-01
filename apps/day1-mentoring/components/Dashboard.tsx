@@ -16,7 +16,6 @@ import { MenteeModal } from "./MenteeModal";
 import { SessionModal } from "./SessionModal";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { SearchResults } from "./SearchResults";
-import { BackupPanel } from "./BackupPanel";
 
 // Track first session creation
 let hasTrackedFirstValue = false;
@@ -34,7 +33,6 @@ export function Dashboard() {
   const [menteeToEdit, setMenteeToEdit] = useState<Mentee | null>(null);
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
   const [sessionToEdit, setSessionToEdit] = useState<Session | null>(null);
-  const [backupPanelOpen, setBackupPanelOpen] = useState(false);
 
   // Confirm dialog states
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -318,7 +316,6 @@ export function Dashboard() {
         onSelectMentee={handleSelectMentee}
         onToggleShowArchived={handleToggleShowArchived}
         onNewMentee={handleOpenNewMentee}
-        onOpenBackup={() => setBackupPanelOpen(true)}
       />
 
       {/* Main content */}
@@ -374,14 +371,6 @@ export function Dashboard() {
           setSessionModalOpen(false);
           setSessionToEdit(null);
         }}
-      />
-
-      <BackupPanel
-        open={backupPanelOpen}
-        mentees={data.mentees}
-        sessions={data.sessions}
-        onImport={data.replaceAll}
-        onClose={() => setBackupPanelOpen(false)}
       />
 
       <ConfirmDialog

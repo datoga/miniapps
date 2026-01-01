@@ -14,7 +14,6 @@ interface SidebarProps {
   onSelectMentee: (id: string | null) => void;
   onToggleShowArchived: (show: boolean) => void;
   onNewMentee: () => void;
-  onOpenBackup: () => void;
 }
 
 export const Sidebar = memo(function Sidebar({
@@ -26,7 +25,6 @@ export const Sidebar = memo(function Sidebar({
   onSelectMentee,
   onToggleShowArchived,
   onNewMentee,
-  onOpenBackup,
 }: SidebarProps) {
   const t = useTranslations();
 
@@ -122,7 +120,7 @@ export const Sidebar = memo(function Sidebar({
       {/* Footer */}
       <div className="border-t border-gray-200 p-4 dark:border-gray-700">
         {/* Show archived toggle */}
-        <label className="mb-3 flex cursor-pointer items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+        <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
           <input
             type="checkbox"
             checked={showArchived}
@@ -131,14 +129,6 @@ export const Sidebar = memo(function Sidebar({
           />
           {t("dashboard.showArchived")}
         </label>
-
-        {/* Backup button */}
-        <button
-          onClick={onOpenBackup}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
-        >
-          {t("backup.title")}
-        </button>
       </div>
     </aside>
   );

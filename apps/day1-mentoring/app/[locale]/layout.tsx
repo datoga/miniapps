@@ -31,7 +31,6 @@ export function generateStaticParams() {
 const mentorFlowNavItems = [
   { href: "#dashboard", labelKey: "nav.dashboard" },
   { href: "#mentees", labelKey: "nav.mentees" },
-  { href: "#backup", labelKey: "nav.backup" },
 ];
 
 type LayoutProps = {

@@ -179,8 +179,8 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className={`text-sm leading-relaxed ${
-                        goal.completed 
-                          ? "text-gray-400 line-through" 
+                        goal.completed
+                          ? "text-gray-400 line-through"
                           : "text-gray-700 dark:text-gray-300"
                       }`}>
                         {goal.text}
@@ -191,19 +191,19 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
                         </span>
                       )}
                     </div>
-                    
+
                     {/* Expand/collapse button */}
                     <button
                       type="button"
                       onClick={() => handleToggleExpand(goal.id)}
                       className="mt-1 text-xs text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 flex items-center gap-1"
                     >
-                      <svg 
-                        width="12" 
-                        height="12" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
                         strokeWidth="2"
                         className={`transition-transform ${isExpanded ? "rotate-90" : ""}`}
                       >

@@ -32,7 +32,7 @@ export const SessionModal = memo(function SessionModal({
     notes: "",
     nextSteps: [],
     tags: [],
-    rating: undefined,
+    isRemote: true, // Remote by default
   });
 
   const [newStepText, setNewStepText] = useState("");
@@ -48,7 +48,7 @@ export const SessionModal = memo(function SessionModal({
           notes: session.notes ?? "",
           nextSteps: session.nextSteps,
           tags: session.tags,
-          rating: session.rating,
+          isRemote: session.isRemote ?? true,
         });
       } else {
         setFormData({
@@ -57,7 +57,7 @@ export const SessionModal = memo(function SessionModal({
           notes: "",
           nextSteps: [],
           tags: [],
-          rating: undefined,
+          isRemote: true,
         });
       }
       setNewStepText("");
@@ -68,7 +68,7 @@ export const SessionModal = memo(function SessionModal({
   const handleChange = useCallback(
     (
       field: keyof SessionFormInput,
-      value: string | number | NextStep[] | string[] | undefined
+      value: string | number | boolean | NextStep[] | string[] | undefined
     ) => {
       setFormData((prev) => ({ ...prev, [field]: value }));
       setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -153,6 +153,56 @@ export const SessionModal = memo(function SessionModal({
             } focus:outline-none focus:ring-1`}
           />
           {errors["date"] && <p className="mt-1 text-sm text-red-500">{errors["date"]}</p>}
+        </div>
+
+        {/* Remote/In-person toggle */}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t("session.sessionType")}
+          </label>
+          <div className="flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+            <button
+              type="button"
+              onClick={() => handleChange("isRemote", true)}
+              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors ${
+                formData.isRemote
+                  ? "bg-primary-500 text-white"
+                  : "bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+              }`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+              {t("session.remote")}
+            </button>
+            <button
+              type="button"
+              onClick={() => handleChange("isRemote", false)}
+              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors ${
+                !formData.isRemote
+                  ? "bg-primary-500 text-white"
+                  : "bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+              }`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              {t("session.inPerson")}
+            </button>
+          </div>
+          {formData.isRemote && (
+            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-blue-500">
+                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-2v-3.278c0-.855-.088-1.445-1.107-1.445-.908 0-1.105.679-1.105 1.389v3.334h-2v-6h2v.816c.282-.523.94-.815 1.669-.815 1.76 0 2.543 1.139 2.543 2.924v3.075z"/>
+              </svg>
+              {t("session.remoteHint")}
+            </p>
+          )}
         </div>
 
         {/* Title */}
@@ -262,4 +312,3 @@ export const SessionModal = memo(function SessionModal({
     </Modal>
   );
 });
-

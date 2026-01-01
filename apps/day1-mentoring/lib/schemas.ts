@@ -92,7 +92,7 @@ export const SessionSchema = z.object({
   notes: z.string().optional(),
   nextSteps: z.array(NextStepSchema).default([]),
   tags: z.array(z.string()).default([]),
-  rating: z.number().int().min(1).max(5).optional(),
+  isRemote: z.boolean().default(true), // Remote by default
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
 });
@@ -106,7 +106,7 @@ export const SessionFormSchema = z.object({
   notes: z.string().optional(),
   nextSteps: z.array(NextStepSchema).default([]),
   tags: z.array(z.string()).default([]),
-  rating: z.union([z.number().int().min(1).max(5), z.literal(""), z.undefined()]).optional(),
+  isRemote: z.boolean().default(true), // Remote by default
 });
 
 export type SessionFormInput = z.infer<typeof SessionFormSchema>;

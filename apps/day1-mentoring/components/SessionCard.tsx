@@ -26,6 +26,7 @@ export const SessionCard = memo(function SessionCard({
 
   const completedSteps = session.nextSteps.filter((s) => s.done).length;
   const totalSteps = session.nextSteps.length;
+  const isRemote = session.isRemote ?? true;
 
   // Check if session is in the future
   const isFutureSession = useMemo(() => {
@@ -35,7 +36,7 @@ export const SessionCard = memo(function SessionCard({
     return sessionDate >= today;
   }, [session.date]);
 
-  // Generate Google Calendar URL
+  // Generate Google Calendar URL with Google Meet for remote sessions
   const calendarUrl = useMemo(() => {
     const dateStr = session.date.replace(/-/g, "");
 
@@ -45,22 +46,51 @@ export const SessionCard = memo(function SessionCard({
         : `Sesión con ${menteeName}`
     );
 
-    const details = encodeURIComponent(
-      [
-        session.notes,
-        session.nextSteps.length > 0
-          ? `\n\nPróximos pasos:\n${session.nextSteps.map(s => `- ${s.text}`).join("\n")}`
-          : ""
-      ].filter(Boolean).join("")
-    );
+    // Build description with notes and next steps
+    let descriptionParts: string[] = [];
+    
+    if (isRemote) {
+      descriptionParts.push("📹 Sesión virtual - Añadir Google Meet desde el evento");
+    }
+    
+    if (session.notes) {
+      descriptionParts.push(session.notes);
+    }
+    
+    if (session.nextSteps.length > 0) {
+      descriptionParts.push(`\nPróximos pasos:\n${session.nextSteps.map(s => `- ${s.text}`).join("\n")}`);
+    }
 
-    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}/${dateStr}&details=${details}`;
-  }, [session, menteeName]);
+    const details = encodeURIComponent(descriptionParts.join("\n\n"));
+
+    // For remote sessions, set location to indicate virtual meeting
+    const location = isRemote ? encodeURIComponent("Google Meet (añadir desde el evento)") : "";
+
+    // Base calendar URL
+    let url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}/${dateStr}&details=${details}`;
+    
+    // Add location for remote sessions
+    if (location) {
+      url += `&location=${location}`;
+    }
+    
+    // Add conference data request for remote sessions
+    // This parameter hints to Google Calendar to add video conferencing
+    if (isRemote) {
+      url += "&add=PHONE";
+    }
+
+    return url;
+  }, [session, menteeName, isRemote]);
 
   const handleAddToCalendar = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     window.open(calendarUrl, "_blank");
   }, [calendarUrl]);
+
+  const handleToggleRemote = useCallback(() => {
+    onUpdate({ isRemote: !isRemote });
+  }, [isRemote, onUpdate]);
 
   const handleAddStep = useCallback(() => {
     if (!newStepText.trim()) return;
@@ -90,7 +120,7 @@ export const SessionCard = memo(function SessionCard({
     <div className="group rounded-xl bg-gray-50 dark:bg-gray-800/50 p-4 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
       <div className="flex items-start justify-between">
         <div className="flex-1 space-y-1">
-          {/* Date */}
+          {/* Date and session type */}
           <div className="flex items-center gap-3">
             <input
               type="date"
@@ -98,13 +128,49 @@ export const SessionCard = memo(function SessionCard({
               onChange={(e) => onUpdate({ date: e.target.value })}
               className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-transparent border-none focus:outline-none focus:ring-1 focus:ring-primary-400 rounded cursor-pointer"
             />
+            
+            {/* Remote/In-person toggle */}
+            <button
+              onClick={handleToggleRemote}
+              className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium transition-colors ${
+                isRemote
+                  ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/50"
+                  : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50"
+              }`}
+              title={isRemote ? t("session.remote") : t("session.inPerson")}
+            >
+              {isRemote ? (
+                <>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                  {t("session.remoteShort")}
+                </>
+              ) : (
+                <>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                  </svg>
+                  {t("session.inPersonShort")}
+                </>
+              )}
+            </button>
+
             {isFutureSession && (
               <button
                 onClick={handleAddToCalendar}
                 className="flex items-center gap-1 text-xs text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition-colors"
-                title={t("session.addToCalendar")}
+                title={isRemote ? t("session.addToCalendarWithMeet") : t("session.addToCalendar")}
               >
                 📅
+                {isRemote && (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-blue-500">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                )}
               </button>
             )}
           </div>

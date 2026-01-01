@@ -91,9 +91,14 @@
     "addNextStep": "Add step",
     "tags": "Tags",
     "tagsPlaceholder": "Add a tag",
-    "rating": "Rating",
-    "ratingPlaceholder": "Rate this session (1-5)",
-    "addToCalendar": "Add to calendar"
+    "sessionType": "Session type",
+    "remote": "Remote",
+    "remoteShort": "Remote",
+    "inPerson": "In-person",
+    "inPersonShort": "In-person",
+    "remoteHint": "Google Meet will be suggested when adding to calendar",
+    "addToCalendar": "Add to calendar",
+    "addToCalendarWithMeet": "Add to calendar with Google Meet"
   },
   "sessionModal": {
     "createTitle": "New Session",

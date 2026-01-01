@@ -91,9 +91,14 @@
     "addNextStep": "Añadir paso",
     "tags": "Etiquetas",
     "tagsPlaceholder": "Añadir etiqueta",
-    "rating": "Valoración",
-    "ratingPlaceholder": "Valora esta sesión (1-5)",
-    "addToCalendar": "Añadir al calendario"
+    "sessionType": "Tipo de sesión",
+    "remote": "Remota",
+    "remoteShort": "Remota",
+    "inPerson": "Presencial",
+    "inPersonShort": "Presencial",
+    "remoteHint": "Se sugerirá Google Meet al añadir al calendario",
+    "addToCalendar": "Añadir al calendario",
+    "addToCalendarWithMeet": "Añadir al calendario con Google Meet"
   },
   "sessionModal": {
     "createTitle": "Nueva Sesión",

@@ -15,7 +15,7 @@ interface MenteeDetailProps {
   onArchive: () => void;
   onDelete: () => void;
   onNewSession: () => void;
-  onEditSession: (session: Session) => void;
+  onUpdateSession: (sessionId: string, updates: Partial<Session>) => void;
   onDeleteSession: (session: Session) => void;
   onToggleStep: (sessionId: string, stepId: string, done: boolean) => void;
 }
@@ -27,7 +27,7 @@ export const MenteeDetail = memo(function MenteeDetail({
   onArchive,
   onDelete,
   onNewSession,
-  onEditSession,
+  onUpdateSession,
   onDeleteSession,
   onToggleStep,
 }: MenteeDetailProps) {
@@ -268,7 +268,7 @@ export const MenteeDetail = memo(function MenteeDetail({
                 key={session.id}
                 session={session}
                 menteeName={mentee.name}
-                onEdit={() => onEditSession(session)}
+                onUpdate={(updates) => onUpdateSession(session.id, updates)}
                 onDelete={() => onDeleteSession(session)}
                 onToggleStep={(stepId, done) => onToggleStep(session.id, stepId, done)}
               />

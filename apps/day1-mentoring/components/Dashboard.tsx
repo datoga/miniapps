@@ -37,7 +37,6 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
   const [menteeModalOpen, setMenteeModalOpen] = useState(false);
   const [menteeToEdit, setMenteeToEdit] = useState<Mentee | null>(null);
   const [sessionModalOpen, setSessionModalOpen] = useState(false);
-  const [sessionToEdit, setSessionToEdit] = useState<Session | null>(null);
 
   // Confirm dialog states
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -179,20 +178,12 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
 
   // Session handlers
   const handleOpenNewSession = useCallback(() => {
-    setSessionToEdit(null);
-    setSessionModalOpen(true);
-  }, []);
-
-  const handleOpenEditSession = useCallback((session: Session) => {
-    setSessionToEdit(session);
     setSessionModalOpen(true);
   }, []);
 
   const handleSaveSession = useCallback(
     async (input: SessionFormInput) => {
-      if (sessionToEdit) {
-        await data.updateSession(sessionToEdit.id, input);
-      } else if (selectedMenteeId) {
+      if (selectedMenteeId) {
         const session = await data.createSession(selectedMenteeId, input);
         if (session) {
           if (!hasTrackedFirstValue && data.sessions.length === 0) {
@@ -206,9 +197,8 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
         }
       }
       setSessionModalOpen(false);
-      setSessionToEdit(null);
     },
-    [data, sessionToEdit, selectedMenteeId]
+    [data, selectedMenteeId]
   );
 
   const handleDeleteSession = useCallback(
@@ -278,7 +268,9 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
               onArchive={() => handleArchiveMentee(selectedMentee)}
               onDelete={() => handleDeleteMentee(selectedMentee)}
               onNewSession={handleOpenNewSession}
-              onEditSession={handleOpenEditSession}
+              onUpdateSession={async (sessionId, updates) => {
+                await data.updateSession(sessionId, updates);
+              }}
               onDeleteSession={handleDeleteSession}
               onToggleStep={handleToggleStep}
             />
@@ -364,11 +356,10 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
 
       <SessionModal
         open={sessionModalOpen}
-        session={sessionToEdit}
+        session={null}
         onSave={handleSaveSession}
         onClose={() => {
           setSessionModalOpen(false);
-          setSessionToEdit(null);
         }}
       />
 

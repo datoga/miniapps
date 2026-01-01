@@ -1,15 +1,18 @@
 "use client";
 
-import { memo } from "react";
-import { useTranslations } from "next-intl";
+import { memo, useCallback } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { Button } from "@miniapps/ui";
 
-interface LandingPageProps {
-  onEnterApp: () => void;
-}
-
-export const LandingPage = memo(function LandingPage({ onEnterApp }: LandingPageProps) {
+export const LandingPage = memo(function LandingPage() {
   const t = useTranslations();
+  const router = useRouter();
+  const locale = useLocale();
+
+  const handleEnterApp = useCallback(() => {
+    router.push(`/${locale}/dashboard`);
+  }, [router, locale]);
 
   return (
     <div className="min-h-[calc(100vh-120px)] flex flex-col relative overflow-hidden">
@@ -70,7 +73,7 @@ export const LandingPage = memo(function LandingPage({ onEnterApp }: LandingPage
           </div>
 
           {/* CTA */}
-          <Button size="lg" onClick={onEnterApp} className="px-8 shadow-lg shadow-primary-500/20">
+          <Button size="lg" onClick={handleEnterApp} className="px-8 shadow-lg shadow-primary-500/20">
             {t("landing.cta")}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-2">
               <line x1="5" y1="12" x2="19" y2="12" />

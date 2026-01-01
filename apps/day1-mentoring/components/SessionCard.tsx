@@ -64,13 +64,13 @@ export const SessionCard = memo(function SessionCard({
 
   const handleAddStep = useCallback(() => {
     if (!newStepText.trim()) return;
-    
+
     const newStep: NextStep = {
       id: uuidv4(),
       text: newStepText.trim(),
       done: false,
     };
-    
+
     onUpdate({ nextSteps: [...session.nextSteps, newStep] });
     setNewStepText("");
   }, [newStepText, session.nextSteps, onUpdate]);
@@ -108,7 +108,7 @@ export const SessionCard = memo(function SessionCard({
               </button>
             )}
           </div>
-          
+
           {/* Title */}
           <EditableField
             value={session.title || ""}
@@ -116,7 +116,7 @@ export const SessionCard = memo(function SessionCard({
             placeholder={t("session.titlePlaceholder")}
             className="font-medium text-gray-900 dark:text-white"
           />
-          
+
           {/* Notes */}
           <EditableField
             value={session.notes || ""}
@@ -126,7 +126,7 @@ export const SessionCard = memo(function SessionCard({
             className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed"
           />
         </div>
-        
+
         <button
           onClick={onDelete}
           className="ml-4 rounded-lg px-2 py-1 text-sm opacity-0 group-hover:opacity-100 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
@@ -146,7 +146,7 @@ export const SessionCard = memo(function SessionCard({
             </span>
           )}
         </div>
-        
+
         {totalSteps > 0 && (
           <div className="h-1 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden mb-2">
             <div
@@ -155,7 +155,7 @@ export const SessionCard = memo(function SessionCard({
             />
           </div>
         )}
-        
+
         <ul className="space-y-1">
           {session.nextSteps.map((step) => (
             <li key={step.id} className="flex items-center gap-2 text-sm group/step">
@@ -186,7 +186,7 @@ export const SessionCard = memo(function SessionCard({
             </li>
           ))}
         </ul>
-        
+
         {/* Add new step */}
         <div className="mt-2 flex gap-2">
           <input

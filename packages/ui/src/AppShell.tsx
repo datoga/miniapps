@@ -1,8 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { Header } from "./Header";
 import { cn } from "./utils";
 
 interface NavItem {

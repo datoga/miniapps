@@ -1,8 +1,8 @@
 "use client";
 
-import { memo, useCallback, useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
+import { memo, useCallback, useEffect, useState } from "react";
 import { cn } from "./utils";
 
 const locales = ["es", "en"] as const;

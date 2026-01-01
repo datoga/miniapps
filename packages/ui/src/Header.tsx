@@ -1,10 +1,10 @@
 "use client";
 
-import { memo } from "react";
-import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { ThemeToggle } from "./ThemeToggle";
+import type { ReactNode } from "react";
+import { memo } from "react";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "./utils";
 
 interface NavItem {

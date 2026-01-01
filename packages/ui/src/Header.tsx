@@ -20,10 +20,7 @@ interface HeaderProps {
   className?: string;
 }
 
-const defaultNavItems: NavItem[] = [
-  { href: "#features", labelKey: "nav.features" },
-  { href: "#about", labelKey: "nav.about" },
-];
+const defaultNavItems: NavItem[] = [];
 
 export const Header = memo(function Header({
   title,
@@ -57,17 +54,19 @@ export const Header = memo(function Header({
         )}
 
         {/* Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-            >
-              {t(item.labelKey)}
-            </a>
-          ))}
-        </nav>
+        {navItems.length > 0 && (
+          <nav className="hidden md:flex items-center space-x-6">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white whitespace-nowrap"
+              >
+                {t(item.labelKey)}
+              </a>
+            ))}
+          </nav>
+        )}
 
         {/* Actions */}
         <div className="flex items-center gap-1">

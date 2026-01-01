@@ -75,7 +75,14 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <AppShell>{children}</AppShell>
+            <AppShell
+              navItems={[
+                { href: "#features", labelKey: "nav.features" },
+                { href: "#about", labelKey: "nav.about" },
+              ]}
+            >
+              {children}
+            </AppShell>
           </NextIntlClientProvider>
         </ThemeProvider>
         {gaId && <GoogleAnalyticsScript gaId={gaId} />}

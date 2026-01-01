@@ -31,26 +31,6 @@ function SearchIcon() {
   );
 }
 
-// Home icon SVG component
-function HomeIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  );
-}
-
 const STORAGE_KEY = "mentorflow_entered_app";
 
 export function AppLayout() {
@@ -95,26 +75,15 @@ export function AppLayout() {
     );
   }
 
-  // Header actions - always show search, show home only on dashboard
+  // Header actions - search only (home is via title click)
   const headerActions = (
-    <div className="flex items-center gap-1">
-      {view === "dashboard" && (
-        <button
-          onClick={handleGoToLanding}
-          className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-          aria-label="Home"
-        >
-          <HomeIcon />
-        </button>
-      )}
-      <button
-        onClick={handleSearchOpen}
-        className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-        aria-label="Search"
-      >
-        <SearchIcon />
-      </button>
-    </div>
+    <button
+      onClick={handleSearchOpen}
+      className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+      aria-label="Search"
+    >
+      <SearchIcon />
+    </button>
   );
 
   if (view === "landing") {
@@ -126,7 +95,7 @@ export function AppLayout() {
   }
 
   return (
-    <AppShell navItems={mentorFlowNavItems} headerActions={headerActions}>
+    <AppShell navItems={mentorFlowNavItems} headerActions={headerActions} onTitleClick={handleGoToLanding}>
       <Dashboard
         searchOpen={searchOpen}
         onSearchOpen={handleSearchOpen}

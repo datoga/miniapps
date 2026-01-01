@@ -16,6 +16,7 @@ interface HeaderProps {
   title?: string;
   navItems?: NavItem[];
   actions?: ReactNode;
+  onTitleClick?: () => void;
   className?: string;
 }
 
@@ -28,6 +29,7 @@ export const Header = memo(function Header({
   title,
   navItems = defaultNavItems,
   actions,
+  onTitleClick,
   className,
 }: HeaderProps) {
   const t = useTranslations();
@@ -41,9 +43,18 @@ export const Header = memo(function Header({
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8">
         {/* Logo / Title */}
-        <h1 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-          {title ?? t("common.appTitle")}
-        </h1>
+        {onTitleClick ? (
+          <button
+            onClick={onTitleClick}
+            className="text-lg font-bold tracking-tight text-gray-900 hover:text-primary-600 dark:text-white dark:hover:text-primary-400 transition-colors"
+          >
+            {title ?? t("common.appTitle")}
+          </button>
+        ) : (
+          <h1 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+            {title ?? t("common.appTitle")}
+          </h1>
+        )}
 
         {/* Navigation */}
         <nav className="hidden items-center gap-8 md:flex">

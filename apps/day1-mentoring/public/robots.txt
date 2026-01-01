@@ -3,5 +3,5 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://mentorflowapp.vercel.app/sitemap.xml
+Sitemap: https://mentorflow.space/sitemap.xml
 

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const APP_URL = "https://mentorflowapp.vercel.app";
+const APP_URL = "https://mentorflow.space";
 
 export const metadata: Metadata = {
   title: {

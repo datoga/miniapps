@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const APP_URL = "https://mentorflowapp.vercel.app";
+const APP_URL = "https://mentorflow.space";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ["es", "en"];

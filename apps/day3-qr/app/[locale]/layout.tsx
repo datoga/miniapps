@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QR Generator",
-  description: "A mini app for generating QR codes",
+  title: "QuickQR",
+  description: "Generate stunning QR codes in seconds",
 };
 
 export function generateStaticParams() {

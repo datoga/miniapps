@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "MedLabs App",
-    short_name: "MedLabs",
-    description: "A mini app for medical labs management",
+    name: "LabTracker",
+    short_name: "LabTracker",
+    description: "Track your medical results with ease",
     start_url: "/",
     scope: "/",
     display: "standalone",

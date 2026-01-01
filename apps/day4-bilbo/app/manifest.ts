@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Bilbo App",
+    name: "Bilbo Explorer",
     short_name: "Bilbo",
-    description: "A mini app for Bilbo adventures",
+    description: "Discover the magic of Bilbao city",
     start_url: "/",
     scope: "/",
     display: "standalone",

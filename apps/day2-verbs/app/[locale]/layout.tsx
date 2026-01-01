@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Verb Conjugator",
-  description: "A mini app for learning verb conjugations",
+  title: "VerbMaster",
+  description: "Master verb conjugations like a pro",
 };
 
 export function generateStaticParams() {

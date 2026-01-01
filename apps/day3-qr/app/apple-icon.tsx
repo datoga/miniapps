@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Icon configuration (same as icon.tsx for consistency)
-const APP_INITIALS = "D3";
+const APP_INITIALS = "QR";
 const BG_COLOR = "#f59e0b";
 const TEXT_COLOR = "#ffffff";
 

@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Job Kanban",
-    short_name: "JobKanban",
-    description: "A mini app for job management with kanban board",
+    name: "CareerBoard",
+    short_name: "CareerBoard",
+    description: "Land your dream job with visual tracking",
     start_url: "/",
     scope: "/",
     display: "standalone",

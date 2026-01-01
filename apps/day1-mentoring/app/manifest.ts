@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Mentoring App",
-    short_name: "Mentoring",
-    description: "A mini app for mentoring sessions",
+    name: "MentorFlow",
+    short_name: "MentorFlow",
+    description: "Connect, grow, and thrive with your mentor",
     start_url: "/",
     scope: "/",
     display: "standalone",

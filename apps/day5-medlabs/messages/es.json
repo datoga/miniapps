@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Seguimiento de Análisis",
-    "description": "Una mini app para seguimiento de resultados de laboratorio"
+    "title": "LabTracker",
+    "description": "Sigue tus resultados médicos con facilidad"
   }
 }

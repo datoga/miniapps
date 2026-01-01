@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "RecordMe App",
-    short_name: "RecordMe",
-    description: "A mini app for voice recording",
+    name: "VoiceSnap",
+    short_name: "VoiceSnap",
+    description: "Capture your voice, preserve your thoughts",
     start_url: "/",
     scope: "/",
     display: "standalone",

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Icon configuration (same as icon.tsx for consistency)
-const APP_INITIALS = "D4";
+const APP_INITIALS = "BE";
 const BG_COLOR = "#ef4444";
 const TEXT_COLOR = "#ffffff";
 

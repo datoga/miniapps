@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Record Me",
-  description: "A mini app for audio recording and notes",
+  title: "VoiceSnap",
+  description: "Capture your voice, preserve your thoughts",
 };
 
 export function generateStaticParams() {

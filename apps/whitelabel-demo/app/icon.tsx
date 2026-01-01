@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Icon configuration
-const APP_INITIALS = "WL";
+const APP_INITIALS = "MS";
 const BG_COLOR = "#0ea5e9";
 const TEXT_COLOR = "#ffffff";
 

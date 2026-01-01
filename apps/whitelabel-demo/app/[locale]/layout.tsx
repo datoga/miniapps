@@ -24,8 +24,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "White-label Demo",
-  description: "A mini app template demo showcasing all features",
+  title: "MiniApp Studio",
+  description: "Your toolkit for building beautiful mini apps",
   // SEO optimizations
   robots: {
     index: true,

@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "QR Generator",
-    short_name: "QR",
-    description: "A mini app for QR code generation",
+    name: "QuickQR",
+    short_name: "QuickQR",
+    description: "Generate stunning QR codes in seconds",
     start_url: "/",
     scope: "/",
     display: "standalone",

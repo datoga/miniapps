@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Medical Labs Tracker",
-  description: "A mini app for tracking medical lab results",
+  title: "LabTracker",
+  description: "Track your medical results with ease",
 };
 
 export function generateStaticParams() {

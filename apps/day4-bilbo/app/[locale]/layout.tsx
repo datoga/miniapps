@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bilbo Guide",
-  description: "A mini app for Bilbo city exploration",
+  title: "Bilbo Explorer",
+  description: "Discover the magic of Bilbao city",
 };
 
 export function generateStaticParams() {

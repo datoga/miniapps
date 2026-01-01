@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "White-label Demo",
-    short_name: "Demo",
-    description: "A mini app template demo showcasing all features",
+    name: "MiniApp Studio",
+    short_name: "Studio",
+    description: "Your toolkit for building beautiful mini apps",
     start_url: "/",
     scope: "/",
     display: "standalone",

@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Verbs App",
-    short_name: "Verbs",
-    description: "A mini app for verb conjugation",
+    name: "VerbMaster",
+    short_name: "VerbMaster",
+    description: "Master verb conjugations like a pro",
     start_url: "/",
     scope: "/",
     display: "standalone",

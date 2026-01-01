@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Job Kanban",
-  description: "A mini app for job application tracking",
+  title: "CareerBoard",
+  description: "Land your dream job with visual tracking",
 };
 
 export function generateStaticParams() {

@@ -40,6 +40,8 @@
     "name": "Nombre",
     "namePlaceholder": "Nombre del mentee",
     "image": "Foto",
+    "changeImage": "Cambiar imagen",
+    "imageTooLarge": "La imagen es demasiado grande (máx. 500KB)",
     "age": "Edad",
     "agePlaceholder": "Introduce la edad",
     "phone": "Teléfono",

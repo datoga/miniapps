@@ -1,11 +1,13 @@
 "use client";
 
-import { memo, useCallback } from "react";
+import { memo, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@miniapps/ui";
 import type { Mentee, Session, MenteeFormInput } from "../lib/schemas";
 import { SessionCard } from "./SessionCard";
 import { EditableField } from "./EditableField";
+
+const MAX_IMAGE_SIZE = 500 * 1024; // 500KB
 
 interface MenteeDetailProps {
   mentee: Mentee;
@@ -29,6 +31,7 @@ export const MenteeDetail = memo(function MenteeDetail({
   onDeleteSession,
 }: MenteeDetailProps) {
   const t = useTranslations();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFieldChange = useCallback(
     (field: keyof MenteeFormInput, value: string | number | undefined) => {
@@ -37,24 +40,63 @@ export const MenteeDetail = memo(function MenteeDetail({
     [onUpdate]
   );
 
+  const handleImageClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleImageChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      if (file.size > MAX_IMAGE_SIZE) {
+        alert(t("mentee.imageTooLarge"));
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onUpdate({ image: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    },
+    [onUpdate, t]
+  );
+
   return (
     <div className="max-w-3xl mx-auto">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-4">
-            {/* Avatar */}
-            {mentee.image ? (
-              <img
-                src={mentee.image}
-                alt={mentee.name}
-                className="w-14 h-14 rounded-2xl object-cover shadow-lg"
-              />
-            ) : (
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary-500/20">
-                {mentee.name.charAt(0).toUpperCase()}
+            {/* Avatar - clickable to change image */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+            <button
+              onClick={handleImageClick}
+              className="relative group"
+              title={t("mentee.changeImage")}
+            >
+              {mentee.image ? (
+                <img
+                  src={mentee.image}
+                  alt={mentee.name}
+                  className="w-14 h-14 rounded-2xl object-cover shadow-lg group-hover:opacity-75 transition-opacity"
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary-500/20 group-hover:opacity-75 transition-opacity">
+                  {mentee.name.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-lg">📷</span>
               </div>
-            )}
+            </button>
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <EditableField

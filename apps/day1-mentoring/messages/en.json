@@ -40,6 +40,8 @@
     "name": "Name",
     "namePlaceholder": "Enter mentee name",
     "image": "Photo",
+    "changeImage": "Change image",
+    "imageTooLarge": "Image is too large (max 500KB)",
     "age": "Age",
     "agePlaceholder": "Enter age",
     "phone": "Phone",

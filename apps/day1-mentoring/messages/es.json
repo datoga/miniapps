@@ -36,6 +36,7 @@
     "selectMentee": "Selecciona una persona",
     "selectMenteeDescription": "Elige una persona de la barra lateral o crea una nueva",
     "menteesGroup": "Personas",
+    "menteesCount": "personas",
     "sessionsGroup": "Sesiones"
   },
   "mentee": {

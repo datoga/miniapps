@@ -21,7 +21,10 @@ export const SessionCard = memo(function SessionCard({
   const totalSteps = session.nextSteps.length;
 
   return (
-    <div className="group rounded-xl bg-gray-50 dark:bg-gray-800/50 p-4 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800">
+    <div 
+      className="group rounded-xl bg-gray-50 dark:bg-gray-800/50 p-4 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+      onClick={onEdit}
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-1">
@@ -56,22 +59,16 @@ export const SessionCard = memo(function SessionCard({
             </p>
           )}
         </div>
-        <div className="ml-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button
-            onClick={onEdit}
-            className="rounded-lg px-2 py-1 text-sm hover:bg-white dark:hover:bg-gray-700 transition-colors"
-            title={t("actions.edit")}
-          >
-            ✏️
-          </button>
-          <button
-            onClick={onDelete}
-            className="rounded-lg px-2 py-1 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-            title={t("actions.delete")}
-          >
-            🗑️
-          </button>
-        </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="ml-4 rounded-lg px-2 py-1 text-sm opacity-0 group-hover:opacity-100 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+          title={t("actions.delete")}
+        >
+          🗑️
+        </button>
       </div>
 
       {/* Next steps */}

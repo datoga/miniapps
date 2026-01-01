@@ -72,31 +72,35 @@ export const EditableField = memo(function EditableField({
       onBlur: handleBlur,
       onKeyDown: handleKeyDown,
       placeholder,
-      className: `w-full bg-transparent border-b-2 border-primary-400 focus:outline-none focus:border-primary-500 ${inputClassName}`,
+      className: `w-full bg-transparent border-b-2 border-primary-400 focus:outline-none focus:border-primary-500 ${className} ${inputClassName}`,
     };
 
     if (multiline) {
-      return (
-        <div className={className}>
-          <textarea {...commonProps} rows={3} />
-        </div>
-      );
+      return <textarea {...commonProps} rows={3} />;
     }
 
-    return (
-      <div className={className}>
-        <input type="text" {...commonProps} />
-      </div>
-    );
+    return <input type="text" {...commonProps} />;
   }
 
   return (
     <div
       onClick={handleClick}
-      className={`cursor-pointer rounded px-1 -mx-1 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 ${className} ${displayClassName}`}
+      className={`group cursor-pointer rounded px-1 -mx-1 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 inline-flex items-center gap-2 ${className} ${displayClassName}`}
       title="Click to edit"
     >
       {value || <span className="text-gray-400 italic">{placeholder}</span>}
+      <svg 
+        width="14" 
+        height="14" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2" 
+        className="opacity-0 group-hover:opacity-50 transition-opacity text-gray-400 flex-shrink-0"
+      >
+        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+        <path d="m15 5 4 4"/>
+      </svg>
     </div>
   );
 });

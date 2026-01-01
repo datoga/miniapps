@@ -62,7 +62,7 @@ export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps)
   const pathname = usePathname();
   const locale = useLocale();
   const [searchOpen, setSearchOpen] = useState(false);
-  
+
   // Load data for search
   const data = useMentoringData();
 
@@ -139,7 +139,7 @@ export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps)
       >
         {children}
       </AppShell>
-      
+
       {/* Search Modal - available on dashboard and mentee detail */}
       <SearchModal
         open={searchOpen}

@@ -95,23 +95,18 @@ export function AppLayout() {
     );
   }
 
-  if (view === "landing") {
-    return (
-      <AppShell navItems={mentorFlowNavItems}>
-        <LandingPage onEnterApp={handleEnterApp} />
-      </AppShell>
-    );
-  }
-
+  // Header actions - always show search, show home only on dashboard
   const headerActions = (
     <div className="flex items-center gap-1">
-      <button
-        onClick={handleGoToLanding}
-        className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
-        aria-label="Home"
-      >
-        <HomeIcon />
-      </button>
+      {view === "dashboard" && (
+        <button
+          onClick={handleGoToLanding}
+          className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+          aria-label="Home"
+        >
+          <HomeIcon />
+        </button>
+      )}
       <button
         onClick={handleSearchOpen}
         className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
@@ -121,6 +116,14 @@ export function AppLayout() {
       </button>
     </div>
   );
+
+  if (view === "landing") {
+    return (
+      <AppShell navItems={mentorFlowNavItems} headerActions={headerActions}>
+        <LandingPage onEnterApp={handleEnterApp} />
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell navItems={mentorFlowNavItems} headerActions={headerActions}>

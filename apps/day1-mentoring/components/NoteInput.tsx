@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { memo, useCallback, useState, useMemo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import type { Note } from "../lib/schemas";
 
@@ -9,25 +9,25 @@ const NOTE_COLORS = ["yellow", "pink", "blue", "green", "purple"] as const;
 type NoteColor = (typeof NOTE_COLORS)[number];
 
 const colorStyles: Record<NoteColor, { bg: string; pin: string }> = {
-  yellow: { 
-    bg: "bg-yellow-100 dark:bg-yellow-900/50", 
-    pin: "bg-red-500" 
+  yellow: {
+    bg: "bg-yellow-100 dark:bg-yellow-900/50",
+    pin: "bg-red-500"
   },
-  pink: { 
-    bg: "bg-pink-100 dark:bg-pink-900/50", 
-    pin: "bg-red-600" 
+  pink: {
+    bg: "bg-pink-100 dark:bg-pink-900/50",
+    pin: "bg-red-600"
   },
-  blue: { 
-    bg: "bg-blue-100 dark:bg-blue-900/50", 
-    pin: "bg-red-500" 
+  blue: {
+    bg: "bg-blue-100 dark:bg-blue-900/50",
+    pin: "bg-red-500"
   },
-  green: { 
-    bg: "bg-green-100 dark:bg-green-900/50", 
-    pin: "bg-red-600" 
+  green: {
+    bg: "bg-green-100 dark:bg-green-900/50",
+    pin: "bg-red-600"
   },
-  purple: { 
-    bg: "bg-purple-100 dark:bg-purple-900/50", 
-    pin: "bg-red-500" 
+  purple: {
+    bg: "bg-purple-100 dark:bg-purple-900/50",
+    pin: "bg-red-500"
   },
 };
 
@@ -101,12 +101,12 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
           {notes.map((note) => {
             const noteColor = (note.color as NoteColor) || "yellow";
             const rotation = rotations[note.id] || 0;
-            
+
             return (
               <div
                 key={note.id}
                 className={`relative group min-w-[160px] max-w-[220px] ${colorStyles[noteColor].bg} shadow-md hover:shadow-lg transition-shadow`}
-                style={{ 
+                style={{
                   transform: `rotate(${rotation}deg)`,
                   clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)"
                 }}
@@ -135,7 +135,7 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
                 </div>
 
                 {/* Folded corner effect */}
-                <div 
+                <div
                   className="absolute bottom-0 right-0 w-0 h-0"
                   style={{
                     borderStyle: "solid",
@@ -159,7 +159,7 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
           placeholder={t("mentee.notesPlaceholder")}
           className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
         />
-        
+
         {/* Color picker toggle */}
         <div className="relative">
           <button
@@ -168,7 +168,7 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
             className={`w-8 h-8 rounded-lg ${colorDots[selectedColor]} shadow-sm transition-transform hover:scale-110`}
             title={t("mentee.noteColor")}
           />
-          
+
           {/* Color picker dropdown */}
           {showColorPicker && (
             <div className="absolute bottom-full right-0 mb-2 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex gap-1.5 z-10">

@@ -36,7 +36,7 @@
     "selectMentee": "Select a mentee",
     "selectMenteeDescription": "Choose a mentee from the sidebar or create a new one",
     "menteesGroup": "Mentees",
-    "menteesCount": "mentees",
+    "menteesCount": "{count, plural, one {mentee} other {mentees}}",
     "sessionsGroup": "Sessions"
   },
   "mentee": {

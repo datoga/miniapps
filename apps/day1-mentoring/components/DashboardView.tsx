@@ -173,7 +173,7 @@ export function DashboardView() {
                   className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight"
                 />
                 <span className="flex items-center justify-center h-7 px-3 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 text-xs font-semibold">
-                  {filteredMentees.length} {t("dashboard.menteesCount")}
+                  {filteredMentees.length} {t("dashboard.menteesCount", { count: filteredMentees.length })}
                 </span>
               </div>
               <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">

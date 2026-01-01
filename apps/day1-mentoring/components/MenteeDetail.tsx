@@ -36,6 +36,15 @@ export const MenteeDetail = memo(function MenteeDetail({
   const t = useTranslations();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Safety check for corrupted data
+  if (!mentee || !mentee.name) {
+    return (
+      <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+        {t("mentee.notFound")}
+      </div>
+    );
+  }
+
   const handleFieldChange = useCallback(
     (field: keyof MenteeFormInput, value: string | number | undefined) => {
       onUpdate({ [field]: value });

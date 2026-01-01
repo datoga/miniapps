@@ -73,13 +73,26 @@ export const MenteeCard = memo(function MenteeCard({
         )}
       </div>
 
-      {/* Goal */}
-      {mentee.goal && (
-        <p className={`text-sm line-clamp-2 mb-3 leading-relaxed ${
-          isArchived ? "text-amber-700 dark:text-amber-400/80" : "text-gray-600 dark:text-gray-400"
-        }`}>
-          {mentee.goal}
-        </p>
+      {/* Goals */}
+      {mentee.goals && mentee.goals.length > 0 && (
+        <div className="mb-3">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className={`text-xs ${isArchived ? "text-amber-600 dark:text-amber-400" : "text-gray-500 dark:text-gray-400"}`}>
+              🎯 {mentee.goals.filter(g => g.completed).length}/{mentee.goals.length}
+            </span>
+            <div className={`flex-1 h-1 rounded-full overflow-hidden ${isArchived ? "bg-amber-200 dark:bg-amber-800/30" : "bg-gray-200 dark:bg-gray-700"}`}>
+              <div
+                className="h-1 rounded-full bg-gradient-to-r from-green-400 to-green-500 transition-all duration-300"
+                style={{ width: `${(mentee.goals.filter(g => g.completed).length / mentee.goals.length) * 100}%` }}
+              />
+            </div>
+          </div>
+          <p className={`text-sm line-clamp-1 ${
+            isArchived ? "text-amber-700 dark:text-amber-400/80" : "text-gray-600 dark:text-gray-400"
+          }`}>
+            {mentee.goals.find(g => !g.completed)?.text || mentee.goals[0]?.text}
+          </p>
+        </div>
       )}
 
       {/* Footer */}

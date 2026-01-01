@@ -19,6 +19,16 @@ export const NoteSchema = z.object({
 
 export type Note = z.infer<typeof NoteSchema>;
 
+// Goal schema
+export const GoalSchema = z.object({
+  id: z.string().uuid(),
+  text: z.string().min(1),
+  completed: z.boolean().default(false),
+  createdAt: z.string().datetime(),
+});
+
+export type Goal = z.infer<typeof GoalSchema>;
+
 // Mentee schema
 export const MenteeSchema = z.object({
   id: z.string().uuid(),
@@ -33,8 +43,10 @@ export const MenteeSchema = z.object({
   availabilityNotes: z.string().optional(), // Availability notes (schedule, preferences)
   // Keep inPersonNotes for backward compatibility, maps to location
   inPersonNotes: z.string().optional(),
+  // Keep goal for backward compatibility, will be migrated to goals array
   goal: z.string().optional(),
-  notes: z.array(NoteSchema).default([]), // Changed to array of notes
+  goals: z.array(GoalSchema).default([]), // Multiple goals
+  notes: z.array(NoteSchema).default([]),
   tags: z.array(z.string()).default([]),
   archived: z.boolean().default(false),
   createdAt: z.string().datetime(),
@@ -54,7 +66,7 @@ export const MenteeFormSchema = z.object({
   location: z.string().optional(),
   inPersonAvailable: z.boolean().optional(),
   availabilityNotes: z.string().optional(),
-  goal: z.string().optional(),
+  goals: z.array(GoalSchema).default([]),
   notes: z.array(NoteSchema).default([]),
   tags: z.array(z.string()).default([]),
 });

@@ -2,10 +2,11 @@
 
 import { memo, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
-import type { Mentee, Session, MenteeFormInput, Note } from "../lib/schemas";
+import type { Mentee, Session, MenteeFormInput, Note, Goal } from "../lib/schemas";
 import { SessionCard } from "./SessionCard";
 import { EditableField } from "./EditableField";
 import { NoteInput } from "./NoteInput";
+import { GoalInput } from "./GoalInput";
 import { resizeImage } from "../lib/imageUtils";
 
 interface MenteeDetailProps {
@@ -196,17 +197,14 @@ export const MenteeDetail = memo(function MenteeDetail({
 
       {/* Content */}
       <div className="space-y-6">
-        {/* Goal */}
+        {/* Goals */}
         <div>
-          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-            🎯 {t("mentee.goal")}
+          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+            🎯 {t("mentee.goals")}
           </h3>
-          <EditableField
-            value={mentee.goal || ""}
-            onChange={(value) => handleFieldChange("goal", value)}
-            placeholder={t("mentee.goalPlaceholder")}
-            multiline
-            className="text-gray-700 dark:text-gray-300 leading-relaxed"
+          <GoalInput
+            goals={mentee.goals || []}
+            onChange={(goals: Goal[]) => onUpdate({ goals })}
           />
         </div>
 

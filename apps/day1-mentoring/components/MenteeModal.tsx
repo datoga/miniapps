@@ -6,7 +6,8 @@ import { Button } from "@miniapps/ui";
 import { Modal } from "./Modal";
 import { TagInput } from "./TagInput";
 import { NoteInput } from "./NoteInput";
-import type { Mentee, MenteeFormInput, Note } from "../lib/schemas";
+import { GoalInput } from "./GoalInput";
+import type { Mentee, MenteeFormInput, Note, Goal } from "../lib/schemas";
 import { MenteeFormSchema } from "../lib/schemas";
 import { resizeImage } from "../lib/imageUtils";
 
@@ -36,7 +37,7 @@ export const MenteeModal = memo(function MenteeModal({
     location: "",
     inPersonAvailable: false,
     availabilityNotes: "",
-    goal: "",
+    goals: [],
     notes: [],
     tags: [],
   });
@@ -58,7 +59,7 @@ export const MenteeModal = memo(function MenteeModal({
           location: mentee.location ?? mentee.inPersonNotes ?? "",
           inPersonAvailable: mentee.inPersonAvailable ?? false,
           availabilityNotes: mentee.availabilityNotes ?? "",
-          goal: mentee.goal ?? "",
+          goals: Array.isArray(mentee.goals) ? mentee.goals : [],
           notes: Array.isArray(mentee.notes) ? mentee.notes : [],
           tags: mentee.tags,
         });
@@ -73,7 +74,7 @@ export const MenteeModal = memo(function MenteeModal({
           location: "",
           inPersonAvailable: false,
           availabilityNotes: "",
-          goal: "",
+          goals: [],
           notes: [],
           tags: [],
         });
@@ -328,17 +329,14 @@ export const MenteeModal = memo(function MenteeModal({
           )}
         </div>
 
-        {/* Goal */}
+        {/* Goals */}
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t("mentee.goal")}
+            🎯 {t("mentee.goals")}
           </label>
-          <textarea
-            value={formData.goal ?? ""}
-            onChange={(e) => handleChange("goal", e.target.value)}
-            placeholder={t("mentee.goalPlaceholder")}
-            rows={2}
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          <GoalInput
+            goals={formData.goals ?? []}
+            onChange={(goals) => handleChange("goals", goals)}
           />
         </div>
 

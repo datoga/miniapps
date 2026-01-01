@@ -1,6 +1,6 @@
 import { GoogleAnalyticsScript } from "@miniapps/analytics";
 import { locales, type Locale } from "@miniapps/i18n";
-import { AppShell, ThemeProvider } from "@miniapps/ui";
+import { ThemeProvider } from "@miniapps/ui";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -27,12 +27,6 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-// MentorFlow-specific navigation
-const mentorFlowNavItems = [
-  { href: "#dashboard", labelKey: "nav.dashboard" },
-  { href: "#mentees", labelKey: "nav.mentees" },
-];
-
 type LayoutProps = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -54,9 +48,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
-          <NextIntlClientProvider messages={messages}>
-            <AppShell navItems={mentorFlowNavItems}>{children}</AppShell>
-          </NextIntlClientProvider>
+          <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />
       </body>

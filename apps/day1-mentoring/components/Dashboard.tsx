@@ -10,22 +10,27 @@ import {
   useMenteeSessions,
 } from "../lib/hooks/useMentoringData";
 import type { Mentee, Session, MenteeFormInput, SessionFormInput } from "../lib/schemas";
-import { Sidebar } from "./Sidebar";
+import { MenteeCard } from "./MenteeCard";
 import { MenteeDetail } from "./MenteeDetail";
 import { MenteeModal } from "./MenteeModal";
 import { SessionModal } from "./SessionModal";
 import { ConfirmDialog } from "./ConfirmDialog";
-import { SearchResults } from "./SearchResults";
+import { SearchModal } from "./SearchModal";
 
 // Track first session creation
 let hasTrackedFirstValue = false;
 
-export function Dashboard() {
+interface DashboardProps {
+  searchOpen: boolean;
+  onSearchOpen: () => void;
+  onSearchClose: () => void;
+}
+
+export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
   const t = useTranslations();
   const data = useMentoringData();
 
   // Local UI state
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedMenteeId, setSelectedMenteeId] = useState<string | null>(null);
 
   // Modal states
@@ -50,11 +55,7 @@ export function Dashboard() {
   });
 
   // Derived data
-  const filteredMentees = useFilteredMentees(
-    data.mentees,
-    data.settings.showArchived,
-    "" // Don't filter by search in sidebar - we'll show search results in main panel
-  );
+  const filteredMentees = useFilteredMentees(data.mentees, data.settings.showArchived, "");
 
   const selectedMentee = useMemo(
     () => data.mentees.find((m) => m.id === selectedMenteeId) ?? null,
@@ -63,72 +64,26 @@ export function Dashboard() {
 
   const menteeSessions = useMenteeSessions(data.sessions, selectedMenteeId);
 
-  // Check if we're in search mode
-  const isSearching = searchQuery.trim().length > 0;
-
-  // Search results
-  const searchResults = useMemo(() => {
-    if (!isSearching) {
-      return { mentees: [], sessions: [] };
-    }
-
-    const q = searchQuery.toLowerCase().trim();
-    const showArchived = data.settings.showArchived;
-
-    // Filter mentees
-    let matchingMentees = data.mentees.filter((m) => {
-      if (!showArchived && m.archived) {
-        return false;
-      }
-      // If a specific mentee is selected, only search within that mentee
-      if (selectedMenteeId && m.id !== selectedMenteeId) {
-        return false;
-      }
-      const searchableText = [
-        m.name,
-        m.goal,
-        m.notes,
-        m.inPersonNotes,
-        m.age?.toString(),
-        ...m.tags,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      return searchableText.includes(q);
+  // Get session counts per mentee
+  const sessionCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    data.sessions.forEach((s) => {
+      counts[s.menteeId] = (counts[s.menteeId] || 0) + 1;
     });
+    return counts;
+  }, [data.sessions]);
 
-    // Filter sessions
-    let matchingSessions = data.sessions.filter((s) => {
-      // If a specific mentee is selected, only show their sessions
-      if (selectedMenteeId && s.menteeId !== selectedMenteeId) {
-        return false;
+  // Get last session per mentee
+  const lastSessions = useMemo(() => {
+    const sessions: Record<string, Session> = {};
+    data.sessions.forEach((s) => {
+      const existing = sessions[s.menteeId];
+      if (!existing || s.date > existing.date) {
+        sessions[s.menteeId] = s;
       }
-      // Check if mentee is archived
-      const mentee = data.mentees.find((m) => m.id === s.menteeId);
-      if (!showArchived && mentee?.archived) {
-        return false;
-      }
-      const searchableText = [
-        s.title,
-        s.notes,
-        ...s.tags,
-        ...s.nextSteps.map((ns) => ns.text),
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      return searchableText.includes(q);
     });
-
-    return {
-      mentees: matchingMentees,
-      sessions: matchingSessions.map((s) => ({
-        ...s,
-        menteeName: data.mentees.find((m) => m.id === s.menteeId)?.name ?? "Unknown",
-      })),
-    };
-  }, [isSearching, searchQuery, data.mentees, data.sessions, data.settings.showArchived, selectedMenteeId]);
+    return sessions;
+  }, [data.sessions]);
 
   // Handlers
   const handleSelectMentee = useCallback(
@@ -160,10 +115,8 @@ export function Dashboard() {
   const handleSaveMentee = useCallback(
     async (input: MenteeFormInput) => {
       if (menteeToEdit) {
-        // Edit
         await data.updateMentee(menteeToEdit.id, input);
       } else {
-        // Create
         const mentee = await data.createMentee(input);
         if (mentee) {
           trackEvent("mentee_created", {
@@ -190,7 +143,6 @@ export function Dashboard() {
           if (isArchiving) {
             await data.archiveMentee(mentee.id);
             trackEvent("mentee_archived");
-            // If the archived mentee was selected, deselect
             if (selectedMenteeId === mentee.id && !data.settings.showArchived) {
               await handleSelectMentee(null);
             }
@@ -239,13 +191,10 @@ export function Dashboard() {
   const handleSaveSession = useCallback(
     async (input: SessionFormInput) => {
       if (sessionToEdit) {
-        // Edit
         await data.updateSession(sessionToEdit.id, input);
       } else if (selectedMenteeId) {
-        // Create
         const session = await data.createSession(selectedMenteeId, input);
         if (session) {
-          // Track first value event
           if (!hasTrackedFirstValue && data.sessions.length === 0) {
             trackEvent("first_value");
             hasTrackedFirstValue = true;
@@ -278,22 +227,9 @@ export function Dashboard() {
     [data, t]
   );
 
-  // Search result click handlers
-  const handleSearchMenteeClick = useCallback(
-    (mentee: Mentee) => {
-      handleSelectMentee(mentee.id);
-      setSearchQuery("");
-    },
-    [handleSelectMentee]
-  );
-
-  const handleSearchSessionClick = useCallback(
-    (session: Session & { menteeName: string }) => {
-      handleSelectMentee(session.menteeId);
-      setSearchQuery("");
-    },
-    [handleSelectMentee]
-  );
+  const handleBackToList = useCallback(() => {
+    handleSelectMentee(null);
+  }, [handleSelectMentee]);
 
   // Loading state
   if (data.isLoading) {
@@ -305,52 +241,88 @@ export function Dashboard() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-120px)] overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar
-        mentees={filteredMentees}
-        selectedMenteeId={selectedMenteeId}
-        showArchived={data.settings.showArchived}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onSelectMentee={handleSelectMentee}
-        onToggleShowArchived={handleToggleShowArchived}
-        onNewMentee={handleOpenNewMentee}
-      />
-
-      {/* Main content */}
-      <main className="flex-1 overflow-auto p-6">
-        {isSearching ? (
-          <SearchResults
-            mentees={searchResults.mentees}
-            sessions={searchResults.sessions}
-            onMenteeClick={handleSearchMenteeClick}
-            onSessionClick={handleSearchSessionClick}
-          />
-        ) : selectedMentee ? (
-          <MenteeDetail
-            mentee={selectedMentee}
-            sessions={menteeSessions}
-            onEdit={() => handleOpenEditMentee(selectedMentee)}
-            onArchive={() => handleArchiveMentee(selectedMentee)}
-            onDelete={() => handleDeleteMentee(selectedMentee)}
-            onNewSession={handleOpenNewSession}
-            onEditSession={handleOpenEditSession}
-            onDeleteSession={handleDeleteSession}
-          />
+    <>
+      <div className="mx-auto max-w-6xl px-4 py-6">
+        {selectedMentee ? (
+          // Mentee detail view
+          <div>
+            <button
+              onClick={handleBackToList}
+              className="mb-4 flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            >
+              ← {t("dashboard.allMentees")}
+            </button>
+            <MenteeDetail
+              mentee={selectedMentee}
+              sessions={menteeSessions}
+              onEdit={() => handleOpenEditMentee(selectedMentee)}
+              onArchive={() => handleArchiveMentee(selectedMentee)}
+              onDelete={() => handleDeleteMentee(selectedMentee)}
+              onNewSession={handleOpenNewSession}
+              onEditSession={handleOpenEditSession}
+              onDeleteSession={handleDeleteSession}
+            />
+          </div>
         ) : (
-          <div className="flex h-full flex-col items-center justify-center text-center">
-            <div className="mb-4 text-6xl">👋</div>
-            <h2 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
-              {t("dashboard.selectMentee")}
-            </h2>
-            <p className="mb-6 text-gray-600 dark:text-gray-400">
-              {t("dashboard.selectMenteeDescription")}
-            </p>
-            <Button onClick={handleOpenNewMentee}>{t("dashboard.newMentee")}</Button>
+          // Mentee list view
+          <div>
+            {/* Header */}
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                {t("dashboard.allMentees")}
+              </h2>
+              <div className="flex items-center gap-3">
+                <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                  <input
+                    type="checkbox"
+                    checked={data.settings.showArchived}
+                    onChange={(e) => handleToggleShowArchived(e.target.checked)}
+                    className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500"
+                  />
+                  {t("dashboard.showArchived")}
+                </label>
+                <Button onClick={handleOpenNewMentee}>+ {t("dashboard.newMentee")}</Button>
+              </div>
+            </div>
+
+            {/* Mentee grid */}
+            {filteredMentees.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-20 text-center">
+                <div className="mb-4 text-6xl">👋</div>
+                <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                  {t("dashboard.noMentees")}
+                </h3>
+                <p className="mb-6 text-gray-600 dark:text-gray-400">
+                  {t("dashboard.noMenteesDescription")}
+                </p>
+                <Button onClick={handleOpenNewMentee}>{t("dashboard.newMentee")}</Button>
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredMentees.map((mentee) => (
+                  <MenteeCard
+                    key={mentee.id}
+                    mentee={mentee}
+                    sessionsCount={sessionCounts[mentee.id] || 0}
+                    lastSession={lastSessions[mentee.id]}
+                    onClick={() => handleSelectMentee(mentee.id)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
-      </main>
+      </div>
+
+      {/* Search Modal */}
+      <SearchModal
+        open={searchOpen}
+        mentees={data.mentees}
+        sessions={data.sessions}
+        showArchived={data.settings.showArchived}
+        onSelectMentee={handleSelectMentee}
+        onClose={onSearchClose}
+      />
 
       {/* Modals */}
       <MenteeModal
@@ -380,7 +352,6 @@ export function Dashboard() {
         onConfirm={confirmDialog.onConfirm}
         onCancel={() => setConfirmDialog((prev) => ({ ...prev, open: false }))}
       />
-    </div>
+    </>
   );
 }
-

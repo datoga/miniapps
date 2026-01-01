@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ThemeToggle } from "./ThemeToggle";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -14,6 +15,7 @@ interface NavItem {
 interface HeaderProps {
   title?: string;
   navItems?: NavItem[];
+  actions?: ReactNode;
   className?: string;
 }
 
@@ -25,6 +27,7 @@ const defaultNavItems: NavItem[] = [
 export const Header = memo(function Header({
   title,
   navItems = defaultNavItems,
+  actions,
   className,
 }: HeaderProps) {
   const t = useTranslations();
@@ -57,6 +60,7 @@ export const Header = memo(function Header({
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          {actions}
           <LocaleSwitcher />
           <div className="h-4 w-px bg-gray-300 dark:bg-gray-700" />
           <ThemeToggle />

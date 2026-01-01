@@ -2,9 +2,10 @@
 
 import { memo, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
-import type { Mentee, Session, MenteeFormInput } from "../lib/schemas";
+import type { Mentee, Session, MenteeFormInput, Note } from "../lib/schemas";
 import { SessionCard } from "./SessionCard";
 import { EditableField } from "./EditableField";
+import { NoteInput } from "./NoteInput";
 import { resizeImage } from "../lib/imageUtils";
 
 interface MenteeDetailProps {
@@ -208,33 +209,15 @@ export const MenteeDetail = memo(function MenteeDetail({
         </div>
 
         {/* Notes (post-its) */}
-        {mentee.notes && Array.isArray(mentee.notes) && mentee.notes.length > 0 && (
-          <div>
-            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
-              📝 {t("mentee.notes")}
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {mentee.notes.map((note) => {
-                const colorClasses: Record<string, { bg: string; border: string; text: string }> = {
-                  yellow: { bg: "bg-yellow-100", border: "border-yellow-300", text: "text-yellow-900" },
-                  pink: { bg: "bg-pink-100", border: "border-pink-300", text: "text-pink-900" },
-                  blue: { bg: "bg-blue-100", border: "border-blue-300", text: "text-blue-900" },
-                  green: { bg: "bg-green-100", border: "border-green-300", text: "text-green-900" },
-                  purple: { bg: "bg-purple-100", border: "border-purple-300", text: "text-purple-900" },
-                };
-                const colors = colorClasses[note.color] || colorClasses["yellow"];
-                return (
-                  <div
-                    key={note.id}
-                    className={`p-3 rounded-lg shadow-md border-2 ${colors.bg} ${colors.border} max-w-[200px] min-w-[120px] transform hover:-rotate-1 transition-transform`}
-                  >
-                    <p className={`text-sm ${colors.text} whitespace-pre-wrap`}>{note.text}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <div>
+          <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+            📝 {t("mentee.notes")}
+          </h3>
+          <NoteInput
+            notes={mentee.notes || []}
+            onChange={(notes: Note[]) => onUpdate({ notes })}
+          />
+        </div>
 
         {/* Location */}
         <div>

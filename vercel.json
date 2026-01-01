@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npx turbo run build --filter=whitelabel-demo",
-  "outputDirectory": "apps/whitelabel-demo/.next",
+  "buildCommand": "npm run build --workspace=day1-mentoring",
+  "outputDirectory": "apps/day1-mentoring/.next",
   "framework": "nextjs"
 }

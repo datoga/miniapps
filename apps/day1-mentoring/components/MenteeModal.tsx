@@ -31,10 +31,12 @@ export const MenteeModal = memo(function MenteeModal({
     name: "",
     age: undefined,
     image: undefined,
+    phone: "",
+    hasWhatsapp: false,
     inPersonAvailable: false,
     inPersonNotes: "",
     goal: "",
-    notes: "",
+    notes: [],
     tags: [],
   });
 
@@ -49,10 +51,12 @@ export const MenteeModal = memo(function MenteeModal({
           name: mentee.name,
           age: mentee.age,
           image: mentee.image,
+          phone: mentee.phone ?? "",
+          hasWhatsapp: mentee.hasWhatsapp ?? false,
           inPersonAvailable: mentee.inPersonAvailable ?? false,
           inPersonNotes: mentee.inPersonNotes ?? "",
           goal: mentee.goal ?? "",
-          notes: mentee.notes ?? "",
+          notes: Array.isArray(mentee.notes) ? mentee.notes : [],
           tags: mentee.tags,
         });
       } else {
@@ -60,10 +64,12 @@ export const MenteeModal = memo(function MenteeModal({
           name: "",
           age: undefined,
           image: undefined,
+          phone: "",
+          hasWhatsapp: false,
           inPersonAvailable: false,
           inPersonNotes: "",
           goal: "",
-          notes: "",
+          notes: [],
           tags: [],
         });
       }
@@ -211,6 +217,31 @@ export const MenteeModal = memo(function MenteeModal({
             placeholder={t("mentee.agePlaceholder")}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
+        </div>
+
+        {/* Phone */}
+        <div>
+          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            📞 {t("mentee.phone")}
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="tel"
+              value={formData.phone ?? ""}
+              onChange={(e) => handleChange("phone", e.target.value)}
+              placeholder={t("mentee.phonePlaceholder")}
+              className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            />
+            <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700">
+              <input
+                type="checkbox"
+                checked={formData.hasWhatsapp ?? false}
+                onChange={(e) => handleChange("hasWhatsapp", e.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-green-500 focus:ring-green-500"
+              />
+              <span className="text-sm text-gray-700 dark:text-gray-300">WhatsApp</span>
+            </label>
+          </div>
         </div>
 
         {/* Location */}

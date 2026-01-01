@@ -25,8 +25,10 @@ export const MenteeSchema = z.object({
   name: z.string().min(1, "Name is required"),
   age: z.number().int().positive().optional(),
   image: z.string().optional(), // Base64 encoded image
+  phone: z.string().optional(), // Phone number
+  hasWhatsapp: z.boolean().optional(), // Has WhatsApp
   inPersonAvailable: z.boolean().optional(),
-  inPersonNotes: z.string().optional(),
+  inPersonNotes: z.string().optional(), // Location
   goal: z.string().optional(),
   notes: z.array(NoteSchema).default([]), // Changed to array of notes
   tags: z.array(z.string()).default([]),
@@ -42,6 +44,8 @@ export const MenteeFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   age: z.union([z.number().int().positive(), z.literal(""), z.undefined()]).optional(),
   image: z.string().optional(),
+  phone: z.string().optional(),
+  hasWhatsapp: z.boolean().optional(),
   inPersonAvailable: z.boolean().optional(),
   inPersonNotes: z.string().optional(),
   goal: z.string().optional(),

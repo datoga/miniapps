@@ -41,6 +41,8 @@
     "image": "Foto",
     "age": "Edad",
     "agePlaceholder": "Introduce la edad",
+    "phone": "Teléfono",
+    "phonePlaceholder": "+34 600 123 456",
     "location": "Ubicación",
     "locationPlaceholder": "Ciudad, país o dirección...",
     "goal": "Objetivo",

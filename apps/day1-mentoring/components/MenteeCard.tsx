@@ -19,6 +19,11 @@ export const MenteeCard = memo(function MenteeCard({
 }: MenteeCardProps) {
   const t = useTranslations();
 
+  // Safety check for corrupted data
+  if (!mentee || !mentee.name) {
+    return null;
+  }
+
   const isArchived = mentee.archived;
 
   return (

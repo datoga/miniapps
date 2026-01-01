@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import type { Mentee, Session, Settings } from "../schemas";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import * as menteesRepo from "../repos/menteesRepo";
 import * as sessionsRepo from "../repos/sessionsRepo";
 import * as settingsRepo from "../repos/settingsRepo";
+import type { Mentee, Session, Settings } from "../schemas";
 
 export interface MentoringDataState {
   mentees: Mentee[];
@@ -251,7 +251,8 @@ export function useFilteredMentees(
   searchQuery: string
 ) {
   return useMemo(() => {
-    let filtered = mentees;
+    // Filter out invalid mentees (corrupted data)
+    let filtered = mentees.filter((m) => m && m.name);
 
     // Filter by archived status
     if (!showArchived) {
@@ -264,11 +265,12 @@ export function useFilteredMentees(
       filtered = filtered.filter((m) => {
         const searchableText = [
           m.name,
-          m.goal,
-          m.notes,
-          m.inPersonNotes,
+          m.location,
+          m.availabilityNotes,
           m.age?.toString(),
-          ...m.tags,
+          ...(m.goals?.map((g) => g.text) || []),
+          ...(m.notes?.map((n) => n.text) || []),
+          ...(m.tags || []),
         ]
           .filter(Boolean)
           .join(" ")
@@ -278,7 +280,7 @@ export function useFilteredMentees(
     }
 
     // Sort by name
-    return filtered.sort((a, b) => a.name.localeCompare(b.name));
+    return filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
   }, [mentees, showArchived, searchQuery]);
 }
 

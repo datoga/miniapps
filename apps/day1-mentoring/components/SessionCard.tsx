@@ -38,18 +38,18 @@ export const SessionCard = memo(function SessionCard({
     // Default 1 hour session
     const startDate = dateStr;
     const endDate = dateStr;
-    
+
     const title = encodeURIComponent(
-      session.title 
-        ? `${session.title} - ${menteeName}` 
+      session.title
+        ? `${session.title} - ${menteeName}`
         : `Sesión con ${menteeName}`
     );
-    
+
     const details = encodeURIComponent(
       [
         session.notes,
-        session.nextSteps.length > 0 
-          ? `\n\nPróximos pasos:\n${session.nextSteps.map(s => `- ${s.text}`).join("\n")}` 
+        session.nextSteps.length > 0
+          ? `\n\nPróximos pasos:\n${session.nextSteps.map(s => `- ${s.text}`).join("\n")}`
           : ""
       ].filter(Boolean).join("")
     );

@@ -46,7 +46,7 @@
     "agePlaceholder": "Enter age",
     "phone": "Phone",
     "phonePlaceholder": "+1 555 123 4567",
-    "location": "Location (remote)",
+    "location": "Location",
     "locationPlaceholder": "City, country, timezone...",
     "inPersonAvailable": "In-person available",
     "availabilityNotes": "Availability notes",

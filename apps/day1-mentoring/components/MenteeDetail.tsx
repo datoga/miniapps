@@ -155,9 +155,13 @@ export const MenteeDetail = memo(function MenteeDetail({
                 {mentee.email && (
                   <a
                     href={`mailto:${mentee.email}`}
-                    className="flex items-center gap-1 hover:text-gray-700 dark:hover:text-gray-300"
+                    className="flex items-center gap-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                    title={t("mentee.sendEmail")}
                   >
-                    <span>✉️</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="2" y="4" width="20" height="16" rx="2"/>
+                      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
                     <span>{mentee.email}</span>
                   </a>
                 )}

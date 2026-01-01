@@ -33,8 +33,9 @@ export const MenteeModal = memo(function MenteeModal({
     image: undefined,
     phone: "",
     hasWhatsapp: false,
+    location: "",
     inPersonAvailable: false,
-    inPersonNotes: "",
+    availabilityNotes: "",
     goal: "",
     notes: [],
     tags: [],
@@ -53,8 +54,9 @@ export const MenteeModal = memo(function MenteeModal({
           image: mentee.image,
           phone: mentee.phone ?? "",
           hasWhatsapp: mentee.hasWhatsapp ?? false,
+          location: mentee.location ?? mentee.inPersonNotes ?? "",
           inPersonAvailable: mentee.inPersonAvailable ?? false,
-          inPersonNotes: mentee.inPersonNotes ?? "",
+          availabilityNotes: mentee.availabilityNotes ?? "",
           goal: mentee.goal ?? "",
           notes: Array.isArray(mentee.notes) ? mentee.notes : [],
           tags: mentee.tags,
@@ -66,8 +68,9 @@ export const MenteeModal = memo(function MenteeModal({
           image: undefined,
           phone: "",
           hasWhatsapp: false,
+          location: "",
           inPersonAvailable: false,
-          inPersonNotes: "",
+          availabilityNotes: "",
           goal: "",
           notes: [],
           tags: [],
@@ -244,18 +247,47 @@ export const MenteeModal = memo(function MenteeModal({
           </div>
         </div>
 
-        {/* Location */}
+        {/* Location (remote) */}
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            📍 {t("mentee.location")}
+            🌐 {t("mentee.location")}
           </label>
           <input
             type="text"
-            value={formData.inPersonNotes ?? ""}
-            onChange={(e) => handleChange("inPersonNotes", e.target.value)}
+            value={formData.location ?? ""}
+            onChange={(e) => handleChange("location", e.target.value)}
             placeholder={t("mentee.locationPlaceholder")}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
+        </div>
+
+        {/* In-person availability */}
+        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4 space-y-3">
+          <label className="flex cursor-pointer items-center gap-2">
+            <input
+              type="checkbox"
+              checked={formData.inPersonAvailable ?? false}
+              onChange={(e) => handleChange("inPersonAvailable", e.target.checked)}
+              className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500"
+            />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              🤝 {t("mentee.inPersonAvailable")}
+            </span>
+          </label>
+          {formData.inPersonAvailable && (
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+                {t("mentee.availabilityNotes")}
+              </label>
+              <input
+                type="text"
+                value={formData.availabilityNotes ?? ""}
+                onChange={(e) => handleChange("availabilityNotes", e.target.value)}
+                placeholder={t("mentee.availabilityNotesPlaceholder")}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              />
+            </div>
+          )}
         </div>
 
         {/* Goal */}

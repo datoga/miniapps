@@ -27,8 +27,11 @@ export const MenteeSchema = z.object({
   image: z.string().optional(), // Base64 encoded image
   phone: z.string().optional(), // Phone number
   hasWhatsapp: z.boolean().optional(), // Has WhatsApp
-  inPersonAvailable: z.boolean().optional(),
-  inPersonNotes: z.string().optional(), // Location
+  location: z.string().optional(), // Location (city, country)
+  inPersonAvailable: z.boolean().optional(), // Available for in-person meetings
+  availabilityNotes: z.string().optional(), // Availability notes (schedule, preferences)
+  // Keep inPersonNotes for backward compatibility, maps to location
+  inPersonNotes: z.string().optional(),
   goal: z.string().optional(),
   notes: z.array(NoteSchema).default([]), // Changed to array of notes
   tags: z.array(z.string()).default([]),
@@ -46,8 +49,9 @@ export const MenteeFormSchema = z.object({
   image: z.string().optional(),
   phone: z.string().optional(),
   hasWhatsapp: z.boolean().optional(),
+  location: z.string().optional(),
   inPersonAvailable: z.boolean().optional(),
-  inPersonNotes: z.string().optional(),
+  availabilityNotes: z.string().optional(),
   goal: z.string().optional(),
   notes: z.array(NoteSchema).default([]),
   tags: z.array(z.string()).default([]),

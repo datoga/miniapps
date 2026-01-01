@@ -105,8 +105,11 @@ export const MenteeCard = memo(function MenteeCard({
           )}
         </div>
         <div className="flex items-center gap-2">
-          {mentee.inPersonNotes && (
-            <span className="cursor-help text-sm" title={mentee.inPersonNotes}>📍</span>
+          {(mentee.location || mentee.inPersonNotes) && (
+            <span className="cursor-help text-sm" title={mentee.location || mentee.inPersonNotes}>🌐</span>
+          )}
+          {mentee.inPersonAvailable && (
+            <span className="cursor-help text-sm text-green-600 dark:text-green-500" title={mentee.availabilityNotes || "Disponible presencial"}>🤝</span>
           )}
           {mentee.phone && (
             mentee.hasWhatsapp ? (

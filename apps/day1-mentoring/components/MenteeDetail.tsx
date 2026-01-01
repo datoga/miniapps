@@ -74,12 +74,20 @@ export const MenteeDetail = memo(function MenteeDetail({
                 onChange={(value) => handleFieldChange("age", value ? parseInt(value) : undefined)}
                 placeholder={t("mentee.agePlaceholder")}
               />
-              {mentee.inPersonNotes && (
+              {(mentee.location || mentee.inPersonNotes) && (
                 <span
                   className="cursor-help"
-                  title={mentee.inPersonNotes}
+                  title={mentee.location || mentee.inPersonNotes}
                 >
-                  📍
+                  🌐
+                </span>
+              )}
+              {mentee.inPersonAvailable && (
+                <span
+                  className="cursor-help text-green-600 dark:text-green-500"
+                  title={mentee.availabilityNotes || t("mentee.inPersonAvailable")}
+                >
+                  🤝
                 </span>
               )}
               {mentee.phone && (

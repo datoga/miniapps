@@ -6,8 +6,7 @@ import { Button } from "@miniapps/ui";
 import { Modal } from "./Modal";
 import { TagInput } from "./TagInput";
 import { NoteInput } from "./NoteInput";
-import { GoalInput } from "./GoalInput";
-import type { Mentee, MenteeFormInput, Note, Goal } from "../lib/schemas";
+import type { Mentee, MenteeFormInput, Note } from "../lib/schemas";
 import { MenteeFormSchema } from "../lib/schemas";
 import { resizeImage } from "../lib/imageUtils";
 
@@ -327,17 +326,6 @@ export const MenteeModal = memo(function MenteeModal({
               />
             </div>
           )}
-        </div>
-
-        {/* Goals */}
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            🎯 {t("mentee.goals")}
-          </label>
-          <GoalInput
-            goals={formData.goals ?? []}
-            onChange={(goals) => handleChange("goals", goals)}
-          />
         </div>
 
         {/* Notes (post-its) - only show when editing */}

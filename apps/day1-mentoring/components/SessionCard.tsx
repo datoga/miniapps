@@ -48,15 +48,15 @@ export const SessionCard = memo(function SessionCard({
 
     // Build description with notes and next steps
     let descriptionParts: string[] = [];
-    
+
     if (isRemote) {
       descriptionParts.push("📹 Sesión virtual - Añadir Google Meet desde el evento");
     }
-    
+
     if (session.notes) {
       descriptionParts.push(session.notes);
     }
-    
+
     if (session.nextSteps.length > 0) {
       descriptionParts.push(`\nPróximos pasos:\n${session.nextSteps.map(s => `- ${s.text}`).join("\n")}`);
     }
@@ -68,12 +68,12 @@ export const SessionCard = memo(function SessionCard({
 
     // Base calendar URL
     let url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}/${dateStr}&details=${details}`;
-    
+
     // Add location for remote sessions
     if (location) {
       url += `&location=${location}`;
     }
-    
+
     // Add conference data request for remote sessions
     // This parameter hints to Google Calendar to add video conferencing
     if (isRemote) {
@@ -128,7 +128,7 @@ export const SessionCard = memo(function SessionCard({
               onChange={(e) => onUpdate({ date: e.target.value })}
               className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-transparent border-none focus:outline-none focus:ring-1 focus:ring-primary-400 rounded cursor-pointer"
             />
-            
+
             {/* Remote/In-person toggle */}
             <button
               onClick={handleToggleRemote}

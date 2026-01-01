@@ -87,6 +87,7 @@ export type SessionFormInput = z.infer<typeof SessionFormSchema>;
 export const SettingsSchema = z.object({
   lastSelectedMenteeId: z.string().uuid().nullable().default(null),
   showArchived: z.boolean().default(false),
+  programName: z.string().default("Mi Programa"),
 });
 
 export type Settings = z.infer<typeof SettingsSchema>;

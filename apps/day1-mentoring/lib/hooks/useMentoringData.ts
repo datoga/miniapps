@@ -41,6 +41,7 @@ export interface MentoringDataActions {
   // Settings actions
   setSelectedMenteeId: (id: string | null) => Promise<void>;
   setShowArchived: (show: boolean) => Promise<void>;
+  setProgramName: (name: string) => Promise<void>;
 
   // Data actions
   refresh: () => Promise<void>;
@@ -53,6 +54,7 @@ export function useMentoringData(): MentoringDataState & MentoringDataActions {
   const [settings, setSettings] = useState<Settings>({
     lastSelectedMenteeId: null,
     showArchived: false,
+    programName: "Mi Programa",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -203,6 +205,11 @@ export function useMentoringData(): MentoringDataState & MentoringDataActions {
     setSettings((prev) => ({ ...prev, showArchived: show }));
   }, []);
 
+  const setProgramName = useCallback(async (name: string) => {
+    await settingsRepo.setProgramName(name);
+    setSettings((prev) => ({ ...prev, programName: name }));
+  }, []);
+
   // Data actions
   const refresh = useCallback(async () => {
     await loadData();
@@ -231,6 +238,7 @@ export function useMentoringData(): MentoringDataState & MentoringDataActions {
     deleteSession,
     setSelectedMenteeId,
     setShowArchived,
+    setProgramName,
     refresh,
     replaceAll,
   };

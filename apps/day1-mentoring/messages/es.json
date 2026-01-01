@@ -23,6 +23,7 @@
   "dashboard": {
     "title": "Panel",
     "allMentees": "Todos los mentees",
+    "programNamePlaceholder": "Nombre del programa",
     "searchPlaceholder": "Buscar mentees, sesiones, notas...",
     "newMentee": "Nuevo Mentee",
     "showArchived": "Mostrar archivados",

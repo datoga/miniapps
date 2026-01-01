@@ -15,6 +15,7 @@ import { MenteeModal } from "./MenteeModal";
 import { SessionModal } from "./SessionModal";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { SearchModal } from "./SearchModal";
+import { EditableField } from "./EditableField";
 
 // Track first session creation
 let hasTrackedFirstValue = false;
@@ -252,7 +253,7 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 12H5M12 19l-7-7 7-7"/>
               </svg>
-              {t("dashboard.allMentees")}
+              {data.settings.programName}
             </button>
             <MenteeDetail
               mentee={selectedMentee}
@@ -270,13 +271,16 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
           <div>
             {/* Header */}
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {t("dashboard.allMentees")}
-                </h2>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  {filteredMentees.length} mentee{filteredMentees.length !== 1 ? "s" : ""}
-                </p>
+              <div className="flex items-center gap-3">
+                <EditableField
+                  value={data.settings.programName}
+                  onChange={(name) => data.setProgramName(name)}
+                  placeholder={t("dashboard.programNamePlaceholder")}
+                  className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                />
+                <span className="rounded-full bg-primary-100 px-2.5 py-0.5 text-sm font-medium text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
+                  {filteredMentees.length}
+                </span>
               </div>
               <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                 <input

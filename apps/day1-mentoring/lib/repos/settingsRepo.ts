@@ -6,6 +6,7 @@ const SETTINGS_KEY = "app_settings";
 const defaultSettings: Settings = {
   lastSelectedMenteeId: null,
   showArchived: false,
+  programName: "Mi Programa",
 };
 
 /**
@@ -44,5 +45,12 @@ export async function setLastSelectedMenteeId(menteeId: string | null): Promise<
  */
 export async function setShowArchived(show: boolean): Promise<void> {
   await updateSettings({ showArchived: show });
+}
+
+/**
+ * Set program name
+ */
+export async function setProgramName(name: string): Promise<void> {
+  await updateSettings({ programName: name });
 }
 

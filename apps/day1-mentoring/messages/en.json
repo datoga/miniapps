@@ -23,6 +23,7 @@
   "dashboard": {
     "title": "Dashboard",
     "allMentees": "All Mentees",
+    "programNamePlaceholder": "Program name",
     "searchPlaceholder": "Search mentees, sessions, notes...",
     "newMentee": "New Mentee",
     "showArchived": "Show archived",

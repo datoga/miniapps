@@ -30,142 +30,147 @@ export const MenteeDetail = memo(function MenteeDetail({
   const t = useTranslations();
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-3xl mx-auto">
       {/* Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{mentee.name}</h2>
-            {mentee.archived && (
-              <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
-                {t("mentee.archived")}
-              </span>
-            )}
+      <div className="mb-8">
+        <div className="flex items-start gap-4 mb-4">
+          {/* Avatar */}
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary-500/20">
+            {mentee.name.charAt(0).toUpperCase()}
           </div>
-          {mentee.age && (
-            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-              {t("mentee.age")}: {mentee.age}
-            </p>
-          )}
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{mentee.name}</h2>
+              {mentee.archived && (
+                <span className="text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-0.5 rounded-full">
+                  {t("mentee.archived")}
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+              {mentee.age && <span>{mentee.age} años</span>}
+              {mentee.inPersonAvailable && (
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-green-500" />
+                  Presencial
+                </span>
+              )}
+            </div>
+          </div>
         </div>
+
+        {/* Actions */}
         <div className="flex gap-2">
-          <Button variant="secondary" size="sm" onClick={onEdit}>
+          <Button variant="outline" size="sm" onClick={onEdit}>
             {t("actions.edit")}
           </Button>
-          <Button variant="secondary" size="sm" onClick={onArchive}>
+          <Button variant="ghost" size="sm" onClick={onArchive}>
             {mentee.archived ? t("actions.unarchive") : t("actions.archive")}
           </Button>
-          <Button variant="secondary" size="sm" onClick={onDelete}>
+          <Button variant="ghost" size="sm" onClick={onDelete} className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20">
             {t("actions.delete")}
           </Button>
         </div>
       </div>
 
-      {/* Info cards */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {/* In-person availability */}
-        {(mentee.inPersonAvailable !== undefined || mentee.inPersonNotes) && (
-          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-              {t("mentee.inPersonAvailable")}
-            </h3>
-            <div className="flex items-center gap-2">
-              <span
-                className={`inline-block h-3 w-3 rounded-full ${
-                  mentee.inPersonAvailable ? "bg-green-500" : "bg-gray-300 dark:bg-gray-600"
-                }`}
-              />
-              <span className="text-sm text-gray-700 dark:text-gray-300">
-                {mentee.inPersonAvailable ? "Yes" : "No"}
-              </span>
-            </div>
-            {mentee.inPersonNotes && (
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                {mentee.inPersonNotes}
-              </p>
-            )}
-          </div>
-        )}
-
+      {/* Content */}
+      <div className="space-y-6">
         {/* Goal */}
         {mentee.goal && (
-          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-            <h3 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+          <div>
+            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
               {t("mentee.goal")}
             </h3>
-            <p className="text-sm text-gray-700 dark:text-gray-300">{mentee.goal}</p>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{mentee.goal}</p>
           </div>
         )}
-      </div>
 
-      {/* Notes */}
-      {mentee.notes && (
-        <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-          <h3 className="mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-            {t("mentee.notes")}
-          </h3>
-          <p className="whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-300">
-            {mentee.notes}
-          </p>
-        </div>
-      )}
-
-      {/* Tags */}
-      {mentee.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {mentee.tags.map((tag, i) => (
-            <span
-              key={i}
-              className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Sessions section */}
-      <div>
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            {t("mentee.sessions")} ({sessions.length})
-          </h3>
-          <Button size="sm" onClick={onNewSession}>
-            {t("mentee.newSession")}
-          </Button>
-        </div>
-
-        {sessions.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-gray-300 p-8 text-center dark:border-gray-600">
-            <p className="text-gray-500 dark:text-gray-400">{t("mentee.noSessions")}</p>
-            <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">
-              {t("mentee.noSessionsDescription")}
+        {/* Notes */}
+        {mentee.notes && (
+          <div>
+            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              {t("mentee.notes")}
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
+              {mentee.notes}
             </p>
           </div>
-        ) : (
-          <div className="space-y-3">
-            {sessions.map((session) => (
-              <SessionCard
-                key={session.id}
-                session={session}
-                onEdit={() => onEditSession(session)}
-                onDelete={() => onDeleteSession(session)}
-              />
+        )}
+
+        {/* In-person notes */}
+        {mentee.inPersonNotes && (
+          <div>
+            <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              {t("mentee.inPersonNotes")}
+            </h3>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{mentee.inPersonNotes}</p>
+          </div>
+        )}
+
+        {/* Tags */}
+        {mentee.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {mentee.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+              >
+                {tag}
+              </span>
             ))}
           </div>
         )}
+
+        {/* Divider */}
+        <div className="border-t border-gray-200 dark:border-gray-700" />
+
+        {/* Sessions section */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {t("mentee.sessions")}
+              <span className="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+                ({sessions.length})
+              </span>
+            </h3>
+            <Button size="sm" onClick={onNewSession}>
+              + {t("mentee.newSession")}
+            </Button>
+          </div>
+
+          {sessions.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray-400">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </div>
+              <p className="text-gray-500 dark:text-gray-400 mb-1">{t("mentee.noSessions")}</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500">{t("mentee.noSessionsDescription")}</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {sessions.map((session) => (
+                <SessionCard
+                  key={session.id}
+                  session={session}
+                  onEdit={() => onEditSession(session)}
+                  onDelete={() => onDeleteSession(session)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Metadata */}
-      <div className="text-xs text-gray-500 dark:text-gray-500">
-        <p>
-          {t("mentee.createdAt")}: {new Date(mentee.createdAt).toLocaleDateString()}
-        </p>
-        <p>
-          {t("mentee.updatedAt")}: {new Date(mentee.updatedAt).toLocaleDateString()}
-        </p>
+      <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800 text-xs text-gray-400 dark:text-gray-500 flex gap-4">
+        <span>{t("mentee.createdAt")}: {new Date(mentee.createdAt).toLocaleDateString()}</span>
+        <span>{t("mentee.updatedAt")}: {new Date(mentee.updatedAt).toLocaleDateString()}</span>
       </div>
     </div>
   );
 });
-

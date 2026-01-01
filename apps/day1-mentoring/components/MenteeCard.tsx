@@ -22,55 +22,75 @@ export const MenteeCard = memo(function MenteeCard({
   return (
     <button
       onClick={onClick}
-      className="w-full rounded-xl border border-gray-200 bg-white p-4 text-left transition-all hover:border-primary-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-primary-600"
+      className="group w-full rounded-2xl bg-white p-5 text-left transition-all duration-200 hover:shadow-lg hover:shadow-gray-200/50 dark:bg-gray-800/50 dark:hover:bg-gray-800 dark:hover:shadow-none border border-gray-100 dark:border-gray-700/50 hover:border-gray-200 dark:hover:border-gray-600"
     >
-      <div className="mb-2 flex items-start justify-between">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{mentee.name}</h3>
+      {/* Header */}
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-3">
+          {/* Avatar */}
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-medium text-sm shadow-sm">
+            {mentee.name.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              {mentee.name}
+            </h3>
+            {mentee.age && (
+              <span className="text-xs text-gray-500 dark:text-gray-400">{mentee.age} años</span>
+            )}
+          </div>
+        </div>
         {mentee.archived && (
-          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-400">
-            📦 {t("mentee.archived")}
+          <span className="text-xs text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">
+            {t("mentee.archived")}
           </span>
         )}
       </div>
 
+      {/* Goal */}
       {mentee.goal && (
-        <p className="mb-3 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">{mentee.goal}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3 leading-relaxed">
+          {mentee.goal}
+        </p>
       )}
 
-      <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-        <span>
-          {sessionsCount} {t("mentee.sessions").toLowerCase()}
-        </span>
-        {lastSession && (
-          <>
-            <span>•</span>
-            <span>{lastSession.date}</span>
-          </>
-        )}
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700/50">
+        <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+          <span className="flex items-center gap-1">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+            {sessionsCount}
+          </span>
+          {lastSession && (
+            <span className="text-gray-400 dark:text-gray-500">{lastSession.date}</span>
+          )}
+        </div>
         {mentee.inPersonAvailable && (
-          <>
-            <span>•</span>
-            <span>📍</span>
-          </>
+          <span className="w-2 h-2 rounded-full bg-green-500" title="Disponible presencial" />
         )}
       </div>
 
+      {/* Tags */}
       {mentee.tags.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {mentee.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-primary-100 px-2 py-0.5 text-xs text-primary-700 dark:bg-primary-900/30 dark:text-primary-300"
+              className="px-2 py-0.5 text-xs rounded-md bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300"
             >
               {tag}
             </span>
           ))}
           {mentee.tags.length > 3 && (
-            <span className="text-xs text-gray-500 dark:text-gray-400">+{mentee.tags.length - 3}</span>
+            <span className="text-xs text-gray-400">+{mentee.tags.length - 3}</span>
           )}
         </div>
       )}
     </button>
   );
 });
-

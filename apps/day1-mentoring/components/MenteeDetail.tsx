@@ -6,8 +6,7 @@ import { Button } from "@miniapps/ui";
 import type { Mentee, Session, MenteeFormInput } from "../lib/schemas";
 import { SessionCard } from "./SessionCard";
 import { EditableField } from "./EditableField";
-
-const MAX_IMAGE_SIZE = 500 * 1024; // 500KB
+import { resizeImage } from "../lib/imageUtils";
 
 interface MenteeDetailProps {
   mentee: Mentee;
@@ -45,22 +44,19 @@ export const MenteeDetail = memo(function MenteeDetail({
   }, []);
 
   const handleImageChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
-      if (file.size > MAX_IMAGE_SIZE) {
-        alert(t("mentee.imageTooLarge"));
-        return;
+      try {
+        // Resize image to 256px max dimension with 80% quality
+        const resizedImage = await resizeImage(file, 256, 0.8);
+        onUpdate({ image: resizedImage });
+      } catch (error) {
+        console.error("Failed to process image:", error);
       }
-
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onUpdate({ image: reader.result as string });
-      };
-      reader.readAsDataURL(file);
     },
-    [onUpdate, t]
+    [onUpdate]
   );
 
   return (

@@ -8,8 +8,7 @@ import { TagInput } from "./TagInput";
 import { NoteInput } from "./NoteInput";
 import type { Mentee, MenteeFormInput, Note } from "../lib/schemas";
 import { MenteeFormSchema } from "../lib/schemas";
-
-const MAX_IMAGE_SIZE = 500 * 1024; // 500KB max
+import { resizeImage } from "../lib/imageUtils";
 
 interface MenteeModalProps {
   open: boolean;
@@ -80,22 +79,19 @@ export const MenteeModal = memo(function MenteeModal({
     }
   }, [open, mentee]);
 
-  const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > MAX_IMAGE_SIZE) {
-      setErrors((prev) => ({ ...prev, image: "Image too large (max 500KB)" }));
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      setFormData((prev) => ({ ...prev, image: result }));
+    try {
+      // Resize image to 256px max dimension with 80% quality
+      const resizedImage = await resizeImage(file, 256, 0.8);
+      setFormData((prev) => ({ ...prev, image: resizedImage }));
       setErrors((prev) => ({ ...prev, image: "" }));
-    };
-    reader.readAsDataURL(file);
+    } catch (error) {
+      console.error("Failed to process image:", error);
+      setErrors((prev) => ({ ...prev, image: "Failed to process image" }));
+    }
   }, []);
 
   const handleRemoveImage = useCallback(() => {

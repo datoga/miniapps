@@ -236,8 +236,8 @@ export const MenteeModal = memo(function MenteeModal({
               className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
             <label className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 transition-colors ${
-              formData.hasWhatsapp 
-                ? "border-green-500 bg-green-50 dark:bg-green-900/20" 
+              formData.hasWhatsapp
+                ? "border-green-500 bg-green-50 dark:bg-green-900/20"
                 : "border-gray-300 hover:bg-gray-50 dark:border-gray-600 dark:hover:bg-gray-700"
             }`}>
               <input
@@ -310,16 +310,18 @@ export const MenteeModal = memo(function MenteeModal({
           />
         </div>
 
-        {/* Notes (post-its) */}
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t("mentee.notes")}
-          </label>
-          <NoteInput
-            notes={formData.notes ?? []}
-            onChange={(notes) => handleChange("notes", notes)}
-          />
-        </div>
+        {/* Notes (post-its) - only show when editing */}
+        {isEdit && (
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t("mentee.notes")}
+            </label>
+            <NoteInput
+              notes={formData.notes ?? []}
+              onChange={(notes) => handleChange("notes", notes)}
+            />
+          </div>
+        )}
 
         {/* Tags */}
         <div>

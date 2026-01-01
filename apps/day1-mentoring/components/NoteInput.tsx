@@ -118,11 +118,12 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
                   </div>
                 </div>
 
-                {/* Delete button */}
+                {/* Delete button - visible on hover */}
                 <button
                   type="button"
                   onClick={() => handleRemoveNote(note.id)}
-                  className="absolute top-1 right-1 w-5 h-5 bg-gray-400/50 hover:bg-red-500 text-white rounded-full text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all"
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
+                  title={t("actions.delete")}
                 >
                   ×
                 </button>

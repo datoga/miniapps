@@ -1,6 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
-import { AppShellWrapper } from "../../../components/AppShellWrapper";
 import { AboutSection } from "../../../components/AboutSection";
+import { AppShellWrapper } from "../../../components/AppShellWrapper";
 
 type PageProps = {
   params: Promise<{ locale: string }>;

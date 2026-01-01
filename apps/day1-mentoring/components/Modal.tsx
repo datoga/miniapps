@@ -1,15 +1,22 @@
 "use client";
 
-import { memo, useEffect, useCallback } from "react";
+import { memo, useCallback, useEffect } from "react";
 
 interface ModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  maxWidth?: string;
 }
 
-export const Modal = memo(function Modal({ open, onClose, title, children }: ModalProps) {
+export const Modal = memo(function Modal({
+  open,
+  onClose,
+  title,
+  children,
+  maxWidth = "max-w-lg",
+}: ModalProps) {
   // Close on escape key
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -36,22 +43,36 @@ export const Modal = memo(function Modal({ open, onClose, title, children }: Mod
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-gray-900/60 backdrop-blur-md transition-opacity"
         onClick={onClose}
       />
 
       {/* Modal content */}
-      <div className="relative max-h-[90vh] w-full max-w-lg overflow-auto rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-800">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{title}</h2>
+      <div
+        className={`relative max-h-[90vh] w-full ${maxWidth} overflow-auto rounded-[2.5rem] bg-white p-8 sm:p-10 shadow-3xl dark:bg-gray-900 border border-gray-100 dark:border-gray-800 transition-all scale-100`}
+      >
+        <div className="mb-8 flex items-center justify-between">
+          <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight">
+            {title}
+          </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
-            ✕
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
         {children}
@@ -59,4 +80,3 @@ export const Modal = memo(function Modal({ open, onClose, title, children }: Mod
     </div>
   );
 });
-

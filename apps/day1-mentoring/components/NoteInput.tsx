@@ -1,43 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import type { Note } from "../lib/schemas";
-
-const NOTE_COLORS = ["yellow", "pink", "blue", "green", "purple"] as const;
-type NoteColor = (typeof NOTE_COLORS)[number];
-
-const colorStyles: Record<NoteColor, { bg: string; pin: string }> = {
-  yellow: {
-    bg: "bg-yellow-100 dark:bg-yellow-900/50",
-    pin: "bg-red-500"
-  },
-  pink: {
-    bg: "bg-pink-100 dark:bg-pink-900/50",
-    pin: "bg-red-600"
-  },
-  blue: {
-    bg: "bg-blue-100 dark:bg-blue-900/50",
-    pin: "bg-red-500"
-  },
-  green: {
-    bg: "bg-green-100 dark:bg-green-900/50",
-    pin: "bg-red-600"
-  },
-  purple: {
-    bg: "bg-purple-100 dark:bg-purple-900/50",
-    pin: "bg-red-500"
-  },
-};
-
-const colorDots: Record<NoteColor, string> = {
-  yellow: "bg-yellow-400 hover:bg-yellow-500",
-  pink: "bg-pink-400 hover:bg-pink-500",
-  blue: "bg-blue-400 hover:bg-blue-500",
-  green: "bg-green-400 hover:bg-green-500",
-  purple: "bg-purple-400 hover:bg-purple-500",
-};
 
 interface NoteInputProps {
   notes: Note[];
@@ -47,34 +13,24 @@ interface NoteInputProps {
 export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputProps) {
   const t = useTranslations();
   const [newNoteText, setNewNoteText] = useState("");
-  const [selectedColor, setSelectedColor] = useState<NoteColor>("yellow");
-  const [showColorPicker, setShowColorPicker] = useState(false);
-
-  // Generate stable rotations based on note id
-  const rotations = useMemo(() => {
-    const map: Record<string, number> = {};
-    notes.forEach((note, index) => {
-      // Use a simple hash based on id and index for stable rotation
-      const hash = note.id.charCodeAt(0) + index;
-      map[note.id] = (hash % 5) - 2; // -2 to 2 degrees
-    });
-    return map;
-  }, [notes]);
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState("");
 
   const handleAddNote = useCallback(() => {
-    if (!newNoteText.trim()) return;
+    if (!newNoteText.trim()) {
+      return;
+    }
 
     const newNote: Note = {
       id: uuidv4(),
       text: newNoteText.trim(),
-      color: selectedColor,
+      color: "blue",
       createdAt: new Date().toISOString(),
     };
 
     onChange([...notes, newNote]);
     setNewNoteText("");
-    setShowColorPicker(false);
-  }, [newNoteText, selectedColor, notes, onChange]);
+  }, [newNoteText, notes, onChange]);
 
   const handleRemoveNote = useCallback(
     (id: string) => {
@@ -83,121 +39,89 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
     [notes, onChange]
   );
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        handleAddNote();
-      }
-    },
-    [handleAddNote]
-  );
+  const handleSaveEdit = useCallback(() => {
+    if (!editingNoteId) {
+      return;
+    }
+
+    if (editingText.trim()) {
+      onChange(notes.map((n) => (n.id === editingNoteId ? { ...n, text: editingText.trim() } : n)));
+    }
+    setEditingNoteId(null);
+    setEditingText("");
+  }, [editingNoteId, editingText, notes, onChange]);
 
   return (
-    <div className="space-y-4">
-      {/* Existing notes as post-its */}
-      {notes.length > 0 && (
-        <div className="flex flex-wrap gap-4">
-          {notes.map((note) => {
-            const noteColor = (note.color as NoteColor) || "yellow";
-            const rotation = rotations[note.id] || 0;
-
-            return (
-              <div
-                key={note.id}
-                className={`relative group min-w-[160px] max-w-[220px] ${colorStyles[noteColor].bg} shadow-md hover:shadow-lg transition-shadow`}
-                style={{
-                  transform: `rotate(${rotation}deg)`,
-                  clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%)"
-                }}
+    <div className="space-y-6">
+      <div className="grid gap-4">
+        {notes.map((note) => (
+          <div
+            key={note.id}
+            className="group relative p-4 rounded-2xl bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-900/30 transition-all hover:shadow-md"
+          >
+            <button
+              onClick={() => handleRemoveNote(note.id)}
+              className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-white/50 transition-all opacity-0 group-hover:opacity-100"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                {/* Pushpin */}
-                <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10">
-                  <div className={`w-4 h-4 rounded-full ${colorStyles[noteColor].pin} shadow-md`}>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/60" />
-                  </div>
-                </div>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
 
-                {/* Delete button - visible on hover */}
-                <button
-                  type="button"
-                  onClick={() => handleRemoveNote(note.id)}
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full text-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md z-20"
-                  title={t("actions.delete")}
-                >
-                  ×
-                </button>
-
-                {/* Note content */}
-                <div className="pt-8 pb-5 px-4">
-                  <p className="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-wrap break-words leading-relaxed">
-                    {note.text}
-                  </p>
-                </div>
-
-                {/* Folded corner effect */}
-                <div
-                  className="absolute bottom-0 right-0 w-0 h-0"
-                  style={{
-                    borderStyle: "solid",
-                    borderWidth: "0 0 10px 10px",
-                    borderColor: "transparent transparent rgba(0,0,0,0.1) transparent"
-                  }}
-                />
+            {editingNoteId === note.id ? (
+              <textarea
+                value={editingText}
+                onChange={(e) => setEditingText(e.target.value)}
+                onBlur={handleSaveEdit}
+                autoFocus
+                rows={3}
+                className="w-full bg-transparent border-none outline-none resize-none text-sm text-gray-700 dark:text-gray-200 leading-relaxed font-medium"
+              />
+            ) : (
+              <div
+                onClick={() => {
+                  setEditingNoteId(note.id);
+                  setEditingText(note.text);
+                }}
+                className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap break-words leading-relaxed cursor-text min-h-[60px]"
+              >
+                {note.text}
               </div>
-            );
-          })}
-        </div>
-      )}
+            )}
 
-      {/* Add new note */}
-      <div className="flex gap-2 items-center">
-        <input
-          type="text"
+            <p className="mt-2 text-[10px] text-amber-500/70 font-medium text-right">
+              {new Date(note.createdAt).toLocaleDateString()}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="relative">
+        <textarea
           value={newNoteText}
           onChange={(e) => setNewNoteText(e.target.value)}
-          onKeyDown={handleKeyDown}
           placeholder={t("mentee.notesPlaceholder")}
-          className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          rows={3}
+          className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all resize-none shadow-sm placeholder:text-gray-400"
         />
-
-        {/* Color picker toggle */}
-        <div className="relative">
+        <div className="flex justify-end mt-2">
           <button
             type="button"
-            onClick={() => setShowColorPicker(!showColorPicker)}
-            className={`w-8 h-8 rounded-lg ${colorDots[selectedColor]} shadow-sm transition-transform hover:scale-110`}
-            title={t("mentee.noteColor")}
-          />
-
-          {/* Color picker dropdown */}
-          {showColorPicker && (
-            <div className="absolute bottom-full right-0 mb-2 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 flex gap-1.5 z-10">
-              {NOTE_COLORS.map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => {
-                    setSelectedColor(color);
-                    setShowColorPicker(false);
-                  }}
-                  className={`w-6 h-6 rounded-full ${colorDots[color]} ${
-                    selectedColor === color ? "ring-2 ring-offset-2 ring-gray-400 dark:ring-offset-gray-800" : ""
-                  } transition-transform hover:scale-110`}
-                />
-              ))}
-            </div>
-          )}
+            onClick={handleAddNote}
+            disabled={!newNoteText.trim()}
+            className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white text-xs font-semibold rounded-xl shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {t("mentee.addNote")}
+          </button>
         </div>
-
-        <button
-          type="button"
-          onClick={handleAddNote}
-          disabled={!newNoteText.trim()}
-          className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium transition-colors"
-        >
-          +
-        </button>
       </div>
     </div>
   );

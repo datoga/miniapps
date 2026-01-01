@@ -1,18 +1,13 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
 import { trackEvent } from "@miniapps/analytics";
-import {
-  useMentoringData,
-  useMenteeSessions,
-} from "../lib/hooks/useMentoringData";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMenteeSessions, useMentoringData } from "../lib/hooks/useMentoringData";
 import type { Mentee, Session, SessionFormInput } from "../lib/schemas";
-import { MenteeDetail } from "./MenteeDetail";
-import { SessionModal } from "./SessionModal";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { MenteeDetail } from "./MenteeDetail";
 
 // Track first session creation
 let hasTrackedFirstValue = false;
@@ -26,9 +21,6 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
   const router = useRouter();
   const locale = useLocale();
   const data = useMentoringData();
-
-  // Modal states
-  const [sessionModalOpen, setSessionModalOpen] = useState(false);
 
   // Confirm dialog states
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -100,29 +92,40 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
   );
 
   // Session handlers
-  const handleOpenNewSession = useCallback(() => {
-    setSessionModalOpen(true);
-  }, []);
+  const handleCreateInlineSession = useCallback(async () => {
+    if (!menteeId) {
+      return;
+    }
 
-  const handleSaveSession = useCallback(
-    async (input: SessionFormInput) => {
-      if (menteeId) {
-        const session = await data.createSession(menteeId, input);
-        if (session) {
-          if (!hasTrackedFirstValue && data.sessions.length === 0) {
-            trackEvent("first_value");
-            hasTrackedFirstValue = true;
-          }
-          trackEvent("session_created", {
-            nextStepsCount: input.nextSteps.length,
-            hasTags: input.tags.length > 0,
-          });
-        }
+    // Default values for new session
+    const now = new Date();
+    const dateStr = now.toISOString().split("T")[0] ?? "";
+    const timeStr = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+    const input: SessionFormInput = {
+      date: dateStr,
+      time: timeStr,
+      tags: [],
+      nextSteps: [],
+      isRemote: true,
+      title: "",
+      notes: "",
+    };
+
+    const session = await data.createSession(menteeId, input);
+
+    if (session) {
+      if (!hasTrackedFirstValue && data.sessions.length === 0) {
+        trackEvent("first_value");
+        hasTrackedFirstValue = true;
       }
-      setSessionModalOpen(false);
-    },
-    [data, menteeId]
-  );
+      trackEvent("session_created", {
+        nextStepsCount: 0,
+        hasTags: false,
+        method: "inline",
+      });
+    }
+  }, [data, menteeId]);
 
   const handleDeleteSession = useCallback(
     (session: Session) => {
@@ -138,20 +141,6 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
       });
     },
     [data, t]
-  );
-
-  const handleToggleStep = useCallback(
-    async (sessionId: string, stepId: string, done: boolean) => {
-      const session = data.sessions.find((s) => s.id === sessionId);
-      if (!session) {return;}
-
-      const updatedNextSteps = session.nextSteps.map((step) =>
-        step.id === stepId ? { ...step, done } : step
-      );
-
-      await data.updateSession(sessionId, { nextSteps: updatedNextSteps });
-    },
-    [data]
   );
 
   // Loading state
@@ -174,8 +163,15 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
           onClick={handleBackToList}
           className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
           {data.settings.programName}
         </button>
@@ -187,24 +183,13 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
           }}
           onArchive={() => handleArchiveMentee(mentee)}
           onDelete={() => handleDeleteMentee(mentee)}
-          onNewSession={handleOpenNewSession}
+          onNewSession={handleCreateInlineSession}
           onUpdateSession={async (sessionId, updates) => {
             await data.updateSession(sessionId, updates);
           }}
           onDeleteSession={handleDeleteSession}
-          onToggleStep={handleToggleStep}
         />
       </div>
-
-      {/* Session Modal */}
-      <SessionModal
-        open={sessionModalOpen}
-        session={null}
-        onSave={handleSaveSession}
-        onClose={() => {
-          setSessionModalOpen(false);
-        }}
-      />
 
       <ConfirmDialog
         open={confirmDialog.open}
@@ -216,4 +201,3 @@ export function MenteeDetailView({ menteeId }: MenteeDetailViewProps) {
     </>
   );
 }
-

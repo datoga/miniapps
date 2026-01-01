@@ -33,6 +33,7 @@ export const GoalSchema = z.object({
   id: z.string().uuid(),
   text: z.string().min(1),
   completed: z.boolean().default(false),
+  description: z.string().optional(), // Free text, action plan, etc.
   actions: z.array(ActionStepSchema).default([]), // Action plan
   createdAt: z.string().datetime(),
 });
@@ -79,6 +80,7 @@ export const MenteeFormSchema = z.object({
   goals: z.array(GoalSchema).default([]),
   notes: z.array(NoteSchema).default([]),
   tags: z.array(z.string()).default([]),
+  archived: z.boolean().optional(),
 });
 
 export type MenteeFormInput = z.infer<typeof MenteeFormSchema>;
@@ -88,6 +90,11 @@ export const SessionSchema = z.object({
   id: z.string().uuid(),
   menteeId: z.string().uuid(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
+  time: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/, "Invalid time format")
+    .optional()
+    .or(z.literal("")),
   title: z.string().optional(),
   notes: z.string().optional(),
   nextSteps: z.array(NextStepSchema).default([]),
@@ -102,6 +109,11 @@ export type Session = z.infer<typeof SessionSchema>;
 // Session form input
 export const SessionFormSchema = z.object({
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format"),
+  time: z
+    .string()
+    .regex(/^\d{2}:\d{2}$/, "Invalid time format")
+    .optional()
+    .or(z.literal("")),
   title: z.string().optional(),
   notes: z.string().optional(),
   nextSteps: z.array(NextStepSchema).default([]),
@@ -133,4 +145,3 @@ export const BackupSchema = z.object({
 });
 
 export type Backup = z.infer<typeof BackupSchema>;
-

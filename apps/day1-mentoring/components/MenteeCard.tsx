@@ -1,173 +1,226 @@
 "use client";
+// Force refresh
 
-import { memo } from "react";
 import { useTranslations } from "next-intl";
+import { memo } from "react";
 import type { Mentee, Session } from "../lib/schemas";
 
 interface MenteeCardProps {
   mentee: Mentee;
   sessionsCount: number;
-  lastSession?: Session;
+  nextSession?: Session;
   onClick: () => void;
+  onArchive: (e: React.MouseEvent) => void;
+  onDelete: (e: React.MouseEvent) => void;
 }
 
 export const MenteeCard = memo(function MenteeCard({
   mentee,
   sessionsCount,
-  lastSession,
+  nextSession,
   onClick,
+  onArchive,
+  onDelete,
 }: MenteeCardProps) {
   const t = useTranslations();
 
-  // Safety check for corrupted data
   if (!mentee || !mentee.name) {
     return null;
   }
 
   const isArchived = mentee.archived;
+  const initial = mentee.name.trim().charAt(0)?.toUpperCase() || "?";
 
   return (
-    <button
+    <div
       onClick={onClick}
-      className={`group w-full rounded-2xl p-5 text-left transition-all duration-200 border ${
+      className={`group relative flex flex-col h-full min-h-[280px] p-6 rounded-3xl border transition-all duration-300 cursor-pointer ${
         isArchived
-          ? "bg-amber-50/50 border-amber-200/50 hover:border-amber-300 dark:bg-amber-900/10 dark:border-amber-800/30 dark:hover:border-amber-700/50"
-          : "bg-white border-gray-100 hover:shadow-lg hover:shadow-gray-200/50 hover:border-gray-200 dark:bg-gray-800/50 dark:border-gray-700/50 dark:hover:bg-gray-800 dark:hover:border-gray-600 dark:hover:shadow-none"
+          ? "bg-gray-50/50 border-gray-200 grayscale opacity-75 hover:opacity-100"
+          : "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-white/20 dark:border-white/5 shadow-sm hover:shadow-lg hover:shadow-primary-500/5 hover:-translate-y-1"
       }`}
     >
-      {/* Header */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          {/* Avatar */}
-          {mentee.image ? (
-            <img
-              src={mentee.image}
-              alt={mentee.name}
-              className={`w-10 h-10 rounded-full object-cover shadow-sm ${
-                isArchived ? "opacity-70" : ""
-              }`}
-            />
-          ) : (
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium text-sm shadow-sm ${
-              isArchived
-                ? "bg-gradient-to-br from-amber-300 to-amber-500 text-amber-900"
-                : "bg-gradient-to-br from-primary-400 to-primary-600 text-white"
-            }`}>
-              {mentee.name?.charAt(0)?.toUpperCase() || "?"}
-            </div>
-          )}
-          <div>
-            <h3 className={`font-semibold transition-colors ${
-              isArchived
-                ? "text-amber-800 dark:text-amber-300"
-                : "text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400"
-            }`}>
-              {mentee.name}
-            </h3>
-            {mentee.age && (
-              <span className={`text-xs ${isArchived ? "text-amber-600 dark:text-amber-400" : "text-gray-500 dark:text-gray-400"}`}>
-                {mentee.age} años
-              </span>
-            )}
-          </div>
-        </div>
+      {/* Header Actions */}
+      <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onArchive(e);
+          }}
+          className="p-2 rounded-xl bg-white dark:bg-gray-700 text-gray-400 hover:text-primary-500 shadow-sm transition-colors"
+          title={isArchived ? t("actions.unarchive") : t("actions.archive")}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M21 8V21a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" />
+            <path d="M21 3H3" />
+            <path d="M10 12h4" />
+          </svg>
+        </button>
+
         {isArchived && (
-          <span className="text-xs text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/30 px-2 py-0.5 rounded font-medium">
-            {t("mentee.archived")}
-          </span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(e);
+            }}
+            className="p-2 rounded-xl bg-white dark:bg-gray-700 text-gray-400 hover:text-red-500 shadow-sm transition-colors"
+            title={t("actions.delete")}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
+          </button>
         )}
       </div>
 
-      {/* Goals */}
-      {mentee.goals && mentee.goals.length > 0 && (
-        <div className="mb-3">
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className={`text-xs ${isArchived ? "text-amber-600 dark:text-amber-400" : "text-gray-500 dark:text-gray-400"}`}>
-              🎯 {mentee.goals.filter(g => g.completed).length}/{mentee.goals.length}
-            </span>
-            <div className={`flex-1 h-1 rounded-full overflow-hidden ${isArchived ? "bg-amber-200 dark:bg-amber-800/30" : "bg-gray-200 dark:bg-gray-700"}`}>
-              <div
-                className="h-1 rounded-full bg-gradient-to-r from-green-400 to-green-500 transition-all duration-300"
-                style={{ width: `${(mentee.goals.filter(g => g.completed).length / mentee.goals.length) * 100}%` }}
-              />
-            </div>
-          </div>
-          <p className={`text-sm line-clamp-1 ${
-            isArchived ? "text-amber-700 dark:text-amber-400/80" : "text-gray-600 dark:text-gray-400"
-          }`}>
-            {mentee.goals.find(g => !g.completed)?.text || mentee.goals[0]?.text}
-          </p>
+      {/* Profile Section */}
+      <div className="flex items-center gap-4 mb-6">
+        <div
+          className={`w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-2xl shadow-inner ${
+            isArchived
+              ? "bg-gray-100 text-gray-400"
+              : "bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900/40 dark:to-primary-800/40 text-primary-700 dark:text-primary-300"
+          }`}
+        >
+          {initial}
         </div>
-      )}
-
-      {/* Footer */}
-      <div className={`flex items-center justify-between pt-3 border-t ${
-        isArchived ? "border-amber-200/50 dark:border-amber-800/30" : "border-gray-100 dark:border-gray-700/50"
-      }`}>
-        <div className={`flex items-center gap-3 text-xs ${
-          isArchived ? "text-amber-600 dark:text-amber-400" : "text-gray-500 dark:text-gray-400"
-        }`}>
-          <span className="flex items-center gap-1">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
-            {sessionsCount}
-          </span>
-          {lastSession && (
-            <span className={isArchived ? "text-amber-500 dark:text-amber-500" : "text-gray-400 dark:text-gray-500"}>
-              {lastSession.date}
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {mentee.location && (
-            <span className="cursor-help text-sm" title={mentee.location}>🌐</span>
-          )}
-          {mentee.inPersonAvailable && (
-            <span className="cursor-help text-sm text-green-600 dark:text-green-500" title={mentee.availabilityNotes || "Disponible presencial"}>🤝</span>
-          )}
-          {mentee.phone && (
-            mentee.hasWhatsapp ? (
-              <span className="text-green-500" title={`WhatsApp: ${mentee.phone}`}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                </svg>
+        <div>
+          <h3
+            className={`font-bold text-xl leading-tight ${
+              isArchived ? "text-gray-500" : "text-gray-900 dark:text-white"
+            }`}
+          >
+            {mentee.name}
+          </h3>
+          <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 font-medium">
+            {mentee.age && (
+              <span>
+                {mentee.age} {t("mentee.ageLabel")}
               </span>
-            ) : (
-              <span className="cursor-help text-sm" title={mentee.phone}>📞</span>
-            )
-          )}
-          {mentee.email && (
-            <span className="cursor-help text-sm" title={mentee.email}>✉️</span>
-          )}
+            )}
+            {mentee.location && (
+              <>
+                <span className="w-1 h-1 rounded-full bg-gray-300" />
+                <span className="truncate max-w-[120px]">{mentee.location}</span>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Tags */}
-      {mentee.tags.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {mentee.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className={`px-2 py-0.5 text-xs rounded-md ${
-                isArchived
-                  ? "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                  : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300"
-              }`}
+      {/* Next Session Highlight */}
+      <div className="mt-auto space-y-4">
+        <div
+          className={`p-4 rounded-2xl transition-colors ${
+            nextSession
+              ? "bg-primary-50/50 dark:bg-primary-900/20 border border-primary-100 dark:border-primary-800/30"
+              : "bg-gray-50 dark:bg-gray-800/30 border border-gray-100 dark:border-gray-800"
+          }`}
+        >
+          <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+            Próxima Sesión
+          </p>
+          <div className="flex items-center gap-3">
+            <div
+              className={`p-2 rounded-lg ${nextSession ? "bg-white text-primary-500 shadow-sm" : "bg-gray-100 text-gray-400"}`}
             >
-              {tag}
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+            </div>
+            <div>
+              <p
+                className={`text-sm font-bold ${nextSession ? "text-gray-900 dark:text-white" : "text-gray-400"}`}
+              >
+                {nextSession ? (
+                  <>
+                    {new Date(nextSession.date).toLocaleDateString(undefined, {
+                      weekday: "short",
+                      day: "numeric",
+                      month: "short",
+                    })}
+                    {nextSession.time ? (
+                      <>
+                        <span className="text-gray-400 font-normal mx-2">•</span>
+                        <span>{nextSession.time}</span>
+                      </>
+                    ) : null}
+                  </>
+                ) : (
+                  "Sin programar"
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Stats Row */}
+        <div className="flex items-center justify-between text-xs text-gray-500 px-1">
+          <div className="flex items-center gap-1.5">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+            </svg>
+            <span>
+              {sessionsCount} {sessionsCount === 1 ? "Sesión" : "Sesiones"}
             </span>
-          ))}
-          {mentee.tags.length > 3 && (
-            <span className={`text-xs ${isArchived ? "text-amber-500" : "text-gray-400"}`}>
-              +{mentee.tags.length - 3}
-            </span>
+          </div>
+
+          {mentee.goals && mentee.goals.length > 0 && (
+            <div className="flex items-center gap-1.5">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="text-emerald-500"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+              <span>
+                {Math.round(
+                  (mentee.goals.filter((g) => g.completed).length / mentee.goals.length) * 100
+                )}
+                %
+              </span>
+            </div>
           )}
         </div>
-      )}
-    </button>
+      </div>
+    </div>
   );
 });

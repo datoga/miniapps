@@ -3,6 +3,14 @@
     "title": "MentorFlow",
     "description": "Connect, grow, and thrive with your mentor"
   },
+  "common": {
+    "appTitle": "MentorFlow"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "mentees": "Mentees",
+    "backup": "Backup"
+  },
   "dashboard": {
     "title": "Dashboard",
     "allMentees": "All Mentees",

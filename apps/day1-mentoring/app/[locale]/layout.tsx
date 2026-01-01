@@ -27,6 +27,13 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// MentorFlow-specific navigation
+const mentorFlowNavItems = [
+  { href: "#dashboard", labelKey: "nav.dashboard" },
+  { href: "#mentees", labelKey: "nav.mentees" },
+  { href: "#backup", labelKey: "nav.backup" },
+];
+
 type LayoutProps = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
@@ -49,7 +56,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <AppShell>{children}</AppShell>
+            <AppShell navItems={mentorFlowNavItems}>{children}</AppShell>
           </NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />

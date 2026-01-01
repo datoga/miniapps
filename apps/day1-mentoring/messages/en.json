@@ -58,6 +58,8 @@
     "goals": "Goals",
     "goalPlaceholder": "Add a goal...",
     "goalsProgress": "Progress",
+    "actionPlan": "Action plan",
+    "addActionPlaceholder": "Add an action...",
     "notes": "Notes",
     "notesPlaceholder": "Write a note...",
     "addNote": "Add",

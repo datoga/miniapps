@@ -19,11 +19,21 @@ export const NoteSchema = z.object({
 
 export type Note = z.infer<typeof NoteSchema>;
 
+// Action step schema (for goal action plans)
+export const ActionStepSchema = z.object({
+  id: z.string().uuid(),
+  text: z.string().min(1),
+  done: z.boolean().default(false),
+});
+
+export type ActionStep = z.infer<typeof ActionStepSchema>;
+
 // Goal schema
 export const GoalSchema = z.object({
   id: z.string().uuid(),
   text: z.string().min(1),
   completed: z.boolean().default(false),
+  actions: z.array(ActionStepSchema).default([]), // Action plan
   createdAt: z.string().datetime(),
 });
 

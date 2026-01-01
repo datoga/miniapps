@@ -242,15 +242,18 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
 
   return (
     <>
-      <div className="mx-auto max-w-6xl px-4 py-6">
+      <div className="mx-auto max-w-5xl px-6 py-8 sm:px-8">
         {selectedMentee ? (
           // Mentee detail view
           <div>
             <button
               onClick={handleBackToList}
-              className="mb-4 flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+              className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             >
-              ← {t("dashboard.allMentees")}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              {t("dashboard.allMentees")}
             </button>
             <MenteeDetail
               mentee={selectedMentee}
@@ -267,17 +270,22 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
           // Mentee list view
           <div>
             {/* Header */}
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {t("dashboard.allMentees")}
-              </h2>
-              <div className="flex items-center gap-3">
-                <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+            <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {t("dashboard.allMentees")}
+                </h2>
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                  {filteredMentees.length} mentee{filteredMentees.length !== 1 ? "s" : ""}
+                </p>
+              </div>
+              <div className="flex items-center gap-4">
+                <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
                   <input
                     type="checkbox"
                     checked={data.settings.showArchived}
                     onChange={(e) => handleToggleShowArchived(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500"
+                    className="h-4 w-4 rounded border-gray-300 text-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800"
                   />
                   {t("dashboard.showArchived")}
                 </label>
@@ -305,7 +313,7 @@ export function Dashboard({ searchOpen, onSearchClose }: DashboardProps) {
                 <Button onClick={handleOpenNewMentee}>+ {t("dashboard.newMentee")}</Button>
               </div>
             ) : (
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredMentees.map((mentee) => (
                   <MenteeCard
                     key={mentee.id}

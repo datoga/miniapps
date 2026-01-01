@@ -50,16 +50,16 @@ export const LocaleSwitcher = memo(function LocaleSwitcher({ className }: Locale
   }
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
+    <div className={cn("flex items-center", className)}>
       {locales.map((loc) => (
         <button
           key={loc}
           onClick={() => switchLocale(loc)}
           className={cn(
-            "rounded-md px-2 py-1.5 text-xs font-semibold transition-all",
+            "rounded-md px-2.5 py-1.5 text-xs font-medium transition-all",
             locale === loc
-              ? "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white"
-              : "text-gray-500 opacity-60 hover:opacity-100 dark:text-gray-400"
+              ? "bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white"
+              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           )}
           title={loc.toUpperCase()}
           type="button"

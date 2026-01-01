@@ -65,14 +65,16 @@ export const ThemeToggle = memo(function ThemeToggle({ className }: ThemeToggleP
   }
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
+    <div className={cn("flex items-center", className)}>
       {options.map((option) => (
         <button
           key={option.value}
           onClick={() => handleThemeChange(option.value)}
           className={cn(
-            "rounded-md p-1.5 transition-all text-gray-600 dark:text-gray-400",
-            theme === option.value ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white" : "opacity-50 hover:opacity-100"
+            "rounded-md p-1.5 transition-all",
+            theme === option.value
+              ? "bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white"
+              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           )}
           title={option.title}
           type="button"

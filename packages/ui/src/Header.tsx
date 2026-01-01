@@ -35,23 +35,23 @@ export const Header = memo(function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-950/80",
+        "sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md dark:border-gray-800/50 dark:bg-gray-950/90",
         className
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8">
         {/* Logo / Title */}
-        <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <h1 className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
           {title ?? t("common.appTitle")}
         </h1>
 
         {/* Navigation */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-sm text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+              className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             >
               {t(item.labelKey)}
             </a>
@@ -59,11 +59,13 @@ export const Header = memo(function Header({
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           {actions}
-          <LocaleSwitcher />
-          <div className="h-4 w-px bg-gray-300 dark:bg-gray-700" />
-          <ThemeToggle />
+          <div className="ml-2 flex items-center gap-1 rounded-lg bg-gray-100/80 p-1 dark:bg-gray-800/50">
+            <LocaleSwitcher />
+            <div className="h-4 w-px bg-gray-300 dark:bg-gray-600" />
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </header>

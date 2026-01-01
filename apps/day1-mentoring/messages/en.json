@@ -47,14 +47,14 @@
     "imageTooLarge": "Image is too large (max 500KB)",
     "age": "Age",
     "ageLabel": "years",
-    "agePlaceholder": "Enter age",
+    "agePlaceholder": "Age",
     "phone": "Phone",
     "phonePlaceholder": "+1 555 123 4567",
     "email": "Email",
     "emailPlaceholder": "email@example.com",
     "sendEmail": "Send email",
     "location": "Location",
-    "locationPlaceholder": "City, country, timezone...",
+    "locationPlaceholder": "City...",
     "inPersonAvailable": "In-person available",
     "availabilityNotes": "Availability notes",
     "availabilityNotesPlaceholder": "Available days, preferred times...",
@@ -74,7 +74,9 @@
     "sessions": "Sessions",
     "noSessions": "No sessions yet",
     "noSessionsDescription": "Add a session to track your mentoring",
-    "newSession": "New Session"
+    "newSession": "New Session",
+    "yes": "YES",
+    "no": "NO"
   },
   "menteeModal": {
     "createTitle": "New Mentee",

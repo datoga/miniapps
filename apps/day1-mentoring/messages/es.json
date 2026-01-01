@@ -47,14 +47,14 @@
     "imageTooLarge": "La imagen es demasiado grande (máx. 500KB)",
     "age": "Edad",
     "ageLabel": "años",
-    "agePlaceholder": "Introduce la edad",
+    "agePlaceholder": "Edad",
     "phone": "Teléfono",
     "phonePlaceholder": "+34 600 123 456",
     "email": "Correo electrónico",
     "emailPlaceholder": "email@ejemplo.com",
     "sendEmail": "Enviar correo",
     "location": "Ubicación",
-    "locationPlaceholder": "Ciudad, país, zona horaria...",
+    "locationPlaceholder": "Ciudad...",
     "inPersonAvailable": "Disponible presencial",
     "availabilityNotes": "Notas de disponibilidad",
     "availabilityNotesPlaceholder": "Días disponibles, horarios preferidos...",
@@ -74,7 +74,9 @@
     "sessions": "Sesiones",
     "noSessions": "Sin sesiones",
     "noSessionsDescription": "Añade una sesión para registrar tu mentoría",
-    "newSession": "Nueva Sesión"
+    "newSession": "Nueva Sesión",
+    "yes": "SÍ",
+    "no": "NO"
   },
   "menteeModal": {
     "createTitle": "Nuevo Mentee",

@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://irregular-verbs.vercel.app/sitemap.xml
+Sitemap: https://verbmasterpro.vercel.app/sitemap.xml

@@ -3,12 +3,14 @@ import { ImageResponse } from "next/og";
 // Icon with transparent background - English verbs theme
 const ICON_EMOJI = "🇬🇧";
 
+export const contentType = "image/png";
+
 // Generate multiple icon sizes
 export function generateImageMetadata() {
   return [
-    { id: "32", size: { width: 32, height: 32 } },
-    { id: "192", size: { width: 192, height: 192 } },
-    { id: "512", size: { width: 512, height: 512 } },
+    { id: "32", size: { width: 32, height: 32 }, contentType: "image/png" },
+    { id: "192", size: { width: 192, height: 192 }, contentType: "image/png" },
+    { id: "512", size: { width: 512, height: 512 }, contentType: "image/png" },
   ];
 }
 
@@ -33,7 +35,6 @@ export default function Icon({ id }: { id: string }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "transparent",
           fontSize,
         }}
       >

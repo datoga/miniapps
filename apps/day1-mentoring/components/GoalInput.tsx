@@ -141,7 +141,7 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
                 </button>
                 <button
                   onClick={() => removeGoal(goal.id)}
-                  className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                  className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100"
                 >
                   <svg
                     width="18"

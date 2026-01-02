@@ -118,8 +118,8 @@ export const EditableField = memo(function EditableField({
         strokeWidth="2"
         className={`text-gray-400 flex-shrink-0 transition-opacity ${
           multiline
-            ? "opacity-0 group-hover:opacity-100 absolute top-4 right-4"
-            : "opacity-0 group-hover:opacity-50"
+            ? "opacity-100 md:opacity-0 md:group-hover:opacity-100 absolute top-4 right-4"
+            : "opacity-50 md:opacity-0 md:group-hover:opacity-50"
         }`}
       >
         <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />

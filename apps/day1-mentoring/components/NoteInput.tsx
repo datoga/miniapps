@@ -61,7 +61,7 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
           >
             <button
               onClick={() => handleRemoveNote(note.id)}
-              className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-white/50 transition-all opacity-0 group-hover:opacity-100"
+              className="absolute top-2 right-2 p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-white/50 transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
             >
               <svg
                 width="14"

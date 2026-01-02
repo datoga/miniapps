@@ -127,7 +127,7 @@ export function generateOgImage(config: OgImageConfig): ImageResponse {
             }}
           >
             {features.map((feature) => (
-              <span key={feature}>✓ {feature}</span>
+              <span key={feature}>{feature}</span>
             ))}
           </div>
         )}

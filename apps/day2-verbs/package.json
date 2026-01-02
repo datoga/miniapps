@@ -1,5 +1,5 @@
 {
-  "name": "day2-verbs",
+  "name": "verbmaster",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
   "dependencies": {
     "@miniapps/analytics": "*",
     "@miniapps/i18n": "*",
+    "@miniapps/seo": "*",
     "@miniapps/storage": "*",
     "@miniapps/ui": "*",
     "@next/third-parties": "^16.1.1",

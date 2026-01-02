@@ -2,38 +2,42 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "VerbMaster",
-    short_name: "VerbMaster",
-    description: "Master verb conjugations like a pro",
+    name: "Verb Master Pro - English Irregular Verbs",
+    short_name: "Verb Master",
+    description:
+      "Learn and practice English irregular verbs with an interactive app. Listen to pronunciations, take quizzes, exams and track your progress. 100% free.",
     start_url: "/",
     scope: "/",
+    id: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#10b981",
+    background_color: "#f8fafc",
+    theme_color: "#4f46e5",
     orientation: "portrait",
-    categories: ["education"],
+    categories: ["education", "reference", "productivity"],
     prefer_related_applications: false,
+    lang: "en",
+    dir: "ltr",
     icons: [
       {
-        src: "/icon?id=192",
+        src: "/icon/192",
         sizes: "192x192",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/icon?id=192",
+        src: "/icon/192",
         sizes: "192x192",
         type: "image/png",
         purpose: "maskable",
       },
       {
-        src: "/icon?id=512",
+        src: "/icon/512",
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/icon?id=512",
+        src: "/icon/512",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
@@ -41,4 +45,3 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
   };
 }
-

@@ -1,39 +1,37 @@
 import { ImageResponse } from "next/og";
 
-// Icon configuration (same as icon.tsx for consistency)
-const APP_INITIALS = "VM";
-const BG_COLOR = "#10b981";
-const TEXT_COLOR = "#ffffff";
+// Apple icon - needs solid background for iOS
+const ICON_EMOJI = "🇬🇧";
+const BG_COLOR = "#4f46e5";
 
-// Apple touch icon is always 180x180
-export const size = { width: 180, height: 180 };
+export const size = {
+  width: 180,
+  height: 180,
+};
+
 export const contentType = "image/png";
 
 export default function AppleIcon() {
-  const fontSize = Math.round(180 * 0.4);
-  const borderRadius = Math.round(180 * 0.18);
+  const fontSize = Math.round(size.width * 0.55);
 
   return new ImageResponse(
     (
       <div
         style={{
-          width: 180,
-          height: 180,
+          width: size.width,
+          height: size.height,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: BG_COLOR,
-          borderRadius: borderRadius,
-          color: TEXT_COLOR,
-          fontSize: fontSize,
-          fontWeight: 700,
-          fontFamily: "system-ui, sans-serif",
+          fontSize,
         }}
       >
-        {APP_INITIALS}
+        {ICON_EMOJI}
       </div>
     ),
-    { width: 180, height: 180 }
+    {
+      ...size,
+    }
   );
 }
-

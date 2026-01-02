@@ -1,9 +1,7 @@
 import { ImageResponse } from "next/og";
 
-// Icon configuration
-const APP_INITIALS = "VM";
-const BG_COLOR = "#10b981";
-const TEXT_COLOR = "#ffffff";
+// Icon with transparent background - English verbs theme
+const ICON_EMOJI = "🇬🇧";
 
 // Generate multiple icon sizes
 export function generateImageMetadata() {
@@ -14,11 +12,17 @@ export function generateImageMetadata() {
   ];
 }
 
+// Size mapping to avoid nested ternary
+const sizeMap: Record<string, number> = {
+  "32": 32,
+  "192": 192,
+  "512": 512,
+};
+
 // Generate the icon image
 export default function Icon({ id }: { id: string }) {
-  const size = id === "32" ? 32 : id === "192" ? 192 : 512;
-  const fontSize = Math.round(size * 0.4);
-  const borderRadius = Math.round(size * 0.18);
+  const size = sizeMap[id] ?? 512;
+  const fontSize = Math.round(size * 0.75);
 
   return new ImageResponse(
     (
@@ -29,15 +33,11 @@ export default function Icon({ id }: { id: string }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: BG_COLOR,
-          borderRadius: borderRadius,
-          color: TEXT_COLOR,
-          fontSize: fontSize,
-          fontWeight: 700,
-          fontFamily: "system-ui, sans-serif",
+          backgroundColor: "transparent",
+          fontSize,
         }}
       >
-        {APP_INITIALS}
+        {ICON_EMOJI}
       </div>
     ),
     {
@@ -46,4 +46,3 @@ export default function Icon({ id }: { id: string }) {
     }
   );
 }
-

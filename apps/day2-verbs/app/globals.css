@@ -3,24 +3,82 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
+/* Smooth transitions for theme changes */
 * {
   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
+/* Hide scrollbar for category selector */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Quiz slot row styles - matching original */
+.slot-row {
+  display: flex;
+  align-items: center;
+  padding: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dark .slot-row {
+  border-bottom-color: #475569;
+}
+
+.slot-row:last-child {
+  border-bottom: none;
+}
+
+.slot-label {
+  width: 100px;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.dark .slot-label {
+  color: #64748b;
+}
+
+/* Bounce-in animation for modals */
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.5s ease-out;
+}

@@ -2,7 +2,6 @@ import { ImageResponse } from "next/og";
 
 // Icon configuration
 const APP_EMOJI = "👥";
-const BG_COLOR = "#8b5cf6";
 
 // Generate multiple icon sizes
 export function generateImageMetadata() {
@@ -23,8 +22,7 @@ const SIZES: Record<string, number> = {
 // Generate the icon image
 export default function Icon({ id }: { id: string }) {
   const size = SIZES[id] ?? 512;
-  const fontSize = Math.round(size * 0.55);
-  const borderRadius = Math.round(size * 0.18);
+  const fontSize = Math.round(size * 0.75);
 
   return new ImageResponse(
     (
@@ -35,8 +33,7 @@ export default function Icon({ id }: { id: string }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: BG_COLOR,
-          borderRadius,
+          backgroundColor: "transparent",
           fontSize,
         }}
       >

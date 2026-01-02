@@ -404,6 +404,91 @@ className="opacity-100 md:opacity-0 md:group-hover:opacity-100"
 - `md:` = 768px+ (tablets and desktop)
 - Use `md:` as the breakpoint for hover behaviors
 
+### URL-Based Tab Navigation (Browser History)
+
+**⚠️ For apps with tabs, use URL hash navigation for browser history support**
+
+When implementing tabbed interfaces, use URL hashes (`#tab-name`) so users can:
+- Use browser back/forward buttons
+- Share direct links to specific tabs
+- Bookmark specific tabs
+
+**Pattern to use:**
+
+```tsx
+// lib/useTabNavigation.ts
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+
+export type Tab = "list" | "find" | "practice" | "exam";
+
+const VALID_TABS: Tab[] = ["list", "find", "practice", "exam"];
+const DEFAULT_TAB: Tab = "list";
+
+function getTabFromHash(): Tab {
+  if (typeof window === "undefined") return DEFAULT_TAB;
+
+  const hash = window.location.hash.slice(1);
+  if (VALID_TABS.includes(hash as Tab)) {
+    return hash as Tab;
+  }
+  return DEFAULT_TAB;
+}
+
+export function useTabNavigation() {
+  const [activeTab, setActiveTab] = useState<Tab>(DEFAULT_TAB);
+
+  // Initialize from hash on mount
+  useEffect(() => {
+    setActiveTab(getTabFromHash());
+  }, []);
+
+  // Listen for hash changes (back/forward buttons)
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveTab(getTabFromHash());
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  // Change tab and update URL hash
+  const changeTab = useCallback((tab: Tab) => {
+    setActiveTab(tab);
+    window.history.pushState(null, "", `#${tab}`);
+  }, []);
+
+  return { activeTab, changeTab };
+}
+```
+
+**Usage in component:**
+
+```tsx
+import { useTabNavigation } from "../lib/useTabNavigation";
+
+export function MyTabbedApp() {
+  const { activeTab, changeTab } = useTabNavigation();
+
+  return (
+    <div>
+      <button onClick={() => changeTab("list")}>List</button>
+      <button onClick={() => changeTab("find")}>Find</button>
+
+      {activeTab === "list" && <ListTab />}
+      {activeTab === "find" && <FindTab />}
+    </div>
+  );
+}
+```
+
+**Best practices:**
+- Use descriptive tab names that match UI labels (e.g., "practice" not "quiz")
+- Always have a DEFAULT_TAB fallback
+- Validate hash values against VALID_TABS array
+- Use `pushState` instead of direct hash assignment for cleaner history
+
 ### Shared Packages
 
 Use these packages instead of creating duplicates:

@@ -1,7 +1,13 @@
 import { GoogleAnalyticsScript } from "@miniapps/analytics";
 import { locales, type Locale } from "@miniapps/i18n";
+import {
+  generateJsonLd,
+  generateSEOMetadata,
+  generateViewport,
+  type LocaleSEOContent,
+} from "@miniapps/seo";
 import { AppShell, ThemeProvider } from "@miniapps/ui";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -11,17 +17,74 @@ import "../globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
 });
 
-export const metadata: Metadata = {
-  title: "VoiceSnap",
-  description: "Capture your voice, preserve your thoughts",
+const APP_NAME = "VoiceSnap";
+const APP_URL = "https://voicesnap.vercel.app";
+
+const seoContent: Record<string, LocaleSEOContent> = {
+  es: {
+    title: "VoiceSnap - Grabadora de Voz",
+    description:
+      "Graba notas de voz rápidamente. App gratuita para capturar ideas, reuniones y pensamientos. Sin registro, privado y funciona offline.",
+    ogAlt: "VoiceSnap - Captura tu voz al instante",
+    keywords: [
+      "grabadora voz",
+      "notas de voz",
+      "grabar audio",
+      "memo voz",
+      "grabación reuniones",
+      "app grabar",
+      "audio recorder",
+    ],
+  },
+  en: {
+    title: "VoiceSnap - Voice Recorder",
+    description:
+      "Record voice notes quickly. Free app to capture ideas, meetings and thoughts. No registration, private and works offline.",
+    ogAlt: "VoiceSnap - Capture your voice instantly",
+    keywords: [
+      "voice recorder",
+      "voice notes",
+      "record audio",
+      "voice memo",
+      "meeting recording",
+      "audio app",
+      "record voice",
+    ],
+  },
 };
+
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const content = seoContent[locale] || seoContent["en"];
+
+  return generateSEOMetadata({
+    appName: APP_NAME,
+    appUrl: APP_URL,
+    locale,
+    content: content!,
+    category: "productivity",
+  });
+}
+
+export const viewport: Viewport = generateViewport({
+  lightThemeColor: "#ffffff",
+  darkThemeColor: "#0a0a0a",
+});
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -43,9 +106,44 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   const messages = await getMessages();
   const gaId = process.env["NEXT_PUBLIC_GA_ID"];
+  const content = seoContent[locale] || seoContent["en"];
+
+  const jsonLdFeatures =
+    locale === "es"
+      ? [
+          "Grabación de voz",
+          "Organiza grabaciones",
+          "100% privado",
+          "Sin registro",
+          "Funciona offline",
+        ]
+      : [
+          "Voice recording",
+          "Organize recordings",
+          "100% private",
+          "No registration",
+          "Works offline",
+        ];
+
+  const jsonLd = generateJsonLd({
+    appName: APP_NAME,
+    appUrl: APP_URL,
+    locale,
+    description: content!.description,
+    applicationCategory: "ProductivityApplication",
+    featureList: jsonLdFeatures,
+  });
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>

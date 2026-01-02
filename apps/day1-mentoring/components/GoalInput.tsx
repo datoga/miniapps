@@ -1,5 +1,6 @@
 "use client";
 
+import { trackEvent } from "@miniapps/analytics";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -32,6 +33,10 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
     onChange([newGoal, ...goals]);
     setNewGoalText("");
     setIsAdding(false);
+    trackEvent("goal_created", {
+      text_length: newGoalText.trim().length,
+      total_goals: goals.length + 1,
+    });
   }, [newGoalText, goals, onChange]);
 
   const removeGoal = useCallback(

@@ -1,5 +1,6 @@
 "use client";
 
+import { trackEvent } from "@miniapps/analytics";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import * as menteesRepo from "../repos/menteesRepo";
 import * as sessionsRepo from "../repos/sessionsRepo";
@@ -91,6 +92,14 @@ export function useMentoringData(): MentoringDataState & MentoringDataActions {
       try {
         const mentee = await menteesRepo.createMentee(input);
         setMentees((prev) => [...prev, mentee]);
+        trackEvent("mentee_created", {
+          has_age: !!input.age,
+          has_email: !!input.email,
+          has_phone: !!input.phone,
+          has_whatsapp: input.hasWhatsapp ?? false,
+          in_person_available: input.inPersonAvailable ?? false,
+          goals_count: input.goals?.length ?? 0,
+        });
         return mentee;
       } catch {
         return null;
@@ -159,6 +168,11 @@ export function useMentoringData(): MentoringDataState & MentoringDataActions {
       try {
         const session = await sessionsRepo.createSession(menteeId, input);
         setSessions((prev) => [...prev, session]);
+        trackEvent("session_created", {
+          is_remote: input.isRemote ?? true,
+          has_notes: !!input.notes?.trim(),
+          has_title: !!input.title?.trim(),
+        });
         return session;
       } catch {
         return null;

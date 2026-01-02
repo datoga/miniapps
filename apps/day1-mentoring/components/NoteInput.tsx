@@ -1,5 +1,6 @@
 "use client";
 
+import { trackEvent } from "@miniapps/analytics";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -30,6 +31,10 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
 
     onChange([...notes, newNote]);
     setNewNoteText("");
+    trackEvent("note_created", {
+      text_length: newNoteText.trim().length,
+      total_notes: notes.length + 1,
+    });
   }, [newNoteText, notes, onChange]);
 
   const handleRemoveNote = useCallback(

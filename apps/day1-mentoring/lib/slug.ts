@@ -1,7 +1,7 @@
 // Short ID length for slugs (4 chars = 65k combinations, sufficient for personal use)
 const SHORT_ID_LENGTH = 4;
 
-export function slugifyName(name?: string): string {
+function slugifyName(name?: string): string {
   const base = name?.trim() || "persona";
   const normalized = base
     .toLowerCase()
@@ -30,19 +30,25 @@ export function buildMenteeSlug(mentee: { id: string; name?: string }): string {
  * Falls back to treating entire slug as ID for backwards compatibility
  */
 export function extractMenteeId(slug: string, mentees?: { id: string }[]): string {
-  if (!slug) return "";
+  if (!slug) {
+    return "";
+  }
 
   // If we have mentees list, find by matching short ID
   if (mentees && mentees.length > 0) {
     const shortId = slug.split("-").pop() || "";
     const found = mentees.find((m) => m.id.startsWith(shortId));
-    if (found) return found.id;
+    if (found) {
+      return found.id;
+    }
   }
 
   // Backwards compatibility: check if slug ends with full UUID
   const uuidRegex = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
   const match = slug.match(uuidRegex);
-  if (match) return match[0];
+  if (match) {
+    return match[0];
+  }
 
   // Last resort: return the last segment as potential short ID
   return slug.split("-").pop() || slug;

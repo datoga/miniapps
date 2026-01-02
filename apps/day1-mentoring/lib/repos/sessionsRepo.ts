@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { getDB } from "../db";
-import type { NextStep, Session, SessionFormInput } from "../schemas";
+import type { Session, SessionFormInput } from "../schemas";
 
 /**
  * List all sessions
@@ -11,20 +11,12 @@ export async function listAllSessions(): Promise<Session[]> {
 }
 
 /**
- * List sessions for a specific mentee
+ * List sessions for a specific mentee (internal use)
  */
-export async function listSessionsByMentee(menteeId: string): Promise<Session[]> {
+async function listSessionsByMentee(menteeId: string): Promise<Session[]> {
   const db = await getDB();
   const all = await db.getAll("sessions");
   return all.filter((s) => s.menteeId === menteeId);
-}
-
-/**
- * Get a single session by ID
- */
-export async function getSession(id: string): Promise<Session | undefined> {
-  const db = await getDB();
-  return db.get("sessions", id);
 }
 
 /**
@@ -120,17 +112,6 @@ export async function replaceAllSessions(sessions: Session[]): Promise<void> {
   }
 
   await tx.done;
-}
-
-/**
- * Helper: Create a new NextStep item
- */
-export function createNextStep(text: string): NextStep {
-  return {
-    id: uuidv4(),
-    text,
-    done: false,
-  };
 }
 
 /**

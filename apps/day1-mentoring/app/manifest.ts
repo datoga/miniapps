@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "MentorFlow",
     short_name: "MentorFlow",
     description: "Connect, grow, and thrive with your mentor",
-    start_url: "/",
+    start_url: "/dashboard",
     scope: "/",
     display: "standalone",
     background_color: "#ffffff",
@@ -41,4 +41,3 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
   };
 }
-

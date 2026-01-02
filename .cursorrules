@@ -4,9 +4,35 @@
 
 **Always use `apps/whitelabel-demo` as the reference implementation** when creating or modifying mini apps.
 
+## Git & Deployment
+
+**⚠️ CRITICAL: NO automatic Git commits or pushes**
+
+- **NEVER** automatically commit or push changes to Git
+- **NEVER** use `git commit` or `git push` without explicit user request
+- This repository has **automatic deployment to production** on push
+- Only stage changes with `git add` if explicitly requested
+- Wait for the user to manually review and deploy changes
+- If asked to "save" or "finish", do NOT interpret as "commit/push"
+
+## Node.js Version
+
+**⚠️ IMPORTANT: Always use Node.js 24 before running commands**
+
+- **ALWAYS** run `nvm use 24` before executing any npm/node commands
+- The project requires Node.js >= 20.9.0 (Next.js 16 requirement)
+- The `.nvmrc` file specifies Node.js 24
+- If a command fails with Node version errors, switch to Node 24 first
+
+```bash
+# Always start terminal sessions with:
+nvm use 24
+```
+
 ## Core Principles
 
 ### 1. Always Use Latest Versions
+
 - **ALWAYS** use the latest stable versions of all dependencies
 - When adding new packages, check npm for the latest version: `npm view <package> version`
 - Regularly update dependencies with `npm update`
@@ -14,6 +40,7 @@
 - Use Node.js 24.x (specified in `.nvmrc`)
 
 ### 2. Reuse Components - DRY Principle
+
 - **NEVER** create duplicate components - check `@miniapps/ui` first
 - Before creating a new component, search the codebase for existing solutions
 - If a component could be reused across apps, add it to `packages/ui`
@@ -22,9 +49,11 @@
   - i18n utilities → `@miniapps/i18n`
   - Analytics → `@miniapps/analytics`
   - Storage → `@miniapps/storage`
+  - SEO utilities → `@miniapps/seo`
 - Use composition over duplication
 
 ### 3. Serverless Architecture - No Backend
+
 - **NO** custom API routes (`app/api/`) unless absolutely necessary
 - **NO** database connections or server-side state
 - **NO** authentication backends - use third-party services if needed
@@ -42,18 +71,23 @@ When creating a new mini app, copy the structure from `apps/whitelabel-demo`:
 apps/your-app/
 ├── app/
 │   ├── [locale]/
-│   │   ├── layout.tsx      # Copy from whitelabel-demo, update metadata
+│   │   ├── layout.tsx      # Copy from whitelabel-demo, update metadata with SEO
 │   │   └── page.tsx        # Your main page
 │   ├── globals.css         # Copy as-is
 │   ├── manifest.ts         # PWA manifest - update name, description, theme_color
+│   ├── sitemap.ts          # SEO sitemap - update APP_URL and routes
 │   ├── icon.tsx            # Dynamic icon generation - update APP_INITIALS, BG_COLOR
-│   └── apple-icon.tsx      # Apple touch icon - match icon.tsx colors
+│   ├── apple-icon.tsx      # Apple touch icon - match icon.tsx colors
+│   └── og-image.png/       # Dynamic OG image generation
+│       └── route.tsx       # Update with app branding
 ├── components/             # App-specific components (only if not reusable)
 ├── messages/
 │   ├── en.json             # English translations
 │   └── es.json             # Spanish translations
 ├── i18n/
 │   └── request.ts          # Copy as-is from whitelabel-demo
+├── public/
+│   └── robots.txt          # SEO robots file - update sitemap URL
 ├── eslint.config.mjs       # Copy as-is
 ├── next.config.ts          # Copy as-is
 ├── package.json            # Update name and port
@@ -63,15 +97,260 @@ apps/your-app/
 └── tsconfig.json           # Copy as-is
 ```
 
+## SEO, SEM & Google Tools
+
+### Required SEO Implementation
+
+Every app **MUST** include the following SEO elements:
+
+#### 1. Metadata with generateSEOMetadata
+
+Use `@miniapps/seo` to generate comprehensive metadata in `layout.tsx`:
+
+```tsx
+import { generateSEOMetadata, generateJsonLd, generateViewport } from "@miniapps/seo";
+
+// Define locale-specific SEO content
+const seoContent = {
+  es: {
+    title: "AppName - Descripción corta",
+    description: "Descripción completa de la app en español (150-160 caracteres ideal)",
+    keywords: ["keyword1", "keyword2", ...],
+    ogAlt: "Texto alternativo para imagen OG",
+  },
+  en: {
+    title: "AppName - Short Description",
+    description: "Full app description in English (150-160 characters ideal)",
+    keywords: ["keyword1", "keyword2", ...],
+    ogAlt: "Alt text for OG image",
+  },
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const content = seoContent[locale as keyof typeof seoContent] || seoContent.en;
+
+  return generateSEOMetadata({
+    appName: "AppName",
+    appUrl: "https://yourapp.com",
+    locale,
+    content,
+    googleVerification: "your-verification-code", // Optional
+    category: "productivity", // or "education", "utilities", etc.
+  });
+}
+
+export const viewport = generateViewport({
+  lightThemeColor: "#ffffff",
+  darkThemeColor: "#0a0a0a",
+});
+```
+
+#### 2. JSON-LD Structured Data
+
+Add structured data in the layout for rich search results:
+
+```tsx
+const jsonLd = generateJsonLd({
+  appName: "AppName",
+  appUrl: APP_URL,
+  locale,
+  description: content.description,
+  applicationCategory: "ProductivityApplication",
+  featureList: ["Feature 1", "Feature 2", "Feature 3"],
+});
+
+// In the <head>:
+<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />;
+```
+
+#### 3. Sitemap (app/sitemap.ts)
+
+```tsx
+import { generateSitemap } from "@miniapps/seo";
+
+const APP_URL = "https://yourapp.com";
+
+export default function sitemap() {
+  return generateSitemap({
+    appUrl: APP_URL,
+    routes: [
+      { path: "", priority: 1, changeFrequency: "weekly" },
+      { path: "/about", priority: 0.7, changeFrequency: "monthly" },
+      // Add more public routes
+    ],
+  });
+}
+```
+
+#### 4. Robots.txt (public/robots.txt)
+
+```
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Private content - don't index
+Disallow: /*/dashboard
+Disallow: /*/settings
+
+# Sitemaps
+Sitemap: https://yourapp.com/sitemap.xml
+```
+
+#### 5. OG Image (app/og-image.png/route.tsx)
+
+```tsx
+import { generateOgImage } from "@miniapps/seo";
+
+export const runtime = "edge";
+
+export async function GET() {
+  return generateOgImage({
+    appName: "AppName",
+    tagline: "Your app tagline",
+    icon: "🚀",
+    features: ["Free", "Private", "Fast"],
+    gradientColors: ["#667eea", "#764ba2"],
+  });
+}
+```
+
+### Google Search Console
+
+- Register each app domain in Google Search Console
+- Add verification code to metadata: `googleVerification: "your-code"`
+- Submit sitemap after deployment: `https://yourapp.com/sitemap.xml`
+
+### Google Analytics (GA4)
+
+- Use `@miniapps/analytics` package (already integrated)
+- Set `NEXT_PUBLIC_GA_ID` environment variable in Vercel
+- Track custom events with `trackEvent()` function
+
+### SEO Best Practices
+
+- **Title**: 50-60 characters, include main keyword
+- **Description**: 150-160 characters, compelling call-to-action
+- **Keywords**: 5-10 relevant keywords per locale
+- **OpenGraph**: Always include og:image (1200x630px)
+- **Canonical URLs**: Prevent duplicate content issues
+- **Alternate Languages**: Properly configured hreflang tags
+- **Structured Data**: JSON-LD for WebApplication schema
+
+## PWA (Progressive Web App)
+
+### Required PWA Files
+
+Every app **MUST** include proper PWA configuration:
+
+#### 1. Web App Manifest (app/manifest.ts)
+
+```tsx
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Full App Name",
+    short_name: "ShortName",
+    description: "App description for PWA",
+    start_url: "/",
+    scope: "/",
+    display: "standalone",
+    background_color: "#ffffff",
+    theme_color: "#your-brand-color",
+    orientation: "portrait",
+    categories: ["productivity"], // or ["education", "utilities", etc.]
+    prefer_related_applications: false,
+    icons: [
+      {
+        src: "/icon?id=192",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icon?id=192",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "maskable",
+      },
+      {
+        src: "/icon?id=512",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/icon?id=512",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "maskable",
+      },
+    ],
+  };
+}
+```
+
+#### 2. Dynamic Icons (app/icon.tsx & app/apple-icon.tsx)
+
+Generate icons dynamically with consistent branding:
+
+```tsx
+// icon.tsx
+import { ImageResponse } from "next/og";
+
+const APP_INITIALS = "AN"; // 2-3 characters
+const BG_COLOR = "#your-brand-color";
+const TEXT_COLOR = "#ffffff";
+
+export const runtime = "edge";
+export const size = { width: 512, height: 512 };
+export const contentType = "image/png";
+
+export default function Icon() {
+  return new ImageResponse(
+    <div
+      style={{
+        fontSize: 256,
+        background: BG_COLOR,
+        color: TEXT_COLOR,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 96,
+        fontWeight: 700,
+      }}
+    >
+      {APP_INITIALS}
+    </div>,
+    { ...size }
+  );
+}
+```
+
+### PWA Best Practices
+
+- **Theme color**: Match your brand primary color
+- **Background color**: Usually white (#ffffff) or black (#0a0a0a)
+- **Icons**: Both 192x192 and 512x512 with "any" and "maskable" purposes
+- **Display mode**: Use "standalone" for app-like experience
+- **Orientation**: "portrait" for mobile-first apps
+- **Scope**: Always "/" to cover the entire app
+
 ## Code Standards
 
 ### TypeScript
+
 - Use strict TypeScript (already configured in tsconfig)
 - Use `type` imports: `import type { X } from "y"`
 - Access env vars with bracket notation: `process.env["NEXT_PUBLIC_GA_ID"]`
 - No `any` types - use proper typing
 
 ### React/Next.js
+
 - Use Next.js App Router conventions
 - Use `"use client"` directive only when needed
 - Prefer Server Components for static content
@@ -80,25 +359,31 @@ apps/your-app/
 - Use `useCallback` for event handlers passed to child components
 
 ### Internationalization
+
 - **NO hardcoded strings** in components
 - All UI text must be in `messages/en.json` and `messages/es.json`
 - Use `useTranslations()` hook to access messages
 - Common translations are in `packages/i18n/messages/common/`
 
 ### Styling
+
 - Use Tailwind CSS classes
 - Dark mode: use `dark:` prefix for dark theme styles
 - Shared theme colors are in `packages/config/tailwind.config.js`
 
 ### Shared Packages
+
 Use these packages instead of creating duplicates:
+
 - `@miniapps/ui` - Components: AppShell, Header, Footer, Button, ThemeToggle, LocaleSwitcher
 - `@miniapps/i18n` - i18n utilities: locales, defaultLocale, mergeMessages
 - `@miniapps/analytics` - GA4: trackEvent, GoogleAnalyticsScript
 - `@miniapps/storage` - Persistence: getJSON, setJSON, remove (IndexedDB)
+- `@miniapps/seo` - SEO: generateSEOMetadata, generateJsonLd, generateSitemap, generateOgImage, generateViewport
 - `@miniapps/config` - Shared Next.js, Tailwind, and PostCSS configs
 
 ### File Naming
+
 - Components: PascalCase (`MyComponent.tsx`)
 - Utilities: camelCase (`myUtil.ts`)
 - Config files: lowercase (`tailwind.config.js`)
@@ -108,9 +393,24 @@ Use these packages instead of creating duplicates:
 - Use `React.memo` for presentational components
 - Use `useCallback` for callbacks passed to children
 - Leverage Next.js `generateStaticParams` for static generation
-- Use `display: "swap"` for fonts
+- Use `display: "swap"` for fonts with `preload: true`
 - Optimize images with Next.js Image component
 - Cache static assets with appropriate headers (configured in next.config)
+- DNS prefetch for external resources (Google Tag Manager, fonts, etc.)
+
+### Head Optimizations
+
+Always include in layout.tsx `<head>`:
+
+```tsx
+<head>
+  {/* JSON-LD structured data */}
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+  {/* DNS prefetch for external resources */}
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+</head>
+```
 
 ## Commands
 
@@ -133,4 +433,43 @@ npm run format
 
 ## Deployment
 
-Each app deploys separately to Vercel. Set `NEXT_PUBLIC_GA_ID` in Vercel Environment Variables.
+Each app deploys separately to Vercel:
+
+1. Set `NEXT_PUBLIC_GA_ID` in Vercel Environment Variables
+2. Submit sitemap to Google Search Console after first deployment
+3. Verify Google Search Console ownership via meta tag verification
+
+## Checklist for New Apps
+
+Before deploying a new app, verify:
+
+### SEO
+
+- [ ] `generateMetadata` with locale-specific title, description, keywords
+- [ ] OpenGraph tags configured with og:image
+- [ ] Twitter card meta tags
+- [ ] Canonical URLs and alternate languages (hreflang)
+- [ ] JSON-LD structured data in layout
+- [ ] `sitemap.ts` with all public routes
+- [ ] `robots.txt` with private route exclusions
+- [ ] Google Search Console verification code (if available)
+
+### PWA
+
+- [ ] `manifest.ts` with proper name, icons, colors
+- [ ] `icon.tsx` dynamic icon with app branding
+- [ ] `apple-icon.tsx` for iOS
+- [ ] `og-image.png/route.tsx` for social sharing
+- [ ] Theme color in viewport config
+
+### Analytics
+
+- [ ] `NEXT_PUBLIC_GA_ID` set in environment
+- [ ] `GoogleAnalyticsScript` in layout
+- [ ] Custom event tracking for key actions
+
+### i18n
+
+- [ ] All strings in `messages/en.json` and `messages/es.json`
+- [ ] SEO content in both languages
+- [ ] No hardcoded text in components

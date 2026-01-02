@@ -58,10 +58,3 @@ export async function getDB(): Promise<IDBPDatabase<MentoringDB>> {
   return dbPromise;
 }
 
-/**
- * Close the database connection (useful for testing)
- */
-export function closeDB(): void {
-  dbPromise = null;
-}
-

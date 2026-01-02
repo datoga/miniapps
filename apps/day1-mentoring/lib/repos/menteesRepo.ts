@@ -11,30 +11,6 @@ export async function listMentees(): Promise<Mentee[]> {
 }
 
 /**
- * List active (non-archived) mentees
- */
-export async function listActiveMentees(): Promise<Mentee[]> {
-  const all = await listMentees();
-  return all.filter((m) => !m.archived);
-}
-
-/**
- * List archived mentees
- */
-export async function listArchivedMentees(): Promise<Mentee[]> {
-  const all = await listMentees();
-  return all.filter((m) => m.archived);
-}
-
-/**
- * Get a single mentee by ID
- */
-export async function getMentee(id: string): Promise<Mentee | undefined> {
-  const db = await getDB();
-  return db.get("mentees", id);
-}
-
-/**
  * Create a new mentee
  */
 export async function createMentee(input: MenteeFormInput): Promise<Mentee> {
@@ -75,11 +51,16 @@ export async function updateMentee(id: string, input: Partial<MenteeFormInput>):
     return null;
   }
 
+  // Handle age update: keep existing if not provided, convert to number or undefined
+  let updatedAge = existing.age;
+  if (input.age !== undefined) {
+    updatedAge = typeof input.age === "number" ? input.age : undefined;
+  }
+
   const updated: Mentee = {
     ...existing,
     ...input,
-    // Ensure age is properly handled
-    age: input.age !== undefined ? (typeof input.age === "number" ? input.age : undefined) : existing.age,
+    age: updatedAge,
     updatedAt: new Date().toISOString(),
   };
 

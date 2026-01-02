@@ -37,6 +37,13 @@ export const metadata: Metadata = {
     "study english",
     "ESL",
     "verb master",
+    // Spanish keywords
+    "verbos irregulares inglés",
+    "verbos irregulares en inglés",
+    "aprender verbos en inglés",
+    "verbos en inglés gratis",
+    "practicar verbos inglés",
+    "lista verbos irregulares",
   ],
   authors: [{ name: "datoga.es", url: "https://datoga.es" }],
   creator: "datoga.es",
@@ -81,6 +88,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: APP_URL,
+    languages: {
+      "en": APP_URL,
+      "es": APP_URL,
+      "x-default": APP_URL,
+    },
   },
   category: "education",
   verification: {
@@ -129,13 +141,6 @@ const jsonLd = {
     "100% free",
   ],
   screenshot: `${APP_URL}/og-image.png`,
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    ratingCount: "100",
-    bestRating: "5",
-    worstRating: "1",
-  },
 };
 
 type LayoutProps = {

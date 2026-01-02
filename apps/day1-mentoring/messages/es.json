@@ -162,9 +162,9 @@
     "faq1Question": "¿Dónde se guardan mis datos?",
     "faq1Answer": "Todos tus datos se almacenan localmente en tu navegador usando IndexedDB. Nunca se envían a ningún servidor.",
     "faq2Question": "¿Puedo usar MentorFlow en varios dispositivos?",
-    "faq2Answer": "Cada dispositivo mantiene sus propios datos. Puedes exportar e importar datos manualmente si necesitas transferirlos.",
+    "faq2Answer": "Actualmente cada dispositivo mantiene sus propios datos de forma independiente. Los datos no se sincronizan entre dispositivos.",
     "faq3Question": "¿Qué pasa si borro los datos del navegador?",
-    "faq3Answer": "Si limpias los datos del navegador o cambias de navegador, perderás tus datos. Recomendamos hacer exportaciones periódicas.",
+    "faq3Answer": "Si limpias los datos del navegador o cambias de navegador, perderás tus datos. Por eso recomendamos instalar la app como PWA.",
     "faq4Question": "¿Es MentorFlow gratuito?",
     "faq4Answer": "Sí, MentorFlow es completamente gratuito y de código abierto.",
     "madeWith": "Hecho con ❤️ para mentores"

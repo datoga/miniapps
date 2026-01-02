@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export type Tab = "learn" | "find" | "practice" | "exam" | "song";
 
@@ -45,4 +45,3 @@ export function useTabNavigation() {
 
   return { activeTab, changeTab };
 }
-

@@ -1,9 +1,9 @@
 "use client";
 
-import { memo, useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { trackEvent } from "@miniapps/analytics";
-import { verbData, type Verb } from "../lib/verbData";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useExamHistory, type ExamResult } from "../lib/useExamHistory";
+import { verbData, type Verb } from "../lib/verbData";
 import { ConfirmModal } from "./ConfirmModal";
 
 type VerbField = "present" | "past" | "participle" | "meaning";
@@ -108,16 +108,21 @@ export const ExamTab = memo(function ExamTab() {
         : [...prev.categories, id];
 
       // Keep at least one category
-      if (newCategories.length === 0) {return prev;}
+      if (newCategories.length === 0) {
+        return prev;
+      }
 
       return { ...prev, categories: newCategories };
     });
   }, []);
 
   // Update question count
-  const setQuestionCount = useCallback((count: number) => {
-    setConfig((prev) => ({ ...prev, questionCount: Math.min(count, maxQuestions) }));
-  }, [maxQuestions]);
+  const setQuestionCount = useCallback(
+    (count: number) => {
+      setConfig((prev) => ({ ...prev, questionCount: Math.min(count, maxQuestions) }));
+    },
+    [maxQuestions]
+  );
 
   // Update time per question
   const setTimePerQuestion = useCallback((time: number) => {
@@ -166,7 +171,9 @@ export const ExamTab = memo(function ExamTab() {
 
   // Timer effect
   useEffect(() => {
-    if (phase !== "exam") {return;}
+    if (phase !== "exam") {
+      return;
+    }
 
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -178,19 +185,24 @@ export const ExamTab = memo(function ExamTab() {
     }, 1000);
 
     return () => {
-      if (timerRef.current) {clearInterval(timerRef.current);}
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
     };
   }, [phase]);
 
   // Check single question answer
-  const checkAnswer = useCallback((question: ExamQuestion, userInputs: Record<string, string>): boolean => {
-    return question.missing.every((type) => {
-      const val = (userInputs[type] || "").trim().toLowerCase();
-      const original = question.verb[type].toLowerCase();
-      const correctForms = [...original.split("/"), original];
-      return correctForms.includes(val);
-    });
-  }, []);
+  const checkAnswer = useCallback(
+    (question: ExamQuestion, userInputs: Record<string, string>): boolean => {
+      return question.missing.every((type) => {
+        const val = (userInputs[type] || "").trim().toLowerCase();
+        const original = question.verb[type].toLowerCase();
+        const correctForms = [...original.split("/"), original];
+        return correctForms.includes(val);
+      });
+    },
+    []
+  );
 
   // Save current answers without grading
   const saveCurrentAnswers = useCallback(() => {
@@ -244,10 +256,14 @@ export const ExamTab = memo(function ExamTab() {
   // Finish exam
   const finishExam = useCallback(() => {
     // Prevent double execution
-    if (examFinishedRef.current) {return;}
+    if (examFinishedRef.current) {
+      return;
+    }
     examFinishedRef.current = true;
 
-    if (timerRef.current) {clearInterval(timerRef.current);}
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
 
     // First, save current inputs to the current question
     const currentInputs = inputsRef.current;
@@ -270,9 +286,8 @@ export const ExamTab = memo(function ExamTab() {
 
     // Check if this is a new best score
     const newPercentage = (correct / updatedQuestions.length) * 100;
-    const previousBestPercentage = history.length > 0
-      ? Math.max(...history.map((e) => (e.correct / e.total) * 100))
-      : 0;
+    const previousBestPercentage =
+      history.length > 0 ? Math.max(...history.map((e) => (e.correct / e.total) * 100)) : 0;
     const isNewBest = newPercentage > previousBestPercentage && newPercentage > 0;
 
     const result = addExamResult({
@@ -289,7 +304,7 @@ export const ExamTab = memo(function ExamTab() {
 
     // Track exam finish
     trackEvent("exam_finish", {
-      correct: correct,
+      correct,
       total: updatedQuestions.length,
       percentage: Math.round((correct / updatedQuestions.length) * 100),
       time_used: timeUsed,
@@ -345,19 +360,21 @@ export const ExamTab = memo(function ExamTab() {
 
   // Generate share text
   const generateShareText = useCallback(() => {
-    if (!lastResult) {return "";}
+    if (!lastResult) {
+      return "";
+    }
 
     const percentage = Math.round((lastResult.correct / lastResult.total) * 100);
     const timeUsedFormatted = formatTime(lastResult.timeUsed);
     const appUrl = typeof window !== "undefined" ? window.location.origin : "";
 
     return [
-      "🎓 Resultados de la prueba de Irregular Verbs en Verb Master Pro 🇬🇧",
+      "Resultados de Irregular Verbs en VerbMasterPro 🇬🇧",
       "",
-      `✅ Aciertos: ${lastResult.correct}/${lastResult.total} (${percentage}%)`,
-      `⏱️ Tiempo: ${timeUsedFormatted}`,
+      `✅ ${lastResult.correct}/${lastResult.total} (${percentage}%)`,
+      `⏱️ ${timeUsedFormatted}`,
       "",
-      `Practica tú también gratis entrando en: ${appUrl}`,
+      `Practica gratis: ${appUrl}`,
     ].join("\n");
   }, [lastResult]);
 
@@ -386,9 +403,8 @@ export const ExamTab = memo(function ExamTab() {
   }, [generateShareText, lastResult]);
 
   // Categories count display
-  const categoriesCount = config.categories.length === verbData.length
-    ? "(all)"
-    : `(${config.categories.length})`;
+  const categoriesCount =
+    config.categories.length === verbData.length ? "(all)" : `(${config.categories.length})`;
 
   // SETUP PHASE
   if (phase === "setup") {
@@ -402,8 +418,7 @@ export const ExamTab = memo(function ExamTab() {
             className="flex w-full items-center justify-center gap-2 p-3 transition-all hover:bg-slate-50 dark:hover:bg-slate-700"
           >
             <p className="text-[10px] font-black uppercase text-slate-400">
-              Categories{" "}
-              <span className="text-indigo-400">{categoriesCount}</span>
+              Categories <span className="text-indigo-400">{categoriesCount}</span>
             </p>
             <span
               className={`text-xs text-slate-300 transition-transform ${showCategories ? "rotate-180" : ""}`}
@@ -552,27 +567,30 @@ export const ExamTab = memo(function ExamTab() {
                         {/* Delete button */}
                         <button
                           type="button"
-                          onClick={() => setConfirmModal({ isOpen: true, type: "delete", examId: exam.id })}
+                          onClick={() =>
+                            setConfirmModal({ isOpen: true, type: "delete", examId: exam.id })
+                          }
                           className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full text-xs text-slate-400 opacity-100 transition-all hover:bg-rose-100 hover:text-rose-500 dark:hover:bg-rose-900/30 md:opacity-0 md:group-hover:opacity-100"
                         >
                           ✕
                         </button>
                         <div className="flex items-center justify-between">
-                          <span className={`text-lg font-black ${
-                            isBest
-                              ? "text-amber-600 dark:text-amber-400"
-                              : "text-indigo-600 dark:text-indigo-400"
-                          }`}>
-                            {isBest && "🏆 "}{exam.correct}/{exam.total}
+                          <span
+                            className={`text-lg font-black ${
+                              isBest
+                                ? "text-amber-600 dark:text-amber-400"
+                                : "text-indigo-600 dark:text-indigo-400"
+                            }`}
+                          >
+                            {isBest && "🏆 "}
+                            {exam.correct}/{exam.total}
                           </span>
                           <span className="text-xs text-slate-400">
                             {new Date(exam.date).toLocaleDateString()}
                           </span>
                         </div>
                         <div className="mt-1 flex items-center justify-between text-xs text-slate-500">
-                          <span>
-                            {Math.round(percentage)}% correct
-                          </span>
+                          <span>{Math.round(percentage)}% correct</span>
                           <span>⏱️ {formatTime(exam.timeUsed)}</span>
                         </div>
                       </div>
@@ -623,7 +641,7 @@ export const ExamTab = memo(function ExamTab() {
   // EXAM PHASE
   if (phase === "exam") {
     const currentQuestion = questions[currentIndex];
-    const progress = ((currentIndex) / questions.length) * 100;
+    const progress = (currentIndex / questions.length) * 100;
     const timeProgress = (timeLeft / (config.timePerQuestion * questions.length)) * 100;
 
     if (!currentQuestion) {
@@ -636,18 +654,16 @@ export const ExamTab = memo(function ExamTab() {
         <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="flex items-center justify-between p-3">
             <div className="text-center">
-              <span className="block text-[9px] font-bold uppercase text-slate-400">
-                Question
-              </span>
+              <span className="block text-[9px] font-bold uppercase text-slate-400">Question</span>
               <span className="text-lg font-black text-indigo-600 dark:text-indigo-400">
                 {currentIndex + 1}/{questions.length}
               </span>
             </div>
             <div className="text-center">
-              <span className="block text-[9px] font-bold uppercase text-slate-400">
-                Time Left
-              </span>
-              <span className={`text-lg font-black ${timeLeft <= 30 ? "text-rose-500 animate-pulse" : "text-amber-500"}`}>
+              <span className="block text-[9px] font-bold uppercase text-slate-400">Time Left</span>
+              <span
+                className={`text-lg font-black ${timeLeft <= 30 ? "text-rose-500 animate-pulse" : "text-amber-500"}`}
+              >
                 {formatTime(timeLeft)}
               </span>
             </div>
@@ -669,37 +685,39 @@ export const ExamTab = memo(function ExamTab() {
 
         {/* Question Card */}
         <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl dark:border-slate-600 dark:bg-slate-800/50">
-          {(["present", "past", "participle", "meaning"] as VerbField[]).map(
-            (type, index) => {
-              const isMeaning = type === "meaning";
-              const isClue = type === currentQuestion.clueType;
+          {(["present", "past", "participle", "meaning"] as VerbField[]).map((type, index) => {
+            const isMeaning = type === "meaning";
+            const isClue = type === currentQuestion.clueType;
 
-              return (
-                <div
-                  key={type}
-                  className={`slot-row ${isClue ? "bg-indigo-50/50 dark:bg-indigo-500/10" : ""}`}
-                >
-                  <span className="slot-label">{labels[type]}</span>
-                  {isClue ? (
-                    <div
-                      className={`flex-1 text-lg font-black text-indigo-600 dark:text-indigo-300 ${!isMeaning ? "uppercase" : ""}`}
-                    >
-                      {currentQuestion.verb[type]}
-                    </div>
-                  ) : (
-                    <input
-                      ref={index === 0 || (index === 1 && currentQuestion.clueType === "present") ? firstInputRef : null}
-                      type="text"
-                      value={inputs[type] || ""}
-                      onChange={(e) => handleInputChange(type, e.target.value)}
-                      className={`flex-1 border-b-2 border-slate-200 bg-transparent p-1 text-lg font-bold outline-none focus:border-indigo-400 dark:border-slate-500 dark:text-white dark:focus:border-indigo-400 ${!isMeaning ? "uppercase" : ""}`}
-                      autoComplete="off"
-                    />
-                  )}
-                </div>
-              );
-            }
-          )}
+            return (
+              <div
+                key={type}
+                className={`slot-row ${isClue ? "bg-indigo-50/50 dark:bg-indigo-500/10" : ""}`}
+              >
+                <span className="slot-label">{labels[type]}</span>
+                {isClue ? (
+                  <div
+                    className={`flex-1 text-lg font-black text-indigo-600 dark:text-indigo-300 ${!isMeaning ? "uppercase" : ""}`}
+                  >
+                    {currentQuestion.verb[type]}
+                  </div>
+                ) : (
+                  <input
+                    ref={
+                      index === 0 || (index === 1 && currentQuestion.clueType === "present")
+                        ? firstInputRef
+                        : null
+                    }
+                    type="text"
+                    value={inputs[type] || ""}
+                    onChange={(e) => handleInputChange(type, e.target.value)}
+                    className={`flex-1 border-b-2 border-slate-200 bg-transparent p-1 text-lg font-bold outline-none focus:border-indigo-400 dark:border-slate-500 dark:text-white dark:focus:border-indigo-400 ${!isMeaning ? "uppercase" : ""}`}
+                    autoComplete="off"
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Question Dots Navigation */}
@@ -772,26 +790,18 @@ export const ExamTab = memo(function ExamTab() {
       <div className="space-y-4">
         {/* Results Summary */}
         <div className="overflow-hidden rounded-3xl border border-slate-100 bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white shadow-xl">
-          <h2 className="mb-4 text-center text-2xl font-black">
-            🎓 Exam Complete!
-          </h2>
+          <h2 className="mb-4 text-center text-2xl font-black">🎓 Exam Complete!</h2>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <span className="block text-[10px] font-bold uppercase opacity-80">
-                Correct
-              </span>
+              <span className="block text-[10px] font-bold uppercase opacity-80">Correct</span>
               <span className="text-3xl font-black">{lastResult.correct}</span>
             </div>
             <div>
-              <span className="block text-[10px] font-bold uppercase opacity-80">
-                Wrong
-              </span>
+              <span className="block text-[10px] font-bold uppercase opacity-80">Wrong</span>
               <span className="text-3xl font-black">{lastResult.incorrect}</span>
             </div>
             <div>
-              <span className="block text-[10px] font-bold uppercase opacity-80">
-                Total
-              </span>
+              <span className="block text-[10px] font-bold uppercase opacity-80">Total</span>
               <span className="text-3xl font-black">{lastResult.total}</span>
             </div>
           </div>
@@ -834,9 +844,7 @@ export const ExamTab = memo(function ExamTab() {
                   <span className="font-bold text-slate-800 dark:text-slate-200">
                     {index + 1}. {q.verb.present}
                   </span>
-                  <span className="text-lg">
-                    {q.isCorrect ? "✅" : "❌"}
-                  </span>
+                  <span className="text-lg">{q.isCorrect ? "✅" : "❌"}</span>
                 </div>
 
                 {expandedQuestion === index && (
@@ -845,8 +853,12 @@ export const ExamTab = memo(function ExamTab() {
                       const isClue = type === q.clueType;
                       const userAnswer = q.userAnswers[type] || "";
                       const correctAnswer = q.verb[type];
-                      const isAnswerCorrect = userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase() ||
-                        correctAnswer.toLowerCase().split("/").includes(userAnswer.toLowerCase().trim());
+                      const isAnswerCorrect =
+                        userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase() ||
+                        correctAnswer
+                          .toLowerCase()
+                          .split("/")
+                          .includes(userAnswer.toLowerCase().trim());
 
                       return (
                         <div key={type} className="flex items-center gap-2 text-sm">
@@ -860,7 +872,13 @@ export const ExamTab = memo(function ExamTab() {
                           ) : (
                             <div className="flex-1">
                               {userAnswer ? (
-                                <span className={isAnswerCorrect ? "text-green-600 dark:text-green-400" : "text-rose-500"}>
+                                <span
+                                  className={
+                                    isAnswerCorrect
+                                      ? "text-green-600 dark:text-green-400"
+                                      : "text-rose-500"
+                                  }
+                                >
                                   {userAnswer}
                                 </span>
                               ) : (
@@ -930,4 +948,3 @@ export const ExamTab = memo(function ExamTab() {
 
   return null;
 });
-

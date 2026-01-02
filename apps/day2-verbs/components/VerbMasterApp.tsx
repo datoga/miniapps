@@ -1,6 +1,7 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useCallback, useEffect } from "react";
+import { trackEvent, trackAppView } from "@miniapps/analytics";
 import { useStats } from "../lib/useStats";
 import { useTabNavigation, type Tab } from "../lib/useTabNavigation";
 import { LearnTab } from "./LearnTab";
@@ -21,6 +22,17 @@ function MusicIcon() {
 export const VerbMasterApp = memo(function VerbMasterApp() {
   const { activeTab, changeTab } = useTabNavigation();
   const { stats, addSuccess, addFail, resetStats, removeHistoryItem } = useStats();
+
+  // Track app view on mount
+  useEffect(() => {
+    trackAppView("VerbMasterPro");
+  }, []);
+
+  // Wrap changeTab with tracking
+  const handleTabChange = useCallback((tab: Tab) => {
+    trackEvent("tab_change", { tab });
+    changeTab(tab);
+  }, [changeTab]);
 
   const tabClasses = (tab: Tab, isSong = false) => {
     const base = "flex-1 py-3 rounded-xl font-bold transition-all";
@@ -43,35 +55,35 @@ export const VerbMasterApp = memo(function VerbMasterApp() {
       <div className="mb-6 flex rounded-2xl bg-slate-200 p-1 dark:bg-slate-800">
         <button
           type="button"
-          onClick={() => changeTab("learn")}
+          onClick={() => handleTabChange("learn")}
           className={tabClasses("learn")}
         >
           List
         </button>
         <button
           type="button"
-          onClick={() => changeTab("find")}
+          onClick={() => handleTabChange("find")}
           className={tabClasses("find")}
         >
           Find
         </button>
         <button
           type="button"
-          onClick={() => changeTab("practice")}
+          onClick={() => handleTabChange("practice")}
           className={tabClasses("practice")}
         >
           Practice
         </button>
         <button
           type="button"
-          onClick={() => changeTab("exam")}
+          onClick={() => handleTabChange("exam")}
           className={tabClasses("exam")}
         >
           Exam
         </button>
         <button
           type="button"
-          onClick={() => changeTab("song")}
+          onClick={() => handleTabChange("song")}
           className={tabClasses("song", true)}
         >
           <MusicIcon />

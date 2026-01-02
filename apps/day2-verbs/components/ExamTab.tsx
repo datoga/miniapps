@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { trackEvent } from "@miniapps/analytics";
 import { verbData, type Verb } from "../lib/verbData";
 import { useExamHistory, type ExamResult } from "../lib/useExamHistory";
 import { ConfirmModal } from "./ConfirmModal";
@@ -154,6 +155,12 @@ export const ExamTab = memo(function ExamTab() {
     setTimeLeft(config.timePerQuestion * newQuestions.length);
     setPhase("exam");
 
+    // Track exam start
+    trackEvent("exam_start", {
+      question_count: newQuestions.length,
+      time_limit: config.timePerQuestion * newQuestions.length,
+    });
+
     setTimeout(() => firstInputRef.current?.focus(), 100);
   }, [generateQuestions, config.timePerQuestion]);
 
@@ -280,6 +287,15 @@ export const ExamTab = memo(function ExamTab() {
     setLastResult(result);
     setPhase("results");
 
+    // Track exam finish
+    trackEvent("exam_finish", {
+      correct: correct,
+      total: updatedQuestions.length,
+      percentage: Math.round((correct / updatedQuestions.length) * 100),
+      time_used: timeUsed,
+      is_new_best: isNewBest,
+    });
+
     // Show congratulation modal if new best
     if (isNewBest) {
       setTimeout(() => setShowNewBestModal(true), 500);
@@ -349,6 +365,12 @@ export const ExamTab = memo(function ExamTab() {
   const shareResults = useCallback(async () => {
     const text = generateShareText();
 
+    // Track share event
+    trackEvent("exam_share", {
+      method: navigator.share ? "native" : "clipboard",
+      percentage: lastResult ? Math.round((lastResult.correct / lastResult.total) * 100) : 0,
+    });
+
     if (navigator.share) {
       try {
         await navigator.share({ text });
@@ -360,7 +382,7 @@ export const ExamTab = memo(function ExamTab() {
       // eslint-disable-next-line no-alert -- Simple notification for clipboard copy
       window.alert("Results copied to clipboard!");
     }
-  }, [generateShareText]);
+  }, [generateShareText, lastResult]);
 
   // Categories count display
   const categoriesCount = config.categories.length === verbData.length

@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { trackEvent } from "@miniapps/analytics";
 import { verbData, type Verb } from "../lib/verbData";
 import type { Stats } from "../lib/useStats";
 import { ConfirmModal } from "./ConfirmModal";
@@ -190,6 +191,12 @@ export const QuizTab = memo(function QuizTab({
 
     setInputStates(newInputStates);
 
+    // Track quiz answer
+    trackEvent("quiz_answer", {
+      verb: verb.present,
+      result: isCorrect ? "correct" : "incorrect",
+    });
+
     if (isCorrect) {
       if (!quizState.counted) {
         onSuccess(verb);
@@ -211,6 +218,9 @@ export const QuizTab = memo(function QuizTab({
   const giveUp = useCallback(() => {
     const verb = quizState.verb;
     if (!verb) { return; }
+
+    // Track solve/give up
+    trackEvent("quiz_solve", { verb: verb.present });
 
     if (!quizState.counted) {
       onFail(verb);

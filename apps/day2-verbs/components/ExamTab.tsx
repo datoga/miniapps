@@ -1,6 +1,7 @@
 "use client";
 
 import { trackEvent } from "@miniapps/analytics";
+import { buildShareText, useShare } from "@miniapps/ui";
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useExamHistory, type ExamResult } from "../lib/useExamHistory";
 import { verbData, type Verb } from "../lib/verbData";
@@ -358,49 +359,33 @@ export const ExamTab = memo(function ExamTab() {
     setExpandedQuestion(null);
   }, []);
 
-  // Generate share text
-  const generateShareText = useCallback(() => {
+  // Share results using reusable hook
+  const shareText = useMemo(() => {
     if (!lastResult) {
       return "";
     }
-
     const percentage = Math.round((lastResult.correct / lastResult.total) * 100);
-    const timeUsedFormatted = formatTime(lastResult.timeUsed);
-    const appUrl = typeof window !== "undefined" ? window.location.origin : "";
-
-    return [
+    return buildShareText([
       "Resultados de Irregular Verbs en VerbMasterPro 🇬🇧",
       "",
       `✅ ${lastResult.correct}/${lastResult.total} (${percentage}%)`,
-      `⏱️ ${timeUsedFormatted}`,
+      `⏱️ ${formatTime(lastResult.timeUsed)}`,
       "",
-      `Practica gratis: ${appUrl}`,
-    ].join("\n");
+      "Practica gratis:",
+    ]);
   }, [lastResult]);
 
-  // Share via native share or copy
-  const shareResults = useCallback(async () => {
-    const text = generateShareText();
-
-    // Track share event
-    const canShare = typeof navigator !== "undefined" && "share" in navigator;
-    trackEvent("exam_share", {
-      method: canShare ? "native" : "clipboard",
-      percentage: lastResult ? Math.round((lastResult.correct / lastResult.total) * 100) : 0,
-    });
-
-    if (canShare) {
-      try {
-        await navigator.share({ text });
-      } catch {
-        // User cancelled or error
-      }
-    } else {
-      await navigator.clipboard.writeText(text);
-      // eslint-disable-next-line no-alert -- Simple notification for clipboard copy
-      window.alert("Results copied to clipboard!");
-    }
-  }, [generateShareText, lastResult]);
+  const { share: shareResults } = useShare({
+    text: shareText,
+    url: typeof window !== "undefined" ? window.location.origin : "",
+    clipboardMessage: "¡Resultados copiados al portapapeles!",
+    onSuccess: (method) => {
+      trackEvent("exam_share", {
+        method,
+        percentage: lastResult ? Math.round((lastResult.correct / lastResult.total) * 100) : 0,
+      });
+    },
+  });
 
   // Categories count display
   const categoriesCount =

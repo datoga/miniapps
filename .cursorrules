@@ -387,20 +387,23 @@ When hiding elements that reveal on hover (action buttons, icons, etc.):
 - **ALWAYS** make elements visible on mobile, hidden on desktop hover
 
 **Pattern to use:**
+
 ```tsx
 // ❌ BAD - Hidden on mobile, users can't access
-className="opacity-0 group-hover:opacity-100"
+className = "opacity-0 group-hover:opacity-100";
 
 // ✅ GOOD - Visible on mobile, hover-reveal on desktop
-className="opacity-100 md:opacity-0 md:group-hover:opacity-100"
+className = "opacity-100 md:opacity-0 md:group-hover:opacity-100";
 ```
 
 **Common use cases:**
+
 - Action buttons (edit, delete, archive)
 - Contextual icons
 - Hover-only tooltips (use click/tap on mobile instead)
 
 **Breakpoint reference:**
+
 - `md:` = 768px+ (tablets and desktop)
 - Use `md:` as the breakpoint for hover behaviors
 
@@ -409,6 +412,7 @@ className="opacity-100 md:opacity-0 md:group-hover:opacity-100"
 **⚠️ For apps with tabs, use URL hash navigation for browser history support**
 
 When implementing tabbed interfaces, use URL hashes (`#tab-name`) so users can:
+
 - Use browser back/forward buttons
 - Share direct links to specific tabs
 - Bookmark specific tabs
@@ -484,6 +488,7 @@ export function MyTabbedApp() {
 ```
 
 **Best practices:**
+
 - Use descriptive tab names that match UI labels (e.g., "practice" not "quiz")
 - Always have a DEFAULT_TAB fallback
 - Validate hash values against VALID_TABS array

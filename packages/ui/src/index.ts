@@ -6,3 +6,4 @@ export { Header } from "./Header";
 export { Footer } from "./Footer";
 export { Button } from "./Button";
 export { cn } from "./utils";
+export { useShare, buildShareText, type ShareOptions, type UseShareResult } from "./useShare";

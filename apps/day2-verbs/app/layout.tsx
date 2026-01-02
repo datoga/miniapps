@@ -84,8 +84,7 @@ export const metadata: Metadata = {
   },
   category: "education",
   verification: {
-    // Add Google Search Console verification here when available
-    // google: "your-verification-code",
+    google: "1gBkkaONti9u4AKeYJRhKE7A9YKTxGzwX4idPi7Zgec",
   },
 };
 

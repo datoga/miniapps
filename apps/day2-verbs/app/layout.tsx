@@ -17,11 +17,11 @@ const APP_URL = "https://verbmaster.pro";
 
 export const metadata: Metadata = {
   title: {
-    default: "Verb Master Pro - Learn English Irregular Verbs Free",
+    default: "Verb Master Pro - Aprende los Verbos Irregulares en Inglés Gratis",
     template: `%s | ${APP_NAME}`,
   },
   description:
-    "Master English irregular verbs with interactive quizzes, exams, and audio pronunciations. Track your progress, practice offline. 100% free educational app.",
+    "Aprende los verbos irregulares en inglés con quizzes interactivos, exámenes cronometrados y pronunciación con audio. Sigue tu progreso. 100% gratis.",
   keywords: [
     "irregular verbs",
     "english irregular verbs",
@@ -63,26 +63,26 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "es_ES",
     url: APP_URL,
     siteName: APP_NAME,
-    title: "Verb Master Pro - Learn English Irregular Verbs Free",
+    title: "Verb Master Pro - Aprende los Verbos Irregulares en Inglés Gratis",
     description:
-      "Master English irregular verbs with interactive quizzes, exams, and audio pronunciations. Track your progress. 100% free.",
+      "Aprende los verbos irregulares en inglés con quizzes interactivos, exámenes y audio. Sigue tu progreso. 100% gratis.",
     images: [
       {
         url: `${APP_URL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "Verb Master Pro - English Irregular Verbs App",
+        alt: "Verb Master Pro - App de Verbos Irregulares en Inglés",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Verb Master Pro - Learn English Irregular Verbs Free",
+    title: "Verb Master Pro - Aprende los Verbos Irregulares en Inglés Gratis",
     description:
-      "Master English irregular verbs with interactive quizzes and exams. 100% free!",
+      "Aprende los verbos irregulares en inglés con quizzes y exámenes interactivos. ¡100% gratis!",
     images: [`${APP_URL}/og-image.png`],
     creator: "@datoga_es",
   },
@@ -110,11 +110,11 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: APP_NAME,
-  alternateName: "Irregular Verbs App",
+  alternateName: "App de Verbos Irregulares en Inglés",
   description:
-    "Master English irregular verbs with interactive quizzes, exams, and audio pronunciations. Track your progress, practice offline. 100% free educational app.",
+    "Aprende los verbos irregulares en inglés con quizzes interactivos, exámenes cronometrados y pronunciación con audio. Sigue tu progreso. 100% gratis.",
   url: APP_URL,
-  inLanguage: "en",
+  inLanguage: "es",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web, Android, iOS",
   browserRequirements: "Requires JavaScript",
@@ -131,14 +131,14 @@ const jsonLd = {
     availability: "https://schema.org/InStock",
   },
   featureList: [
-    "150+ irregular verbs",
-    "Audio pronunciations",
-    "Interactive quizzes",
-    "Timed exams",
-    "Progress tracking",
-    "Works offline (PWA)",
-    "Dark mode support",
-    "100% free",
+    "150+ verbos irregulares",
+    "Pronunciación con audio",
+    "Quizzes interactivos",
+    "Exámenes cronometrados",
+    "Seguimiento de progreso",
+    "Funciona sin conexión (PWA)",
+    "Modo oscuro",
+    "100% gratis",
   ],
   screenshot: `${APP_URL}/og-image.png`,
 };

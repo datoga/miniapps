@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 
+export const runtime = "edge";
+
 // Icon configuration
 const APP_INITIALS = "MF";
 const BG_COLOR = "#8b5cf6";

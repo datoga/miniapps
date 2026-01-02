@@ -14,7 +14,6 @@ export async function GET() {
           alignItems: "center",
           justifyContent: "center",
           background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          fontFamily: "system-ui, sans-serif",
         }}
       >
         <div
@@ -44,7 +43,7 @@ export async function GET() {
         <div
           style={{
             fontSize: 72,
-            fontWeight: 800,
+            fontWeight: 700,
             color: "white",
             marginBottom: 16,
             textShadow: "0 4px 20px rgba(0,0,0,0.2)",
@@ -61,7 +60,7 @@ export async function GET() {
             lineHeight: 1.4,
           }}
         >
-          Gestiona tus sesiones de mentoría
+          Gestiona tus sesiones de mentoria
         </div>
         <div
           style={{
@@ -72,9 +71,9 @@ export async function GET() {
             gap: 32,
           }}
         >
-          <span>✓ 100% Privado</span>
-          <span>✓ Sin registro</span>
-          <span>✓ Gratuito</span>
+          <span>100% Privado</span>
+          <span>Sin registro</span>
+          <span>Gratuito</span>
         </div>
       </div>
     ),
@@ -84,4 +83,3 @@ export async function GET() {
     }
   );
 }
-

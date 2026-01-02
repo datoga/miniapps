@@ -1,9 +1,8 @@
 import { ImageResponse } from "next/og";
 
 // Icon configuration
-const APP_INITIALS = "MF";
+const APP_EMOJI = "👥";
 const BG_COLOR = "#8b5cf6";
-const TEXT_COLOR = "#ffffff";
 
 // Generate multiple icon sizes
 export function generateImageMetadata() {
@@ -24,7 +23,7 @@ const SIZES: Record<string, number> = {
 // Generate the icon image
 export default function Icon({ id }: { id: string }) {
   const size = SIZES[id] ?? 512;
-  const fontSize = Math.round(size * 0.4);
+  const fontSize = Math.round(size * 0.55);
   const borderRadius = Math.round(size * 0.18);
 
   return new ImageResponse(
@@ -38,13 +37,10 @@ export default function Icon({ id }: { id: string }) {
           justifyContent: "center",
           backgroundColor: BG_COLOR,
           borderRadius,
-          color: TEXT_COLOR,
           fontSize,
-          fontWeight: 700,
-          fontFamily: "system-ui, sans-serif",
         }}
       >
-        {APP_INITIALS}
+        {APP_EMOJI}
       </div>
     ),
     {
@@ -53,4 +49,3 @@ export default function Icon({ id }: { id: string }) {
     }
   );
 }
-

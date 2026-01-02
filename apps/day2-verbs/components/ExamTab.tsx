@@ -366,12 +366,13 @@ export const ExamTab = memo(function ExamTab() {
     const text = generateShareText();
 
     // Track share event
+    const canShare = typeof navigator !== "undefined" && "share" in navigator;
     trackEvent("exam_share", {
-      method: navigator.share ? "native" : "clipboard",
+      method: canShare ? "native" : "clipboard",
       percentage: lastResult ? Math.round((lastResult.correct / lastResult.total) * 100) : 0,
     });
 
-    if (navigator.share) {
+    if (canShare) {
       try {
         await navigator.share({ text });
       } catch {

@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 const APP_NAME = "Verb Master Pro";
-const APP_URL = "https://verbmasterpro.vercel.app";
+const APP_URL = "https://verbmaster.pro";
 
 export const metadata: Metadata = {
   title: {

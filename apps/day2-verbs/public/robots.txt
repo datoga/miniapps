@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://verbmasterpro.vercel.app/sitemap.xml
+Sitemap: https://verbmaster.pro/sitemap.xml

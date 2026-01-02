@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const APP_URL = "https://verbmasterpro.vercel.app";
+const APP_URL = "https://verbmaster.pro";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

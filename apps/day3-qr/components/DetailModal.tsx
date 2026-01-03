@@ -60,10 +60,17 @@ export const DetailModal = memo(function DetailModal({
   }, [item]);
 
   const handleNameSave = useCallback(() => {
-    if (item && nameValue.trim()) {
-      onUpdateName(item.id, nameValue.trim());
+    if (!item) return;
+    
+    const trimmedName = nameValue.trim();
+    if (trimmedName) {
+      onUpdateName(item.id, trimmedName);
+      setEditingName(false);
+    } else {
+      // Revert to original name if empty
+      setNameValue(item.name);
+      setEditingName(false);
     }
-    setEditingName(false);
   }, [item, nameValue, onUpdateName]);
 
   const handleNameKeyDown = useCallback(

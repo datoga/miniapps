@@ -28,6 +28,7 @@ export const FullscreenModal = memo(function FullscreenModal({
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        e.stopImmediatePropagation(); // Prevent parent modal from closing
         onClose();
       }
     },

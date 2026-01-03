@@ -494,7 +494,7 @@ export const EditorModal = memo(function EditorModal({
                 value={name}
                 onChange={(e) => handleNameChange(e.target.value)}
                 placeholder={t("editor.namePlaceholder")}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
               {!isNameValid && name.length > 0 && (
                 <p className="mt-1 text-sm text-red-500">{t("editor.nameRequired")}</p>
@@ -514,7 +514,7 @@ export const EditorModal = memo(function EditorModal({
                         className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
                           contentMode === "url"
                             ? "bg-white dark:bg-gray-700 shadow-sm text-primary-600 dark:text-primary-400"
-                            : "text-gray-600 dark:text-gray-400"
+                            : "text-gray-600 dark:text-gray-300"
                         }`}
                       >
                         URL
@@ -524,7 +524,7 @@ export const EditorModal = memo(function EditorModal({
                         className={`flex-1 py-2 rounded-lg font-medium transition-colors ${
                           contentMode === "text"
                             ? "bg-white dark:bg-gray-700 shadow-sm text-primary-600 dark:text-primary-400"
-                            : "text-gray-600 dark:text-gray-400"
+                            : "text-gray-600 dark:text-gray-300"
                         }`}
                       >
                         {t("editor.text")}
@@ -543,7 +543,7 @@ export const EditorModal = memo(function EditorModal({
                           value={data}
                           onChange={(e) => handleDataChange(e.target.value)}
                           placeholder="https://example.com"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                         />
                       ) : (
                         <textarea
@@ -551,7 +551,7 @@ export const EditorModal = memo(function EditorModal({
                           onChange={(e) => handleDataChange(e.target.value)}
                           placeholder={t("editor.textPlaceholder")}
                           rows={4}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
+                          className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
                         />
                       )}
                       {!isContentValid && data.length > 0 && (
@@ -578,7 +578,7 @@ export const EditorModal = memo(function EditorModal({
                               className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                                 options.sizePx === size
                                   ? "bg-primary-500 text-white border-primary-500"
-                                  : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-400"
+                                  : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary-400"
                               }`}
                             >
                               {size}px
@@ -600,7 +600,7 @@ export const EditorModal = memo(function EditorModal({
                               className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
                                 options.ecc === ecc
                                   ? "bg-primary-500 text-white border-primary-500"
-                                  : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-400"
+                                  : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary-400"
                               }`}
                             >
                               {ecc}

@@ -38,10 +38,10 @@ export const QrCanvas = memo(function QrCanvas({
   if (!data) {
     return (
       <div
-        className={`flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-xl ${className}`}
+        className={`flex items-center justify-center bg-gray-200 dark:bg-gray-700/50 rounded-xl border border-gray-300 dark:border-gray-600 ${className}`}
         style={{ width: opts.sizePx, height: opts.sizePx, maxWidth: "100%" }}
       >
-        <span className="text-gray-400 dark:text-gray-500 text-sm">{t("editor.noContent")}</span>
+        <span className="text-gray-500 dark:text-gray-400 text-sm">{t("editor.noContent")}</span>
       </div>
     );
   }

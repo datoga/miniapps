@@ -177,9 +177,42 @@ export const DetailModal = memo(function DetailModal({
     day: "numeric",
   });
 
+  // Editable title component
+  const editableTitle = editingName ? (
+    <input
+      type="text"
+      value={nameValue}
+      onChange={(e) => setNameValue(e.target.value)}
+      onBlur={handleNameSave}
+      onKeyDown={handleNameKeyDown}
+      autoFocus
+      className="w-full px-2 py-1 text-2xl font-bold bg-white dark:bg-gray-800 border border-primary-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 dark:text-white"
+    />
+  ) : (
+    <button
+      onClick={() => setEditingName(true)}
+      className="group flex items-center gap-2 text-left hover:text-primary-500 transition-colors"
+      title={t("actions.edit")}
+    >
+      <span>{item.name}</span>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400"
+      >
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+      </svg>
+    </button>
+  );
+
   return (
     <>
-      <Modal open={open} onClose={onClose} title={item.name} maxWidth="max-w-2xl">
+      <Modal open={open} onClose={onClose} title={editableTitle} maxWidth="max-w-2xl">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left: QR Preview */}
           <div className="flex-shrink-0 flex flex-col items-center">
@@ -267,39 +300,6 @@ export const DetailModal = memo(function DetailModal({
 
           {/* Right: Info */}
           <div className="flex-1 min-w-0">
-            {/* Name (editable) */}
-            <div className="mb-4">
-              {editingName ? (
-                <input
-                  type="text"
-                  value={nameValue}
-                  onChange={(e) => setNameValue(e.target.value)}
-                  onBlur={handleNameSave}
-                  onKeyDown={handleNameKeyDown}
-                  autoFocus
-                  className="w-full px-3 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-gray-900 dark:text-white"
-                />
-              ) : (
-                <button
-                  onClick={() => setEditingName(true)}
-                  className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 transition-colors"
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                  </svg>
-                  {t("actions.edit")}
-                </button>
-              )}
-            </div>
-
             {/* Metadata */}
             <div className="flex flex-wrap gap-2 mb-4">
               <span

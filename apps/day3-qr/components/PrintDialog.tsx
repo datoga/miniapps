@@ -322,7 +322,7 @@ export const PrintDialog = memo(function PrintDialog({
                 className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                   copies === count
                     ? "bg-primary-500 text-white border-primary-500"
-                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-400"
+                    : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 hover:border-primary-400 text-gray-700 dark:text-gray-300"
                 }`}
               >
                 {count}

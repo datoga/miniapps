@@ -197,7 +197,7 @@ export const QRKitApp = memo(function QRKitApp() {
           {filteredItems.length === 0 && !searchQuery && (
             // Empty state
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="w-24 h-24 rounded-3xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-6">
+              <div className="w-24 h-24 rounded-3xl bg-gray-100 dark:bg-gray-800/60 flex items-center justify-center mb-6 border border-gray-200 dark:border-gray-700">
                 <svg
                   width="48"
                   height="48"
@@ -205,7 +205,7 @@ export const QRKitApp = memo(function QRKitApp() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
-                  className="text-gray-400"
+                  className="text-gray-400 dark:text-gray-500"
                 >
                   <rect x="3" y="3" width="7" height="7" />
                   <rect x="14" y="3" width="7" height="7" />
@@ -219,7 +219,7 @@ export const QRKitApp = memo(function QRKitApp() {
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                 {t("library.emptyTitle")}
               </h2>
-              <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-sm">
+              <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-sm">
                 {t("library.emptyDescription")}
               </p>
               <button
@@ -234,7 +234,7 @@ export const QRKitApp = memo(function QRKitApp() {
           {filteredItems.length === 0 && searchQuery && (
             // No results state
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
+              <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-800/60 flex items-center justify-center mb-4 border border-gray-200 dark:border-gray-700">
                 <svg
                   width="32"
                   height="32"
@@ -242,7 +242,7 @@ export const QRKitApp = memo(function QRKitApp() {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
-                  className="text-gray-400"
+                  className="text-gray-400 dark:text-gray-500"
                 >
                   <circle cx="11" cy="11" r="8" />
                   <path d="m21 21-4.35-4.35" />
@@ -251,7 +251,7 @@ export const QRKitApp = memo(function QRKitApp() {
               <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                 {t("library.noResults")}
               </h2>
-              <p className="text-gray-500 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-300">
                 {t("library.noResultsDescription")}
               </p>
             </div>

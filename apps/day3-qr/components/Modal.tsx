@@ -5,7 +5,7 @@ import { memo, useCallback, useEffect } from "react";
 interface ModalProps {
   open: boolean;
   onClose: () => void;
-  title: string;
+  title: React.ReactNode;
   children: React.ReactNode;
   maxWidth?: string;
 }

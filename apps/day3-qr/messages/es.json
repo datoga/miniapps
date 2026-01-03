@@ -62,6 +62,7 @@
     "stopScan": "Detener",
     "startingCamera": "Iniciando cámara...",
     "retryCamera": "Reintentar",
+    "switchCamera": "Cambiar Cámara",
     "detected": "¡Detectado!",
     "cameraError": "No se pudo acceder a la cámara. Por favor verifica los permisos.",
     "or": "o",

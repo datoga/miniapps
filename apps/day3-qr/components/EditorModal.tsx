@@ -143,8 +143,19 @@ export const EditorModal = memo(function EditorModal({
         setDevices(devs);
         // Auto-start camera after getting devices
         if (videoRef.current && !isScanning) {
-          const firstDevice = devs[0];
-          startContinuousScanning(firstDevice ? firstDevice.deviceId : null);
+          // Prefer back camera (environment facing) over front camera
+          const backCamera = devs.find(
+            (d) =>
+              d.label.toLowerCase().includes("back") ||
+              d.label.toLowerCase().includes("rear") ||
+              d.label.toLowerCase().includes("environment") ||
+              d.label.toLowerCase().includes("trasera")
+          );
+          const preferredDevice = backCamera || devs[0];
+          if (preferredDevice) {
+            setSelectedDevice(preferredDevice.deviceId);
+          }
+          startContinuousScanning(preferredDevice ? preferredDevice.deviceId : null);
         }
       });
     }
@@ -667,24 +678,41 @@ export const EditorModal = memo(function EditorModal({
                         </div>
                       )}
                     </div>
-                    {/* Camera selector */}
+                    {/* Camera switch button */}
                     {devices.length > 1 && (
-                      <select
-                        value={selectedDevice || ""}
-                        onChange={(e) => {
-                          setSelectedDevice(e.target.value || null);
-                          // Restart camera with new device
-                          stopCamera();
-                          setTimeout(() => startCamera(), 100);
+                      <button
+                        onClick={() => {
+                          // Find current index and switch to next camera
+                          const currentIndex = devices.findIndex(
+                            (d) => d.deviceId === selectedDevice
+                          );
+                          const nextIndex = (currentIndex + 1) % devices.length;
+                          const nextDevice = devices[nextIndex];
+                          if (nextDevice) {
+                            setSelectedDevice(nextDevice.deviceId);
+                            // Restart camera with new device
+                            stopCamera();
+                            setTimeout(() => startCamera(), 100);
+                          }
                         }}
-                        className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+                        className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                       >
-                        {devices.map((device) => (
-                          <option key={device.deviceId} value={device.deviceId}>
-                            {device.label || `Camera ${device.deviceId.slice(0, 8)}`}
-                          </option>
-                        ))}
-                      </select>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M11 19H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5" />
+                          <path d="M13 5h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-5" />
+                          <circle cx="12" cy="12" r="3" />
+                          <path d="m18 22-3-3 3-3" />
+                          <path d="m6 2 3 3-3 3" />
+                        </svg>
+                        <span className="text-sm font-medium">{t("editor.switchCamera")}</span>
+                      </button>
                     )}
                     {cameraError && (
                       <div className="mt-2 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">

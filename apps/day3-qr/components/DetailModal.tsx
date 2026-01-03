@@ -61,7 +61,7 @@ export const DetailModal = memo(function DetailModal({
 
   const handleNameSave = useCallback(() => {
     if (!item) return;
-    
+
     const trimmedName = nameValue.trim();
     if (trimmedName) {
       onUpdateName(item.id, trimmedName);
@@ -197,7 +197,10 @@ export const DetailModal = memo(function DetailModal({
     />
   ) : (
     <button
-      onClick={() => setEditingName(true)}
+      onClick={() => {
+        setNameValue(item.name); // Reset to current name before editing
+        setEditingName(true);
+      }}
       className="group flex items-center gap-2 text-left hover:text-primary-500 transition-colors max-w-full"
       title={item.name}
     >

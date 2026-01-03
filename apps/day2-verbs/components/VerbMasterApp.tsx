@@ -1,15 +1,15 @@
 "use client";
 
+import { trackAppView, trackEvent } from "@miniapps/analytics";
 import { memo, useCallback, useEffect } from "react";
-import { trackEvent, trackAppView } from "@miniapps/analytics";
 import { useStats } from "../lib/useStats";
 import { useTabNavigation, type Tab } from "../lib/useTabNavigation";
-import { LearnTab } from "./LearnTab";
-import { FindTab } from "./FindTab";
-import { QuizTab } from "./QuizTab";
-import { ExamTab } from "./ExamTab";
-import { SongTab } from "./SongTab";
 import { AppFooter } from "./AppFooter";
+import { ExamTab } from "./ExamTab";
+import { FindTab } from "./FindTab";
+import { LearnTab } from "./LearnTab";
+import { QuizTab } from "./QuizTab";
+import { SongTab } from "./SongTab";
 
 function MusicIcon() {
   return (
@@ -29,10 +29,13 @@ export const VerbMasterApp = memo(function VerbMasterApp() {
   }, []);
 
   // Wrap changeTab with tracking
-  const handleTabChange = useCallback((tab: Tab) => {
-    trackEvent("tab_change", { tab });
-    changeTab(tab);
-  }, [changeTab]);
+  const handleTabChange = useCallback(
+    (tab: Tab) => {
+      trackEvent("vm_tab_change", { tab });
+      changeTab(tab);
+    },
+    [changeTab]
+  );
 
   const tabClasses = (tab: Tab, isSong = false) => {
     const base = "flex-1 py-3 rounded-xl font-bold transition-all";
@@ -110,4 +113,3 @@ export const VerbMasterApp = memo(function VerbMasterApp() {
     </div>
   );
 });
-

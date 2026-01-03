@@ -33,7 +33,7 @@ export const GoalInput = memo(function GoalInput({ goals, onChange }: GoalInputP
     onChange([newGoal, ...goals]);
     setNewGoalText("");
     setIsAdding(false);
-    trackEvent("goal_created", {
+    trackEvent("mf_goal_created", {
       text_length: newGoalText.trim().length,
       total_goals: goals.length + 1,
     });

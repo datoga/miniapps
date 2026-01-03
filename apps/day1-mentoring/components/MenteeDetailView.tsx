@@ -62,7 +62,7 @@ export function MenteeDetailView({ menteeSlug }: MenteeDetailViewProps) {
       const isArchiving = !menteeToArchive.archived;
       if (isArchiving) {
         await data.archiveMentee(menteeToArchive.id);
-        trackEvent("mentee_archived");
+        trackEvent("mf_mentee_archived");
       } else {
         await data.unarchiveMentee(menteeToArchive.id);
       }
@@ -78,7 +78,7 @@ export function MenteeDetailView({ menteeSlug }: MenteeDetailViewProps) {
         message: t("confirm.deleteMenteeMessage"),
         onConfirm: async () => {
           await data.deleteMentee(menteeToDelete.id);
-          trackEvent("mentee_deleted", {
+          trackEvent("mf_mentee_deleted", {
             menteesCount: data.mentees.length - 1,
           });
           setConfirmDialog((prev) => ({ ...prev, open: false }));
@@ -115,10 +115,10 @@ export function MenteeDetailView({ menteeSlug }: MenteeDetailViewProps) {
 
     if (session) {
       if (!hasTrackedFirstValue && data.sessions.length === 0) {
-        trackEvent("first_value");
+        trackEvent("mf_first_value");
         hasTrackedFirstValue = true;
       }
-      trackEvent("session_created", {
+      trackEvent("mf_session_created", {
         nextStepsCount: 0,
         hasTags: false,
         method: "inline",
@@ -134,7 +134,7 @@ export function MenteeDetailView({ menteeSlug }: MenteeDetailViewProps) {
         message: t("confirm.deleteSessionMessage"),
         onConfirm: async () => {
           await data.deleteSession(session.id);
-          trackEvent("session_deleted");
+          trackEvent("mf_session_deleted");
           setConfirmDialog((prev) => ({ ...prev, open: false }));
         },
       });

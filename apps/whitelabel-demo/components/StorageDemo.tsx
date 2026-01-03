@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { getJSON, setJSON, remove } from "@miniapps/storage";
 import { trackEvent } from "@miniapps/analytics";
+import { getJSON, remove, setJSON } from "@miniapps/storage";
+import { Button } from "@miniapps/ui";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "whitelabel-demo-value";
 
@@ -38,7 +38,7 @@ export function StorageDemo() {
 
     // Track first save event
     if (isFirstSave) {
-      trackEvent("first_value", { value_length: inputValue.length });
+      trackEvent("wl_first_value", { value_length: inputValue.length });
       setIsFirstSave(false);
     }
 
@@ -54,7 +54,7 @@ export function StorageDemo() {
     setIsFirstSave(true);
 
     // Track clear event
-    trackEvent("clear_clicked");
+    trackEvent("wl_clear_clicked");
 
     // Clear message after 3 seconds
     setTimeout(() => setMessage(null), 3000);

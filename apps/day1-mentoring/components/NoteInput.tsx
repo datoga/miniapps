@@ -31,7 +31,7 @@ export const NoteInput = memo(function NoteInput({ notes, onChange }: NoteInputP
 
     onChange([...notes, newNote]);
     setNewNoteText("");
-    trackEvent("note_created", {
+    trackEvent("mf_note_created", {
       text_length: newNoteText.trim().length,
       total_notes: notes.length + 1,
     });

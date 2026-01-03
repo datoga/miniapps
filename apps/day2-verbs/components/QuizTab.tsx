@@ -1,9 +1,9 @@
 "use client";
 
-import { memo, useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { trackEvent } from "@miniapps/analytics";
-import { verbData, type Verb } from "../lib/verbData";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Stats } from "../lib/useStats";
+import { verbData, type Verb } from "../lib/verbData";
 import { ConfirmModal } from "./ConfirmModal";
 
 type VerbField = "present" | "past" | "participle" | "meaning";
@@ -27,14 +27,18 @@ const inputStateStyles: Record<string, string> = {
   correct: "border-green-500 text-green-600 dark:bg-green-900/30 dark:text-green-400",
   incorrect: "border-rose-400 text-rose-500 dark:bg-rose-900/30 dark:text-rose-400",
   skipped: "border-amber-400 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
-  default: "border-slate-200 text-slate-800 focus:border-indigo-400 dark:border-slate-500 dark:text-white dark:focus:border-indigo-400",
+  default:
+    "border-slate-200 text-slate-800 focus:border-indigo-400 dark:border-slate-500 dark:text-white dark:focus:border-indigo-400",
 };
 
 // Feedback styles to avoid nested ternaries
 const feedbackStyles: Record<string, string> = {
-  correct: "border-y-2 border-green-300 text-green-500 dark:border-green-700 dark:bg-green-900/30 dark:text-green-400",
-  incorrect: "border-y-2 border-rose-300 text-rose-500 dark:border-rose-700 dark:bg-rose-900/30 dark:text-rose-400",
-  skipped: "border-y-2 border-amber-300 text-amber-500 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+  correct:
+    "border-y-2 border-green-300 text-green-500 dark:border-green-700 dark:bg-green-900/30 dark:text-green-400",
+  incorrect:
+    "border-y-2 border-rose-300 text-rose-500 dark:border-rose-700 dark:bg-rose-900/30 dark:text-rose-400",
+  skipped:
+    "border-y-2 border-amber-300 text-amber-500 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
 };
 
 interface QuizTabProps {
@@ -52,9 +56,7 @@ export const QuizTab = memo(function QuizTab({
   onReset,
   onRemoveHistoryItem,
 }: QuizTabProps) {
-  const [enabledGroups, setEnabledGroups] = useState<string[]>(
-    verbData.map((g) => g.id)
-  );
+  const [enabledGroups, setEnabledGroups] = useState<string[]>(verbData.map((g) => g.id));
   const [showCategories, setShowCategories] = useState(false);
   const [quizState, setQuizState] = useState<QuizState>({
     verb: null,
@@ -64,7 +66,9 @@ export const QuizTab = memo(function QuizTab({
   });
   const [inputs, setInputs] = useState<Record<string, string>>({});
   const [feedback, setFeedback] = useState<"correct" | "incorrect" | "skipped" | null>(null);
-  const [inputStates, setInputStates] = useState<Record<string, "correct" | "incorrect" | "skipped" | null>>({});
+  const [inputStates, setInputStates] = useState<
+    Record<string, "correct" | "incorrect" | "skipped" | null>
+  >({});
   const [buttonsLocked, setButtonsLocked] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [confirmModal, setConfirmModal] = useState<{
@@ -76,9 +80,7 @@ export const QuizTab = memo(function QuizTab({
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   const filteredVerbs = useMemo(() => {
-    return verbData
-      .filter((g) => enabledGroups.includes(g.id))
-      .flatMap((g) => g.verbs);
+    return verbData.filter((g) => enabledGroups.includes(g.id)).flatMap((g) => g.verbs);
   }, [enabledGroups]);
 
   const setupQuiz = useCallback(() => {
@@ -125,7 +127,9 @@ export const QuizTab = memo(function QuizTab({
     const clueType = types[clueIndex] ?? "present";
     const missing = types.filter((_, i) => i !== clueIndex);
 
-    if (!selectedVerb) {return;}
+    if (!selectedVerb) {
+      return;
+    }
     setQuizState({ verb: selectedVerb, clueType, missing, counted: false });
     setInputs({});
     setFeedback(null);
@@ -171,7 +175,9 @@ export const QuizTab = memo(function QuizTab({
 
   const checkAnswer = useCallback(() => {
     const verb = quizState.verb;
-    if (!verb) { return; }
+    if (!verb) {
+      return;
+    }
 
     let isCorrect = true;
     const newInputStates: Record<string, "correct" | "incorrect" | null> = {};
@@ -192,7 +198,7 @@ export const QuizTab = memo(function QuizTab({
     setInputStates(newInputStates);
 
     // Track quiz answer
-    trackEvent("quiz_answer", {
+    trackEvent("vm_quiz_answer", {
       verb: verb.present,
       result: isCorrect ? "correct" : "incorrect",
     });
@@ -217,10 +223,12 @@ export const QuizTab = memo(function QuizTab({
 
   const giveUp = useCallback(() => {
     const verb = quizState.verb;
-    if (!verb) { return; }
+    if (!verb) {
+      return;
+    }
 
     // Track solve/give up
-    trackEvent("quiz_solve", { verb: verb.present });
+    trackEvent("vm_quiz_solve", { verb: verb.present });
 
     if (!quizState.counted) {
       onFail(verb);
@@ -251,16 +259,11 @@ export const QuizTab = memo(function QuizTab({
     setConfirmModal({ isOpen: false, type: "reset" });
   }, [confirmModal, onReset, onRemoveHistoryItem]);
 
-  const categoriesCount = enabledGroups.length === verbData.length
-    ? "(all)"
-    : `(${enabledGroups.length})`;
+  const categoriesCount =
+    enabledGroups.length === verbData.length ? "(all)" : `(${enabledGroups.length})`;
 
   if (!quizState.verb) {
-    return (
-      <div className="py-8 text-center text-slate-400">
-        Loading...
-      </div>
-    );
+    return <div className="py-8 text-center text-slate-400">Loading...</div>;
   }
 
   const currentVerb = quizState.verb;
@@ -275,8 +278,7 @@ export const QuizTab = memo(function QuizTab({
           className="flex w-full items-center justify-center gap-2 p-3 transition-all hover:bg-slate-50 dark:hover:bg-slate-700"
         >
           <p className="text-[10px] font-black uppercase text-slate-400">
-            Quiz Categories{" "}
-            <span className="text-indigo-400">{categoriesCount}</span>
+            Quiz Categories <span className="text-indigo-400">{categoriesCount}</span>
           </p>
           <span
             className={`text-xs text-slate-300 transition-transform ${showCategories ? "rotate-180" : ""}`}
@@ -306,40 +308,42 @@ export const QuizTab = memo(function QuizTab({
 
       {/* Quiz Card */}
       <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-xl dark:border-slate-600 dark:bg-slate-800/50">
-        {(["present", "past", "participle", "meaning"] as VerbField[]).map(
-          (type, index) => {
-            const isMeaning = type === "meaning";
-            const isClue = type === quizState.clueType;
-            const inputState = inputStates[type];
+        {(["present", "past", "participle", "meaning"] as VerbField[]).map((type, index) => {
+          const isMeaning = type === "meaning";
+          const isClue = type === quizState.clueType;
+          const inputState = inputStates[type];
 
-            return (
-              <div
-                key={type}
-                className={`slot-row ${isClue ? "bg-indigo-50/50 dark:bg-indigo-500/10" : ""}`}
-              >
-                <span className="slot-label">{labels[type]}</span>
-                {isClue ? (
-                  <div
-                    className={`flex-1 text-lg font-black text-indigo-600 dark:text-indigo-300 ${!isMeaning ? "uppercase" : ""}`}
-                  >
-                    {currentVerb[type]}
-                  </div>
-                ) : (
-                  <input
-                    ref={index === 0 || (index === 1 && quizState.clueType === "present") ? firstInputRef : null}
-                    type="text"
-                    value={inputs[type] || ""}
-                    onChange={(e) => handleInputChange(type, e.target.value)}
-                    readOnly={buttonsLocked}
-                    className={`flex-1 border-b-2 bg-transparent p-1 text-lg font-bold outline-none ${!isMeaning ? "uppercase" : ""} ${
-                      inputStateStyles[inputState ?? "default"]
-                    }`}
-                  />
-                )}
-              </div>
-            );
-          }
-        )}
+          return (
+            <div
+              key={type}
+              className={`slot-row ${isClue ? "bg-indigo-50/50 dark:bg-indigo-500/10" : ""}`}
+            >
+              <span className="slot-label">{labels[type]}</span>
+              {isClue ? (
+                <div
+                  className={`flex-1 text-lg font-black text-indigo-600 dark:text-indigo-300 ${!isMeaning ? "uppercase" : ""}`}
+                >
+                  {currentVerb[type]}
+                </div>
+              ) : (
+                <input
+                  ref={
+                    index === 0 || (index === 1 && quizState.clueType === "present")
+                      ? firstInputRef
+                      : null
+                  }
+                  type="text"
+                  value={inputs[type] || ""}
+                  onChange={(e) => handleInputChange(type, e.target.value)}
+                  readOnly={buttonsLocked}
+                  className={`flex-1 border-b-2 bg-transparent p-1 text-lg font-bold outline-none ${!isMeaning ? "uppercase" : ""} ${
+                    inputStateStyles[inputState ?? "default"]
+                  }`}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Action Buttons */}
@@ -364,9 +368,7 @@ export const QuizTab = memo(function QuizTab({
 
       {/* Feedback */}
       {feedback && (
-        <div
-          className={`py-4 text-center text-xl font-black ${feedbackStyles[feedback]}`}
-        >
+        <div className={`py-4 text-center text-xl font-black ${feedbackStyles[feedback]}`}>
           {feedback === "correct" && "✓ EXCELLENT!"}
           {feedback === "incorrect" && "✗ INCORRECT"}
           {feedback === "skipped" && "💡 SKIPPED"}
@@ -379,21 +381,15 @@ export const QuizTab = memo(function QuizTab({
         className="fixed bottom-6 left-4 right-4 z-50 mx-auto flex max-w-md cursor-pointer justify-around rounded-3xl bg-slate-800 p-4 text-white shadow-2xl dark:border dark:border-slate-500 dark:bg-slate-700"
       >
         <div className="text-center">
-          <span className="block text-[10px] font-bold uppercase text-slate-400">
-            Success
-          </span>
+          <span className="block text-[10px] font-bold uppercase text-slate-400">Success</span>
           <span className="text-xl font-black text-green-400">{stats.score}</span>
         </div>
         <div className="text-center">
-          <span className="block text-[10px] font-bold uppercase text-slate-400">
-            Fails
-          </span>
+          <span className="block text-[10px] font-bold uppercase text-slate-400">Fails</span>
           <span className="text-xl font-black text-rose-400">{stats.fails}</span>
         </div>
         <div className="text-center">
-          <span className="block text-[10px] font-bold uppercase text-slate-400">
-            Total
-          </span>
+          <span className="block text-[10px] font-bold uppercase text-slate-400">Total</span>
           <span className="text-xl font-black text-slate-200">{stats.total}</span>
         </div>
       </div>
@@ -433,7 +429,9 @@ export const QuizTab = memo(function QuizTab({
                   {/* Delete button */}
                   <button
                     type="button"
-                    onClick={() => setConfirmModal({ isOpen: true, type: "delete", itemIndex: index })}
+                    onClick={() =>
+                      setConfirmModal({ isOpen: true, type: "delete", itemIndex: index })
+                    }
                     className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px] text-slate-400 opacity-100 transition-all hover:bg-rose-100 hover:text-rose-500 dark:hover:bg-rose-900/30 md:opacity-0 md:group-hover:opacity-100"
                   >
                     ✕
@@ -449,9 +447,7 @@ export const QuizTab = memo(function QuizTab({
                 </div>
               ))}
               {stats.history.length === 0 && (
-                <p className="py-8 text-center text-sm text-slate-400">
-                  No history yet
-                </p>
+                <p className="py-8 text-center text-sm text-slate-400">No history yet</p>
               )}
             </div>
             <div className="border-t bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900">

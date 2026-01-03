@@ -129,7 +129,8 @@ export const DetailModal = memo(function DetailModal({
 
     try {
       const blob = await toPNGBlob(item.data, item.options);
-      const file = new File([blob], `${item.name}.png`, { type: "image/png" });
+      const filename = `${item.name} - QRKit.pro.png`;
+      const file = new File([blob], filename, { type: "image/png" });
 
       if (navigator.canShare && !navigator.canShare({ files: [file] })) {
         // Fallback to sharing text only

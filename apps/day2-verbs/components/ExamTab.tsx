@@ -162,7 +162,7 @@ export const ExamTab = memo(function ExamTab() {
     setPhase("exam");
 
     // Track exam start
-    trackEvent("exam_start", {
+    trackEvent("vm_exam_start", {
       question_count: newQuestions.length,
       time_limit: config.timePerQuestion * newQuestions.length,
     });
@@ -304,7 +304,7 @@ export const ExamTab = memo(function ExamTab() {
     setPhase("results");
 
     // Track exam finish
-    trackEvent("exam_finish", {
+    trackEvent("vm_exam_finish", {
       correct,
       total: updatedQuestions.length,
       percentage: Math.round((correct / updatedQuestions.length) * 100),
@@ -380,7 +380,7 @@ export const ExamTab = memo(function ExamTab() {
     url: typeof window !== "undefined" ? window.location.origin : "",
     clipboardMessage: "¡Resultados copiados al portapapeles!",
     onSuccess: (method) => {
-      trackEvent("exam_share", {
+      trackEvent("vm_exam_share", {
         method,
         percentage: lastResult ? Math.round((lastResult.correct / lastResult.total) * 100) : 0,
       });

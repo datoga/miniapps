@@ -403,7 +403,8 @@ export const EditorModal = memo(function EditorModal({
 
     try {
       const blob = await toPNGBlob(data, options);
-      const file = new File([blob], `${qrName}.png`, { type: "image/png" });
+      const filename = `${qrName} - QRKit.pro.png`;
+      const file = new File([blob], filename, { type: "image/png" });
 
       if (navigator.canShare && !navigator.canShare({ files: [file] })) {
         await navigator.share({ title: qrName, text: shareText });

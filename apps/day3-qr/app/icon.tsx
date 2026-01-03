@@ -23,120 +23,177 @@ const SIZES: Record<string, number> = {
 export default function Icon({ id }: { id: string }) {
   const size = SIZES[id] ?? 512;
   const borderRadius = Math.round(size * 0.18);
-  const unit = Math.round(size / 8);
-  const smallUnit = Math.round(size / 16);
+  const padding = Math.round(size * 0.15); // More padding to avoid cut-off
+  const unit = Math.round(size / 10); // Smaller units
+  const smallUnit = Math.round(size / 20);
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: BG_COLOR,
+        borderRadius,
+        padding,
+      }}
+    >
+      {/* QR-style pattern */}
       <div
         style={{
-          width: size,
-          height: size,
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: BG_COLOR,
-          borderRadius,
-          padding: unit,
+          flexDirection: "column",
+          gap: smallUnit,
+          width: "100%",
+          height: "100%",
         }}
       >
-        {/* QR-style pattern */}
+        {/* Top row */}
+        <div style={{ display: "flex", gap: smallUnit, flex: 1 }}>
+          {/* Top-left finder pattern */}
+          <div
+            style={{
+              width: unit * 2,
+              height: unit * 2,
+              backgroundColor: "white",
+              borderRadius: smallUnit / 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: unit,
+                height: unit,
+                backgroundColor: BG_COLOR,
+                borderRadius: smallUnit / 3,
+              }}
+            />
+          </div>
+          {/* Top middle */}
+          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div
+              style={{
+                width: smallUnit,
+                height: smallUnit,
+                backgroundColor: "white",
+                borderRadius: 2,
+              }}
+            />
+          </div>
+          {/* Top-right finder pattern */}
+          <div
+            style={{
+              width: unit * 2,
+              height: unit * 2,
+              backgroundColor: "white",
+              borderRadius: smallUnit / 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: unit,
+                height: unit,
+                backgroundColor: BG_COLOR,
+                borderRadius: smallUnit / 3,
+              }}
+            />
+          </div>
+        </div>
+        {/* Middle row */}
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             gap: smallUnit,
-            width: "100%",
-            height: "100%",
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          {/* Top row */}
-          <div style={{ display: "flex", gap: smallUnit, flex: 1 }}>
-            {/* Top-left finder pattern */}
+          <div
+            style={{
+              width: smallUnit,
+              height: smallUnit,
+              backgroundColor: "white",
+              borderRadius: 2,
+            }}
+          />
+          <div
+            style={{
+              width: smallUnit * 1.5,
+              height: smallUnit * 1.5,
+              backgroundColor: "white",
+              borderRadius: 2,
+            }}
+          />
+          <div
+            style={{
+              width: smallUnit,
+              height: smallUnit,
+              backgroundColor: "white",
+              borderRadius: 2,
+            }}
+          />
+        </div>
+        {/* Bottom row */}
+        <div style={{ display: "flex", gap: smallUnit, flex: 1 }}>
+          {/* Bottom-left finder pattern */}
+          <div
+            style={{
+              width: unit * 2,
+              height: unit * 2,
+              backgroundColor: "white",
+              borderRadius: smallUnit / 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <div
               style={{
-                width: unit * 2.5,
-                height: unit * 2.5,
-                backgroundColor: "white",
-                borderRadius: smallUnit / 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                width: unit,
+                height: unit,
+                backgroundColor: BG_COLOR,
+                borderRadius: smallUnit / 3,
               }}
-            >
-              <div
-                style={{
-                  width: unit * 1.2,
-                  height: unit * 1.2,
-                  backgroundColor: BG_COLOR,
-                  borderRadius: smallUnit / 3,
-                }}
-              />
-            </div>
-            {/* Top middle */}
-            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ width: smallUnit, height: smallUnit, backgroundColor: "white", borderRadius: 2 }} />
-            </div>
-            {/* Top-right finder pattern */}
-            <div
-              style={{
-                width: unit * 2.5,
-                height: unit * 2.5,
-                backgroundColor: "white",
-                borderRadius: smallUnit / 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: unit * 1.2,
-                  height: unit * 1.2,
-                  backgroundColor: BG_COLOR,
-                  borderRadius: smallUnit / 3,
-                }}
-              />
-            </div>
+            />
           </div>
-          {/* Middle row */}
-          <div style={{ display: "flex", gap: smallUnit, flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <div style={{ width: smallUnit, height: smallUnit, backgroundColor: "white", borderRadius: 2 }} />
-            <div style={{ width: smallUnit * 1.5, height: smallUnit * 1.5, backgroundColor: "white", borderRadius: 2 }} />
-            <div style={{ width: smallUnit, height: smallUnit, backgroundColor: "white", borderRadius: 2 }} />
-          </div>
-          {/* Bottom row */}
-          <div style={{ display: "flex", gap: smallUnit, flex: 1 }}>
-            {/* Bottom-left finder pattern */}
+          {/* Bottom middle + right */}
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              gap: smallUnit,
+            }}
+          >
             <div
               style={{
-                width: unit * 2.5,
-                height: unit * 2.5,
+                width: smallUnit,
+                height: smallUnit,
                 backgroundColor: "white",
-                borderRadius: smallUnit / 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                borderRadius: 2,
               }}
-            >
-              <div
-                style={{
-                  width: unit * 1.2,
-                  height: unit * 1.2,
-                  backgroundColor: BG_COLOR,
-                  borderRadius: smallUnit / 3,
-                }}
-              />
-            </div>
-            {/* Bottom middle + right */}
-            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: smallUnit }}>
-              <div style={{ width: smallUnit, height: smallUnit, backgroundColor: "white", borderRadius: 2 }} />
-              <div style={{ width: smallUnit * 1.5, height: smallUnit * 1.5, backgroundColor: "white", borderRadius: 2 }} />
-            </div>
+            />
+            <div
+              style={{
+                width: smallUnit * 1.5,
+                height: smallUnit * 1.5,
+                backgroundColor: "white",
+                borderRadius: 2,
+              }}
+            />
           </div>
         </div>
       </div>
-    ),
+    </div>,
     {
       width: size,
       height: size,

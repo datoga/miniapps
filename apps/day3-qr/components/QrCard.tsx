@@ -87,7 +87,7 @@ export const QrCard = memo(function QrCard({ item, onClick, onDelete }: QrCardPr
 
       {/* Header: Name + Date */}
       <div className="mb-2 pr-12">
-        <h3 className="font-semibold text-sm leading-tight line-clamp-2 text-gray-900 dark:text-white">
+        <h3 className="font-semibold text-sm leading-tight line-clamp-2 break-all text-gray-900 dark:text-white" title={item.name}>
           {item.name}
         </h3>
         <div className="flex items-center gap-1 text-[10px] text-gray-400 dark:text-gray-500">

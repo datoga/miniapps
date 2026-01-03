@@ -191,10 +191,10 @@ export const DetailModal = memo(function DetailModal({
   ) : (
     <button
       onClick={() => setEditingName(true)}
-      className="group flex items-center gap-2 text-left hover:text-primary-500 transition-colors"
-      title={t("actions.edit")}
+      className="group flex items-center gap-2 text-left hover:text-primary-500 transition-colors max-w-full"
+      title={item.name}
     >
-      <span>{item.name}</span>
+      <span className="truncate">{item.name}</span>
       <svg
         width="16"
         height="16"

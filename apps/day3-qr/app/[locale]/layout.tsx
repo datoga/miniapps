@@ -83,6 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     content,
     category: "utilities",
+    googleVerification: "QmGWxaQRGfboDKyUToTPI1DMkuSQZt_PgsSlXCYd-aY",
   });
 }
 

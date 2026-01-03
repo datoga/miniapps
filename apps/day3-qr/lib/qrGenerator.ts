@@ -54,10 +54,7 @@ export async function toDataURL(
 /**
  * Generate QR code as SVG string
  */
-export async function toSVGString(
-  data: string,
-  options: Partial<QrOptions> = {}
-): Promise<string> {
+export async function toSVGString(data: string, options: Partial<QrOptions> = {}): Promise<string> {
   const opts = { ...DEFAULT_QR_OPTIONS, ...options };
 
   return await QRCode.toString(data || " ", {
@@ -225,10 +222,7 @@ export async function downloadWebP(
 /**
  * Get QR code as PNG blob (for sharing)
  */
-export async function toPNGBlob(
-  data: string,
-  options: Partial<QrOptions> = {}
-): Promise<Blob> {
+export async function toPNGBlob(data: string, options: Partial<QrOptions> = {}): Promise<Blob> {
   const opts = { ...DEFAULT_QR_OPTIONS, ...options };
 
   const dataUrl = await QRCode.toDataURL(data || " ", {
@@ -308,7 +302,7 @@ export async function toBrandedPNGBlob(
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(
-    "🔷 Genera gratis tus QR en qrkit.pro",
+    "Genera gratis tus QR en https://qrkit.pro",
     totalWidth / 2,
     totalHeight - footerHeight / 2
   );
@@ -332,4 +326,3 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     return false;
   }
 }
-

@@ -380,6 +380,48 @@ This is the **Google-recommended approach** because:
 - Access env vars with bracket notation: `process.env["NEXT_PUBLIC_GA_ID"]`
 - No `any` types - use proper typing
 
+### Schema Validation with Zod
+
+**⚠️ REQUIRED: All data schemas must be validated with Zod**
+
+When defining data structures (for storage, forms, API responses, etc.):
+
+1. **Define schema with Zod** first, then infer the TypeScript type
+2. **Validate at boundaries** (form submission, storage load, API responses)
+3. **Use `.safeParse()`** for user input to handle errors gracefully
+
+**Pattern to use:**
+
+```tsx
+import { z } from "zod";
+
+// 1. Define schema
+export const MenteeSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email().optional().or(z.literal("")),
+  age: z.number().int().positive().optional(),
+  createdAt: z.string().datetime(),
+});
+
+// 2. Infer type from schema
+export type Mentee = z.infer<typeof MenteeSchema>;
+
+// 3. Validate at boundaries
+const result = MenteeSchema.safeParse(data);
+if (!result.success) {
+  // Handle validation errors
+  console.error(result.error.issues);
+}
+```
+
+**Best practices:**
+
+- Place schemas in `lib/schemas.ts`
+- Create separate `FormSchema` for form inputs (may differ from storage schema)
+- Use `.default()` for optional fields with defaults
+- Use `.optional()` or `.or(z.literal(""))` for truly optional fields
+
 ### React/Next.js
 
 - Use Next.js App Router conventions

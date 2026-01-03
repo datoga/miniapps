@@ -9,7 +9,7 @@ import {
   downloadPNG,
   downloadSVG,
   downloadWebP,
-  toPNGBlob,
+  toBrandedPNGBlob,
 } from "../lib/qrGenerator";
 import type { QrItem } from "../lib/types";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -128,8 +128,8 @@ export const DetailModal = memo(function DetailModal({
     );
 
     try {
-      const blob = await toPNGBlob(item.data, item.options);
-      const filename = `${item.name} - QRKit.pro.png`;
+      const blob = await toBrandedPNGBlob(item.data, item.options);
+      const filename = "qrkit.pro.png";
       const file = new File([blob], filename, { type: "image/png" });
 
       if (navigator.canShare && !navigator.canShare({ files: [file] })) {

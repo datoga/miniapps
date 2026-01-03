@@ -4,7 +4,7 @@ import { trackEvent } from "@miniapps/analytics";
 import { Button } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { downloadJPG, downloadPNG, downloadSVG, downloadWebP, toPNGBlob } from "../lib/qrGenerator";
+import { downloadJPG, downloadPNG, downloadSVG, downloadWebP, toBrandedPNGBlob } from "../lib/qrGenerator";
 import {
   decodeFromBlob,
   getVideoDevices,
@@ -402,8 +402,8 @@ export const EditorModal = memo(function EditorModal({
     const shareText = [`📱 ${qrName}`, "", "✨ Creado con QRKit", "🔗 qrkit.pro"].join("\n");
 
     try {
-      const blob = await toPNGBlob(data, options);
-      const filename = `${qrName} - QRKit.pro.png`;
+      const blob = await toBrandedPNGBlob(data, options);
+      const filename = "qrkit.pro.png";
       const file = new File([blob], filename, { type: "image/png" });
 
       if (navigator.canShare && !navigator.canShare({ files: [file] })) {

@@ -247,6 +247,81 @@ export async function toPNGBlob(
 }
 
 /**
+ * Get QR code as branded PNG blob (for sharing with footer)
+ */
+export async function toBrandedPNGBlob(
+  data: string,
+  options: Partial<QrOptions> = {}
+): Promise<Blob> {
+  const opts = { ...DEFAULT_QR_OPTIONS, ...options };
+  const qrSize = opts.sizePx;
+  const footerHeight = 50;
+  const padding = 20;
+  const totalWidth = qrSize + padding * 2;
+  const totalHeight = qrSize + footerHeight + padding * 2;
+
+  // Generate QR as data URL
+  const qrDataUrl = await QRCode.toDataURL(data || " ", {
+    width: qrSize,
+    margin: opts.margin,
+    errorCorrectionLevel: opts.ecc,
+    color: {
+      dark: opts.colorDark,
+      light: opts.colorLight,
+    },
+  });
+
+  // Create canvas with footer
+  const canvas = document.createElement("canvas");
+  canvas.width = totalWidth;
+  canvas.height = totalHeight;
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) {
+    // Fallback to non-branded
+    const response = await fetch(qrDataUrl);
+    return await response.blob();
+  }
+
+  // Fill background
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, totalWidth, totalHeight);
+
+  // Draw QR code
+  const qrImg = new Image();
+  qrImg.src = qrDataUrl;
+
+  await new Promise<void>((resolve) => {
+    qrImg.onload = () => {
+      ctx.drawImage(qrImg, padding, padding, qrSize, qrSize);
+      resolve();
+    };
+  });
+
+  // Draw footer
+  ctx.fillStyle = "#0ea5e9"; // sky-500
+  ctx.fillRect(0, totalHeight - footerHeight, totalWidth, footerHeight);
+
+  // Draw text
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 16px system-ui, -apple-system, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(
+    "🔷 Genera gratis tus QR en qrkit.pro",
+    totalWidth / 2,
+    totalHeight - footerHeight / 2
+  );
+
+  // Convert to blob
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob || new Blob());
+    }, "image/png");
+  });
+}
+
+/**
  * Copy QR content to clipboard
  */
 export async function copyToClipboard(text: string): Promise<boolean> {

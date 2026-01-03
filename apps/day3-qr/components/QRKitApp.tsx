@@ -23,11 +23,17 @@ export const QRKitApp = memo(function QRKitApp() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAddMode, setShowAddMode] = useState(false);
   const [editorMode, setEditorMode] = useState<EditorMode | null>(null);
-  const [selectedItem, setSelectedItem] = useState<QrItem | null>(null);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<{
     item: QrItem;
     from: "card" | "detail";
   } | null>(null);
+
+  // Derive selected item from items array (ensures it always reflects current state)
+  const selectedItem = useMemo(
+    () => (selectedItemId ? items.find((i) => i.id === selectedItemId) ?? null : null),
+    [items, selectedItemId]
+  );
 
   // Track app view on mount
   useEffect(() => {
@@ -94,11 +100,11 @@ export const QRKitApp = memo(function QRKitApp() {
   );
 
   const handleCardClick = useCallback((item: QrItem) => {
-    setSelectedItem(item);
+    setSelectedItemId(item.id);
   }, []);
 
   const handleDetailClose = useCallback(() => {
-    setSelectedItem(null);
+    setSelectedItemId(null);
   }, []);
 
   const handleDeleteRequest = useCallback((item: QrItem, from: "card" | "detail") => {
@@ -110,11 +116,11 @@ export const QRKitApp = memo(function QRKitApp() {
       deleteItem(deleteConfirm.item.id);
       trackEvent("qr_delete", { from: deleteConfirm.from });
       setDeleteConfirm(null);
-      if (selectedItem?.id === deleteConfirm.item.id) {
-        setSelectedItem(null);
+      if (selectedItemId === deleteConfirm.item.id) {
+        setSelectedItemId(null);
       }
     }
-  }, [deleteConfirm, deleteItem, selectedItem]);
+  }, [deleteConfirm, deleteItem, selectedItemId]);
 
   // Loading state
   if (isLoading) {

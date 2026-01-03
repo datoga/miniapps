@@ -78,7 +78,9 @@
     "noSessionsDescription": "Añade una sesión para registrar tu mentoría",
     "newSession": "Nueva Sesión",
     "yes": "SÍ",
-    "no": "NO"
+    "no": "NO",
+    "profession": "Profesión",
+    "professionPlaceholder": "Ingeniero de Software, Diseñador..."
   },
   "menteeModal": {
     "createTitle": "Nueva persona",

@@ -44,6 +44,7 @@ export type Goal = z.infer<typeof GoalSchema>;
 export const MenteeSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1, "Name is required"),
+  profession: z.string().optional(), // Profession or job title
   age: z.number().int().positive().optional(),
   image: z.string().optional(), // Base64 encoded image
   email: z.string().email().optional().or(z.literal("")), // Email address
@@ -69,6 +70,7 @@ export type Mentee = z.infer<typeof MenteeSchema>;
 // Mentee form input (for validation)
 export const MenteeFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
+  profession: z.string().optional(),
   age: z.union([z.number().int().positive(), z.literal(""), z.undefined()]).optional(),
   image: z.string().optional(),
   email: z.string().email().optional().or(z.literal("")),

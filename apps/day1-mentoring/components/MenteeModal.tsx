@@ -24,6 +24,7 @@ export const MenteeModal = memo(function MenteeModal({
 
   const [formData, setFormData] = useState<MenteeFormInput>({
     name: "",
+    profession: "",
     age: undefined,
     image: undefined,
     email: "",
@@ -45,6 +46,7 @@ export const MenteeModal = memo(function MenteeModal({
       if (mentee) {
         setFormData({
           name: mentee.name,
+          profession: mentee.profession ?? "",
           age: mentee.age,
           image: mentee.image,
           email: mentee.email ?? "",
@@ -60,6 +62,7 @@ export const MenteeModal = memo(function MenteeModal({
       } else {
         setFormData({
           name: "",
+          profession: "",
           age: undefined,
           image: undefined,
           email: "",
@@ -153,6 +156,20 @@ export const MenteeModal = memo(function MenteeModal({
               className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-2xl px-5 py-3 text-sm font-bold text-gray-900 dark:text-white focus:outline-none focus:border-primary-500 transition-all"
             />
           </div>
+        </div>
+
+        {/* Profession */}
+        <div>
+          <label className="mb-2 block text-[10px] font-black uppercase tracking-widest text-gray-400">
+            💼 {t("mentee.profession")}
+          </label>
+          <input
+            type="text"
+            value={formData.profession ?? ""}
+            onChange={(e) => handleChange("profession", e.target.value)}
+            placeholder={t("mentee.professionPlaceholder")}
+            className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-2xl px-5 py-3 text-sm font-bold text-gray-900 dark:text-white focus:outline-none focus:border-primary-500 transition-all"
+          />
         </div>
 
         {/* Contact Info */}

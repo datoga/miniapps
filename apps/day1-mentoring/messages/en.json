@@ -78,7 +78,9 @@
     "noSessionsDescription": "Add a session to track your mentoring",
     "newSession": "New Session",
     "yes": "YES",
-    "no": "NO"
+    "no": "NO",
+    "profession": "Profession",
+    "professionPlaceholder": "Software Engineer, Designer..."
   },
   "menteeModal": {
     "createTitle": "New Mentee",

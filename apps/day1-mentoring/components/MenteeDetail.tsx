@@ -86,6 +86,17 @@ export const MenteeDetail = memo(function MenteeDetail({
                   defaultEditing={isNew}
                 />
 
+                {/* Profession */}
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-lg">💼</span>
+                  <EditableField
+                    value={mentee.profession || ""}
+                    onChange={(v) => handleFieldChange("profession", v)}
+                    placeholder={t("mentee.professionPlaceholder")}
+                    className="text-lg text-gray-600 dark:text-gray-400 font-medium"
+                  />
+                </div>
+
                 <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mt-3 text-gray-500">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-transparent hover:border-gray-200 transition-colors whitespace-nowrap">
                     <span className="text-base">📅</span>

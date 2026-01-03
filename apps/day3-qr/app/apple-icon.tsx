@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 // Icon configuration (same as icon.tsx for consistency)
 const APP_INITIALS = "QR";
-const BG_COLOR = "#f59e0b";
+const BG_COLOR = "#0ea5e9";
 const TEXT_COLOR = "#ffffff";
 
 // Apple touch icon is always 180x180
@@ -36,4 +36,3 @@ export default function AppleIcon() {
     { width: 180, height: 180 }
   );
 }
-

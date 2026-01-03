@@ -3,5 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://quickqr.vercel.app/sitemap.xml
-
+Sitemap: https://qrkitway.vercel.app/sitemap.xml

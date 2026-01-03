@@ -28,40 +28,44 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const APP_NAME = "QuickQR";
-const APP_URL = "https://quickqr.vercel.app";
+const APP_NAME = "QRKit Way";
+const APP_URL = "https://qrkitway.vercel.app";
 
 const seoContent: Record<string, LocaleSEOContent> = {
   es: {
-    title: "QuickQR - Generador de Códigos QR",
+    title: "QRKit Way - Biblioteca de Códigos QR",
     description:
-      "Genera códigos QR personalizados en segundos. App gratuita para crear QR de URLs, textos, contactos y más. Sin registro, privado y funciona offline.",
-    ogAlt: "QuickQR - Genera códigos QR al instante",
+      "Crea, escanea y organiza tu biblioteca de códigos QR. Genera QR de URLs y textos, imprime, comparte y descarga. 100% privado, sin registro, funciona offline.",
+    ogAlt: "QRKit Way - Tu biblioteca personal de códigos QR",
     keywords: [
       "generador qr",
       "código qr",
       "crear qr",
-      "qr gratis",
-      "qr online",
-      "qr personalizado",
       "escanear qr",
+      "biblioteca qr",
+      "qr gratis",
+      "qr offline",
+      "imprimir qr",
       "qr url",
+      "qr texto",
     ],
   },
   en: {
-    title: "QuickQR - QR Code Generator",
+    title: "QRKit Way - QR Code Library",
     description:
-      "Generate custom QR codes in seconds. Free app to create QR codes for URLs, text, contacts and more. No registration, private and works offline.",
-    ogAlt: "QuickQR - Generate QR codes instantly",
+      "Create, scan and organize your QR code library. Generate QR codes for URLs and text, print, share and download. 100% private, no registration, works offline.",
+    ogAlt: "QRKit Way - Your personal QR code library",
     keywords: [
       "qr generator",
       "qr code",
       "create qr",
-      "free qr",
-      "online qr",
-      "custom qr",
       "scan qr",
+      "qr library",
+      "free qr",
+      "offline qr",
+      "print qr",
       "qr url",
+      "qr text",
     ],
   },
 };
@@ -113,16 +117,22 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const jsonLdFeatures =
     locale === "es"
       ? [
-          "Genera códigos QR",
-          "QR para URLs y textos",
-          "100% gratuito",
+          "Crea códigos QR",
+          "Escanea y decodifica QR",
+          "Biblioteca personal",
+          "Descarga PNG/SVG",
+          "Imprime múltiples copias",
+          "100% privado - datos locales",
           "Sin registro",
           "Funciona offline",
         ]
       : [
-          "Generate QR codes",
-          "QR for URLs and text",
-          "100% free",
+          "Create QR codes",
+          "Scan and decode QR",
+          "Personal library",
+          "Download PNG/SVG",
+          "Print multiple copies",
+          "100% private - local data",
           "No registration",
           "Works offline",
         ];
@@ -149,7 +159,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <AppShell>{children}</AppShell>
+            <AppShell title={APP_NAME}>{children}</AppShell>
           </NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />

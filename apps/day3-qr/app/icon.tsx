@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 // Icon configuration
 const APP_INITIALS = "QR";
-const BG_COLOR = "#f59e0b";
+const BG_COLOR = "#0ea5e9";
 const TEXT_COLOR = "#ffffff";
 
 // Generate multiple icon sizes
@@ -46,4 +46,3 @@ export default function Icon({ id }: { id: string }) {
     }
   );
 }
-

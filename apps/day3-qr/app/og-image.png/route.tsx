@@ -5,10 +5,10 @@ export const runtime = "edge";
 
 export async function GET(): Promise<ImageResponse> {
   return generateOgImage({
-    appName: "QuickQR",
-    tagline: "Generate stunning QR codes in seconds",
+    appName: "QRKit Way",
+    tagline: "Your personal QR code library",
     icon: "📱",
-    features: ["Free", "Private", "Instant"],
-    gradientColors: ["#3b82f6", "#1d4ed8"],
+    features: ["Create", "Scan", "Organize"],
+    gradientColors: ["#0ea5e9", "#0284c7"],
   });
 }

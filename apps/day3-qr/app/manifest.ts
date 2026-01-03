@@ -2,14 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "QuickQR",
-    short_name: "QuickQR",
-    description: "Generate stunning QR codes in seconds",
+    name: "QRKit Way",
+    short_name: "QRKit",
+    description: "Create, scan and organize your QR code library",
     start_url: "/",
     scope: "/",
     display: "standalone",
     background_color: "#ffffff",
-    theme_color: "#f59e0b",
+    theme_color: "#0ea5e9",
     orientation: "portrait",
     categories: ["utilities", "productivity"],
     prefer_related_applications: false,
@@ -41,4 +41,3 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
   };
 }
-

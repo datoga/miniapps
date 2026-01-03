@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { generateSitemap } from "@miniapps/seo";
 
-const APP_URL = "https://quickqr.vercel.app";
+const APP_URL = "https://qrkitway.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return generateSitemap({

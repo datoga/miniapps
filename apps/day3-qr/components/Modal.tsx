@@ -54,8 +54,8 @@ export const Modal = memo(function Modal({
       <div
         className={`relative max-h-[90vh] w-full ${maxWidth} overflow-auto rounded-3xl bg-white p-6 sm:p-8 shadow-2xl dark:bg-gray-900 border border-gray-100 dark:border-gray-800 transition-all`}
       >
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{title}</h2>
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <div className="flex-1 min-w-0 text-2xl font-bold text-gray-900 dark:text-white">{title}</div>
           <button
             onClick={onClose}
             className="w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"

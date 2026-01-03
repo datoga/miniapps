@@ -189,7 +189,7 @@ export const EditorModal = memo(function EditorModal({
     try {
       const cleanup = startCameraScanning(
         videoRef.current,
-        selectedDevice || undefined,
+        selectedDevice,
         (result) => {
           setData(result);
           setSource("camera");

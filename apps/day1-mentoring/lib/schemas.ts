@@ -126,7 +126,7 @@ export type SessionFormInput = z.infer<typeof SessionFormSchema>;
 // Settings schema
 export const SettingsSchema = z.object({
   lastSelectedMenteeId: z.string().uuid().nullable().default(null),
-  showArchived: z.boolean().default(false),
+  showArchived: z.boolean().default(true),
   programName: z.string().default("MentorFlow"),
 });
 

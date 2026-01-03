@@ -58,24 +58,16 @@ export function MenteeDetailView({ menteeSlug }: MenteeDetailViewProps) {
   }, [router, locale]);
 
   const handleArchiveMentee = useCallback(
-    (menteeToArchive: Mentee) => {
+    async (menteeToArchive: Mentee) => {
       const isArchiving = !menteeToArchive.archived;
-      setConfirmDialog({
-        open: true,
-        title: isArchiving ? t("confirm.archiveTitle") : t("confirm.unarchiveTitle"),
-        message: isArchiving ? t("confirm.archiveMessage") : t("confirm.unarchiveMessage"),
-        onConfirm: async () => {
-          if (isArchiving) {
-            await data.archiveMentee(menteeToArchive.id);
-            trackEvent("mentee_archived");
-          } else {
-            await data.unarchiveMentee(menteeToArchive.id);
-          }
-          setConfirmDialog((prev) => ({ ...prev, open: false }));
-        },
-      });
+      if (isArchiving) {
+        await data.archiveMentee(menteeToArchive.id);
+        trackEvent("mentee_archived");
+      } else {
+        await data.unarchiveMentee(menteeToArchive.id);
+      }
     },
-    [data, t]
+    [data]
   );
 
   const handleDeleteMentee = useCallback(

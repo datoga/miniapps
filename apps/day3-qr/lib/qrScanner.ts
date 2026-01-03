@@ -32,21 +32,6 @@ export async function decodeFromImage(
 }
 
 /**
- * Decode QR code from a canvas element
- */
-export async function decodeFromCanvas(
-  canvas: HTMLCanvasElement
-): Promise<string | null> {
-  try {
-    const qrReader = getReader();
-    const result = await qrReader.decodeFromCanvas(canvas);
-    return result?.getText() || null;
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Decode QR code from a blob/file
  */
 export async function decodeFromBlob(blob: Blob): Promise<string | null> {
@@ -109,7 +94,7 @@ export interface CameraScanState {
  */
 export function startCameraScanning(
   videoElement: HTMLVideoElement,
-  deviceId: string | undefined,
+  deviceId: string | null,
   onResult: (result: string) => void,
   onError: (error: Error) => void
 ): () => void {
@@ -121,7 +106,7 @@ export function startCameraScanning(
 
     try {
       await qrReader.decodeFromVideoDevice(
-        deviceId || undefined,
+        deviceId,
         videoElement,
         (result, error) => {
           if (stopped) return;

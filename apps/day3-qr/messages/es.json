@@ -1,6 +1,97 @@
 {
   "app": {
-    "title": "QuickQR",
-    "description": "Genera códigos QR espectaculares en segundos"
+    "title": "QRKit Way",
+    "description": "Tu biblioteca personal de códigos QR"
+  },
+  "common": {
+    "appTitle": "QRKit Way"
+  },
+  "library": {
+    "title": "Mi Biblioteca QR",
+    "subtitle": "Crea, escanea y organiza tus códigos QR",
+    "showArchived": "Mostrar archivados",
+    "searchPlaceholder": "Buscar por nombre, contenido, tipo...",
+    "addNew": "Añadir QR",
+    "addNewDesc": "Crear o escanear",
+    "emptyTitle": "Sin códigos QR",
+    "emptyDescription": "Crea tu primer código QR o escanea uno existente para comenzar",
+    "createFirst": "Crear Código QR",
+    "noResults": "Sin resultados",
+    "noResultsDescription": "Intenta ajustar los términos de búsqueda"
+  },
+  "card": {
+    "text": "Texto",
+    "other": "Otro",
+    "archived": "Archivado"
+  },
+  "addMode": {
+    "title": "Añadir Código QR",
+    "create": "Crear",
+    "createDesc": "Introduce URL o texto para generar un nuevo QR",
+    "read": "Escanear / Importar",
+    "readDesc": "Escanea con cámara o importa desde imagen"
+  },
+  "editor": {
+    "createTitle": "Nuevo Código QR",
+    "importTitle": "Importar Código QR",
+    "name": "Nombre",
+    "namePlaceholder": "Introduce un nombre para este QR",
+    "nameRequired": "El nombre es obligatorio",
+    "text": "Texto",
+    "textPlaceholder": "Escribe el contenido...",
+    "textRequired": "El contenido de texto es obligatorio",
+    "invalidUrl": "Por favor introduce una URL válida (http:// o https://)",
+    "size": "Tamaño (píxeles)",
+    "errorCorrection": "Corrección de errores",
+    "margin": "Margen",
+    "preview": "Vista previa",
+    "saveToLibrary": "Guardar en biblioteca",
+    "discard": "Descartar",
+    "discardTitle": "¿Descartar cambios?",
+    "discardMessage": "Los cambios no guardados se perderán. ¿Estás seguro de que quieres descartar?",
+    "unsavedTitle": "Cambios sin guardar",
+    "unsavedMessage": "Tienes cambios sin guardar. ¿Qué deseas hacer?",
+    "camera": "Escanear con cámara",
+    "startScan": "Iniciar escaneo",
+    "stopScan": "Detener",
+    "cameraError": "No se pudo acceder a la cámara. Por favor verifica los permisos.",
+    "or": "o",
+    "dropOrPaste": "Arrastra una imagen aquí, pega desde el portapapeles (Ctrl+V), o",
+    "selectFile": "Seleccionar imagen",
+    "decoded": "¡Código QR detectado!",
+    "decodeError": "No se pudo decodificar el QR de la imagen. Prueba otra imagen o método."
+  },
+  "detail": {
+    "title": "Detalles del QR",
+    "created": "Creado",
+    "content": "Contenido"
+  },
+  "actions": {
+    "edit": "Editar",
+    "archive": "Archivar",
+    "unarchive": "Restaurar",
+    "delete": "Eliminar",
+    "copy": "Copiar",
+    "download": "Descargar",
+    "downloadPNG": "Descargar PNG",
+    "downloadSVG": "Descargar SVG",
+    "fullscreen": "Pantalla completa",
+    "print": "Imprimir",
+    "share": "Compartir"
+  },
+  "confirm": {
+    "confirm": "Confirmar",
+    "deleteTitle": "Eliminar Código QR",
+    "deleteMessage": "¿Estás seguro de que quieres eliminar este código QR? Esta acción no se puede deshacer."
+  },
+  "print": {
+    "title": "Imprimir Código QR",
+    "size": "Tamaño (cm)",
+    "copies": "Número de copias",
+    "showName": "Mostrar nombre bajo el QR",
+    "showContent": "Mostrar contenido bajo el QR",
+    "print": "Imprimir",
+    "printing": "Imprimiendo...",
+    "popupBlocked": "Ventana emergente bloqueada. Por favor permite las ventanas emergentes para este sitio."
   }
 }

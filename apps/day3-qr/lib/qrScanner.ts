@@ -1,6 +1,6 @@
 "use client";
 
-import { BrowserMultiFormatReader, BarcodeFormat, DecodeHintType } from "@zxing/library";
+import { BarcodeFormat, BrowserMultiFormatReader, DecodeHintType } from "@zxing/library";
 
 let reader: BrowserMultiFormatReader | null = null;
 
@@ -19,9 +19,7 @@ function getReader(): BrowserMultiFormatReader {
 /**
  * Decode QR code from an image element
  */
-export async function decodeFromImage(
-  image: HTMLImageElement
-): Promise<string | null> {
+export async function decodeFromImage(image: HTMLImageElement): Promise<string | null> {
   try {
     const qrReader = getReader();
     const result = await qrReader.decodeFromImageElement(image);
@@ -55,19 +53,6 @@ export async function decodeFromBlob(blob: Blob): Promise<string | null> {
 }
 
 /**
- * Decode QR code from a URL
- */
-export async function decodeFromUrl(imageUrl: string): Promise<string | null> {
-  try {
-    const qrReader = getReader();
-    const result = await qrReader.decodeFromImageUrl(imageUrl);
-    return result?.getText() || null;
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Get available video input devices
  */
 export async function getVideoDevices(): Promise<MediaDeviceInfo[]> {
@@ -77,15 +62,6 @@ export async function getVideoDevices(): Promise<MediaDeviceInfo[]> {
   } catch {
     return [];
   }
-}
-
-/**
- * Camera scanning state
- */
-export interface CameraScanState {
-  isScanning: boolean;
-  deviceId: string | null;
-  error: string | null;
 }
 
 /**
@@ -102,28 +78,28 @@ export function startCameraScanning(
   let stopped = false;
 
   const decodeOnce = async () => {
-    if (stopped) return;
+    if (stopped) {
+      return;
+    }
 
     try {
-      await qrReader.decodeFromVideoDevice(
-        deviceId,
-        videoElement,
-        (result, error) => {
-          if (stopped) return;
+      await qrReader.decodeFromVideoDevice(deviceId, videoElement, (result, error) => {
+        if (stopped) {
+          return;
+        }
 
-          if (result) {
-            const text = result.getText();
-            if (text) {
-              stopped = true;
-              onResult(text);
-            }
-          }
-
-          if (error && !(error instanceof Error && error.message.includes("No MultiFormat"))) {
-            // Ignore "no code found" errors during continuous scanning
+        if (result) {
+          const text = result.getText();
+          if (text) {
+            stopped = true;
+            onResult(text);
           }
         }
-      );
+
+        if (error && !(error instanceof Error && error.message.includes("No MultiFormat"))) {
+          // Ignore "no code found" errors during continuous scanning
+        }
+      });
     } catch (err) {
       if (!stopped) {
         onError(err instanceof Error ? err : new Error("Camera error"));
@@ -157,4 +133,3 @@ export function resetReader(): void {
     reader = null;
   }
 }
-

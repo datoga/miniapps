@@ -1,8 +1,8 @@
 "use client";
 
 import { memo, useEffect, useState } from "react";
-import type { QrOptions } from "../lib/types";
 import { toDataURL } from "../lib/qrGenerator";
+import type { QrOptions } from "../lib/types";
 
 interface QrThumbnailProps {
   data: string;
@@ -29,7 +29,9 @@ export const QrThumbnail = memo(function QrThumbnail({
       return;
     }
 
-    toDataURL(data, size * 2, options).then(setDataUrl).catch(() => setDataUrl(""));
+    toDataURL(data, size * 2, options)
+      .then(setDataUrl)
+      .catch(() => setDataUrl(""));
   }, [data, size, options]);
 
   if (!data || !dataUrl) {
@@ -60,6 +62,7 @@ export const QrThumbnail = memo(function QrThumbnail({
   }
 
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={dataUrl}
       alt="QR code"
@@ -68,4 +71,3 @@ export const QrThumbnail = memo(function QrThumbnail({
     />
   );
 });
-

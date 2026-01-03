@@ -7,7 +7,6 @@ export interface QrItem {
   data: string; // QR payload (URL or text) - NEVER send to GA
   kind: "url" | "text" | "other";
   createdAt: string; // ISO date
-  archivedAt?: string; // ISO date (presence means archived)
   options: QrOptions;
 }
 
@@ -23,10 +22,17 @@ export interface QrOptions {
 }
 
 /**
+ * Sort options
+ */
+export type SortBy = "name" | "createdAt";
+export type SortDir = "asc" | "desc";
+
+/**
  * User preferences
  */
 export interface QrPrefs {
-  showArchived: boolean;
+  sortBy: SortBy;
+  sortDir: SortDir;
   lastOptions?: Partial<QrOptions>;
 }
 
@@ -45,29 +51,18 @@ export const DEFAULT_QR_OPTIONS: QrOptions = {
  * Default preferences
  */
 export const DEFAULT_PREFS: QrPrefs = {
-  showArchived: false,
+  sortBy: "createdAt",
+  sortDir: "desc",
 };
 
 /**
  * Editor mode type
  */
-export type EditorMode = "create" | "read";
+export type EditorMode = "create" | "scan" | "import";
 
 /**
  * Content mode for creating QR
  */
 export type ContentMode = "url" | "text";
 
-/**
- * Editor state for unsaved workspace
- */
-export interface EditorState {
-  mode: EditorMode;
-  contentMode: ContentMode;
-  name: string;
-  data: string;
-  options: QrOptions;
-  isDirty: boolean;
-  source?: "camera" | "upload" | "paste" | "url";
-}
 

@@ -6,12 +6,14 @@ import {
   generateViewport,
   type LocaleSEOContent,
 } from "@miniapps/seo";
-import { AppShell, ThemeProvider } from "@miniapps/ui";
+import { Footer, ThemeProvider } from "@miniapps/ui";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import { APP_NAME, APP_URL } from "../../lib/config";
+import { AppHeader } from "../../components/AppHeader";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -28,15 +30,12 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const APP_NAME = "QRKit Way";
-const APP_URL = "https://qrkitway.vercel.app";
-
-const seoContent: Record<string, LocaleSEOContent> = {
+const seoContent: Record<Locale, LocaleSEOContent> = {
   es: {
-    title: "QRKit Way - Biblioteca de Códigos QR",
+    title: "QRKit - Biblioteca de Códigos QR",
     description:
       "Crea, escanea y organiza tu biblioteca de códigos QR. Genera QR de URLs y textos, imprime, comparte y descarga. 100% privado, sin registro, funciona offline.",
-    ogAlt: "QRKit Way - Tu biblioteca personal de códigos QR",
+    ogAlt: "QRKit - Tu biblioteca personal de códigos QR",
     keywords: [
       "generador qr",
       "código qr",
@@ -51,10 +50,10 @@ const seoContent: Record<string, LocaleSEOContent> = {
     ],
   },
   en: {
-    title: "QRKit Way - QR Code Library",
+    title: "QRKit - QR Code Library",
     description:
       "Create, scan and organize your QR code library. Generate QR codes for URLs and text, print, share and download. 100% private, no registration, works offline.",
-    ogAlt: "QRKit Way - Your personal QR code library",
+    ogAlt: "QRKit - Your personal QR code library",
     keywords: [
       "qr generator",
       "qr code",
@@ -76,13 +75,13 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const content = seoContent[locale] || seoContent["en"];
+  const content = seoContent[locale as Locale] ?? seoContent.en;
 
   return generateSEOMetadata({
     appName: APP_NAME,
     appUrl: APP_URL,
     locale,
-    content: content!,
+    content,
     category: "utilities",
   });
 }
@@ -112,7 +111,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   const messages = await getMessages();
   const gaId = process.env["NEXT_PUBLIC_GA_ID"];
-  const content = seoContent[locale] || seoContent["en"];
+  const content = seoContent[locale as Locale] ?? seoContent.en;
 
   const jsonLdFeatures =
     locale === "es"
@@ -141,7 +140,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     appName: APP_NAME,
     appUrl: APP_URL,
     locale,
-    description: content!.description,
+    description: content.description,
     applicationCategory: "UtilitiesApplication",
     featureList: jsonLdFeatures,
   });
@@ -159,7 +158,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <AppShell title={APP_NAME}>{children}</AppShell>
+            <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
+              <AppHeader />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
           </NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />

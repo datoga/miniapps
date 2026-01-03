@@ -1,48 +1,44 @@
 "use client";
 
-import { memo, useState, useCallback, useEffect, useMemo } from "react";
+import { trackAppView, trackEvent } from "@miniapps/analytics";
 import { useTranslations } from "next-intl";
-import { trackEvent, trackAppView } from "@miniapps/analytics";
-import type { QrItem, EditorMode } from "../lib/types";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { searchItems, sortItems } from "../lib/search";
+import type { EditorMode, QrItem, SortBy, SortDir } from "../lib/types";
 import { useQrLibrary } from "../lib/useQrLibrary";
-import { searchItems } from "../lib/search";
-import { QrCard } from "./QrCard";
 import { AddCard } from "./AddCard";
 import { AddModeModal } from "./AddModeModal";
-import { EditorModal } from "./EditorModal";
-import { DetailModal } from "./DetailModal";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { DetailModal } from "./DetailModal";
+import { EditorModal } from "./EditorModal";
+import { QrCard } from "./QrCard";
+import { SortDropdown } from "./SortDropdown";
 
 export const QRKitApp = memo(function QRKitApp() {
   const t = useTranslations();
-  const {
-    items,
-    prefs,
-    isLoading,
-    addItem,
-    deleteItem,
-    toggleArchive,
-    updateName,
-    setShowArchived,
-  } = useQrLibrary();
+  const { items, prefs, isLoading, addItem, deleteItem, updateName, setSortBy, setSortDir } =
+    useQrLibrary();
 
   // UI state
   const [searchQuery, setSearchQuery] = useState("");
   const [showAddMode, setShowAddMode] = useState(false);
   const [editorMode, setEditorMode] = useState<EditorMode | null>(null);
   const [selectedItem, setSelectedItem] = useState<QrItem | null>(null);
-  const [deleteConfirm, setDeleteConfirm] = useState<{ item: QrItem; from: "card" | "detail" } | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<{
+    item: QrItem;
+    from: "card" | "detail";
+  } | null>(null);
 
   // Track app view on mount
   useEffect(() => {
-    trackAppView("QRKitWay");
+    trackAppView("QRKit");
   }, []);
 
-  // Filtered items
-  const filteredItems = useMemo(
-    () => searchItems(items, searchQuery, prefs.showArchived),
-    [items, searchQuery, prefs.showArchived]
-  );
+  // Filtered and sorted items
+  const filteredItems = useMemo(() => {
+    const filtered = searchItems(items, searchQuery);
+    return sortItems(filtered, prefs.sortBy, prefs.sortDir);
+  }, [items, searchQuery, prefs.sortBy, prefs.sortDir]);
 
   // Handlers
   const handleSearchChange = useCallback((value: string) => {
@@ -52,13 +48,16 @@ export const QRKitApp = memo(function QRKitApp() {
   const handleSearchBlur = useCallback(() => {
     trackEvent("qr_search", {
       has_query: searchQuery.trim().length > 0 ? 1 : 0,
-      show_archived: prefs.showArchived ? 1 : 0,
     });
-  }, [searchQuery, prefs.showArchived]);
+  }, [searchQuery]);
 
-  const handleToggleShowArchived = useCallback((show: boolean) => {
-    setShowArchived(show);
-  }, [setShowArchived]);
+  const handleSortChange = useCallback(
+    (sortBy: SortBy, sortDir: SortDir) => {
+      setSortBy(sortBy);
+      setSortDir(sortDir);
+    },
+    [setSortBy, setSortDir]
+  );
 
   const handleAddClick = useCallback(() => {
     setShowAddMode(true);
@@ -70,20 +69,29 @@ export const QRKitApp = memo(function QRKitApp() {
     trackEvent("qr_add_open", { mode: "create" });
   }, []);
 
-  const handleSelectRead = useCallback(() => {
+  const handleSelectScan = useCallback(() => {
     setShowAddMode(false);
-    setEditorMode("read");
-    trackEvent("qr_add_open", { mode: "read" });
+    setEditorMode("scan");
+    trackEvent("qr_add_open", { mode: "scan" });
+  }, []);
+
+  const handleSelectImport = useCallback(() => {
+    setShowAddMode(false);
+    setEditorMode("import");
+    trackEvent("qr_add_open", { mode: "import" });
   }, []);
 
   const handleEditorClose = useCallback(() => {
     setEditorMode(null);
   }, []);
 
-  const handleEditorSave = useCallback((item: QrItem) => {
-    addItem(item);
-    setEditorMode(null);
-  }, [addItem]);
+  const handleEditorSave = useCallback(
+    (item: QrItem) => {
+      addItem(item);
+      setEditorMode(null);
+    },
+    [addItem]
+  );
 
   const handleCardClick = useCallback((item: QrItem) => {
     setSelectedItem(item);
@@ -92,15 +100,6 @@ export const QRKitApp = memo(function QRKitApp() {
   const handleDetailClose = useCallback(() => {
     setSelectedItem(null);
   }, []);
-
-  const handleArchive = useCallback((id: string) => {
-    const item = items.find((i) => i.id === id);
-    if (item) {
-      const wasArchived = !!item.archivedAt;
-      toggleArchive(id);
-      trackEvent("qr_archive_toggle", { archived: wasArchived ? 0 : 1 });
-    }
-  }, [items, toggleArchive]);
 
   const handleDeleteRequest = useCallback((item: QrItem, from: "card" | "detail") => {
     setDeleteConfirm({ item, from });
@@ -141,34 +140,13 @@ export const QRKitApp = memo(function QRKitApp() {
               <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                 {t("library.title")}
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">
-                {t("library.subtitle")}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4">
-              {/* Show archived toggle */}
-              <label className="flex cursor-pointer items-center gap-3 group px-4 py-2 rounded-full bg-white/50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 hover:bg-white hover:shadow-sm transition-all">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {t("library.showArchived")}
-                </span>
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    checked={prefs.showArchived}
-                    onChange={(e) => handleToggleShowArchived(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-9 h-5 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:bg-primary-500 transition-all" />
-                  <div className="absolute left-1 top-1 w-3 h-3 bg-white rounded-full shadow-sm transition-transform peer-checked:translate-x-4" />
-                </div>
-              </label>
+              <p className="hidden sm:block text-gray-600 dark:text-gray-400 mt-1">{t("library.subtitle")}</p>
             </div>
           </div>
 
-          {/* Search */}
-          <div className="mb-6">
-            <div className="relative">
+          {/* Search + Sort */}
+          <div className="mb-6 flex gap-2 sm:gap-3">
+            <div className="relative flex-1 min-w-0">
               <svg
                 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
                 fill="none"
@@ -185,24 +163,38 @@ export const QRKitApp = memo(function QRKitApp() {
                 onChange={(e) => handleSearchChange(e.target.value)}
                 onBlur={handleSearchBlur}
                 placeholder={t("library.searchPlaceholder")}
-                className="w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className="w-full pl-12 pr-4 py-3 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all text-sm sm:text-base"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
                   className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
                     <line x1="18" y1="6" x2="6" y2="18" />
                     <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
                 </button>
               )}
             </div>
+
+            {/* Sort dropdown */}
+            <SortDropdown
+              sortBy={prefs.sortBy}
+              sortDir={prefs.sortDir}
+              onSortChange={handleSortChange}
+            />
           </div>
 
           {/* Items grid */}
-          {filteredItems.length === 0 && !searchQuery ? (
+          {filteredItems.length === 0 && !searchQuery && (
             // Empty state
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="w-24 h-24 rounded-3xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-6">
@@ -237,7 +229,9 @@ export const QRKitApp = memo(function QRKitApp() {
                 {t("library.createFirst")}
               </button>
             </div>
-          ) : filteredItems.length === 0 && searchQuery ? (
+          )}
+
+          {filteredItems.length === 0 && searchQuery && (
             // No results state
             <div className="flex flex-col items-center justify-center py-16 text-center">
               <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-4">
@@ -261,7 +255,9 @@ export const QRKitApp = memo(function QRKitApp() {
                 {t("library.noResultsDescription")}
               </p>
             </div>
-          ) : (
+          )}
+
+          {filteredItems.length > 0 && (
             // Grid
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredItems.map((item) => (
@@ -269,7 +265,6 @@ export const QRKitApp = memo(function QRKitApp() {
                   key={item.id}
                   item={item}
                   onClick={() => handleCardClick(item)}
-                  onArchive={() => handleArchive(item.id)}
                   onDelete={() => handleDeleteRequest(item, "card")}
                 />
               ))}
@@ -284,7 +279,8 @@ export const QRKitApp = memo(function QRKitApp() {
         open={showAddMode}
         onClose={() => setShowAddMode(false)}
         onSelectCreate={handleSelectCreate}
-        onSelectRead={handleSelectRead}
+        onSelectScan={handleSelectScan}
+        onSelectImport={handleSelectImport}
       />
 
       <EditorModal
@@ -299,10 +295,11 @@ export const QRKitApp = memo(function QRKitApp() {
         onClose={handleDetailClose}
         item={selectedItem}
         onUpdateName={updateName}
-        onArchive={handleArchive}
         onDelete={(id) => {
           const item = items.find((i) => i.id === id);
-          if (item) handleDeleteRequest(item, "detail");
+          if (item) {
+            handleDeleteRequest(item, "detail");
+          }
         }}
       />
 
@@ -317,4 +314,3 @@ export const QRKitApp = memo(function QRKitApp() {
     </>
   );
 });
-

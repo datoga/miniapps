@@ -124,6 +124,105 @@ export async function downloadSVG(
 }
 
 /**
+ * Download QR code as JPG
+ */
+export async function downloadJPG(
+  data: string,
+  filename: string,
+  options: Partial<QrOptions> = {}
+): Promise<void> {
+  const opts = { ...DEFAULT_QR_OPTIONS, ...options };
+
+  // Generate PNG data URL first
+  const pngDataUrl = await QRCode.toDataURL(data || " ", {
+    width: opts.sizePx,
+    margin: opts.margin,
+    errorCorrectionLevel: opts.ecc,
+    color: {
+      dark: opts.colorDark,
+      light: opts.colorLight,
+    },
+  });
+
+  // Convert to JPG using canvas
+  const img = new Image();
+  img.src = pngDataUrl;
+
+  await new Promise<void>((resolve) => {
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = opts.sizePx;
+      canvas.height = opts.sizePx;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        // Fill with white background (JPG doesn't support transparency)
+        ctx.fillStyle = opts.colorLight;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+
+        const jpgDataUrl = canvas.toDataURL("image/jpeg", 0.95);
+
+        const link = document.createElement("a");
+        link.download = `${filename}.jpg`;
+        link.href = jpgDataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+      resolve();
+    };
+  });
+}
+
+/**
+ * Download QR code as WebP
+ */
+export async function downloadWebP(
+  data: string,
+  filename: string,
+  options: Partial<QrOptions> = {}
+): Promise<void> {
+  const opts = { ...DEFAULT_QR_OPTIONS, ...options };
+
+  // Generate PNG data URL first
+  const pngDataUrl = await QRCode.toDataURL(data || " ", {
+    width: opts.sizePx,
+    margin: opts.margin,
+    errorCorrectionLevel: opts.ecc,
+    color: {
+      dark: opts.colorDark,
+      light: opts.colorLight,
+    },
+  });
+
+  // Convert to WebP using canvas
+  const img = new Image();
+  img.src = pngDataUrl;
+
+  await new Promise<void>((resolve) => {
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = opts.sizePx;
+      canvas.height = opts.sizePx;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+
+        const webpDataUrl = canvas.toDataURL("image/webp", 0.95);
+
+        const link = document.createElement("a");
+        link.download = `${filename}.webp`;
+        link.href = webpDataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+      resolve();
+    };
+  });
+}
+
+/**
  * Get QR code as PNG blob (for sharing)
  */
 export async function toPNGBlob(

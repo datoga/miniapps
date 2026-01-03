@@ -1,38 +1,45 @@
 {
   "app": {
-    "title": "QRKit Way",
+    "title": "QRKit",
     "description": "Your personal QR code library"
   },
   "common": {
-    "appTitle": "QRKit Way"
+    "appTitle": "QRKit",
+    "close": "Close",
+    "cancel": "Cancel",
+    "noContent": "No content"
   },
   "library": {
     "title": "My QR Library",
     "subtitle": "Create, scan and organize your QR codes",
-    "showArchived": "Show archived",
     "searchPlaceholder": "Search by name, content, type...",
     "addNew": "Add QR",
     "addNewDesc": "Create or scan",
     "emptyTitle": "No QR codes yet",
     "emptyDescription": "Create your first QR code or scan an existing one to get started",
-    "createFirst": "Create QR Code",
+    "createFirst": "Add New QR",
     "noResults": "No results found",
-    "noResultsDescription": "Try adjusting your search terms"
+    "noResultsDescription": "Try adjusting your search terms",
+    "sortByName": "Name",
+    "sortByDate": "Date",
+    "sort": "Sort"
   },
   "card": {
     "text": "Text",
-    "other": "Other",
-    "archived": "Archived"
+    "other": "Other"
   },
   "addMode": {
     "title": "Add QR Code",
     "create": "Create",
-    "createDesc": "Enter URL or text to generate a new QR",
-    "read": "Scan / Import",
-    "readDesc": "Scan with camera or import from image"
+    "createDesc": "Enter URL or text",
+    "scan": "Scan",
+    "scanDesc": "Use camera",
+    "import": "Import",
+    "importDesc": "From image file"
   },
   "editor": {
     "createTitle": "New QR Code",
+    "scanTitle": "Scan QR Code",
     "importTitle": "Import QR Code",
     "name": "Name",
     "namePlaceholder": "Enter a name for this QR",
@@ -45,15 +52,17 @@
     "errorCorrection": "Error Correction",
     "margin": "Margin",
     "preview": "Preview",
+    "noContent": "No content",
     "saveToLibrary": "Save to Library",
-    "discard": "Discard",
-    "discardTitle": "Discard changes?",
-    "discardMessage": "Your unsaved changes will be lost. Are you sure you want to discard?",
-    "unsavedTitle": "Unsaved changes",
-    "unsavedMessage": "You have unsaved changes. What would you like to do?",
+    "closeTitle": "Close without saving?",
+    "closeMessage": "If you close now, this QR code will be lost. Save it to your library first if you want to keep it.",
+    "closeConfirm": "Close without saving",
     "camera": "Camera Scan",
     "startScan": "Start Scanning",
     "stopScan": "Stop",
+    "startingCamera": "Starting camera...",
+    "retryCamera": "Try again",
+    "detected": "Detected!",
     "cameraError": "Could not access camera. Please check permissions.",
     "or": "or",
     "dropOrPaste": "Drop an image here, paste from clipboard (Ctrl+V), or",
@@ -68,10 +77,9 @@
   },
   "actions": {
     "edit": "Edit",
-    "archive": "Archive",
-    "unarchive": "Restore",
     "delete": "Delete",
     "copy": "Copy",
+    "visit": "Visit link",
     "download": "Download",
     "downloadPNG": "Download PNG",
     "downloadSVG": "Download SVG",
@@ -87,6 +95,7 @@
   "print": {
     "title": "Print QR Code",
     "size": "Size (cm)",
+    "custom": "Custom",
     "copies": "Number of copies",
     "showName": "Show name below QR",
     "showContent": "Show content below QR",

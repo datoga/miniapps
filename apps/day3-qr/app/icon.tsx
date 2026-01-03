@@ -1,9 +1,7 @@
 import { ImageResponse } from "next/og";
 
 // Icon configuration
-const APP_INITIALS = "QR";
 const BG_COLOR = "#0ea5e9";
-const TEXT_COLOR = "#ffffff";
 
 // Generate multiple icon sizes
 export function generateImageMetadata() {
@@ -14,11 +12,18 @@ export function generateImageMetadata() {
   ];
 }
 
-// Generate the icon image
+// Size lookup map
+const SIZES: Record<string, number> = {
+  "32": 32,
+  "192": 192,
+  "512": 512,
+};
+
+// Generate the icon image with QR code style
 export default function Icon({ id }: { id: string }) {
-  const size = id === "32" ? 32 : id === "192" ? 192 : 512;
-  const fontSize = Math.round(size * 0.4);
+  const size = SIZES[id] ?? 512;
   const borderRadius = Math.round(size * 0.18);
+  const fontSize = Math.round(size * 0.5);
 
   return new ImageResponse(
     (
@@ -30,14 +35,15 @@ export default function Icon({ id }: { id: string }) {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: BG_COLOR,
-          borderRadius: borderRadius,
-          color: TEXT_COLOR,
-          fontSize: fontSize,
+          borderRadius,
+          color: "white",
+          fontSize,
           fontWeight: 700,
           fontFamily: "system-ui, sans-serif",
+          letterSpacing: "-0.02em",
         }}
       >
-        {APP_INITIALS}
+        QR
       </div>
     ),
     {

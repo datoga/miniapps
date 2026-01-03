@@ -1,14 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { QrItem, QrPrefs } from "./types";
+import type { QrItem, QrPrefs, SortBy, SortDir } from "./types";
 import { DEFAULT_PREFS } from "./types";
 import {
   loadLibrary,
   loadPrefs,
   upsertItem,
   deleteItem as deleteItemFromStorage,
-  toggleArchive as toggleArchiveInStorage,
   updateName as updateNameInStorage,
   updatePref,
   saveLibrary,
@@ -21,9 +20,9 @@ interface UseQrLibraryReturn {
   addItem: (item: QrItem) => void;
   updateItem: (item: QrItem) => void;
   deleteItem: (id: string) => void;
-  toggleArchive: (id: string) => void;
   updateName: (id: string, name: string) => void;
-  setShowArchived: (show: boolean) => void;
+  setSortBy: (sortBy: SortBy) => void;
+  setSortDir: (sortDir: SortDir) => void;
   refresh: () => void;
 }
 
@@ -57,18 +56,18 @@ export function useQrLibrary(): UseQrLibraryReturn {
     setItems(updated);
   }, []);
 
-  const toggleArchive = useCallback((id: string) => {
-    const updated = toggleArchiveInStorage(id);
-    setItems(updated);
-  }, []);
-
   const updateName = useCallback((id: string, name: string) => {
     const updated = updateNameInStorage(id, name);
     setItems(updated);
   }, []);
 
-  const setShowArchived = useCallback((show: boolean) => {
-    const updated = updatePref("showArchived", show);
+  const setSortBy = useCallback((sortBy: SortBy) => {
+    const updated = updatePref("sortBy", sortBy);
+    setPrefs(updated);
+  }, []);
+
+  const setSortDir = useCallback((sortDir: SortDir) => {
+    const updated = updatePref("sortDir", sortDir);
     setPrefs(updated);
   }, []);
 
@@ -84,13 +83,12 @@ export function useQrLibrary(): UseQrLibraryReturn {
     addItem,
     updateItem,
     deleteItem,
-    toggleArchive,
     updateName,
-    setShowArchived,
+    setSortBy,
+    setSortDir,
     refresh,
   };
 }
 
 // Re-export storage functions for direct use
 export { loadLibrary, saveLibrary };
-

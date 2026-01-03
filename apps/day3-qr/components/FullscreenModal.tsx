@@ -1,15 +1,16 @@
 "use client";
 
-import { memo, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { memo, useCallback, useEffect } from "react";
 import type { QrItem } from "../lib/types";
+import { DownloadDropdown, type DownloadFormat } from "./DownloadDropdown";
 import { QrCanvas } from "./QrCanvas";
 
 interface FullscreenModalProps {
   open: boolean;
   onClose: () => void;
   item: QrItem | null;
-  onDownloadPNG: () => void;
+  onDownload: (format: DownloadFormat) => void;
   onShare: () => void;
   canShare: boolean;
 }
@@ -18,7 +19,7 @@ export const FullscreenModal = memo(function FullscreenModal({
   open,
   onClose,
   item,
-  onDownloadPNG,
+  onDownload,
   onShare,
   canShare,
 }: FullscreenModalProps) {
@@ -44,7 +45,9 @@ export const FullscreenModal = memo(function FullscreenModal({
     };
   }, [open, handleKeyDown]);
 
-  if (!open || !item) return null;
+  if (!open || !item) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
@@ -78,24 +81,7 @@ export const FullscreenModal = memo(function FullscreenModal({
 
       {/* Action buttons */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4">
-        <button
-          onClick={onDownloadPNG}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="7 10 12 15 17 10" />
-            <line x1="12" y1="15" x2="12" y2="3" />
-          </svg>
-          {t("actions.download")}
-        </button>
+        <DownloadDropdown onDownload={onDownload} variant="fullscreen" direction="up" showLabel />
         {canShare && (
           <button
             onClick={onShare}
@@ -122,4 +108,3 @@ export const FullscreenModal = memo(function FullscreenModal({
     </div>
   );
 });
-

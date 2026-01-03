@@ -1,7 +1,7 @@
 "use client";
 
-import { memo } from "react";
 import { useTranslations } from "next-intl";
+import { memo } from "react";
 
 interface AddCardProps {
   onClick: () => void;
@@ -32,10 +32,7 @@ export const AddCard = memo(function AddCard({ onClick }: AddCardProps) {
       <p className="text-base font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
         {t("library.addNew")}
       </p>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-        {t("library.addNewDesc")}
-      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t("library.addNewDesc")}</p>
     </button>
   );
 });
-

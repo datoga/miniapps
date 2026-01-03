@@ -1,9 +1,10 @@
 "use client";
 
-import { memo, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { memo, useEffect, useMemo, useRef } from "react";
+import { renderToCanvas } from "../lib/qrGenerator";
 import type { QrOptions } from "../lib/types";
 import { DEFAULT_QR_OPTIONS } from "../lib/types";
-import { renderToCanvas } from "../lib/qrGenerator";
 
 interface QrCanvasProps {
   data: string;
@@ -20,26 +21,27 @@ export const QrCanvas = memo(function QrCanvas({
   options = {},
   className = "",
 }: QrCanvasProps) {
+  const t = useTranslations();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const opts = { ...DEFAULT_QR_OPTIONS, ...options };
+  const opts = useMemo(() => ({ ...DEFAULT_QR_OPTIONS, ...options }), [options]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
 
     // Render QR code to canvas
     renderToCanvas(canvas, data, opts).catch(console.error);
-  }, [data, opts.sizePx, opts.ecc, opts.margin, opts.colorDark, opts.colorLight]);
+  }, [data, opts]);
 
   if (!data) {
     return (
       <div
-        className={`flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg ${className}`}
-        style={{ width: opts.sizePx, height: opts.sizePx }}
+        className={`flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-xl ${className}`}
+        style={{ width: opts.sizePx, height: opts.sizePx, maxWidth: "100%" }}
       >
-        <span className="text-gray-400 dark:text-gray-500 text-sm">
-          No content
-        </span>
+        <span className="text-gray-400 dark:text-gray-500 text-sm">{t("editor.noContent")}</span>
       </div>
     );
   }
@@ -52,4 +54,3 @@ export const QrCanvas = memo(function QrCanvas({
     />
   );
 });
-

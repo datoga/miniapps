@@ -1,38 +1,45 @@
 {
   "app": {
-    "title": "QRKit Way",
+    "title": "QRKit",
     "description": "Tu biblioteca personal de códigos QR"
   },
   "common": {
-    "appTitle": "QRKit Way"
+    "appTitle": "QRKit",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "noContent": "Sin contenido"
   },
   "library": {
     "title": "Mi Biblioteca QR",
     "subtitle": "Crea, escanea y organiza tus códigos QR",
-    "showArchived": "Mostrar archivados",
     "searchPlaceholder": "Buscar por nombre, contenido, tipo...",
     "addNew": "Añadir QR",
     "addNewDesc": "Crear o escanear",
     "emptyTitle": "Sin códigos QR",
     "emptyDescription": "Crea tu primer código QR o escanea uno existente para comenzar",
-    "createFirst": "Crear Código QR",
+    "createFirst": "Añadir Nuevo QR",
     "noResults": "Sin resultados",
-    "noResultsDescription": "Intenta ajustar los términos de búsqueda"
+    "noResultsDescription": "Intenta ajustar los términos de búsqueda",
+    "sortByName": "Nombre",
+    "sortByDate": "Fecha",
+    "sort": "Ordenar"
   },
   "card": {
     "text": "Texto",
-    "other": "Otro",
-    "archived": "Archivado"
+    "other": "Otro"
   },
   "addMode": {
     "title": "Añadir Código QR",
     "create": "Crear",
-    "createDesc": "Introduce URL o texto para generar un nuevo QR",
-    "read": "Escanear / Importar",
-    "readDesc": "Escanea con cámara o importa desde imagen"
+    "createDesc": "URL o texto",
+    "scan": "Escanear",
+    "scanDesc": "Usar cámara",
+    "import": "Importar",
+    "importDesc": "Desde imagen"
   },
   "editor": {
     "createTitle": "Nuevo Código QR",
+    "scanTitle": "Escanear Código QR",
     "importTitle": "Importar Código QR",
     "name": "Nombre",
     "namePlaceholder": "Introduce un nombre para este QR",
@@ -45,15 +52,17 @@
     "errorCorrection": "Corrección de errores",
     "margin": "Margen",
     "preview": "Vista previa",
+    "noContent": "Sin contenido",
     "saveToLibrary": "Guardar en biblioteca",
-    "discard": "Descartar",
-    "discardTitle": "¿Descartar cambios?",
-    "discardMessage": "Los cambios no guardados se perderán. ¿Estás seguro de que quieres descartar?",
-    "unsavedTitle": "Cambios sin guardar",
-    "unsavedMessage": "Tienes cambios sin guardar. ¿Qué deseas hacer?",
+    "closeTitle": "¿Cerrar sin guardar?",
+    "closeMessage": "Si cierras ahora, este código QR se perderá. Guárdalo en tu biblioteca primero si quieres conservarlo.",
+    "closeConfirm": "Cerrar sin guardar",
     "camera": "Escanear con cámara",
     "startScan": "Iniciar escaneo",
     "stopScan": "Detener",
+    "startingCamera": "Iniciando cámara...",
+    "retryCamera": "Reintentar",
+    "detected": "¡Detectado!",
     "cameraError": "No se pudo acceder a la cámara. Por favor verifica los permisos.",
     "or": "o",
     "dropOrPaste": "Arrastra una imagen aquí, pega desde el portapapeles (Ctrl+V), o",
@@ -68,10 +77,9 @@
   },
   "actions": {
     "edit": "Editar",
-    "archive": "Archivar",
-    "unarchive": "Restaurar",
     "delete": "Eliminar",
     "copy": "Copiar",
+    "visit": "Visitar enlace",
     "download": "Descargar",
     "downloadPNG": "Descargar PNG",
     "downloadSVG": "Descargar SVG",
@@ -87,6 +95,7 @@
   "print": {
     "title": "Imprimir Código QR",
     "size": "Tamaño (cm)",
+    "custom": "Otro",
     "copies": "Número de copias",
     "showName": "Mostrar nombre bajo el QR",
     "showContent": "Mostrar contenido bajo el QR",

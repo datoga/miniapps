@@ -4,8 +4,8 @@ import type { QrItem, QrPrefs } from "./types";
 import { DEFAULT_PREFS, DEFAULT_QR_OPTIONS } from "./types";
 
 // Storage keys with namespacing and versioning
-const LIBRARY_KEY = "qrkit_way_library_v1";
-const PREFS_KEY = "qrkit_way_prefs_v1";
+const LIBRARY_KEY = "qrkit_library_v1";
+const PREFS_KEY = "qrkit_prefs_v1";
 
 /**
  * Load the QR library from localStorage
@@ -86,26 +86,6 @@ export function deleteItem(id: string): QrItem[] {
 }
 
 /**
- * Toggle archive status of an item
- * If archivedAt exists, remove it; else set to current time
- */
-export function toggleArchive(id: string): QrItem[] {
-  const items = loadLibrary();
-  const item = items.find((i) => i.id === id);
-
-  if (item) {
-    if (item.archivedAt) {
-      delete item.archivedAt;
-    } else {
-      item.archivedAt = new Date().toISOString();
-    }
-    saveLibrary(items);
-  }
-
-  return items;
-}
-
-/**
  * Update the name of an item
  */
 export function updateName(id: string, name: string): QrItem[] {
@@ -114,24 +94,6 @@ export function updateName(id: string, name: string): QrItem[] {
 
   if (item) {
     item.name = name.trim();
-    saveLibrary(items);
-  }
-
-  return items;
-}
-
-/**
- * Update the options of an item
- */
-export function updateItemOptions(
-  id: string,
-  options: Partial<QrItem["options"]>
-): QrItem[] {
-  const items = loadLibrary();
-  const item = items.find((i) => i.id === id);
-
-  if (item) {
-    item.options = { ...item.options, ...options };
     saveLibrary(items);
   }
 

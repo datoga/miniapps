@@ -210,7 +210,7 @@ export const PrintDialog = memo(function PrintDialog({
               </div>
               <div class="grid">${items}</div>
               <div class="footer">
-                Generated with QRKit · qrkit.vercel.app
+                Generated with QRKit · qrkit.pro
               </div>
             </div>
           </body>

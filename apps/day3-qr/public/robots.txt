@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://qrkit.vercel.app/sitemap.xml
+Sitemap: https://qrkit.pro/sitemap.xml

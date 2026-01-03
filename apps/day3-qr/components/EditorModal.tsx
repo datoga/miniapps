@@ -388,7 +388,7 @@ export const EditorModal = memo(function EditorModal({
     }
 
     const qrName = name || "QR Code";
-    const shareText = [`📱 ${qrName}`, "", "✨ Creado con QRKit", "🔗 qrkit.vercel.app"].join("\n");
+    const shareText = [`📱 ${qrName}`, "", "✨ Creado con QRKit", "🔗 qrkit.pro"].join("\n");
 
     try {
       const blob = await toPNGBlob(data, options);

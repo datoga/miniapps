@@ -123,7 +123,7 @@ export const DetailModal = memo(function DetailModal({
       return;
     }
 
-    const shareText = [`📱 ${item.name}`, "", "✨ Creado con QRKit", "🔗 qrkit.vercel.app"].join(
+    const shareText = [`📱 ${item.name}`, "", "✨ Creado con QRKit", "🔗 qrkit.pro"].join(
       "\n"
     );
 

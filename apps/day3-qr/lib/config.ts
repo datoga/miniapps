@@ -26,7 +26,7 @@ function getAppUrl(): string {
   }
 
   // Default fallback
-  return "https://qrkit.vercel.app";
+  return "https://qrkit.pro";
 }
 
 export const APP_URL = getAppUrl();

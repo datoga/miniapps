@@ -8,4 +8,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "../../packages/ui/src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  theme: {
+    ...sharedConfig.theme,
+    extend: {
+      ...sharedConfig.theme?.extend,
+      fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+      },
+    },
+  },
 };

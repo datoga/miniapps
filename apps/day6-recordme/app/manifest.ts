@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "VoiceSnap",
     short_name: "VoiceSnap",
     description: "Capture your voice, preserve your thoughts",
-    start_url: "/",
+    start_url: "/?utm_source=pwa&utm_medium=installed",
     scope: "/",
     display: "standalone",
     background_color: "#ffffff",

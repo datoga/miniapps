@@ -246,6 +246,8 @@ Every app **MUST** include proper PWA configuration:
 
 #### 1. Web App Manifest (app/manifest.ts)
 
+**⚠️ IMPORTANT: Always include UTM parameters in `start_url` for PWA analytics tracking**
+
 ```tsx
 import type { MetadataRoute } from "next";
 
@@ -254,7 +256,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Full App Name",
     short_name: "ShortName",
     description: "App description for PWA",
-    start_url: "/",
+    start_url: "/?utm_source=pwa&utm_medium=installed", // PWA tracking - REQUIRED
     scope: "/",
     display: "standalone",
     background_color: "#ffffff",
@@ -290,6 +292,11 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
   };
 }
+```
+
+**Note:** If the app has a different landing page (e.g., `/dashboard`), use that path with UTM params:
+```tsx
+start_url: "/dashboard?utm_source=pwa&utm_medium=installed",
 ```
 
 #### 2. Dynamic Icons (app/icon.tsx & app/apple-icon.tsx)
@@ -345,6 +352,24 @@ export default function Icon({ id }: { id: string }) {
 - **Display mode**: Use "standalone" for app-like experience
 - **Orientation**: "portrait" for mobile-first apps
 - **Scope**: Always "/" to cover the entire app
+- **Analytics**: Always include `?utm_source=pwa&utm_medium=installed` in `start_url`
+
+### PWA Analytics Tracking
+
+**⚠️ REQUIRED: Track PWA installs in Google Analytics**
+
+The standard method to track PWA users is adding UTM parameters to the manifest's `start_url`:
+
+```tsx
+// This appears in GA4 > Acquisition > Source/Medium as "pwa / installed"
+start_url: "/?utm_source=pwa&utm_medium=installed",
+```
+
+This is the **Google-recommended approach** because:
+- Works automatically with GA4 without extra code
+- Universal across all analytics platforms
+- No JavaScript detection required
+- Captured on every PWA launch
 
 ## Code Standards
 
@@ -580,6 +605,7 @@ Before deploying a new app, verify:
 ### PWA
 
 - [ ] `manifest.ts` with proper name, icons, colors
+- [ ] `start_url` includes `?utm_source=pwa&utm_medium=installed` for analytics
 - [ ] `icon.tsx` dynamic icon with app branding
 - [ ] `apple-icon.tsx` for iOS
 - [ ] `og-image.png/route.tsx` for social sharing

@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "Verb Master",
     description:
       "Learn and practice English irregular verbs with an interactive app. Listen to pronunciations, take quizzes, exams and track your progress. 100% free.",
-    start_url: "/",
+    start_url: "/?utm_source=pwa&utm_medium=installed",
     scope: "/",
     id: "/",
     display: "standalone",

@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "CareerBoard",
     short_name: "CareerBoard",
     description: "Land your dream job with visual tracking",
-    start_url: "/",
+    start_url: "/?utm_source=pwa&utm_medium=installed",
     scope: "/",
     display: "standalone",
     background_color: "#ffffff",

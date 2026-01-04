@@ -21,13 +21,11 @@ import { AppHeader } from "./AppHeader";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { CycleCompletedModal } from "./CycleCompletedModal";
 import { EditCycleModal } from "./EditCycleModal";
-import { EditHistoricalRestModal } from "./EditHistoricalRestModal";
 import { ExerciseCalendar } from "./ExerciseCalendar";
 import { FirstConnectionConflictModal } from "./FirstConnectionConflictModal";
 import { ExerciseChart } from "./ExerciseChart";
 import { NewCycleModal } from "./NewCycleModal";
 import { PRBanner } from "./PRBanner";
-import { RestModal } from "./RestModal";
 import { SessionModal } from "./SessionModal";
 import { SyncStatusIndicator } from "./SyncStatusIndicator";
 
@@ -51,12 +49,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
     deleteCycle,
     updateCycle,
     deleteExercise,
-    startRest,
-    endRest,
-    updateRest,
-    cancelRest,
-    updateHistoricalRest,
-    deleteHistoricalRest,
     updateSettings,
   } = useBilboData();
 
@@ -68,13 +60,11 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
   const [loading, setLoading] = useState(true);
 
   const [selectedCycleId, setSelectedCycleId] = useState<string | "all">("all");
-  const [showRestPeriods, setShowRestPeriods] = useState(true);
 
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [editingSession, setEditingSession] = useState<Session | null>(null);
   const [showNewCycleModal, setShowNewCycleModal] = useState(false);
   const [showEndCycleConfirm, setShowEndCycleConfirm] = useState(false);
-  const [showWhatNextModal, setShowWhatNextModal] = useState(false);
   const [showCycleCompleted, setShowCycleCompleted] = useState(false);
   const [completedCycleData, setCompletedCycleData] = useState<{
     cycleIndex: number;
@@ -85,23 +75,11 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
     final1RMKg: number;
     totalWorkKg: number;
   } | null>(null);
-  const [showRestModal, setShowRestModal] = useState(false);
-  const [showEndRestConfirm, setShowEndRestConfirm] = useState(false);
-  const [editingRest, setEditingRest] = useState(false);
-  const [showCancelRestConfirm, setShowCancelRestConfirm] = useState(false);
   const [deleteSessionId, setDeleteSessionId] = useState<string | null>(null);
   const [deleteCycleId, setDeleteCycleId] = useState<string | null>(null);
   const [showDeleteExerciseConfirm, setShowDeleteExerciseConfirm] = useState(false);
   const [editingCycleFromCalendar, setEditingCycleFromCalendar] = useState<Cycle | null>(null);
 
-  // Historical rest editing
-  const [editingHistoricalRest, setEditingHistoricalRest] = useState<{
-    restId: string;
-    startDate: string;
-    endDate?: string;
-    actualEndDate: string;
-  } | null>(null);
-  const [deleteRestId, setDeleteRestId] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [firstConnectionConflict, setFirstConnectionConflict] = useState<{
     conflict: FirstConnectionConflict;
@@ -137,21 +115,11 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
     return true;
   });
 
-  // Build timeline with cycle markers and rest periods
+  // Build timeline with cycle markers
   type TimelineEvent =
     | { type: "session"; session: Session }
     | { type: "cycle-start"; cycle: Cycle; timestamp: number }
-    | { type: "cycle-end"; cycle: Cycle; timestamp: number }
-    | {
-        type: "rest-start";
-        date: string;
-        timestamp: number;
-        isCurrent: boolean;
-        endDate?: string;
-        restId?: string;
-        actualEndDate?: string;
-      }
-    | { type: "rest-end"; date: string; timestamp: number; restId?: string };
+    | { type: "cycle-end"; cycle: Cycle; timestamp: number };
 
   // Helper to get cycle dates from sessions
   const getCycleDates = useCallback(
@@ -194,45 +162,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
       }
     });
 
-    // Add rest period events (if toggle is on AND showing all cycles)
-    if (showRestPeriods && selectedCycleId === "all") {
-      // Current rest period (if any)
-      if (exercise?.restStartDate) {
-        const restStartTs = new Date(exercise.restStartDate).getTime();
-        events.push({
-          type: "rest-start",
-          date: exercise.restStartDate,
-          timestamp: restStartTs,
-          isCurrent: true,
-          endDate: exercise.restEndDate,
-        });
-      }
-
-      // Historical rest periods
-      if (exercise?.restHistory) {
-        exercise.restHistory.forEach((rest) => {
-          const restStartTs = new Date(rest.startDate).getTime();
-          events.push({
-            type: "rest-start",
-            date: rest.startDate,
-            timestamp: restStartTs,
-            isCurrent: false,
-            endDate: rest.endDate,
-            restId: rest.id,
-            actualEndDate: rest.actualEndDate,
-          });
-          // Add rest-end event using actualEndDate
-          const restEndTs = new Date(rest.actualEndDate).getTime();
-          events.push({
-            type: "rest-end",
-            date: rest.actualEndDate,
-            timestamp: restEndTs,
-            restId: rest.id,
-          });
-        });
-      }
-    }
-
     // Sort by datetime/timestamp descending (newest first)
     // cycle-start should appear AFTER (below) all sessions in that cycle
     // cycle-end should appear BEFORE (above) all sessions in that cycle
@@ -257,26 +186,23 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
           return new Date(e.timestamp).toISOString().slice(0, 19);
         }
         // For cycle-end, position just after the newest session
-        if (e.type === "cycle-end") {
-          const cycleSessions = filteredSessions.filter((s) => s.cycleId === e.cycle.id);
-          const sortedSessions = [...cycleSessions].sort((x, y) =>
-            y.datetime.localeCompare(x.datetime)
-          );
-          const newest = sortedSessions[0];
-          if (newest) {
-            // Add "Z" suffix to sort just after the session (Z > T in ASCII)
-            return newest.datetime.replace("T", "Z");
-          }
-          return new Date(e.timestamp).toISOString().slice(0, 19);
+        // e.type === "cycle-end"
+        const cycleSessions = filteredSessions.filter((s) => s.cycleId === e.cycle.id);
+        const sortedSessions = [...cycleSessions].sort((x, y) =>
+          y.datetime.localeCompare(x.datetime)
+        );
+        const newest = sortedSessions[0];
+        if (newest) {
+          // Add "Z" suffix to sort just after the session (Z > T in ASCII)
+          return newest.datetime.replace("T", "Z");
         }
-        // For rest events, use timestamp converted to ISO string
         return new Date(e.timestamp).toISOString().slice(0, 19);
       };
       return getSortKey(b).localeCompare(getSortKey(a));
     });
 
     return events;
-  }, [filteredSessions, cycles, exercise, selectedCycleId, getCycleDates, showRestPeriods]);
+  }, [filteredSessions, cycles, selectedCycleId, getCycleDates]);
 
   // Check if this is the first session of the active cycle
   const sessionsInActiveCycle = activeCycle
@@ -347,13 +273,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
   const handleCloseCycleCompleted = () => {
     setShowCycleCompleted(false);
     setCompletedCycleData(null);
-    setShowWhatNextModal(true);
-  };
-
-  const handleStartNewCycle = async () => {
-    // Cycle already finished - just open new cycle modal
-    setShowWhatNextModal(false);
-    setShowNewCycleModal(true);
   };
 
   const handleNewCycleSave = async (base1RMKg: number) => {
@@ -377,69 +296,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
     }
     await deleteCycle(deleteCycleId);
     setDeleteCycleId(null);
-    loadData();
-  };
-
-  const handleStartRest = async () => {
-    // Cycle already finished - just open rest modal
-    setShowWhatNextModal(false);
-    setShowRestModal(true);
-  };
-
-  const handleRestSave = async (startDate: string, endDate?: string) => {
-    if (editingRest) {
-      await updateRest(exerciseId, startDate, endDate);
-      setEditingRest(false);
-    } else {
-      await startRest(exerciseId, startDate, endDate);
-    }
-    setShowRestModal(false);
-    loadData();
-  };
-
-  const handleCancelRest = async () => {
-    await cancelRest(exerciseId);
-    setShowCancelRestConfirm(false);
-    loadData();
-  };
-
-  const handleEditRest = () => {
-    setEditingRest(true);
-    setShowRestModal(true);
-  };
-
-  const handleEndRest = async () => {
-    await endRest(exerciseId);
-    setShowEndRestConfirm(false);
-    await loadData(); // Refresh to show rest-end in timeline
-    setShowNewCycleModal(true);
-  };
-
-  const handleUpdateHistoricalRest = async (
-    startDate: string,
-    actualEndDate: string,
-    endDate?: string
-  ) => {
-    if (!editingHistoricalRest) {
-      return;
-    }
-    await updateHistoricalRest(
-      exerciseId,
-      editingHistoricalRest.restId,
-      startDate,
-      actualEndDate,
-      endDate
-    );
-    setEditingHistoricalRest(null);
-    loadData();
-  };
-
-  const handleDeleteHistoricalRest = async () => {
-    if (!deleteRestId) {
-      return;
-    }
-    await deleteHistoricalRest(exerciseId, deleteRestId);
-    setDeleteRestId(null);
     loadData();
   };
 
@@ -664,79 +520,25 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
             </div>
           </div>
 
-          {/* Rest Banner */}
-          {exercise.isResting && (
-            <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 p-4 dark:border-blue-900 dark:bg-blue-950/30">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">😴</span>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-blue-800 dark:text-blue-300">
-                    {t("rest.restingTitle")}
-                  </h3>
-                  <p className="text-sm text-blue-600 dark:text-blue-400">
-                    {t("rest.since")}{" "}
-                    <span className="md:hidden">
-                      {new Date(exercise.restStartDate!).toLocaleDateString(undefined, {
-                        day: "numeric",
-                        month: "numeric",
-                      })}
-                    </span>
-                    <span className="hidden md:inline">
-                      {new Date(exercise.restStartDate!).toLocaleDateString()}
-                    </span>
-                    {exercise.restEndDate && (
-                      <span>
-                        {" · "}
-                        {t("rest.until")}{" "}
-                        <span className="md:hidden">
-                          {new Date(exercise.restEndDate).toLocaleDateString(undefined, {
-                            day: "numeric",
-                            month: "numeric",
-                          })}
-                        </span>
-                        <span className="hidden md:inline">
-                          {new Date(exercise.restEndDate).toLocaleDateString()}
-                        </span>
-                      </span>
-                    )}
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowEndRestConfirm(true)}
-                  className="border-blue-300 text-blue-700 hover:bg-blue-100 dark:border-blue-700 dark:text-blue-300 dark:hover:bg-blue-900"
-                >
-                  {t("rest.endRest")}
-                </Button>
-              </div>
-            </div>
-          )}
-
           {/* Actions */}
           <div className="mb-6 flex flex-wrap gap-2">
-            {activeCycle && !exercise.isResting && (
+            {activeCycle && (
               <Button variant="primary" onClick={() => setShowSessionModal(true)}>
                 <span className="md:hidden">✏️</span>
                 <span className="hidden md:inline">✏️ {t("home.logSession")}</span>
               </Button>
             )}
-            {activeCycle && !exercise.isResting && !isFirstSessionOfCycle && (
+            {activeCycle && !isFirstSessionOfCycle && (
               <Button variant="outline" onClick={handleFinishCycleClick}>
                 <span className="md:hidden">🏁</span>
                 <span className="hidden md:inline">🏁 {t("exercise.endCycle")}</span>
               </Button>
             )}
-            {!activeCycle && !exercise.isResting && (
-              <>
-                <Button variant="outline" onClick={() => setShowNewCycleModal(true)}>
-                  <span className="md:hidden">🔄</span>
-                  <span className="hidden md:inline">🔄 {t("exercise.startNewCycle")}</span>
-                </Button>
-                <Button variant="outline" onClick={() => setShowRestModal(true)}>
-                  <span className="md:hidden">😴</span>
-                  <span className="hidden md:inline">😴 {t("rest.takeRest")}</span>
-                </Button>
-              </>
+            {!activeCycle && (
+              <Button variant="outline" onClick={() => setShowNewCycleModal(true)}>
+                <span className="md:hidden">🔄</span>
+                <span className="hidden md:inline">🔄 {t("exercise.startNewCycle")}</span>
+              </Button>
             )}
           </div>
 
@@ -841,22 +643,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
                       </option>
                     ))}
                   </select>
-                )}
-
-                {/* Rest Toggle - only show when viewing all cycles */}
-                {selectedCycleId === "all" && (
-                  <button
-                    onClick={() => setShowRestPeriods(!showRestPeriods)}
-                    className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                      showRestPeriods
-                        ? "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
-                        : "bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500"
-                    }`}
-                    title={t("exercise.filters.showRests")}
-                  >
-                    <span>😴</span>
-                    <span className="hidden sm:inline">{t("exercise.filters.showRests")}</span>
-                  </button>
                 )}
               </div>
 
@@ -1015,162 +801,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
                             </tr>
                           );
                         }
-                        if (event.type === "rest-start") {
-                          return (
-                            <tr
-                              key={`rest-start-${event.date}-${event.timestamp}`}
-                              className="bg-blue-50 dark:bg-blue-950/30"
-                            >
-                              <td colSpan={6} className="px-2 py-2">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
-                                    <span className="text-lg">😴</span>
-                                    <span className="font-medium">
-                                      {t("exercise.timeline.restStarted")}
-                                    </span>
-                                    <span className="text-xs text-blue-600 dark:text-blue-500">
-                                      <span className="md:hidden">
-                                        {new Date(event.date).toLocaleDateString(undefined, {
-                                          day: "numeric",
-                                          month: "numeric",
-                                        })}
-                                      </span>
-                                      <span className="hidden md:inline">
-                                        {new Date(event.date).toLocaleDateString()}
-                                      </span>
-                                    </span>
-                                    {event.endDate && (
-                                      <span className="text-xs text-blue-500 dark:text-blue-600">
-                                        → {new Date(event.endDate).toLocaleDateString()}
-                                      </span>
-                                    )}
-                                  </div>
-                                  {/* Edit/Delete buttons - for current rest */}
-                                  {event.isCurrent && (
-                                    <div className="flex gap-2">
-                                      <button
-                                        onClick={handleEditRest}
-                                        className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
-                                        title={t("common.edit")}
-                                      >
-                                        <svg
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                                          />
-                                        </svg>
-                                      </button>
-                                      <button
-                                        onClick={() => setShowCancelRestConfirm(true)}
-                                        className="text-gray-400 hover:text-red-600 dark:hover:text-red-400"
-                                        title={t("common.delete")}
-                                      >
-                                        <svg
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                          />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-                                  {/* Edit/Delete buttons - for historical rest */}
-                                  {!event.isCurrent && event.restId && (
-                                    <div className="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                                      <button
-                                        onClick={() =>
-                                          setEditingHistoricalRest({
-                                            restId: event.restId!,
-                                            startDate: event.date,
-                                            endDate: event.endDate,
-                                            actualEndDate: event.actualEndDate!,
-                                          })
-                                        }
-                                        className="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
-                                        title={t("common.edit")}
-                                      >
-                                        <svg
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                                          />
-                                        </svg>
-                                      </button>
-                                      <button
-                                        onClick={() => setDeleteRestId(event.restId!)}
-                                        className="text-gray-400 hover:text-red-600 dark:hover:text-red-400"
-                                        title={t("common.delete")}
-                                      >
-                                        <svg
-                                          className="h-4 w-4"
-                                          fill="none"
-                                          stroke="currentColor"
-                                          viewBox="0 0 24 24"
-                                        >
-                                          <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                          />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        }
-                        if (event.type === "rest-end") {
-                          return (
-                            <tr
-                              key={`rest-end-${event.date}-${event.timestamp}`}
-                              className="bg-green-50 dark:bg-green-950/30"
-                            >
-                              <td colSpan={6} className="px-2 py-2">
-                                <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
-                                  <span className="text-lg">✅</span>
-                                  <span className="font-medium">
-                                    {t("exercise.timeline.restEnded")}
-                                  </span>
-                                  <span className="text-xs text-green-600 dark:text-green-500">
-                                    <span className="md:hidden">
-                                      {new Date(event.date).toLocaleDateString(undefined, {
-                                        day: "numeric",
-                                        month: "numeric",
-                                      })}
-                                    </span>
-                                    <span className="hidden md:inline">
-                                      {new Date(event.date).toLocaleDateString()}
-                                    </span>
-                                  </span>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        }
                         return null;
                       })}
                     </tbody>
@@ -1184,12 +814,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
             <ExerciseCalendar
               sessions={sessions}
               cycles={cycles}
-              restHistory={exercise.restHistory || []}
-              currentRest={
-                exercise.isResting && exercise.restStartDate
-                  ? { startDate: exercise.restStartDate, endDate: exercise.restEndDate }
-                  : undefined
-              }
               unitsUI={settings.unitsUI}
               onEditSession={(session) => {
                 setEditingSession(session);
@@ -1200,17 +824,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
                 setEditingCycleFromCalendar(cycle);
               }}
               onDeleteCycle={(cycleId) => setDeleteCycleId(cycleId)}
-              onEditRest={(rest) => {
-                if (rest.id) {
-                  setEditingHistoricalRest({
-                    restId: rest.id,
-                    startDate: rest.startDate,
-                    endDate: rest.endDate,
-                    actualEndDate: rest.actualEndDate,
-                  });
-                }
-              }}
-              onDeleteRest={(restId) => setDeleteRestId(restId)}
             />
           )}
 
@@ -1258,9 +871,30 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
           }}
           onBilboCompletedEndCycle={async () => {
             setShowSessionModal(false);
+
+            // Collect cycle stats before finishing
+            const cycleSessions = sessions.filter((s) => s.cycleId === activeCycle.id);
+            const sessionCount = cycleSessions.length + 1; // +1 for the session just saved
+            const startDate = new Date(activeCycle.startedAt).toISOString().split("T")[0] as string;
+            const endDate = new Date().toISOString().split("T")[0] as string;
+            const initial1RMKg = activeCycle.base1RMKg;
+            const final1RMKg = activeCycle.improved1RMKg || activeCycle.base1RMKg;
+            const totalWorkKg = cycleSessions.reduce((sum, s) => sum + s.workKg, 0);
+
             await finishCycle(activeCycle.id);
             await loadData();
-            setShowWhatNextModal(true);
+
+            // Show cycle completed modal with share option
+            setCompletedCycleData({
+              cycleIndex: activeCycle.index,
+              sessionCount,
+              startDate,
+              endDate,
+              initial1RMKg,
+              final1RMKg,
+              totalWorkKg,
+            });
+            setShowCycleCompleted(true);
           }}
         />
       )}
@@ -1283,31 +917,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
             // This is only called for new sessions, not edits
             setEditingSession(null);
           }}
-        />
-      )}
-
-      {/* What Next Modal - shown after cycle is closed */}
-      {showWhatNextModal && (
-        <WhatNextModal onStartNewCycle={handleStartNewCycle} onStartRest={handleStartRest} />
-      )}
-
-      {/* Rest Modal */}
-      {showRestModal && (
-        <RestModal
-          isOpen
-          onClose={() => {
-            setShowRestModal(false);
-            setEditingRest(false);
-          }}
-          onSave={handleRestSave}
-          previousCycleEndDate={
-            cycles.length > 0
-              ? [...cycles].sort((a, b) => b.index - a.index)[0]?.endedAt
-              : undefined
-          }
-          isEditing={editingRest}
-          initialStartDate={editingRest ? exercise?.restStartDate : undefined}
-          initialEndDate={editingRest ? exercise?.restEndDate : undefined}
         />
       )}
 
@@ -1343,16 +952,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
         />
       )}
 
-      {/* End Rest Confirm */}
-      <ConfirmDialog
-        isOpen={showEndRestConfirm}
-        onClose={() => setShowEndRestConfirm(false)}
-        onConfirm={handleEndRest}
-        title={t("rest.endRestTitle")}
-        message={t("rest.endRestMessage")}
-        confirmLabel={t("rest.endRestConfirm")}
-      />
-
       {/* New Cycle Modal */}
       {showNewCycleModal && (
         <NewCycleModal
@@ -1383,38 +982,6 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
         message={t("cycle.deleteConfirm")}
         variant="danger"
       />
-
-      {/* Cancel Rest Confirm */}
-      <ConfirmDialog
-        isOpen={showCancelRestConfirm}
-        onClose={() => setShowCancelRestConfirm(false)}
-        onConfirm={handleCancelRest}
-        title={t("rest.cancelRestTitle")}
-        message={t("rest.cancelRestMessage")}
-        variant="danger"
-      />
-
-      {/* Delete Historical Rest Confirm */}
-      <ConfirmDialog
-        isOpen={!!deleteRestId}
-        onClose={() => setDeleteRestId(null)}
-        onConfirm={handleDeleteHistoricalRest}
-        title={t("common.delete")}
-        message={t("rest.deleteRestMessage")}
-        variant="danger"
-      />
-
-      {/* Edit Historical Rest Modal */}
-      {editingHistoricalRest && (
-        <EditHistoricalRestModal
-          isOpen
-          onClose={() => setEditingHistoricalRest(null)}
-          onSave={handleUpdateHistoricalRest}
-          initialStartDate={editingHistoricalRest.startDate}
-          initialEndDate={editingHistoricalRest.endDate}
-          initialActualEndDate={editingHistoricalRest.actualEndDate}
-        />
-      )}
 
       {/* Edit Cycle Modal */}
       {editingCycleFromCalendar && (
@@ -1527,56 +1094,5 @@ function SessionRow({ session, unitsUI, onEdit, onDelete }: SessionRowProps) {
         </div>
       </td>
     </tr>
-  );
-}
-
-interface WhatNextModalProps {
-  onStartNewCycle: () => void;
-  onStartRest: () => void;
-}
-
-function WhatNextModal({ onStartNewCycle, onStartRest }: WhatNextModalProps) {
-  const t = useTranslations();
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-      <div className="relative w-full max-w-sm rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-900">
-        <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-          ✅ {t("cycle.cycleCompleted")}
-        </h2>
-        <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-          {t("cycle.whatNextDescription")}
-        </p>
-        <div className="space-y-3">
-          <button
-            onClick={onStartNewCycle}
-            className="flex w-full items-center gap-3 rounded-lg border-2 border-red-600 bg-red-50 p-4 hover:bg-red-100 dark:border-red-500 dark:bg-red-950 dark:hover:bg-red-900"
-          >
-            <span className="text-2xl">🔄</span>
-            <div className="text-left">
-              <span className="font-semibold text-red-700 dark:text-red-300">
-                {t("exercise.startNewCycle")}
-              </span>
-              <p className="text-xs text-red-600 dark:text-red-400">
-                {t("exercise.startNewCycleHint")}
-              </p>
-            </div>
-          </button>
-          <button
-            onClick={onStartRest}
-            className="flex w-full items-center gap-3 rounded-lg border border-blue-200 bg-blue-50 p-4 hover:bg-blue-100 dark:border-blue-700 dark:bg-blue-950 dark:hover:bg-blue-900"
-          >
-            <span className="text-2xl">😴</span>
-            <div className="text-left">
-              <span className="font-medium text-blue-700 dark:text-blue-300">
-                {t("rest.takeRest")}
-              </span>
-              <p className="text-xs text-blue-600 dark:text-blue-400">{t("rest.takeRestHint")}</p>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
   );
 }

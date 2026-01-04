@@ -111,31 +111,3 @@ export function CycleEndRow({ cycle, timestamp, unitsUI, onDelete }: CycleEndRow
   );
 }
 
-interface RestStartRowProps {
-  date: string;
-}
-
-export function RestStartRow({ date }: RestStartRowProps) {
-  const t = useTranslations();
-
-  return (
-    <tr className="bg-blue-50 dark:bg-blue-950/30">
-      <td colSpan={6} className="px-2 py-2">
-        <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
-          <span className="text-lg">😴</span>
-          <span className="font-medium">{t("exercise.timeline.restStarted")}</span>
-          <span className="text-xs text-blue-600 dark:text-blue-500">
-            <span className="md:hidden">
-              {new Date(date).toLocaleDateString(undefined, {
-                day: "numeric",
-                month: "numeric",
-              })}
-            </span>
-            <span className="hidden md:inline">{new Date(date).toLocaleDateString()}</span>
-          </span>
-        </div>
-      </td>
-    </tr>
-  );
-}
-

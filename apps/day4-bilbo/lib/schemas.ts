@@ -4,15 +4,6 @@ import { z } from "zod";
 export const PresetType = z.enum(["bench", "squat", "deadlift", "row", "ohp", "custom"]);
 export type PresetType = z.infer<typeof PresetType>;
 
-// Rest period history entry
-export const RestPeriodSchema = z.object({
-  id: z.string().uuid().optional(), // Unique identifier (may be missing in old data)
-  startDate: z.string(), // ISO date string (YYYY-MM-DD)
-  endDate: z.string().optional(), // ISO date string when rest ended
-  actualEndDate: z.string(), // ISO date string when rest was actually ended
-});
-export type RestPeriod = z.infer<typeof RestPeriodSchema>;
-
 // Exercise schema
 export const ExerciseSchema = z.object({
   id: z.string().uuid(),
@@ -22,12 +13,6 @@ export const ExerciseSchema = z.object({
   emoji: z.string().optional(), // Optional emoji override
   createdAt: z.number(), // ms timestamp
   updatedAt: z.number(), // ms timestamp
-  // Rest period tracking (current)
-  isResting: z.boolean().optional(), // true when in rest period
-  restStartDate: z.string().optional(), // ISO date string (YYYY-MM-DD)
-  restEndDate: z.string().optional(), // ISO date string (YYYY-MM-DD), optional planned end
-  // Rest period history (completed)
-  restHistory: z.array(RestPeriodSchema).optional(),
 });
 export type Exercise = z.infer<typeof ExerciseSchema>;
 

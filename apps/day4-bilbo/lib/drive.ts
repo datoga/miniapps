@@ -1,9 +1,9 @@
 "use client";
 
 import * as db from "./db";
+import { trackSettingsChanged } from "./ga";
 import type { Backup, DriveProfile, DriveSyncState } from "./schemas";
 import { BackupSchema } from "./schemas";
-import { trackSettingsChanged } from "./ga";
 
 // Google Drive API constants
 const DRIVE_FILE_NAME = "bilbotracker-backup.json";
@@ -34,7 +34,9 @@ let currentAccessToken: string | null = null;
  * Initialize Google Identity Services
  */
 export async function initGoogleAuth(): Promise<boolean> {
-  if (typeof window === "undefined") {return false;}
+  if (typeof window === "undefined") {
+    return false;
+  }
 
   const clientId = getClientId();
   if (!clientId) {
@@ -64,54 +66,88 @@ export async function initGoogleAuth(): Promise<boolean> {
  */
 export async function signInWithGoogle(): Promise<{ profile: DriveProfile; token: string } | null> {
   const initialized = await initGoogleAuth();
-  if (!initialized) {return null;}
+  if (!initialized) {
+    console.error("Failed to initialize Google Auth");
+    return null;
+  }
 
   const clientId = getClientId();
-  if (!clientId) {return null;}
+  if (!clientId) {
+    console.error("Google Client ID not configured");
+    return null;
+  }
 
   return new Promise((resolve) => {
-    const google = (window as unknown as { google: { accounts: { oauth2: {
-      initTokenClient: (config: {
-        client_id: string;
-        scope: string;
-        callback: (response: TokenResponse) => void;
-      }) => { requestAccessToken: () => void };
-    } } } }).google;
+    // Timeout after 60 seconds (user might take time to select account)
+    const timeout = setTimeout(() => {
+      console.warn("Google sign-in timed out");
+      resolve(null);
+    }, 60000);
 
-    const tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: clientId,
-      scope: `${DRIVE_SCOPE} https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email`,
-      callback: async (response: TokenResponse) => {
-        if (response.error) {
-          console.error("Token error:", response.error);
-          resolve(null);
-          return;
+    try {
+      const google = (
+        window as unknown as {
+          google: {
+            accounts: {
+              oauth2: {
+                initTokenClient: (config: {
+                  client_id: string;
+                  scope: string;
+                  callback: (response: TokenResponse) => void;
+                  error_callback?: (error: { type: string; message?: string }) => void;
+                }) => { requestAccessToken: () => void };
+              };
+            };
+          };
         }
+      ).google;
 
-        currentAccessToken = response.access_token;
+      const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: `${DRIVE_SCOPE} https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email`,
+        callback: async (response: TokenResponse) => {
+          clearTimeout(timeout);
 
-        // Get user profile
-        try {
-          const profileRes = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
-            headers: { Authorization: `Bearer ${response.access_token}` },
-          });
-          const profile: GoogleUser = await profileRes.json();
+          if (response.error) {
+            console.error("Token error:", response.error);
+            resolve(null);
+            return;
+          }
 
-          resolve({
-            profile: {
-              name: profile.name,
-              email: profile.email,
-              pictureUrl: profile.picture,
-            },
-            token: response.access_token,
-          });
-        } catch {
+          currentAccessToken = response.access_token;
+
+          // Get user profile
+          try {
+            const profileRes = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
+              headers: { Authorization: `Bearer ${response.access_token}` },
+            });
+            const profile: GoogleUser = await profileRes.json();
+
+            resolve({
+              profile: {
+                name: profile.name,
+                email: profile.email,
+                pictureUrl: profile.picture,
+              },
+              token: response.access_token,
+            });
+          } catch {
+            resolve(null);
+          }
+        },
+        error_callback: (error) => {
+          clearTimeout(timeout);
+          console.error("Google sign-in error:", error.type, error.message);
           resolve(null);
-        }
-      },
-    });
+        },
+      });
 
-    tokenClient.requestAccessToken();
+      tokenClient.requestAccessToken();
+    } catch (error) {
+      clearTimeout(timeout);
+      console.error("Error initializing token client:", error);
+      resolve(null);
+    }
   });
 }
 
@@ -142,14 +178,18 @@ async function setSyncState(state: DriveSyncState): Promise<void> {
 /**
  * Find the backup file in appDataFolder
  */
-async function findBackupFile(accessToken: string): Promise<{ id: string; modifiedTime: string } | null> {
+async function findBackupFile(
+  accessToken: string
+): Promise<{ id: string; modifiedTime: string } | null> {
   const url = `https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q=name='${DRIVE_FILE_NAME}'&fields=files(id,modifiedTime)`;
 
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-  if (!res.ok) {return null;}
+  if (!res.ok) {
+    return null;
+  }
 
   const data = await res.json();
   if (data.files && data.files.length > 0) {
@@ -169,7 +209,9 @@ async function downloadBackup(accessToken: string, fileId: string): Promise<Back
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
-  if (!res.ok) {return null;}
+  if (!res.ok) {
+    return null;
+  }
 
   try {
     const data = await res.json();
@@ -187,7 +229,11 @@ async function downloadBackup(accessToken: string, fileId: string): Promise<Back
 /**
  * Upload backup to Drive
  */
-async function uploadBackup(accessToken: string, backup: Backup, existingFileId?: string): Promise<boolean> {
+async function uploadBackup(
+  accessToken: string,
+  backup: Backup,
+  existingFileId?: string
+): Promise<boolean> {
   const metadata = {
     name: DRIVE_FILE_NAME,
     mimeType: "application/json",
@@ -195,14 +241,8 @@ async function uploadBackup(accessToken: string, backup: Backup, existingFileId?
   };
 
   const form = new FormData();
-  form.append(
-    "metadata",
-    new Blob([JSON.stringify(metadata)], { type: "application/json" })
-  );
-  form.append(
-    "file",
-    new Blob([JSON.stringify(backup)], { type: "application/json" })
-  );
+  form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+  form.append("file", new Blob([JSON.stringify(backup)], { type: "application/json" }));
 
   const url = existingFileId
     ? `https://www.googleapis.com/upload/drive/v3/files/${existingFileId}?uploadType=multipart`
@@ -522,4 +562,3 @@ export async function deleteBackupFromDrive(accessToken: string): Promise<boolea
     return false;
   }
 }
-

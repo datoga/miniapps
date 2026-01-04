@@ -24,3 +24,4 @@ export const config = {
     "/((?!api|_next|_vercel|static|icon|apple-icon|manifest\\.webmanifest|.*\\..*).*)",
   ],
 };
+

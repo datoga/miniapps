@@ -1,11 +1,17 @@
 import type { MetadataRoute } from "next";
 import { generateSitemap } from "@miniapps/seo";
 
-const APP_URL = "https://bilbo-explorer.vercel.app";
+const APP_URL = "https://bilbotracker.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Only public pages - /app/* is private/noindex
   return generateSitemap({
     appUrl: APP_URL,
-    routes: [{ path: "", priority: 1, changeFrequency: "weekly" }],
+    locales: ["es", "en"],
+    routes: [
+      { path: "", priority: 1, changeFrequency: "weekly" },
+      { path: "/about", priority: 0.7, changeFrequency: "monthly" },
+    ],
   });
 }
+

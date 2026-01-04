@@ -1,6 +1,484 @@
 {
   "app": {
-    "title": "Bilbo Explorer",
-    "description": "Discover the magic of Bilbao city"
+    "title": "Bilbo Tracker",
+    "subtitle": "Track your strength training progress",
+    "description": "A simple and effective way to track your workouts using the Bilbo method. Free, private, works offline."
+  },
+  "landing": {
+    "hero": {
+      "title": "Train Smarter",
+      "subtitle": "Track your strength progress with the Bilbo method",
+      "description": "A progressive training system that helps you build strength systematically. Track exercises, log sessions, and watch your 1RM grow over time.",
+      "cta": "Start Training",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Features",
+      "progressive": {
+        "title": "Progressive Overload",
+        "description": "Automatic load suggestions based on your last session"
+      },
+      "tracking": {
+        "title": "Session Tracking",
+        "description": "Log every workout with load, reps, and notes"
+      },
+      "cycles": {
+        "title": "Training Cycles",
+        "description": "Organize your training into structured cycles"
+      },
+      "offline": {
+        "title": "Works Offline",
+        "description": "All data stored locally in your browser"
+      }
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "app": "App",
+    "about": "About",
+    "faq": "FAQ",
+    "settings": "Settings",
+    "backToApp": "Back to App"
+  },
+  "home": {
+    "title": "My Exercises",
+    "empty": {
+      "title": "No exercises yet",
+      "description": "Create your first exercise to start training"
+    },
+    "addExercise": "Add Exercise",
+    "nextSuggested": "Next",
+    "lastSession": "Last",
+    "cycle": "Cycle",
+    "logSession": "Log Session",
+    "viewDetails": "View Details"
+  },
+  "exercise": {
+    "title": "Exercise Details",
+    "duplicate": "This exercise already exists",
+    "duplicateMessage": "You already have \"{name}\" in your list",
+    "history": "History",
+    "calendar": "Calendar",
+    "charts": "Charts",
+    "filters": {
+      "cycle": "Cycle",
+      "phase": "Phase",
+      "all": "All",
+      "current": "Current",
+      "dateRange": "Date Range",
+      "showRests": "Rests"
+    },
+    "table": {
+      "date": "Date",
+      "load": "Load",
+      "reps": "Reps",
+      "work": "Work",
+      "phase": "Phase",
+      "notes": "Notes"
+    },
+    "endCycle": "End Cycle",
+    "startNewCycle": "Start New Cycle",
+    "startNewCycleHint": "Start a new cycle with your updated 1RM",
+    "finishCycleConfirm": "Are you sure you want to finish this cycle?",
+    "cycleCompleted": "Cycle Options",
+    "whatNext": "What's next?",
+    "whatNextDescription": "What would you like to do with this cycle?",
+    "startNewCycleHint": "Finish this cycle and start fresh",
+    "continueStrength": "Continue with Strength",
+    "continueStrengthHint": "Keep training with strength adaptation",
+    "decideLater": "Decide Later",
+    "decideLaterHint": "Continue training, decide later",
+    "noSessions": "No sessions recorded yet",
+    "timeline": {
+      "cycleStarted": "Cycle {number} started",
+      "cycleEnded": "Cycle {number} ended",
+      "restStarted": "Rest started",
+      "restEnded": "Rest ended"
+    },
+    "dangerZone": "Danger Zone",
+    "deleteDescription": "Deleting this exercise will remove all session history and cycles",
+    "deleteButton": "Delete Exercise",
+    "deleteTitle": "Delete this exercise?",
+    "deleteMessage": "This will permanently delete all sessions, cycles, and history for this exercise. This action cannot be undone."
+  },
+  "session": {
+    "title": "Log Session",
+    "editTitle": "Edit Session",
+    "date": "Date",
+    "time": "Time",
+    "suggestedLoad": "Suggested Load",
+    "loadUsed": "Load Used",
+    "reps": "Reps",
+    "previousReps": "Previous",
+    "previousLoad": "Previous",
+    "duration": "Duration",
+    "notes": "Notes",
+    "phase": "Phase",
+    "phaseBilbo": "Bilbo",
+    "phaseStrength": "Strength",
+    "phaseBilboHint": "Testing phase - until you get less than 15 reps",
+    "phaseStrengthHint": "Strength adaptation phase",
+    "phaseEditHint": "Phase cannot be changed when editing",
+    "work": "Work",
+    "estimated1RM": "1RM Est.",
+    "save": "Save Session",
+    "update": "Update Session",
+    "cancel": "Cancel",
+    "deleteConfirm": "Are you sure you want to delete this session?",
+    "bilboCompletedTitle": "Bilbo Phase Completed!",
+    "bilboCompletedSubtitle": "You achieved {reps} reps",
+    "bilboCompletedDescription": "You've found your working weight (less than 15 reps). Now you can continue with strength adaptation or end the cycle.",
+    "continueStrengthOption": "Continue with Strength",
+    "continueStrengthHint": "Save session and keep training. Following sessions will be strength adaptation (+{increment} {units} per session)",
+    "endCycleOption": "End Cycle",
+    "endCycleOptionHint": "Save session and close the cycle. You can start a new cycle or rest",
+    "savedSuccess": "Session saved!"
+  },
+  "cycle": {
+    "title": "New Cycle",
+    "base1RM": "Base 1RM for this cycle",
+    "suggestedBase": "Suggested base (from previous cycle)",
+    "useCalculator": "Use 1RM Calculator",
+    "calculator": {
+      "title": "1RM Calculator",
+      "weight": "Weight lifted",
+      "reps": "Reps completed",
+      "estimated": "1RM Est.",
+      "apply": "Use this value"
+    },
+    "start": "Start Cycle",
+    "endCycleTitle": "End Cycle",
+    "endCycleMessage": "Are you sure you want to end this cycle? You can then start a new cycle or schedule a rest period.",
+    "endCycleWarningBilbo": "⚠️ Your minimum reps in this cycle was {minReps}, which is 15 or more. It's recommended to continue with the Bilbo cycle until you get less than 15 reps (indicates correct weight). Are you sure you want to end anyway?",
+    "endCycleConfirm": "Yes, end cycle",
+    "cycleCompleted": "Cycle Completed!",
+    "whatNextDescription": "You've finished this cycle. What would you like to do next?",
+    "deleteConfirm": "Are you sure you want to delete this cycle? All associated sessions will also be deleted.",
+    "editStartDate": "Edit Cycle {number} start date",
+    "editEndDate": "Edit Cycle {number} end date",
+    "edit1RM": "Edit 1RM (only if no sessions)",
+    "edit1RMTitle": "Edit Cycle {number} 1RM",
+    "edit1RMDescription": "You can modify the base 1RM for this cycle since it has no sessions logged yet."
+  },
+  "rm": {
+    "detected": "New 1RM Est.!",
+    "previous": "Previous 1RM",
+    "new": "1RM Est.",
+    "hint": "Calculated using Epley formula",
+    "dismiss": "Dismiss"
+  },
+  "wizard": {
+    "title": "Welcome to Bilbo Tracker",
+    "subtitle": "Let's set up your training",
+    "step": "Step {current} of {total}",
+    "next": "Next",
+    "back": "Back",
+    "finish": "Start Training",
+    "skip": "Skip",
+    "language": {
+      "title": "Choose your language",
+      "description": "You can change this later in settings"
+    },
+    "units": {
+      "title": "Weight units",
+      "description": "How do you measure your weights?",
+      "kg": "Kilograms (kg)",
+      "lb": "Pounds (lb)"
+    },
+    "increment": {
+      "title": "Weight increment",
+      "description": "How much weight do you add between sessions?",
+      "hint": "Default: 2.5"
+    },
+    "roundStep": {
+      "title": "Rounding step",
+      "description": "Round suggested weights to the nearest multiple of:",
+      "hint": "Default: 2.5"
+    },
+    "exercise": {
+      "title": "Your first exercise",
+      "titleAdd": "New exercise",
+      "description": "Choose a preset or create a custom exercise",
+      "presets": {
+        "bench": "Bench Press",
+        "squat": "Squat",
+        "deadlift": "Deadlift",
+        "ohp": "Overhead Press",
+        "row": "Barbell Row"
+      },
+      "custom": "Custom exercise",
+      "customName": "Exercise name",
+      "chooseIcon": "Choose an icon"
+    },
+    "base1RM": {
+      "title": "Starting 1RM",
+      "description": "Enter your estimated one-rep max for this exercise",
+      "manual": "Enter manually",
+      "calculate": "Calculate from a set"
+    },
+    "sync": {
+      "title": "Backup",
+      "description": "Save your data to the cloud so you never lose it",
+      "googleDriveInfo": "Sync your workouts with Google Drive to keep them available on any device.",
+      "comingSoon": "Coming soon",
+      "skipHint": "You can set this up later in Settings"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "units": {
+      "title": "Weight units",
+      "kg": "Kilograms (kg)",
+      "lb": "Pounds (lb)"
+    },
+    "increment": {
+      "title": "Weight increment",
+      "description": "Weight added between sessions"
+    },
+    "roundStep": {
+      "title": "Rounding step",
+      "description": "Round to nearest multiple"
+    },
+    "language": {
+      "title": "Language"
+    },
+    "sync": {
+      "title": "Cloud Backup",
+      "description": "Automatically back up your data to Google Drive",
+      "signIn": "Connect with Google Drive",
+      "signOut": "Disconnect",
+      "disconnect": "Disconnect",
+      "disconnectAndDelete": "Disconnect & delete",
+      "disconnectDeleteConfirm": "Disconnect and delete data?",
+      "disconnectDeleteMessage": "This will delete your backup from Google Drive and disconnect your account. Your local data will not be affected.",
+      "syncNow": "Sync now",
+      "status": {
+        "signed_out": "Not connected",
+        "signed_in": "Connected",
+        "syncing": "Syncing...",
+        "synced": "Connected",
+        "error": "Sync error"
+      },
+      "lastSynced": "Last sync",
+      "errorDetails": "Could not connect to Google Drive. Check your internet connection and try again."
+    },
+    "help": {
+      "title": "Help & Information"
+    },
+    "danger": {
+      "title": "Danger Zone",
+      "deleteAll": {
+        "title": "Delete All Data",
+        "description": "Permanently delete all exercises, sessions, and settings",
+        "button": "Delete All Data",
+        "confirmTitle": "Delete All Data?",
+        "confirmMessage": "This will permanently delete all your exercises, training sessions, and settings. If connected to Google Drive, your backup will also be deleted and your account disconnected. This action cannot be undone."
+      }
+    }
+  },
+  "about": {
+    "title": "About Bilbo Tracker",
+    "description": "Bilbo Tracker is a free workout tracking app designed to help you build strength using progressive overload principles.",
+    "method": {
+      "title": "The Training Method",
+      "description": "The Bilbo method is a simple progressive overload system where you start at 50% of your 1RM and add weight each session until you can no longer complete the target reps. Then you start a new cycle with your improved 1RM."
+    },
+    "privacy": {
+      "title": "Privacy First",
+      "description": "All your data is stored locally in your browser. Optional cloud backup uses Google Drive's hidden app folder, which only this app can access."
+    },
+    "attribution": {
+      "title": "Attribution",
+      "description": "This app is inspired by training methods shared by the BilboTeam community.",
+      "link": "Visit BilboTeam"
+    },
+    "disclaimer": "This app is not affiliated with or endorsed by BilboTeam."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "questions": {
+      "what1rm": {
+        "q": "What is 1RM?",
+        "a": "1RM stands for One Rep Maximum - the maximum weight you can lift for a single repetition. It's used as a baseline to calculate your training loads."
+      },
+      "howSuggested": {
+        "q": "How is the suggested load calculated?",
+        "a": "For the first session of a cycle, the suggested load is 50% of your base 1RM. For subsequent sessions, it's your last session's load plus your weight increment setting, rounded to your rounding step."
+      },
+      "whyNoChange1RM": {
+        "q": "Why can't I change my 1RM mid-cycle?",
+        "a": "The base 1RM is fixed during a cycle to provide consistent progression. When you finish a cycle and start a new one, you can update your base 1RM based on your improved performance."
+      },
+      "whatStrength": {
+        "q": "What does the Strength badge mean?",
+        "a": "Sessions marked as 'Strength' are logged after finishing a cycle but before starting a new one. They follow the same progression but are tracked separately from Bilbo phase sessions."
+      },
+      "howSync": {
+        "q": "How does cloud backup work?",
+        "a": "When enabled, your data is automatically saved to Google Drive after each session. It uses a hidden app-specific folder that only this app can access. Your data is never shared."
+      },
+      "whatConflict": {
+        "q": "What happens if there's a sync conflict?",
+        "a": "If your local data differs from the cloud backup, you'll be asked to choose which version to keep. This can happen if you use the app on multiple devices."
+      },
+      "privacy": {
+        "q": "Is my data private?",
+        "a": "Yes. All data is stored locally in your browser. If you enable cloud backup, data is stored in your personal Google Drive account in a hidden folder. We don't have access to your data. Basic usage analytics may be collected but never includes personal workout details."
+      }
+    }
+  },
+  "rest": {
+    "title": "Start Rest Period",
+    "editTitle": "Edit Rest Period",
+    "editHistoricalTitle": "Edit Rest Period",
+    "editHistoricalDescription": "Modify the dates of this rest period.",
+    "description": "Take a break from this exercise. You can start a new cycle whenever you're ready.",
+    "startDate": "Start Date",
+    "endDate": "Planned End Date",
+    "plannedEndDate": "Planned End Date",
+    "plannedEndDateHint": "Optional - the date you had planned to finish",
+    "actualEndDate": "Actual End Date",
+    "actualEndDateHint": "When you actually ended the rest",
+    "endDateHint": "Optional - leave empty if you don't know when you'll resume",
+    "startRest": "Start Rest",
+    "takeRest": "Take a Rest",
+    "takeRestHint": "Schedule a recovery period",
+    "restingTitle": "Resting",
+    "since": "Since",
+    "until": "Until",
+    "endRest": "End Rest",
+    "endRestTitle": "End Rest Period?",
+    "endRestMessage": "Ready to get back to training? You'll be able to start a new cycle.",
+    "endRestConfirm": "End Rest & Continue",
+    "cancelRestTitle": "Delete Rest Period?",
+    "cancelRestMessage": "This will delete the current rest period. This action cannot be undone.",
+    "deleteRestMessage": "This will delete this rest period from history. This action cannot be undone."
+  },
+  "charts": {
+    "metric": "Metric",
+    "loadUsed": "Load",
+    "reps": "Reps",
+    "both": "Both",
+    "loadOnly": "Load",
+    "workOnly": "Work",
+    "repsOnly": "Reps",
+    "work": "Work",
+    "volume": "Volume",
+    "estimated1RM": "1RM Est.",
+    "noData": "No data to display",
+    "selectCycles": "Cycles",
+    "onlyLast": "Only last",
+    "showAll": "Show all",
+    "sessionNumber": "Session #",
+    "sessionDetail": "Session",
+    "fullscreen": "Fullscreen"
+  },
+  "presets": {
+    "bench": "Bench Press",
+    "squat": "Squat",
+    "deadlift": "Deadlift",
+    "row": "Barbell Row",
+    "ohp": "Overhead Press",
+    "custom": "Custom"
+  },
+  "units": {
+    "kg": "kg",
+    "lb": "lb",
+    "reps": "reps",
+    "seconds": "s"
+  },
+  "calendar": {
+    "today": "Today",
+    "noEvents": "No events on this day",
+    "session": "Session",
+    "restDay": "Rest day",
+    "currentRest": "Ongoing",
+    "weekDays": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "legend": {
+      "session": "Session",
+      "cycleStart": "Cycle start",
+      "cycleEnd": "Cycle end",
+      "rest": "Rest"
+    }
+  },
+  "cycle": {
+    "editTitle": "Edit Cycle",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "endDateHint": "Leave empty if cycle is active",
+    "base1RM": "Base 1RM"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "selected": "Selected",
+    "next": "Next",
+    "back": "Back"
+  },
+  "conflict": {
+    "title": "Sync Conflict",
+    "description": "Your local data differs from the cloud backup. Choose which version to keep.",
+    "local": {
+      "title": "Keep Local",
+      "description": "Use your current device's data"
+    },
+    "remote": {
+      "title": "Keep Remote",
+      "description": "Use the cloud backup data"
+    },
+    "lastUpdated": "Last updated",
+    "sessions": "sessions",
+    "lastSession": "Last session"
+  },
+  "sync": {
+    "conflict": {
+      "title": "Data Found",
+      "description": "You have data both on this device and in Google Drive. Which data do you want to use?",
+      "local": "This Device",
+      "remote": "Google Drive",
+      "exercises": "Exercises",
+      "sessions": "Sessions",
+      "lastModified": "Last modified",
+      "keepLocal": "Use local data",
+      "keepRemote": "Use Drive data",
+      "syncing": "Syncing...",
+      "warning": "Unselected data will be lost"
+    }
+  },
+  "share": {
+    "button": "Share",
+    "copied": "Copied to clipboard!",
+    "error": "Could not share",
+    "session": {
+      "title": "Share session",
+      "result": "Result",
+      "number": "Session"
+    },
+    "cycle": {
+      "title": "Share cycle",
+      "completed": "Cycle completed",
+      "stats": "Stats",
+      "sessions": "Sessions",
+      "duration": "Duration",
+      "initial1RM": "Initial 1RM",
+      "final1RM": "Final 1RM",
+      "totalWork": "Total work"
+    }
   }
 }
+

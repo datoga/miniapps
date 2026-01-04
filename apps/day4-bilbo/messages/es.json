@@ -1,6 +1,484 @@
 {
   "app": {
-    "title": "Bilbo Explorer",
-    "description": "Descubre la magia de la ciudad de Bilbao"
+    "title": "Bilbo Tracker",
+    "subtitle": "Registra tu progreso en entrenamiento de fuerza",
+    "description": "Una forma simple y efectiva de registrar tus entrenamientos con el método Bilbo. Gratis, privado, funciona sin conexión."
+  },
+  "landing": {
+    "hero": {
+      "title": "Entrena Mejor",
+      "subtitle": "Registra tu progreso de fuerza con el método Bilbo",
+      "description": "Un sistema de entrenamiento progresivo que te ayuda a ganar fuerza de forma sistemática. Registra ejercicios, sesiones y observa cómo crece tu 1RM.",
+      "cta": "Empezar",
+      "learnMore": "Saber Más"
+    },
+    "features": {
+      "title": "Características",
+      "progressive": {
+        "title": "Sobrecarga Progresiva",
+        "description": "Sugerencias automáticas de peso basadas en tu última sesión"
+      },
+      "tracking": {
+        "title": "Registro de Sesiones",
+        "description": "Registra cada entrenamiento con peso, repeticiones y notas"
+      },
+      "cycles": {
+        "title": "Ciclos de Entrenamiento",
+        "description": "Organiza tu entrenamiento en ciclos estructurados"
+      },
+      "offline": {
+        "title": "Funciona Sin Conexión",
+        "description": "Todos los datos se guardan localmente en tu navegador"
+      }
+    }
+  },
+  "nav": {
+    "home": "Inicio",
+    "app": "App",
+    "about": "Acerca de",
+    "faq": "FAQ",
+    "settings": "Ajustes",
+    "backToApp": "Volver a la App"
+  },
+  "home": {
+    "title": "Mis Ejercicios",
+    "empty": {
+      "title": "Sin ejercicios aún",
+      "description": "Crea tu primer ejercicio para empezar a entrenar"
+    },
+    "addExercise": "Añadir Ejercicio",
+    "nextSuggested": "Sig.",
+    "lastSession": "Última",
+    "cycle": "Ciclo",
+    "logSession": "Registrar Sesión",
+    "viewDetails": "Ver Detalles"
+  },
+  "exercise": {
+    "title": "Detalles del Ejercicio",
+    "duplicate": "Ya existe este ejercicio",
+    "duplicateMessage": "Ya tienes \"{name}\" en tu lista",
+    "history": "Historial",
+    "calendar": "Calendario",
+    "charts": "Gráficos",
+    "filters": {
+      "cycle": "Ciclo",
+      "phase": "Fase",
+      "all": "Todos",
+      "current": "Actual",
+      "dateRange": "Rango de fechas",
+      "showRests": "Descansos"
+    },
+    "table": {
+      "date": "Fecha",
+      "load": "Peso",
+      "reps": "Reps",
+      "work": "Trabajo",
+      "phase": "Fase",
+      "notes": "Notas"
+    },
+    "endCycle": "Terminar Ciclo",
+    "startNewCycle": "Iniciar Nuevo Ciclo",
+    "startNewCycleHint": "Comienza un nuevo ciclo con tu 1RM actualizado",
+    "finishCycleConfirm": "¿Estás seguro de que quieres terminar este ciclo?",
+    "cycleCompleted": "Opciones de Ciclo",
+    "whatNext": "¿Qué hacemos ahora?",
+    "whatNextDescription": "¿Qué te gustaría hacer con este ciclo?",
+    "startNewCycleHint": "Termina este ciclo y empieza de nuevo",
+    "continueStrength": "Continuar con Fuerza",
+    "continueStrengthHint": "Sigue entrenando con adaptación a fuerza",
+    "decideLater": "Decidir Más Tarde",
+    "decideLaterHint": "Sigue entrenando, decide después",
+    "noSessions": "No hay sesiones registradas",
+    "timeline": {
+      "cycleStarted": "Ciclo {number} iniciado",
+      "cycleEnded": "Ciclo {number} terminado",
+      "restStarted": "Descanso iniciado",
+      "restEnded": "Descanso terminado"
+    },
+    "dangerZone": "Zona de Peligro",
+    "deleteDescription": "Eliminar este ejercicio borrará todo el historial de sesiones y ciclos",
+    "deleteButton": "Eliminar Ejercicio",
+    "deleteTitle": "¿Eliminar este ejercicio?",
+    "deleteMessage": "Se eliminarán permanentemente todas las sesiones, ciclos e historial de este ejercicio. Esta acción no se puede deshacer."
+  },
+  "session": {
+    "title": "Registrar Sesión",
+    "editTitle": "Editar Sesión",
+    "date": "Fecha",
+    "time": "Hora",
+    "suggestedLoad": "Peso Sugerido",
+    "loadUsed": "Peso Usado",
+    "reps": "Repeticiones",
+    "previousReps": "Anterior",
+    "previousLoad": "Anterior",
+    "duration": "Duración",
+    "notes": "Notas",
+    "phase": "Fase",
+    "phaseBilbo": "Bilbo",
+    "phaseStrength": "Fuerza",
+    "phaseBilboHint": "Fase de prueba - hasta conseguir menos de 15 reps",
+    "phaseStrengthHint": "Fase de adaptación a fuerza",
+    "phaseEditHint": "La fase no se puede cambiar al editar",
+    "work": "Trabajo",
+    "estimated1RM": "1RM Est.",
+    "save": "Guardar Sesión",
+    "update": "Actualizar Sesión",
+    "cancel": "Cancelar",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar esta sesión?",
+    "bilboCompletedTitle": "¡Fase Bilbo Completada!",
+    "bilboCompletedSubtitle": "Has conseguido {reps} repeticiones",
+    "bilboCompletedDescription": "Has encontrado tu peso de trabajo (menos de 15 reps). Ahora puedes continuar con la adaptación a fuerza o terminar el ciclo.",
+    "continueStrengthOption": "Continuar con Fuerza",
+    "continueStrengthHint": "Guardar sesión y seguir entrenando. Las siguientes sesiones serán de adaptación a fuerza (+{increment} {units} por sesión)",
+    "endCycleOption": "Terminar Ciclo",
+    "endCycleOptionHint": "Guardar sesión y cerrar el ciclo. Podrás iniciar un nuevo ciclo o descansar",
+    "savedSuccess": "¡Sesión guardada!"
+  },
+  "cycle": {
+    "title": "Nuevo Ciclo",
+    "base1RM": "1RM base para este ciclo",
+    "suggestedBase": "Base sugerida (del ciclo anterior)",
+    "useCalculator": "Usar Calculadora 1RM",
+    "calculator": {
+      "title": "Calculadora 1RM",
+      "weight": "Peso levantado",
+      "reps": "Repeticiones completadas",
+      "estimated": "1RM Est.",
+      "apply": "Usar este valor"
+    },
+    "start": "Iniciar Ciclo",
+    "endCycleTitle": "Terminar Ciclo",
+    "endCycleMessage": "¿Estás seguro de que quieres terminar este ciclo? Podrás iniciar un nuevo ciclo o programar un descanso.",
+    "endCycleWarningBilbo": "⚠️ Tu mínimo de repeticiones en este ciclo fue {minReps}, que es mayor o igual a 15. Se recomienda continuar con el ciclo Bilbo hasta conseguir menos de 15 reps (indica que el peso es correcto). ¿Estás seguro de que quieres terminar igualmente?",
+    "endCycleConfirm": "Sí, terminar ciclo",
+    "cycleCompleted": "¡Ciclo Completado!",
+    "whatNextDescription": "Has terminado este ciclo. ¿Qué quieres hacer ahora?",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar este ciclo? Se eliminarán también todas las sesiones asociadas.",
+    "editStartDate": "Editar fecha de inicio del Ciclo {number}",
+    "editEndDate": "Editar fecha de fin del Ciclo {number}",
+    "edit1RM": "Editar 1RM (solo si no hay sesiones)",
+    "edit1RMTitle": "Editar 1RM del Ciclo {number}",
+    "edit1RMDescription": "Puedes modificar el 1RM base de este ciclo ya que aún no tiene sesiones registradas."
+  },
+  "rm": {
+    "detected": "¡Nuevo 1RM Est.!",
+    "previous": "1RM Anterior",
+    "new": "1RM Est.",
+    "hint": "Calculado con fórmula Epley",
+    "dismiss": "Cerrar"
+  },
+  "wizard": {
+    "title": "Bienvenido a Bilbo Tracker",
+    "subtitle": "Configuremos tu entrenamiento",
+    "step": "Paso {current} de {total}",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "finish": "Empezar a Entrenar",
+    "skip": "Omitir",
+    "language": {
+      "title": "Elige tu idioma",
+      "description": "Puedes cambiarlo después en ajustes"
+    },
+    "units": {
+      "title": "Unidades de peso",
+      "description": "¿Cómo mides tus pesos?",
+      "kg": "Kilogramos (kg)",
+      "lb": "Libras (lb)"
+    },
+    "increment": {
+      "title": "Incremento de peso",
+      "description": "¿Cuánto peso añades entre sesiones?",
+      "hint": "Por defecto: 2.5"
+    },
+    "roundStep": {
+      "title": "Paso de redondeo",
+      "description": "Redondear pesos sugeridos al múltiplo más cercano de:",
+      "hint": "Por defecto: 2.5"
+    },
+    "exercise": {
+      "title": "Tu primer ejercicio",
+      "titleAdd": "Nuevo ejercicio",
+      "description": "Elige un preset o crea un ejercicio personalizado",
+      "presets": {
+        "bench": "Press Banca",
+        "squat": "Sentadilla",
+        "deadlift": "Peso Muerto",
+        "row": "Remo con Barra",
+        "ohp": "Press Militar"
+      },
+      "custom": "Ejercicio personalizado",
+      "customName": "Nombre del ejercicio",
+      "chooseIcon": "Elige un icono"
+    },
+    "base1RM": {
+      "title": "1RM Inicial",
+      "description": "Introduce tu máximo estimado de una repetición para este ejercicio",
+      "manual": "Introducir manualmente",
+      "calculate": "Calcular desde una serie"
+    },
+    "sync": {
+      "title": "Copia de seguridad",
+      "description": "Guarda tus datos en la nube para no perderlos",
+      "googleDriveInfo": "Sincroniza tus entrenamientos con Google Drive para tenerlos siempre disponibles en cualquier dispositivo.",
+      "comingSoon": "Próximamente",
+      "skipHint": "Puedes configurar esto más tarde desde Ajustes"
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "units": {
+      "title": "Unidades de peso",
+      "kg": "Kilogramos (kg)",
+      "lb": "Libras (lb)"
+    },
+    "increment": {
+      "title": "Incremento de peso",
+      "description": "Peso añadido entre sesiones"
+    },
+    "roundStep": {
+      "title": "Paso de redondeo",
+      "description": "Redondear al múltiplo más cercano"
+    },
+    "language": {
+      "title": "Idioma"
+    },
+    "sync": {
+      "title": "Copia de Seguridad",
+      "description": "Guarda tus datos automáticamente en Google Drive",
+      "signIn": "Conectar con Google Drive",
+      "signOut": "Desconectar",
+      "disconnect": "Desconectar",
+      "disconnectAndDelete": "Desconectar y borrar",
+      "disconnectDeleteConfirm": "¿Desconectar y borrar datos?",
+      "disconnectDeleteMessage": "Se eliminará la copia de seguridad de Google Drive y se desconectará tu cuenta. Tus datos locales no se verán afectados.",
+      "syncNow": "Sincronizar ahora",
+      "status": {
+        "signed_out": "No conectado",
+        "signed_in": "Conectado",
+        "syncing": "Sincronizando...",
+        "synced": "Conectado",
+        "error": "Error de sincronización"
+      },
+      "lastSynced": "Última sync",
+      "errorDetails": "No se pudo conectar con Google Drive. Comprueba tu conexión a internet e inténtalo de nuevo."
+    },
+    "help": {
+      "title": "Ayuda e Información"
+    },
+    "danger": {
+      "title": "Zona de Peligro",
+      "deleteAll": {
+        "title": "Eliminar Todos los Datos",
+        "description": "Elimina permanentemente todos los ejercicios, sesiones y ajustes",
+        "button": "Eliminar Todos los Datos",
+        "confirmTitle": "¿Eliminar Todos los Datos?",
+        "confirmMessage": "Esto eliminará permanentemente todos tus ejercicios, sesiones de entrenamiento y ajustes. Si estás conectado a Google Drive, también se borrará la copia de seguridad y se desconectará tu cuenta. Esta acción no se puede deshacer."
+      }
+    }
+  },
+  "about": {
+    "title": "Acerca de Bilbo Tracker",
+    "description": "Bilbo Tracker es una app gratuita de seguimiento de entrenamientos diseñada para ayudarte a ganar fuerza usando principios de sobrecarga progresiva.",
+    "method": {
+      "title": "El Método de Entrenamiento",
+      "description": "El método Bilbo es un sistema simple de sobrecarga progresiva donde empiezas al 50% de tu 1RM y añades peso en cada sesión hasta que ya no puedes completar las repeticiones objetivo. Entonces empiezas un nuevo ciclo con tu 1RM mejorado."
+    },
+    "privacy": {
+      "title": "Privacidad Primero",
+      "description": "Todos tus datos se guardan localmente en tu navegador. La copia de seguridad opcional usa una carpeta oculta de Google Drive a la que solo esta app puede acceder."
+    },
+    "attribution": {
+      "title": "Atribución",
+      "description": "Esta app está inspirada en métodos de entrenamiento compartidos por la comunidad BilboTeam.",
+      "link": "Visitar BilboTeam"
+    },
+    "disclaimer": "Esta app no está afiliada ni respaldada por BilboTeam."
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "questions": {
+      "what1rm": {
+        "q": "¿Qué es 1RM?",
+        "a": "1RM significa One Rep Maximum (Máximo de Una Repetición) - el peso máximo que puedes levantar en una sola repetición. Se usa como base para calcular tus cargas de entrenamiento."
+      },
+      "howSuggested": {
+        "q": "¿Cómo se calcula el peso sugerido?",
+        "a": "Para la primera sesión de un ciclo, el peso sugerido es el 50% de tu 1RM base. Para las sesiones siguientes, es el peso de tu última sesión más tu incremento de peso, redondeado a tu paso de redondeo."
+      },
+      "whyNoChange1RM": {
+        "q": "¿Por qué no puedo cambiar mi 1RM a mitad de ciclo?",
+        "a": "El 1RM base se fija durante un ciclo para proporcionar una progresión consistente. Cuando terminas un ciclo e inicias uno nuevo, puedes actualizar tu 1RM base basándote en tu rendimiento mejorado."
+      },
+      "whatStrength": {
+        "q": "¿Qué significa la etiqueta Fuerza?",
+        "a": "Las sesiones marcadas como 'Fuerza' se registran después de terminar un ciclo pero antes de iniciar uno nuevo. Siguen la misma progresión pero se registran por separado de las sesiones de fase Bilbo."
+      },
+      "howSync": {
+        "q": "¿Cómo funciona la copia de seguridad?",
+        "a": "Cuando está activada, tus datos se guardan automáticamente en Google Drive después de cada sesión. Usa una carpeta oculta específica de la app a la que solo esta app puede acceder. Tus datos nunca se comparten."
+      },
+      "whatConflict": {
+        "q": "¿Qué pasa si hay un conflicto de sincronización?",
+        "a": "Si tus datos locales difieren de la copia de seguridad, se te pedirá que elijas qué versión conservar. Esto puede pasar si usas la app en varios dispositivos."
+      },
+      "privacy": {
+        "q": "¿Son privados mis datos?",
+        "a": "Sí. Todos los datos se guardan localmente en tu navegador. Si activas la copia de seguridad, los datos se guardan en tu cuenta personal de Google Drive en una carpeta oculta. No tenemos acceso a tus datos. Se pueden recoger analíticas básicas de uso pero nunca incluyen detalles personales de entrenamientos."
+      }
+    }
+  },
+  "rest": {
+    "title": "Iniciar Período de Descanso",
+    "editTitle": "Editar Período de Descanso",
+    "editHistoricalTitle": "Editar Descanso",
+    "editHistoricalDescription": "Modifica las fechas de este período de descanso.",
+    "description": "Tómate un descanso de este ejercicio. Puedes empezar un nuevo ciclo cuando estés listo.",
+    "startDate": "Fecha de Inicio",
+    "endDate": "Fecha de Fin Prevista",
+    "plannedEndDate": "Fecha de Fin Prevista",
+    "plannedEndDateHint": "Opcional - la fecha que habías planeado terminar",
+    "actualEndDate": "Fecha de Fin Real",
+    "actualEndDateHint": "Cuándo realmente terminaste el descanso",
+    "endDateHint": "Opcional - déjalo vacío si no sabes cuándo retomarás",
+    "startRest": "Iniciar Descanso",
+    "takeRest": "Tomar un Descanso",
+    "takeRestHint": "Programa un período de recuperación",
+    "restingTitle": "Descansando",
+    "since": "Desde",
+    "until": "Hasta",
+    "endRest": "Terminar Descanso",
+    "endRestTitle": "¿Terminar Período de Descanso?",
+    "endRestMessage": "¿Listo para volver a entrenar? Podrás comenzar un nuevo ciclo.",
+    "endRestConfirm": "Terminar Descanso y Continuar",
+    "cancelRestTitle": "¿Eliminar Período de Descanso?",
+    "cancelRestMessage": "Se eliminará el período de descanso actual. Esta acción no se puede deshacer.",
+    "deleteRestMessage": "Se eliminará este período de descanso del historial. Esta acción no se puede deshacer."
+  },
+  "charts": {
+    "metric": "Métrica",
+    "loadUsed": "Peso",
+    "reps": "Reps",
+    "both": "Ambos",
+    "loadOnly": "Peso",
+    "workOnly": "Trabajo",
+    "repsOnly": "Reps",
+    "work": "Trabajo",
+    "volume": "Volumen",
+    "estimated1RM": "1RM Est.",
+    "noData": "Sin datos para mostrar",
+    "selectCycles": "Ciclos",
+    "onlyLast": "Solo último",
+    "showAll": "Mostrar todos",
+    "sessionNumber": "Sesión #",
+    "sessionDetail": "Sesión",
+    "fullscreen": "Pantalla completa"
+  },
+  "presets": {
+    "bench": "Press Banca",
+    "squat": "Sentadilla",
+    "deadlift": "Peso Muerto",
+    "row": "Remo con Barra",
+    "ohp": "Press Militar",
+    "custom": "Personalizado"
+  },
+  "units": {
+    "kg": "kg",
+    "lb": "lb",
+    "reps": "reps",
+    "seconds": "s"
+  },
+  "calendar": {
+    "today": "Hoy",
+    "noEvents": "No hay eventos este día",
+    "session": "Sesión",
+    "restDay": "Día de descanso",
+    "currentRest": "En curso",
+    "weekDays": {
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb",
+      "sun": "Dom"
+    },
+    "legend": {
+      "session": "Sesión",
+      "cycleStart": "Inicio ciclo",
+      "cycleEnd": "Fin ciclo",
+      "rest": "Descanso"
+    }
+  },
+  "cycle": {
+    "editTitle": "Editar Ciclo",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "endDateHint": "Dejar vacío si el ciclo está activo",
+    "base1RM": "1RM Base"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "selected": "Seleccionado",
+    "next": "Siguiente",
+    "back": "Atrás"
+  },
+  "conflict": {
+    "title": "Conflicto de Sincronización",
+    "description": "Tus datos locales difieren de la copia de seguridad. Elige qué versión conservar.",
+    "local": {
+      "title": "Conservar Local",
+      "description": "Usar los datos de este dispositivo"
+    },
+    "remote": {
+      "title": "Conservar Remoto",
+      "description": "Usar los datos de la copia de seguridad"
+    },
+    "lastUpdated": "Última actualización",
+    "sessions": "sesiones",
+    "lastSession": "Última sesión"
+  },
+  "sync": {
+    "conflict": {
+      "title": "Datos encontrados",
+      "description": "Tienes datos tanto en este dispositivo como en Google Drive. ¿Qué datos quieres usar?",
+      "local": "Este dispositivo",
+      "remote": "Google Drive",
+      "exercises": "Ejercicios",
+      "sessions": "Sesiones",
+      "lastModified": "Última modificación",
+      "keepLocal": "Usar datos locales",
+      "keepRemote": "Usar datos de Drive",
+      "syncing": "Sincronizando...",
+      "warning": "Los datos no seleccionados se perderán"
+    }
+  },
+  "share": {
+    "button": "Compartir",
+    "copied": "¡Copiado al portapapeles!",
+    "error": "No se pudo compartir",
+    "session": {
+      "title": "Compartir sesión",
+      "result": "Resultado",
+      "number": "Sesión"
+    },
+    "cycle": {
+      "title": "Compartir ciclo",
+      "completed": "Ciclo completado",
+      "stats": "Estadísticas",
+      "sessions": "Sesiones",
+      "duration": "Duración",
+      "initial1RM": "1RM inicial",
+      "final1RM": "1RM final",
+      "totalWork": "Trabajo total"
+    }
   }
 }
+

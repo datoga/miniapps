@@ -22,7 +22,7 @@ export interface SitemapConfig {
 
 /**
  * Generates a sitemap for Next.js apps with i18n support.
- * Creates entries for each route in each locale.
+ * Creates entries for each route in each locale with proper hreflang alternates.
  */
 export function generateSitemap(config: SitemapConfig): MetadataRoute.Sitemap {
   const {
@@ -37,11 +37,24 @@ export function generateSitemap(config: SitemapConfig): MetadataRoute.Sitemap {
   for (const locale of locales) {
     for (const route of routes) {
       const isHomepage = route.path === "" || route.path === "/";
+      const routePath = route.path === "/" ? "" : route.path;
+
+      // Build alternates for hreflang
+      const alternates: { languages: Record<string, string> } = {
+        languages: {},
+      };
+      for (const altLocale of locales) {
+        alternates.languages[altLocale] = `${appUrl}/${altLocale}${routePath}`;
+      }
+      // Add x-default (usually the first locale or primary language)
+      alternates.languages["x-default"] = `${appUrl}/${locales[0]}${routePath}`;
+
       sitemapEntries.push({
-        url: `${appUrl}/${locale}${route.path === "/" ? "" : route.path}`,
+        url: `${appUrl}/${locale}${routePath}`,
         lastModified,
         changeFrequency: route.changeFrequency ?? (isHomepage ? "weekly" : "monthly"),
         priority: route.priority ?? (isHomepage ? 1 : 0.7),
+        alternates,
       });
     }
   }

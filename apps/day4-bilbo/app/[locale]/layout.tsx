@@ -6,7 +6,7 @@ import {
   generateViewport,
   type LocaleSEOContent,
 } from "@miniapps/seo";
-import { AppShell, ThemeProvider } from "@miniapps/ui";
+import { ThemeProvider } from "@miniapps/ui";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -28,40 +28,40 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const APP_NAME = "Bilbo Explorer";
-const APP_URL = "https://bilbo-explorer.vercel.app";
+const APP_NAME = "Bilbo Tracker";
+const APP_URL = "https://bilbotracker.vercel.app";
 
 const seoContent: Record<string, LocaleSEOContent> = {
   es: {
-    title: "Bilbo Explorer - Descubre Bilbao",
+    title: "Bilbo Tracker - Entrenamiento de Fuerza",
     description:
-      "Explora los mejores lugares de Bilbao. Guía turística gratuita con restaurantes, museos, parques y lugares emblemáticos. Funciona offline.",
-    ogAlt: "Bilbo Explorer - Tu guía de Bilbao",
+      "Registra tu progreso de entrenamiento con el método Bilbo. Sobrecarga progresiva, ciclos de entrenamiento y seguimiento de 1RM. Gratis y privado.",
+    ogAlt: "Bilbo Tracker - Tu app de entrenamiento de fuerza",
     keywords: [
-      "bilbao",
-      "turismo bilbao",
-      "guía bilbao",
-      "qué ver bilbao",
-      "restaurantes bilbao",
-      "guggenheim",
-      "país vasco",
-      "euskadi",
+      "entrenamiento fuerza",
+      "1rm",
+      "sobrecarga progresiva",
+      "press banca",
+      "sentadilla",
+      "peso muerto",
+      "registro entrenamientos",
+      "gym tracker",
     ],
   },
   en: {
-    title: "Bilbo Explorer - Discover Bilbao",
+    title: "Bilbo Tracker - Strength Training Tracker",
     description:
-      "Explore the best places in Bilbao. Free tourist guide with restaurants, museums, parks and landmarks. Works offline.",
-    ogAlt: "Bilbo Explorer - Your Bilbao guide",
+      "Track your training progress with the Bilbo method. Progressive overload, training cycles, and 1RM tracking. Free and private.",
+    ogAlt: "Bilbo Tracker - Your strength training app",
     keywords: [
-      "bilbao",
-      "bilbao tourism",
-      "bilbao guide",
-      "things to do bilbao",
-      "bilbao restaurants",
-      "guggenheim",
-      "basque country",
-      "spain travel",
+      "strength training",
+      "1rm",
+      "progressive overload",
+      "bench press",
+      "squat",
+      "deadlift",
+      "workout tracker",
+      "gym tracker",
     ],
   },
 };
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     appUrl: APP_URL,
     locale,
     content: content!,
-    category: "travel",
+    category: "health",
   });
 }
 
@@ -113,16 +113,16 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const jsonLdFeatures =
     locale === "es"
       ? [
-          "Guía de Bilbao",
-          "Restaurantes y bares",
-          "Museos y cultura",
+          "Sobrecarga progresiva",
+          "Ciclos de entrenamiento",
+          "Seguimiento 1RM",
           "100% gratuito",
           "Funciona offline",
         ]
       : [
-          "Bilbao guide",
-          "Restaurants and bars",
-          "Museums and culture",
+          "Progressive overload",
+          "Training cycles",
+          "1RM tracking",
           "100% free",
           "Works offline",
         ];
@@ -132,7 +132,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     appUrl: APP_URL,
     locale,
     description: content!.description,
-    applicationCategory: "TravelApplication",
+    applicationCategory: "HealthApplication",
     featureList: jsonLdFeatures,
   });
 
@@ -149,7 +149,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <AppShell>{children}</AppShell>
+            {children}
           </NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />
@@ -157,3 +157,4 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     </html>
   );
 }
+

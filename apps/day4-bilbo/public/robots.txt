@@ -2,6 +2,10 @@
 User-agent: *
 Allow: /
 
+# Private app content - don't index
+Disallow: /*/app
+Disallow: /*/app/*
+
 # Sitemaps
-Sitemap: https://bilbo-explorer.vercel.app/sitemap.xml
+Sitemap: https://bilbotracker.vercel.app/sitemap.xml
 

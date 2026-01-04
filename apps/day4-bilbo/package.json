@@ -1,5 +1,5 @@
 {
-  "name": "day4-bilbo",
+  "name": "bilbotracker",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -22,7 +22,10 @@
     "next-themes": "^0.4.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "tailwind-merge": "^3.4.0"
+    "recharts": "^2.15.3",
+    "tailwind-merge": "^3.4.0",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@miniapps/eslint-config": "*",
@@ -30,9 +33,11 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3"
   }
 }
+

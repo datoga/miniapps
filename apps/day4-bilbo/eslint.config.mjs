@@ -6,3 +6,4 @@ export default [
     ignores: ["postcss.config.js", "tailwind.config.js"],
   },
 ];
+

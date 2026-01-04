@@ -20,7 +20,20 @@ body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
+/* Smooth transitions for theme changes */
 * {
   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+/* Focus styles - red theme */
+:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
+/* Selection colors - red theme */
+::selection {
+  background-color: #dc2626;
+  color: white;
 }
 

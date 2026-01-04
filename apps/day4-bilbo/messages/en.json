@@ -226,7 +226,7 @@
       "title": "Backup",
       "description": "Save your data to the cloud so you never lose it",
       "googleDriveInfo": "Sync your workouts with Google Drive to keep them available on any device.",
-      "comingSoon": "Coming soon",
+      "connected": "Connected to Google Drive",
       "skipHint": "You can set this up later in Settings"
     }
   },

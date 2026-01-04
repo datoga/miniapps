@@ -226,7 +226,7 @@
       "title": "Copia de seguridad",
       "description": "Guarda tus datos en la nube para no perderlos",
       "googleDriveInfo": "Sincroniza tus entrenamientos con Google Drive para tenerlos siempre disponibles en cualquier dispositivo.",
-      "comingSoon": "Próximamente",
+      "connected": "Conectado a Google Drive",
       "skipHint": "Puedes configurar esto más tarde desde Ajustes"
     }
   },

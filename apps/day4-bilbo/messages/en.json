@@ -60,6 +60,7 @@
     "history": "History",
     "calendar": "Calendar",
     "charts": "Charts",
+    "settingsTab": "Settings",
     "filters": {
       "cycle": "Cycle",
       "phase": "Phase",
@@ -158,7 +159,12 @@
     "editEndDate": "Edit Cycle {number} end date",
     "edit1RM": "Edit 1RM (only if no sessions)",
     "edit1RMTitle": "Edit Cycle {number} 1RM",
-    "edit1RMDescription": "You can modify the base 1RM for this cycle since it has no sessions logged yet."
+    "edit1RMDescription": "You can modify the base 1RM for this cycle since it has no sessions logged yet.",
+    "editTitle": "Edit Cycle",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "endDateHint": "Leave empty if cycle is active",
+    "cycleCompletedDescription": "Congratulations! You have completed this cycle. You can share your results."
   },
   "rm": {
     "detected": "New 1RM Est.!",
@@ -248,9 +254,9 @@
       "signIn": "Connect with Google Drive",
       "signOut": "Disconnect",
       "disconnect": "Disconnect",
-      "disconnectAndDelete": "Disconnect & delete",
-      "disconnectDeleteConfirm": "Disconnect and delete data?",
-      "disconnectDeleteMessage": "This will delete your backup from Google Drive and disconnect your account. Your local data will not be affected.",
+      "disconnectConfirmTitle": "Disconnect from Google Drive?",
+      "disconnectConfirmMessage": "Your Google Drive account will be disconnected. Your local data will not be affected.",
+      "disconnectDeleteBackupOption": "Also delete backup from Google Drive",
       "syncNow": "Sync now",
       "status": {
         "signed_out": "Not connected",
@@ -272,7 +278,8 @@
         "description": "Permanently delete all exercises, sessions, and settings",
         "button": "Delete All Data",
         "confirmTitle": "Delete All Data?",
-        "confirmMessage": "This will permanently delete all your exercises, training sessions, and settings. If connected to Google Drive, your backup will also be deleted and your account disconnected. This action cannot be undone."
+        "confirmMessage": "This will permanently delete all your exercises, training sessions, and settings from this device. This action cannot be undone.",
+        "deleteBackupToo": "Also delete Google Drive backup and disconnect account"
       }
     }
   },
@@ -408,13 +415,6 @@
       "cycleEnd": "Cycle end",
       "rest": "Rest"
     }
-  },
-  "cycle": {
-    "editTitle": "Edit Cycle",
-    "startDate": "Start date",
-    "endDate": "End date",
-    "endDateHint": "Leave empty if cycle is active",
-    "base1RM": "Base 1RM"
   },
   "common": {
     "save": "Save",

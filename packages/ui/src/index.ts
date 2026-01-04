@@ -5,5 +5,7 @@ export { AppShell } from "./AppShell";
 export { Header } from "./Header";
 export { Footer } from "./Footer";
 export { Button } from "./Button";
+export { Modal, type ModalProps } from "./Modal";
+export { ConfirmDialog, type ConfirmDialogProps } from "./ConfirmDialog";
 export { cn } from "./utils";
 export { useShare, buildShareText, type ShareOptions, type UseShareResult } from "./useShare";

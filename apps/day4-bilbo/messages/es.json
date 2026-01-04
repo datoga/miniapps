@@ -60,6 +60,7 @@
     "history": "Historial",
     "calendar": "Calendario",
     "charts": "Gráficos",
+    "settingsTab": "Ajustes",
     "filters": {
       "cycle": "Ciclo",
       "phase": "Fase",
@@ -158,7 +159,12 @@
     "editEndDate": "Editar fecha de fin del Ciclo {number}",
     "edit1RM": "Editar 1RM (solo si no hay sesiones)",
     "edit1RMTitle": "Editar 1RM del Ciclo {number}",
-    "edit1RMDescription": "Puedes modificar el 1RM base de este ciclo ya que aún no tiene sesiones registradas."
+    "edit1RMDescription": "Puedes modificar el 1RM base de este ciclo ya que aún no tiene sesiones registradas.",
+    "editTitle": "Editar Ciclo",
+    "startDate": "Fecha de inicio",
+    "endDate": "Fecha de fin",
+    "endDateHint": "Dejar vacío si el ciclo está activo",
+    "cycleCompletedDescription": "¡Felicidades! Has completado el ciclo. Puedes compartir tus resultados."
   },
   "rm": {
     "detected": "¡Nuevo 1RM Est.!",
@@ -248,9 +254,9 @@
       "signIn": "Conectar con Google Drive",
       "signOut": "Desconectar",
       "disconnect": "Desconectar",
-      "disconnectAndDelete": "Desconectar y borrar",
-      "disconnectDeleteConfirm": "¿Desconectar y borrar datos?",
-      "disconnectDeleteMessage": "Se eliminará la copia de seguridad de Google Drive y se desconectará tu cuenta. Tus datos locales no se verán afectados.",
+      "disconnectConfirmTitle": "¿Desconectar de Google Drive?",
+      "disconnectConfirmMessage": "Se desconectará tu cuenta de Google Drive. Tus datos locales no se verán afectados.",
+      "disconnectDeleteBackupOption": "También eliminar la copia de seguridad en Google Drive",
       "syncNow": "Sincronizar ahora",
       "status": {
         "signed_out": "No conectado",
@@ -272,7 +278,8 @@
         "description": "Elimina permanentemente todos los ejercicios, sesiones y ajustes",
         "button": "Eliminar Todos los Datos",
         "confirmTitle": "¿Eliminar Todos los Datos?",
-        "confirmMessage": "Esto eliminará permanentemente todos tus ejercicios, sesiones de entrenamiento y ajustes. Si estás conectado a Google Drive, también se borrará la copia de seguridad y se desconectará tu cuenta. Esta acción no se puede deshacer."
+        "confirmMessage": "Esto eliminará permanentemente todos tus ejercicios, sesiones de entrenamiento y ajustes de este dispositivo. Esta acción no se puede deshacer.",
+        "deleteBackupToo": "También eliminar la copia de seguridad en Google Drive y desconectar la cuenta"
       }
     }
   },
@@ -408,13 +415,6 @@
       "cycleEnd": "Fin ciclo",
       "rest": "Descanso"
     }
-  },
-  "cycle": {
-    "editTitle": "Editar Ciclo",
-    "startDate": "Fecha de inicio",
-    "endDate": "Fecha de fin",
-    "endDateHint": "Dejar vacío si el ciclo está activo",
-    "base1RM": "1RM Base"
   },
   "common": {
     "save": "Guardar",

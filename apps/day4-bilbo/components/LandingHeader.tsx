@@ -25,7 +25,7 @@ export function LandingHeader({ locale, currentPath = "landing" }: LandingHeader
           className="flex items-center gap-2 font-semibold text-gray-900 dark:text-white"
         >
           <span className="text-xl">🏋️</span>
-          <span className="hidden xs:inline">{t("app.title")}</span>
+          <span className="hidden sm:inline">{t("app.title")}</span>
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-2">

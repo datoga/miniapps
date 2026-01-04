@@ -87,7 +87,7 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
   } | null>(null);
   const [isResolvingConflict, setIsResolvingConflict] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<"history" | "calendar" | "charts">("history");
+  const [activeTab, setActiveTab] = useState<"history" | "calendar" | "charts" | "settings">("history");
 
   const loadData = useCallback(async () => {
     const data = await getExerciseData(exerciseId);
@@ -574,6 +574,16 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
             >
               {t("exercise.charts")}
             </button>
+            <button
+              onClick={() => setActiveTab("settings")}
+              className={`px-4 py-2 text-sm font-medium ${
+                activeTab === "settings"
+                  ? "border-b-2 border-red-600 text-red-600"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+              }`}
+            >
+              {t("exercise.settingsTab")}
+            </button>
           </div>
 
           {activeTab === "history" && (
@@ -831,21 +841,25 @@ export function ExerciseDetail({ locale, exerciseId }: ExerciseDetailProps) {
             <ExerciseChart sessions={sessions} cycles={cycles} unitsUI={settings.unitsUI} />
           )}
 
-          {/* Danger Zone - Delete Exercise */}
-          <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/30">
-            <h3 className="mb-1 font-semibold text-red-800 dark:text-red-300">
-              {t("exercise.dangerZone")}
-            </h3>
-            <p className="mb-3 text-sm text-red-600 dark:text-red-400">
-              {t("exercise.deleteDescription")}
-            </p>
-            <button
-              onClick={() => setShowDeleteExerciseConfirm(true)}
-              className="w-full rounded-lg border border-red-300 bg-white px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-red-50 dark:border-red-800 dark:bg-red-950 dark:text-red-300 dark:hover:bg-red-900"
-            >
-              🗑️ {t("exercise.deleteButton")}
-            </button>
-          </div>
+          {activeTab === "settings" && (
+            <div className="space-y-6">
+              {/* Danger Zone - Delete Exercise */}
+              <div className="rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/30">
+                <h3 className="mb-1 font-semibold text-red-800 dark:text-red-300">
+                  {t("exercise.dangerZone")}
+                </h3>
+                <p className="mb-3 text-sm text-red-600 dark:text-red-400">
+                  {t("exercise.deleteDescription")}
+                </p>
+                <button
+                  onClick={() => setShowDeleteExerciseConfirm(true)}
+                  className="w-full rounded-lg border border-red-300 bg-white px-4 py-2.5 text-sm font-medium text-red-700 hover:bg-red-50 dark:border-red-800 dark:bg-red-950 dark:text-red-300 dark:hover:bg-red-900"
+                >
+                  🗑️ {t("exercise.deleteButton")}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </main>
 

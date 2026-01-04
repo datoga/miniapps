@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Footer } from "@miniapps/ui";
 import { AppHeader } from "./AppHeader";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { Modal } from "./Modal";
 import { SyncStatusIndicator } from "./SyncStatusIndicator";
 import { useBilboData } from "@/lib/hooks/useBilboData";
 import { fromKg, toKg, format2 } from "@/lib/math";
@@ -36,7 +36,9 @@ export function SettingsPage({ locale }: SettingsPageProps) {
   const [unitsUI, setUnitsUI] = useState(settings.unitsUI);
   const [increment, setIncrement] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showDisconnectDeleteConfirm, setShowDisconnectDeleteConfirm] = useState(false);
+  const [deleteBackupToo, setDeleteBackupToo] = useState(true);
+  const [showDisconnectConfirm, setShowDisconnectConfirm] = useState(false);
+  const [disconnectDeleteBackup, setDisconnectDeleteBackup] = useState(false);
 
   // Google Drive sync state
   const [syncState, setSyncState] = useState<DriveSyncState>(
@@ -96,8 +98,8 @@ export function SettingsPage({ locale }: SettingsPageProps) {
   };
 
   const handleDeleteAllData = async () => {
-    // If connected to Google Drive, delete backup and sign out first
-    if (syncState !== "signed_out") {
+    // If connected to Google Drive and user wants to delete backup too
+    if (syncState !== "signed_out" && deleteBackupToo) {
       const accessToken = getAccessToken();
       if (accessToken) {
         try {
@@ -111,6 +113,7 @@ export function SettingsPage({ locale }: SettingsPageProps) {
 
     // Clear all local data
     await clearAllData();
+    setShowDeleteConfirm(false);
     router.push(`/${locale}`);
   };
 
@@ -270,17 +273,20 @@ export function SettingsPage({ locale }: SettingsPageProps) {
     }
   };
 
-  const handleDisconnectAndDelete = async () => {
-    const accessToken = getAccessToken();
-    if (accessToken) {
-      try {
-        await deleteBackupFromDrive(accessToken);
-      } catch (error) {
-        console.error("Error deleting backup from Drive:", error);
+  const handleDisconnect = async () => {
+    // If user wants to delete backup too
+    if (disconnectDeleteBackup) {
+      const accessToken = getAccessToken();
+      if (accessToken) {
+        try {
+          await deleteBackupFromDrive(accessToken);
+        } catch (error) {
+          console.error("Error deleting backup from Drive:", error);
+        }
       }
     }
 
-    // Sign out after deleting
+    // Sign out
     await signOut();
     setSyncProfile(undefined);
     setSyncState("signed_out");
@@ -292,7 +298,8 @@ export function SettingsPage({ locale }: SettingsPageProps) {
       lastSyncedAt: undefined,
     });
     trackSettingsChanged("sync");
-    setShowDisconnectDeleteConfirm(false);
+    setShowDisconnectConfirm(false);
+    setDisconnectDeleteBackup(false);
   };
 
   if (loading) {
@@ -376,21 +383,13 @@ export function SettingsPage({ locale }: SettingsPageProps) {
 
             {/* Cloud Backup - Google Drive */}
             <div className="rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-              <div className="mb-3 flex items-center gap-3">
-                {/* Google Drive Icon */}
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 via-green-500 to-yellow-500">
-                  <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M7.71 3.5L1.15 15l3.43 6h13.71l3.43-6L15.29 3.5H7.71zM15 15H9l-3-5.5L9 4h6l3 5.5L15 15z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
-                    {t("settings.sync.title")}
-                  </h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {t("settings.sync.description")}
-                  </p>
-                </div>
+              <div className="mb-3">
+                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  {t("settings.sync.title")}
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {t("settings.sync.description")}
+                </p>
               </div>
 
               {syncState === "signed_out" ? (
@@ -545,21 +544,13 @@ export function SettingsPage({ locale }: SettingsPageProps) {
                     </button>
                   </div>
 
-                  {/* Disconnect options */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleGoogleSignOut}
-                      className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
-                    >
-                      {t("settings.sync.disconnect")}
-                    </button>
-                    <button
-                      onClick={() => setShowDisconnectDeleteConfirm(true)}
-                      className="flex-1 rounded-lg border border-orange-200 bg-orange-50 px-3 py-2 text-xs text-orange-700 hover:bg-orange-100 dark:border-orange-800 dark:bg-orange-950/50 dark:text-orange-400 dark:hover:bg-orange-900/50"
-                    >
-                      {t("settings.sync.disconnectAndDelete")}
-                    </button>
-                  </div>
+                  {/* Disconnect button */}
+                  <button
+                    onClick={() => setShowDisconnectConfirm(true)}
+                    className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+                  >
+                    {t("settings.sync.disconnect")}
+                  </button>
                 </div>
               )}
 
@@ -591,25 +582,99 @@ export function SettingsPage({ locale }: SettingsPageProps) {
 
       <Footer />
 
-      <ConfirmDialog
+      {/* Delete All Data Modal */}
+      <Modal
         isOpen={showDeleteConfirm}
-        onClose={() => setShowDeleteConfirm(false)}
-        onConfirm={handleDeleteAllData}
+        onClose={() => {
+          setShowDeleteConfirm(false);
+          setDeleteBackupToo(true);
+        }}
         title={t("settings.danger.deleteAll.confirmTitle")}
-        message={t("settings.danger.deleteAll.confirmMessage")}
-        confirmLabel={t("common.delete")}
-        variant="danger"
-      />
+        size="sm"
+      >
+        <p className="mb-4 text-gray-600 dark:text-gray-400">
+          {t("settings.danger.deleteAll.confirmMessage")}
+        </p>
 
-      <ConfirmDialog
-        isOpen={showDisconnectDeleteConfirm}
-        onClose={() => setShowDisconnectDeleteConfirm(false)}
-        onConfirm={handleDisconnectAndDelete}
-        title={t("settings.sync.disconnectDeleteConfirm")}
-        message={t("settings.sync.disconnectDeleteMessage")}
-        confirmLabel={t("settings.sync.disconnectAndDelete")}
-        variant="warning"
-      />
+        {/* Checkbox to delete backup - only shown if connected */}
+        {syncState !== "signed_out" && (
+          <label className="mb-4 flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-800">
+            <input
+              type="checkbox"
+              checked={deleteBackupToo}
+              onChange={(e) => setDeleteBackupToo(e.target.checked)}
+              className="mt-0.5 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500 dark:border-gray-600 dark:bg-gray-700"
+            />
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              {t("settings.danger.deleteAll.deleteBackupToo")}
+            </span>
+          </label>
+        )}
+
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={() => {
+              setShowDeleteConfirm(false);
+              setDeleteBackupToo(true);
+            }}
+            className="rounded-lg px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+          >
+            {t("common.cancel")}
+          </button>
+          <button
+            onClick={handleDeleteAllData}
+            className="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+          >
+            {t("common.delete")}
+          </button>
+        </div>
+      </Modal>
+
+      {/* Disconnect Confirmation Modal */}
+      <Modal
+        isOpen={showDisconnectConfirm}
+        onClose={() => {
+          setShowDisconnectConfirm(false);
+          setDisconnectDeleteBackup(false);
+        }}
+        title={t("settings.sync.disconnectConfirmTitle")}
+        size="sm"
+      >
+        <p className="mb-4 text-gray-600 dark:text-gray-400">
+          {t("settings.sync.disconnectConfirmMessage")}
+        </p>
+
+        {/* Checkbox to delete backup */}
+        <label className="mb-4 flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-800">
+          <input
+            type="checkbox"
+            checked={disconnectDeleteBackup}
+            onChange={(e) => setDisconnectDeleteBackup(e.target.checked)}
+            className="mt-0.5 h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500 dark:border-gray-600 dark:bg-gray-700"
+          />
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t("settings.sync.disconnectDeleteBackupOption")}
+          </span>
+        </label>
+
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={() => {
+              setShowDisconnectConfirm(false);
+              setDisconnectDeleteBackup(false);
+            }}
+            className="rounded-lg px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+          >
+            {t("common.cancel")}
+          </button>
+          <button
+            onClick={handleDisconnect}
+            className="rounded-lg bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
+          >
+            {t("settings.sync.disconnect")}
+          </button>
+        </div>
+      </Modal>
 
       {/* First Connection Conflict Modal */}
       {firstConnectionConflict && (

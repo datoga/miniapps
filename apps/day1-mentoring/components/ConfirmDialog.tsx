@@ -1,37 +1,27 @@
 "use client";
 
-import { memo } from "react";
+import {
+  ConfirmDialog as BaseConfirmDialog,
+  type ConfirmDialogProps as BaseConfirmDialogProps,
+} from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
 
-interface ConfirmDialogProps {
-  open: boolean;
-  title: string;
-  message: string;
-  onConfirm: () => void;
-  onCancel: () => void;
+// Re-export with default labels from i18n
+export interface ConfirmDialogProps
+  extends Omit<BaseConfirmDialogProps, "confirmLabel" | "cancelLabel" | "closeLabel"> {
+  confirmLabel?: string;
+  cancelLabel?: string;
 }
 
-export const ConfirmDialog = memo(function ConfirmDialog({
-  open,
-  title,
-  message,
-  onConfirm,
-  onCancel,
-}: ConfirmDialogProps) {
+export function ConfirmDialog({ confirmLabel, cancelLabel, ...props }: ConfirmDialogProps) {
   const t = useTranslations();
 
   return (
-    <Modal open={open} onClose={onCancel} title={title}>
-      <p className="mb-6 text-gray-600 dark:text-gray-400">{message}</p>
-      <div className="flex justify-end gap-3">
-        <Button variant="secondary" onClick={onCancel}>
-          {t("confirm.cancel")}
-        </Button>
-        <Button onClick={onConfirm}>{t("confirm.confirm")}</Button>
-      </div>
-    </Modal>
+    <BaseConfirmDialog
+      {...props}
+      confirmLabel={confirmLabel || t("confirm.confirm")}
+      cancelLabel={cancelLabel || t("confirm.cancel")}
+      closeLabel={t("common.close")}
+    />
   );
-});
-
+}

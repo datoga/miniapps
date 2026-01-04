@@ -69,7 +69,7 @@ export const DetailModal = memo(function DetailModal({
     } else {
       // Revert to original name if empty
       setNameValue(item.name);
-      setEditingName(false);
+    setEditingName(false);
     }
   }, [item, nameValue, onUpdateName]);
 

@@ -80,6 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     content: content!,
     category: "health",
+    googleVerification: "OpDwYcOvm-Yz5X0FiaxA608djiy52axWjx6bdJGnE8o",
   });
 }
 

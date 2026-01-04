@@ -25,6 +25,16 @@ export interface CycleShareData {
 }
 
 /**
+ * Get the app URL dynamically
+ */
+function getAppUrl(): string {
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}`;
+  }
+  return "https://bilbotracker.vercel.app";
+}
+
+/**
  * Format session data for sharing
  */
 export function formatSessionShare(data: SessionShareData, t: (key: string) => string): string {
@@ -32,6 +42,7 @@ export function formatSessionShare(data: SessionShareData, t: (key: string) => s
   const work = format2(fromKg(data.workKg, data.unitsUI));
   const estimated1RM = format2(fromKg(estimate1RM(data.loadKg, data.reps), data.unitsUI));
   const phaseLabel = data.phase === "bilbo" ? "Bilbo" : t("session.phaseStrength");
+  const appUrl = getAppUrl();
 
   const lines = [
     `🏋️ ${data.exerciseName}`,
@@ -46,6 +57,8 @@ export function formatSessionShare(data: SessionShareData, t: (key: string) => s
     `📍 ${t("session.phase")}: ${phaseLabel}`,
     ``,
     `#BilboTracker #Fuerza #Entrenamiento`,
+    ``,
+    `💪 ${t("share.promo")} ${appUrl}`,
   ];
 
   return lines.join("\n");
@@ -61,6 +74,7 @@ export function formatCycleShare(data: CycleShareData, t: (key: string) => strin
   const improvement = data.final1RMKg > data.initial1RMKg
     ? `+${format2(fromKg(data.final1RMKg - data.initial1RMKg, data.unitsUI))} ${data.unitsUI} 📈`
     : "";
+  const appUrl = getAppUrl();
 
   const lines = [
     `🏆 ${t("share.cycle.completed")}!`,
@@ -75,6 +89,8 @@ export function formatCycleShare(data: CycleShareData, t: (key: string) => strin
     `• ${t("share.cycle.totalWork")}: ${totalWork} ${data.unitsUI}`,
     ``,
     `#BilboTracker #Fuerza #CicloCompletado`,
+    ``,
+    `💪 ${t("share.promo")} ${appUrl}`,
   ];
 
   return lines.join("\n");

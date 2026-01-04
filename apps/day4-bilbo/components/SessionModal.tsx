@@ -473,11 +473,6 @@ export function SessionModal({
                 {t("share.copied")}
               </p>
             )}
-            {shareStatus === "error" && (
-              <p className="mt-2 text-center text-sm text-red-600 dark:text-red-400">
-                {t("share.error")}
-              </p>
-            )}
           </div>
         </div>
       )}

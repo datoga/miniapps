@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
 });
 
 const APP_NAME = "Bilbo Tracker";
-const APP_URL = "https://bilbotracker.vercel.app";
+const APP_URL = "https://bilbo.live";
 
 const seoContent: Record<string, LocaleSEOContent> = {
   es: {

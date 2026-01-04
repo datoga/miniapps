@@ -31,7 +31,7 @@ function getAppUrl(): string {
   if (typeof window !== "undefined") {
     return `${window.location.origin}`;
   }
-  return "https://bilbotracker.vercel.app";
+  return "https://bilbo.live";
 }
 
 /**

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { generateSitemap } from "@miniapps/seo";
 
-const APP_URL = "https://bilbotracker.vercel.app";
+const APP_URL = "https://bilbo.live";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Only public pages - /app/* is private/noindex

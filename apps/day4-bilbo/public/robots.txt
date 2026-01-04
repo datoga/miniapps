@@ -7,5 +7,5 @@ Disallow: /*/app
 Disallow: /*/app/*
 
 # Sitemaps
-Sitemap: https://bilbotracker.vercel.app/sitemap.xml
+Sitemap: https://bilbo.live/sitemap.xml
 

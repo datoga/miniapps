@@ -55,7 +55,7 @@ La sincronización con Google Drive usa la carpeta `appDataFolder`, que es una c
 **Ejemplo completo de orígenes:**
 ```
 http://localhost:3004
-https://bilbotracker.vercel.app
+https://bilbo.live
 https://bilbotracker.tudominio.com
 ```
 

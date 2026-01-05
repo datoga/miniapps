@@ -129,12 +129,12 @@ async function autoResolveByeMatch(
   winnersBracket: string[][]
 ): Promise<void> {
   if (match.status === "completed") return;
-  
+
   const isByeA = match.aId === "__BYE__";
   const isByeB = match.bId === "__BYE__";
   const hasRealA = match.aId && match.aId !== "__BYE__";
   const hasRealB = match.bId && match.bId !== "__BYE__";
-  
+
   // Both are BYE -> complete with BYE winner
   if (isByeA && isByeB) {
     match.status = "completed";
@@ -145,7 +145,7 @@ async function autoResolveByeMatch(
     await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatchId, grandFinalResetMatchId);
     return;
   }
-  
+
   // One side is BYE, other is real participant -> real participant wins
   if (isByeA && hasRealB) {
     match.status = "completed";
@@ -157,7 +157,7 @@ async function autoResolveByeMatch(
     await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatchId, grandFinalResetMatchId);
     return;
   }
-  
+
   if (hasRealA && isByeB) {
     match.status = "completed";
     match.winnerId = match.aId;
@@ -555,7 +555,7 @@ async function advanceDoubleElimWinner(
         }
         nextMatch.updatedAt = Date.now();
         await db.saveMatch(nextMatch);
-        
+
         // Auto-resolve if one side is BYE and other is real participant
         await autoResolveByeMatch(nextMatch, allMatches, losersBracket, grandFinalMatchId, grandFinalResetMatchId, winnersBracket);
       }
@@ -666,7 +666,7 @@ async function sendToLosersBracket(
     } else {
       // Integration rounds: drop-ins fill A side
       targetMatch.aId = loserId;
-      
+
       // Check if the B side (from losers) is a BYE - auto-advance if so
       if (targetMatch.bId === "__BYE__") {
         targetMatch.bId = null;
@@ -676,7 +676,7 @@ async function sendToLosersBracket(
         targetMatch.playedAt = Date.now();
         targetMatch.updatedAt = Date.now();
         await db.saveMatch(targetMatch);
-        
+
         // Advance to next losers round
         await advanceLosersWinner(targetMatch, allMatches, losersBracket);
         return;
@@ -731,6 +731,35 @@ async function advanceLosersWinner(
     }
     nextMatch.updatedAt = Date.now();
     await db.saveMatch(nextMatch);
+    
+    // Auto-resolve if one side is BYE and other is real participant
+    const isByeA = nextMatch.aId === "__BYE__";
+    const isByeB = nextMatch.bId === "__BYE__";
+    const hasRealA = nextMatch.aId && nextMatch.aId !== "__BYE__";
+    const hasRealB = nextMatch.bId && nextMatch.bId !== "__BYE__";
+    
+    if ((isByeA && hasRealB) || (hasRealA && isByeB)) {
+      // Real participant auto-advances
+      const realWinner = isByeA ? nextMatch.bId : nextMatch.aId;
+      nextMatch.status = "completed";
+      nextMatch.winnerId = realWinner;
+      nextMatch.loserId = null;
+      nextMatch.playedAt = Date.now();
+      nextMatch.updatedAt = Date.now();
+      await db.saveMatch(nextMatch);
+      
+      // Recursively advance the real winner
+      await advanceLosersWinner(nextMatch, allMatches, losersBracket);
+    } else if (isByeA && isByeB) {
+      // Both BYEs - propagate BYE
+      nextMatch.status = "completed";
+      nextMatch.winnerId = "__BYE__";
+      nextMatch.updatedAt = Date.now();
+      await db.saveMatch(nextMatch);
+      
+      // Recursively propagate
+      await advanceLosersWinner(nextMatch, allMatches, losersBracket);
+    }
   }
 }
 

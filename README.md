@@ -78,7 +78,7 @@ npm run lint
 │   ├── day2-verbs/          # Placeholder app
 │   ├── day3-qr/             # Placeholder app
 │   ├── day4-bilbo/          # Placeholder app
-│   ├── day5-medlabs/        # Placeholder app
+│   ├── day5-gamemaster/     # Game Master - Tournament management
 │   ├── day6-recordme/       # Placeholder app
 │   └── day7-jobkanban/      # Placeholder app
 ├── packages/

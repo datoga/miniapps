@@ -1,0 +1,316 @@
+{
+  "app": {
+    "title": "Game Master",
+    "description": "Organiza torneos de videojuegos como un pro"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "about": "Acerca de",
+    "settings": "Ajustes"
+  },
+  "landing": {
+    "hero": {
+      "title": "Game Master",
+      "subtitle": "Tu torneo, tus reglas",
+      "description": "Organiza llaves de eliminación o rankings por puntos/tiempo. Perfecto para gaming nights, esports caseros y competiciones de cualquier tipo.",
+      "cta": "Empezar",
+      "learnMore": "Saber más"
+    },
+    "features": {
+      "title": "Todo lo que necesitas",
+      "bracket": {
+        "title": "Eliminación Simple",
+        "description": "Formato clásico de llave con gestión automática de BYEs"
+      },
+      "ladder": {
+        "title": "Rankings por Puntuación",
+        "description": "Cada participante registra su mejor puntuación o tiempo"
+      },
+      "tv": {
+        "title": "Modo TV",
+        "description": "Visualización optimizada para pantallas grandes y proyectores"
+      },
+      "offline": {
+        "title": "Funciona Offline",
+        "description": "Todos los datos guardados localmente. No necesita internet"
+      }
+    }
+  },
+  "about": {
+    "title": "Acerca de Game Master",
+    "description": "Game Master es una aplicación gratuita, privada y offline-first para organizar torneos de videojuegos y competiciones.",
+    "features": {
+      "title": "Características",
+      "list": [
+        "Llaves de eliminación simple con siembra automática",
+        "Rankings por puntuación con cronómetro integrado",
+        "Soporte para individuos, parejas y equipos",
+        "Pantalla Now Playing optimizada para TV",
+        "Respaldo en Google Drive (opcional)",
+        "Funciona completamente sin conexión",
+        "No requiere cuenta"
+      ]
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "description": "Los datos de tu torneo permanecen en tu dispositivo. El respaldo en Google Drive es opcional y usa una carpeta privada de la aplicación que solo esta app puede acceder."
+    }
+  },
+  "dashboard": {
+    "title": "Mis Torneos",
+    "empty": {
+      "title": "Sin torneos todavía",
+      "description": "Crea tu primer torneo para comenzar"
+    },
+    "createTournament": "Nuevo Torneo",
+    "status": {
+      "draft": "Borrador",
+      "active": "Activo",
+      "completed": "Completado"
+    },
+    "mode": {
+      "single_elim": "Eliminación Simple",
+      "double_elim": "Doble Eliminación",
+      "ladder": "Ranking"
+    },
+    "participants": "{count} participantes",
+    "archive": "Archivar",
+    "unarchive": "Restaurar",
+    "delete": "Eliminar",
+    "deleteTitle": "Eliminar Torneo",
+    "deleteConfirm": "¿Estás seguro de que quieres eliminar este torneo? Esta acción no se puede deshacer y se perderán todos los datos.",
+    "deleteConfirmButton": "Sí, eliminar",
+    "showArchived": "Mostrar archivados",
+    "hideArchived": "Ocultar archivados",
+    "archived": "Archivado"
+  },
+  "tournament": {
+    "create": {
+      "title": "Nuevo Torneo",
+      "name": "Nombre del Torneo",
+      "namePlaceholder": "Ingresa el nombre del torneo",
+      "mode": "Modo del Torneo",
+      "modeHint": "Elige cómo se organizarán los partidos",
+      "elimination": "Eliminación",
+      "eliminationType": "Tipo de Eliminación",
+      "singleElim": "Simple",
+      "singleElimHint": "Pierdes una vez y quedas fuera",
+      "doubleElim": "Doble",
+      "doubleElimHint": "Segunda oportunidad por el cuadro de perdedores",
+      "ladderType": "Tipo de Ranking",
+      "ladderTypePoints": "Por Puntos",
+      "ladderTypePointsHint": "Gana quien tenga más puntos",
+      "ladderTypeTime": "Por Tiempo",
+      "ladderTypeTimeHint": "Gana el más rápido (speed run)",
+      "participantType": "Tipo de Participante",
+      "individual": "Individual",
+      "pair": "Pareja (2 jugadores)",
+      "date": "Fecha del Torneo",
+      "multipleDays": "El torneo dura varios días",
+      "endDate": "Fecha de finalización",
+      "create": "Crear Torneo",
+      "game": "Juego / Actividad",
+      "gameHint": "Selecciona el juego para este torneo (opcional)",
+      "selectGame": "Selecciona un juego...",
+      "customGameName": "Nombre del juego personalizado",
+      "changeEmoji": "Cambiar emoji",
+      "selectEmoji": "Selecciona un emoji",
+      "resetEmoji": "Usar emoji por defecto",
+      "clearGame": "Quitar selección de juego"
+    },
+    "draft": {
+      "title": "Configuración",
+      "addParticipant": "Agregar Participante",
+      "addIndividual": "Agregar Participante",
+      "addPair": "Agregar Pareja",
+      "participantName": "Nombre",
+      "participantNamePlaceholder": "Ingresa el nombre",
+      "pairName": "Nombre de la pareja",
+      "pairNamePlaceholder": "Ingresa el nombre de la pareja",
+      "memberNames": "Integrantes de la Pareja",
+      "memberPlaceholder": "Miembro {number}",
+      "add": "Agregar",
+      "participants": "Participantes",
+      "noParticipants": "Sin participantes todavía",
+      "removeParticipant": "Eliminar",
+      "startTournament": "Iniciar Torneo",
+      "minParticipants": "Se necesitan al menos 2 participantes para iniciar",
+      "minPairs": "Se necesitan al menos 2 parejas para iniciar",
+      "nameDuplicate": "Este nombre ya está en uso",
+      "suggestions": "Participantes anteriores"
+    },
+    "nowPlaying": {
+      "title": "En Juego",
+      "selectMatch": "Seleccionar Partido",
+      "vsLabel": "vs",
+      "scoreA": "Puntos",
+      "scoreB": "Puntos",
+      "reportResult": "Reportar Resultado",
+      "noDraws": "No se permiten empates",
+      "matchCompleted": "¡Partido completado!",
+      "winner": "Ganador",
+      "nextMatch": "Siguiente Partido"
+    },
+    "ladder": {
+      "title": "Ranking",
+      "rank": "Pos",
+      "name": "Nombre",
+      "score": "Puntuación",
+      "time": "Tiempo",
+      "points": "pts",
+      "tieBreaker": "Reordenar empates manualmente",
+      "moveUp": "Subir",
+      "moveDown": "Bajar",
+      "recentScores": "Últimos",
+      "recentTimes": "Últimos",
+      "timer": "Cronómetro",
+      "timerStart": "Iniciar",
+      "timerPause": "Pausar",
+      "timerReset": "Reiniciar",
+      "addTime": "Añadir tiempo",
+      "timeWarning": "¡Últimos segundos!",
+      "registerScore": "Registrar Resultado",
+      "registerTime": "Registrar Tiempo",
+      "selectParticipant": "Seleccionar participante",
+      "scoreLabel": "Puntuación obtenida",
+      "timeLabel": "Tiempo conseguido",
+      "timeFormat": "Minutos : Segundos",
+      "saveScore": "Guardar",
+      "saveTime": "Guardar",
+      "timeNotBetter": "El tiempo no es mejor que el actual",
+      "endTournament": "Finalizar Torneo",
+      "endTournamentHint": "Una vez finalizado, se mostrará el ranking final con los ganadores.",
+      "endTournamentConfirm": "¿Estás seguro de que quieres finalizar este torneo? Esta acción no se puede deshacer.",
+      "finishTournament": "Terminar Torneo",
+      "confirmEnd": "Sí, finalizar",
+      "rankingByPoints": "Clasificación por puntuación",
+      "rankingByTime": "Clasificación por mejor tiempo",
+      "noParticipants": "No hay participantes"
+    },
+    "completed": {
+      "title": "¡Torneo Finalizado!",
+      "fullRanking": "Clasificación Final",
+      "celebrate": "¡Celebrar de nuevo!",
+      "champion": "Campeón",
+      "viewResults": "Ver Resultados",
+      "viewBracket": "Ver Cuadro Completo",
+      "hideBracket": "Ocultar Cuadro",
+      "viewRanking": "Ver Ranking Completo",
+      "hideRanking": "Ocultar Ranking"
+    },
+    "tv": {
+      "mode": "Modo Visualización TV",
+      "syncing": "Sincronizando...",
+      "lastUpdate": "Última actualización",
+      "autoRefresh": "Auto-actualización cada 15s",
+      "preparing": "Preparando Torneo...",
+      "winner": "Ganador"
+    },
+    "bracket": {
+      "title": "Cuadro",
+      "singleElimination": "Eliminación Simple",
+      "round": "Ronda {number}",
+      "finals": "Final",
+      "semifinal": "Semifinal",
+      "quarterfinal": "Cuartos",
+      "bye": "Pasa",
+      "tbd": "Por definir",
+      "pending": "Por definir",
+      "winner": "Ganador",
+      "regenerate": "Generar nuevos emparejamientos",
+      "regenerateConfirm": "¿Reorganizar los emparejamientos? Se perderá el cuadro actual.",
+      "clickToSelect": "Haz clic en un partido para reportar su resultado"
+    },
+    "doubleElim": {
+      "title": "Doble Eliminación",
+      "winnersBracket": "Ganadores",
+      "losersBracket": "Perdedores",
+      "grandFinal": "Gran Final",
+      "grandFinalReset": "Final Definitiva",
+      "lives": "{count} vidas",
+      "twoLives": "2 ❤️",
+      "oneLife": "1 ❤️",
+      "eliminated": "Eliminado",
+      "bracketReset": "¡Bracket Reset!",
+      "bracketResetDesc": "Ambos tienen 1 vida. ¡Última partida decisiva!",
+      "winnersRound": "G-Ronda {number}",
+      "losersRound": "P-Ronda {number}",
+      "winnersFinal": "Final Ganadores",
+      "losersFinal": "Final Perdedores",
+      "fromWinners": "Viene de Ganadores",
+      "fromLosers": "Viene de Perdedores"
+    }
+  },
+  "drive": {
+    "connect": "Conectar Google Drive",
+    "reconnect": "Reconectar",
+    "disconnect": "Desconectar",
+    "notConfigured": "Google Drive no configurado",
+    "notConfiguredShort": "No disponible",
+    "status": {
+      "disconnected": "No conectado",
+      "connected": "Conectado",
+      "syncing": "Sincronizando...",
+      "needs_reconnect": "Requiere reconexión",
+      "offline": "Sin conexión"
+    },
+    "lastSync": "Última sincronización"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "back": "Volver"
+  },
+  "games": {
+    "category": {
+      "videogame": "Videojuegos",
+      "tabletop": "Mesa / Cartas",
+      "sport": "Deportes",
+      "other": "Otros"
+    },
+    "mario_kart": "Mario Kart",
+    "mario_strikers": "Mario Strikers",
+    "nes_edition": "NES Edition",
+    "smash_bros": "Smash Bros",
+    "fifa": "FIFA / EA FC",
+    "cod": "Call of Duty",
+    "fortnite": "Fortnite",
+    "minecraft": "Minecraft",
+    "rocket_league": "Rocket League",
+    "lol": "League of Legends",
+    "valorant": "Valorant",
+    "tetris": "Tetris",
+    "street_fighter": "Street Fighter",
+    "pokemon": "Pokémon",
+    "chess": "Ajedrez",
+    "poker": "Póker",
+    "uno": "UNO",
+    "monopoly": "Monopoly",
+    "scrabble": "Scrabble",
+    "catan": "Catán",
+    "magic": "Magic: The Gathering",
+    "darts": "Dardos",
+    "pool": "Billar",
+    "football": "Fútbol",
+    "basketball": "Baloncesto",
+    "tennis": "Tenis",
+    "ping_pong": "Ping Pong",
+    "badminton": "Bádminton",
+    "volleyball": "Voleibol",
+    "bowling": "Bolos",
+    "golf": "Golf",
+    "racing": "Carreras",
+    "trivia": "Trivial",
+    "karaoke": "Karaoke",
+    "dance": "Baile",
+    "escape_room": "Escape Room",
+    "custom": "Personalizado"
+  }
+}

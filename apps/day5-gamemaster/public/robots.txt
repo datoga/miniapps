@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Private app routes
+Disallow: /*/app/
+
+# Sitemaps
+Sitemap: https://gamemaster.vercel.app/sitemap.xml

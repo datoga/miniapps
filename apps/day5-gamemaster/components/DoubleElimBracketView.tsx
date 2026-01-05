@@ -85,6 +85,13 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
 
   // Only show header for grand final matches
   const showHeader = bracketSide === "grand_final" || bracketSide === "grand_final_reset";
+  
+  // In Grand Final: A comes from Winners (2 lives), B comes from Losers (1 life)
+  // In Grand Final Reset: both have 1 life
+  const isGrandFinal = bracketSide === "grand_final";
+  const isGrandFinalReset = bracketSide === "grand_final_reset";
+  const livesA = isGrandFinalReset ? 1 : isGrandFinal ? 2 : null;
+  const livesB = isGrandFinal || isGrandFinalReset ? 1 : null;
 
   return (
     <div
@@ -123,7 +130,12 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
           }`}>
             {isByeA
               ? t("tournament.bracket.bye")
-              : participantA?.name || (match.aId === null ? t("tournament.bracket.tbd") : "")}
+              : participantA?.name 
+                ? <>
+                    {participantA.name}
+                    {livesA !== null && <span className="ml-1 text-xs">{"❤️".repeat(livesA)}</span>}
+                  </>
+                : (match.aId === null ? t("tournament.bracket.tbd") : "")}
           </span>
           {participantA?.members && participantA.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -160,7 +172,12 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
           }`}>
             {isByeB
               ? t("tournament.bracket.bye")
-              : participantB?.name || (match.bId === null ? t("tournament.bracket.tbd") : "")}
+              : participantB?.name
+                ? <>
+                    {participantB.name}
+                    {livesB !== null && <span className="ml-1 text-xs">{"❤️".repeat(livesB)}</span>}
+                  </>
+                : (match.bId === null ? t("tournament.bracket.tbd") : "")}
           </span>
           {participantB?.members && participantB.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">

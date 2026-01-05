@@ -518,17 +518,15 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                 const match = matches.find((m) => m.id === pos.matchId);
                 if (!match) return null;
 
-                // Skip empty matches (no participants and not completed)
-                if (!match.aId && !match.bId && match.status !== "completed") return null;
-
                 const pA = match.aId ? participantMap.get(match.aId) : null;
                 const pB = match.bId ? participantMap.get(match.bId) : null;
                 const isSelected = match.id === selectedMatch?.id;
                 const isMatchCompleted = match.status === "completed";
                 const isPlayable = match.status === "pending" && match.aId && match.bId;
-
-                // Skip if both sides are empty (BYE vs BYE or waiting for both)
-                if (!pA && !pB && !isMatchCompleted) return null;
+                
+                // Detect BYEs: match completed with one side missing
+                const isByeA = isMatchCompleted && !match.aId && match.bId;
+                const isByeB = isMatchCompleted && !match.bId && match.aId;
 
                 return (
                   <div
@@ -570,9 +568,13 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                         <span className={`block truncate text-sm font-medium ${
                           isMatchCompleted && match.winnerId === match.aId
                             ? "text-emerald-700 dark:text-emerald-400"
-                            : "text-gray-900 dark:text-white"
+                            : isByeA
+                              ? "italic text-gray-400 dark:text-gray-500"
+                              : "text-gray-900 dark:text-white"
                         }`}>
-                          {pA?.name || (match.aId === null && !isMatchCompleted ? t("tournament.bracket.pending") : pA?.name || "")}
+                          {isByeA 
+                            ? t("tournament.bracket.bye")
+                            : pA?.name || (match.aId === null ? t("tournament.bracket.tbd") : "")}
                         </span>
                         {pA?.members && pA.members.length > 0 && (
                           <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -580,7 +582,7 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                           </span>
                         )}
                       </div>
-                      {isMatchCompleted && (
+                      {isMatchCompleted && !isByeA && !isByeB && (
                         <span className={`ml-1 flex-shrink-0 text-sm font-bold ${
                           match.winnerId === match.aId
                             ? "text-emerald-600 dark:text-emerald-400"
@@ -603,9 +605,13 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                         <span className={`block truncate text-sm font-medium ${
                           isMatchCompleted && match.winnerId === match.bId
                             ? "text-emerald-700 dark:text-emerald-400"
-                            : "text-gray-900 dark:text-white"
+                            : isByeB
+                              ? "italic text-gray-400 dark:text-gray-500"
+                              : "text-gray-900 dark:text-white"
                         }`}>
-                          {pB?.name || (match.bId === null && !isMatchCompleted ? t("tournament.bracket.pending") : pB?.name || "")}
+                          {isByeB
+                            ? t("tournament.bracket.bye")
+                            : pB?.name || (match.bId === null ? t("tournament.bracket.tbd") : "")}
                         </span>
                         {pB?.members && pB.members.length > 0 && (
                           <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -613,7 +619,7 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                           </span>
                         )}
                       </div>
-                      {isMatchCompleted && (
+                      {isMatchCompleted && !isByeA && !isByeB && (
                         <span className={`ml-1 flex-shrink-0 text-sm font-bold ${
                           match.winnerId === match.bId
                             ? "text-emerald-600 dark:text-emerald-400"

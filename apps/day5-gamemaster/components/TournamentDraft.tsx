@@ -34,7 +34,7 @@ export function TournamentDraft({ tournament, participants }: TournamentDraftPro
 
   // Load all existing participants for autocomplete
   useEffect(() => {
-    getAllParticipants().then(setAllExistingParticipants);
+    setAllExistingParticipants(getAllParticipants());
   }, []);
 
   // Close suggestions when clicking outside
@@ -117,17 +117,25 @@ export function TournamentDraft({ tournament, participants }: TournamentDraftPro
 
   const hasErrors = !!nameError || memberErrors.some((e) => e !== null);
 
+  // Check if all required members are filled (for pairs)
+  const allMembersFilled = memberCount === 0 || memberNames.filter((n) => n.trim()).length === memberCount;
+
   // Get suggestions based on current input (for main name or member names)
   const getSuggestions = (input: string, currentTournamentNames: Set<string>): Participant[] => {
     const trimmed = input.trim().toLowerCase();
     if (!trimmed || trimmed.length < 1) return [];
 
+    const seenNames = new Set<string>();
     return allExistingParticipants
       .filter((p) => {
+        const nameLower = p.name.toLowerCase();
+        // Skip duplicates (same name from different tournaments)
+        if (seenNames.has(nameLower)) return false;
+        seenNames.add(nameLower);
         // Don't suggest if already in this tournament
-        if (currentTournamentNames.has(p.name.toLowerCase())) return false;
+        if (currentTournamentNames.has(nameLower)) return false;
         // Match by name starting with or containing the input
-        return p.name.toLowerCase().includes(trimmed);
+        return nameLower.includes(trimmed);
       })
       .slice(0, 5); // Limit to 5 suggestions
   };
@@ -317,7 +325,7 @@ export function TournamentDraft({ tournament, participants }: TournamentDraftPro
           {memberCount > 0 && (
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                {t("tournament.draft.memberNames")}
+                {t("tournament.draft.memberNames")} <span className="text-red-500">*</span>
               </label>
               <div className="space-y-2">
                 {Array.from({ length: memberCount }, (_, i) => (
@@ -378,7 +386,7 @@ export function TournamentDraft({ tournament, participants }: TournamentDraftPro
 
           <button
             type="submit"
-            disabled={!participantName.trim() || loading || hasErrors}
+            disabled={!participantName.trim() || !allMembersFilled || loading || hasErrors}
             className="rounded-lg bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700 disabled:opacity-50"
           >
             {loading ? t("common.loading") : t("tournament.draft.add")}

@@ -24,11 +24,66 @@ function getNumRounds(size: number): number {
 
 /**
  * Calculate the number of losers bracket rounds
- * For size N (power of 2), losers has (2 * log2(N)) - 1 rounds
- * Example: size 8 -> 3 winners rounds, 5 losers rounds
+ * For size N (power of 2), losers has (winnersRounds - 1) * 2 rounds
+ * Example: 4 participants -> 2 winners rounds, 2 losers rounds
+ * Example: 8 participants -> 3 winners rounds, 4 losers rounds
+ * Example: 16 participants -> 4 winners rounds, 6 losers rounds
  */
 function getNumLosersRounds(winnersRounds: number): number {
-  return winnersRounds * 2 - 1;
+  return (winnersRounds - 1) * 2;
+}
+
+/**
+ * Generate proper bracket seeding
+ *
+ * For n participants in a bracket of size s:
+ * - numByes = s - n (participants that get a bye)
+ * - Top seeds get byes, bottom seeds play in round 1
+ *
+ * Example: 5 participants in 8-bracket
+ * - 3 byes (seeds 1, 2, 3 advance to round 2)
+ * - 1 real match in round 1 (seeds 4 vs 5)
+ */
+function generateBracketSeeding(numParticipants: number, bracketSize: number): (number | null)[] {
+  const slotOrder = generateSlotOrder(bracketSize);
+  const slots: (number | null)[] = new Array(bracketSize).fill(null);
+
+  for (let slot = 0; slot < bracketSize; slot++) {
+    const seed = slotOrder[slot];
+    if (seed !== undefined && seed < numParticipants) {
+      slots[slot] = seed;
+    }
+  }
+
+  return slots;
+}
+
+/**
+ * Generate standard tournament bracket slot order
+ * Returns array where index is slot position and value is seed (0-indexed)
+ */
+function generateSlotOrder(bracketSize: number): number[] {
+  let order = [0, 1];
+
+  while (order.length < bracketSize) {
+    const newOrder: number[] = [];
+    const currentSize = order.length;
+    const newSize = currentSize * 2;
+
+    for (let i = 0; i < currentSize; i += 2) {
+      const seed1 = order[i]!;
+      const seed2 = order[i + 1]!;
+
+      newOrder.push(seed1);
+      newOrder.push(newSize - 1 - seed1);
+      newOrder.push(seed2);
+      newOrder.push(newSize - 1 - seed2);
+    }
+
+    order = newOrder;
+  }
+
+  return order;
 }
 
 /**
@@ -88,8 +143,11 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
   const losersRounds = getNumLosersRounds(winnersRounds);
   const now = Date.now();
 
-  // Shuffle participants for seeding
+  // Shuffle participants for random seeding
   const shuffled = [...participants].sort(() => Math.random() - 0.5);
+
+  // Generate proper bracket seeding (distributes BYEs correctly)
+  const seeding = generateBracketSeeding(shuffled.length, bracketSize);
 
   const allMatches: Match[] = [];
   const winnersBracket: string[][] = [];
@@ -104,12 +162,14 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
       let aId: string | null = null;
       let bId: string | null = null;
 
-      // Only first round has initial participants
+      // Only first round has initial participants based on seeding
       if (round === 0) {
-        const aIndex = slot * 2;
-        const bIndex = slot * 2 + 1;
-        aId = aIndex < shuffled.length ? (shuffled[aIndex] ?? null) : null;
-        bId = bIndex < shuffled.length ? (shuffled[bIndex] ?? null) : null;
+        const aSlot = slot * 2;
+        const bSlot = slot * 2 + 1;
+        const aSeed = seeding[aSlot];
+        const bSeed = seeding[bSlot];
+        aId = aSeed !== null && aSeed !== undefined ? (shuffled[aSeed] ?? null) : null;
+        bId = bSeed !== null && bSeed !== undefined ? (shuffled[bSeed] ?? null) : null;
       }
 
       const match = createMatch(tournamentId, round, slot, "winners", aId, bId, now);
@@ -121,42 +181,48 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
   }
 
   // ============ Create Losers Bracket ============
-  // Losers bracket structure is complex:
+  // Special case: With only 2 participants, there's no losers bracket
+  // The loser of the winners final goes directly to Grand Final with 1 life
+  //
+  // Losers bracket structure for 3+ participants is complex:
   // - Round 0: Losers from Winners R0 play each other
   // - Round 1: Winners of L-R0 vs losers from Winners R1
   // - Round 2: Winners of L-R1 play each other (halving)
   // - Round 3: Winners of L-R2 vs losers from Winners R2
   // - ... and so on
 
-  for (let lRound = 0; lRound < losersRounds; lRound++) {
-    // Calculate matches in this losers round
-    // Odd rounds: number halves from previous
-    // Even rounds: receives drop-ins from winners
+  // Skip losers bracket if only 2 participants
+  if (participants.length > 2) {
+    for (let lRound = 0; lRound < losersRounds; lRound++) {
+      // Calculate matches in this losers round
+      // Odd rounds: number halves from previous
+      // Even rounds: receives drop-ins from winners
 
-    let matchesInRound: number;
-    if (lRound === 0) {
-      // First losers round: half of first winners round
-      matchesInRound = bracketSize / 4;
-    } else if (lRound % 2 === 0) {
-      // Even rounds (2, 4, 6...): halving round (no new drop-ins)
-      matchesInRound = Math.max(1, Math.ceil(losersBracket[lRound - 1]?.length ?? 1) / 2);
-    } else {
-      // Odd rounds (1, 3, 5...): integration round with drop-ins
-      // Same number as previous round (drop-ins meet survivors)
-      matchesInRound = losersBracket[lRound - 1]?.length ?? 1;
+      let matchesInRound: number;
+      if (lRound === 0) {
+        // First losers round: half of first winners round
+        matchesInRound = bracketSize / 4;
+      } else if (lRound % 2 === 0) {
+        // Even rounds (2, 4, 6...): halving round (no new drop-ins)
+        matchesInRound = Math.max(1, Math.ceil(losersBracket[lRound - 1]?.length ?? 1) / 2);
+      } else {
+        // Odd rounds (1, 3, 5...): integration round with drop-ins
+        // Same number as previous round (drop-ins meet survivors)
+        matchesInRound = losersBracket[lRound - 1]?.length ?? 1;
+      }
+
+      matchesInRound = Math.max(1, matchesInRound);
+
+      const roundMatchIds: string[] = [];
+
+      for (let slot = 0; slot < matchesInRound; slot++) {
+        const match = createMatch(tournamentId, lRound, slot, "losers", null, null, now);
+        allMatches.push(match);
+        roundMatchIds.push(match.id);
+      }
+
+      losersBracket.push(roundMatchIds);
     }
-
-    matchesInRound = Math.max(1, matchesInRound);
-
-    const roundMatchIds: string[] = [];
-
-    for (let slot = 0; slot < matchesInRound; slot++) {
-      const match = createMatch(tournamentId, lRound, slot, "losers", null, null, now);
-      allMatches.push(match);
-      roundMatchIds.push(match.id);
-    }
-
-    losersBracket.push(roundMatchIds);
   }
 
   // ============ Create Grand Final ============
@@ -176,6 +242,9 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
   let firstPlayableMatchId: string | undefined;
   const winnersR0 = winnersBracket[0] || [];
 
+  // Track which winners R0 slots had BYEs (no loser will be produced)
+  const byeSlots = new Set<number>();
+
   for (const matchId of winnersR0) {
     const match = allMatches.find((m) => m.id === matchId);
     if (!match) continue;
@@ -188,6 +257,7 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
       match.playedAt = now;
       match.updatedAt = now;
       await db.saveMatch(match);
+      byeSlots.add(match.slot ?? 0);
       await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatch.id, grandFinalResetMatch.id);
     } else if (!match.aId && match.bId) {
       // B gets a BYE
@@ -197,9 +267,38 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
       match.playedAt = now;
       match.updatedAt = now;
       await db.saveMatch(match);
+      byeSlots.add(match.slot ?? 0);
       await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatch.id, grandFinalResetMatch.id);
     } else if (match.aId && match.bId && !firstPlayableMatchId) {
       firstPlayableMatchId = match.id;
+    }
+  }
+
+  // ============ Mark losers R0 slots that will never be filled (due to BYEs) ============
+  // In losers R0, matches pair up: slots (0,1)->L0, (2,3)->L1, etc.
+  // If a winners R0 slot had a BYE, the corresponding losers position won't get a loser
+  if (losersBracket.length > 0) {
+    const losersR0 = losersBracket[0] || [];
+    for (let losersSlot = 0; losersSlot < losersR0.length; losersSlot++) {
+      const losersMatchId = losersR0[losersSlot];
+      const losersMatch = losersMatchId ? allMatches.find((m) => m.id === losersMatchId) : undefined;
+      if (!losersMatch) continue;
+
+      // This losers match receives losers from winners slots (losersSlot*2) and (losersSlot*2+1)
+      const winnersSlotA = losersSlot * 2;
+      const winnersSlotB = losersSlot * 2 + 1;
+      const slotAHadBye = byeSlots.has(winnersSlotA);
+      const slotBHadBye = byeSlots.has(winnersSlotB);
+
+      // Mark slots that will never be filled due to BYEs
+      // We use a special marker to know this slot won't receive a loser
+      if (slotAHadBye) {
+        losersMatch.aId = "__BYE__";
+      }
+      if (slotBHadBye) {
+        losersMatch.bId = "__BYE__";
+      }
+      await db.saveMatch(losersMatch);
     }
   }
 
@@ -281,7 +380,18 @@ async function advanceDoubleElimWinner(
 
     // Send loser to losers bracket (only if there's a real loser)
     if (loserId) {
-      await sendToLosersBracket(round, slot, loserId, allMatches, losersBracket);
+      // Special case: no losers bracket (only 2 participants)
+      // The loser goes directly to Grand Final as B (with 1 life)
+      if (losersBracket.length === 0) {
+        const grandFinalMatch = allMatches.find((m) => m.id === grandFinalMatchId);
+        if (grandFinalMatch) {
+          grandFinalMatch.bId = loserId;
+          grandFinalMatch.updatedAt = Date.now();
+          await db.saveMatch(grandFinalMatch);
+        }
+      } else {
+        await sendToLosersBracket(round, slot, loserId, allMatches, losersBracket);
+      }
     }
 
   } else if (bracketSide === "losers") {
@@ -404,12 +514,80 @@ async function sendToLosersBracket(
       } else {
         targetMatch.bId = loserId;
       }
+
+      // Check if the other side is a BYE marker - auto-advance if so
+      const otherSideIsBye = isEvenSlot
+        ? targetMatch.bId === "__BYE__"
+        : targetMatch.aId === "__BYE__";
+
+      if (otherSideIsBye) {
+        // This loser gets a BYE in losers bracket
+        targetMatch.aId = isEvenSlot ? loserId : null;
+        targetMatch.bId = isEvenSlot ? null : loserId;
+        targetMatch.status = "completed";
+        targetMatch.winnerId = loserId;
+        targetMatch.loserId = null;
+        targetMatch.playedAt = Date.now();
+        targetMatch.updatedAt = Date.now();
+        await db.saveMatch(targetMatch);
+
+        // Advance to next losers round
+        await advanceLosersWinner(targetMatch, allMatches, losersBracket);
+        return;
+      }
     } else {
       // Integration rounds: drop-ins fill A side
       targetMatch.aId = loserId;
     }
     targetMatch.updatedAt = Date.now();
     await db.saveMatch(targetMatch);
+  }
+}
+
+/**
+ * Helper to advance a loser bracket winner (used for BYE auto-advancement)
+ */
+async function advanceLosersWinner(
+  completedMatch: Match,
+  allMatches: Match[],
+  losersBracket: string[][]
+): Promise<void> {
+  const { round, slot, winnerId } = completedMatch;
+  if (round === undefined || slot === undefined || !winnerId) return;
+
+  const nextRound = round + 1;
+  if (nextRound >= losersBracket.length) return;
+
+  const nextRoundMatches = losersBracket[nextRound]?.length ?? 1;
+  const currentRoundMatches = losersBracket[round]?.length ?? 1;
+
+  let nextSlot: number;
+  if (nextRoundMatches === currentRoundMatches) {
+    // Integration round: slot stays same, winner goes to B side
+    nextSlot = slot;
+  } else {
+    // Halving round: standard progression
+    nextSlot = Math.floor(slot / 2);
+  }
+
+  const nextMatchId = losersBracket[nextRound]?.[nextSlot];
+  const nextMatch = nextMatchId ? allMatches.find((m) => m.id === nextMatchId) : undefined;
+
+  if (nextMatch) {
+    if (nextRoundMatches === currentRoundMatches) {
+      // Integration round: survivor fills B
+      nextMatch.bId = winnerId;
+    } else {
+      // Halving round: standard A/B fill
+      const isEvenSlot = slot % 2 === 0;
+      if (isEvenSlot) {
+        nextMatch.aId = winnerId;
+      } else {
+        nextMatch.bId = winnerId;
+      }
+    }
+    nextMatch.updatedAt = Date.now();
+    await db.saveMatch(nextMatch);
   }
 }
 

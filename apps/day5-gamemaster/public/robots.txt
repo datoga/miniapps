@@ -6,4 +6,4 @@ Allow: /
 Disallow: /*/app/
 
 # Sitemaps
-Sitemap: https://gamemaster.vercel.app/sitemap.xml
+Sitemap: https://gamemaster.digital/sitemap.xml

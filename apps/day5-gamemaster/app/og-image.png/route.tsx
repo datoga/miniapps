@@ -8,7 +8,7 @@ export async function GET(): Promise<ImageResponse> {
     appName: "Game Master",
     tagline: "Organize gaming tournaments like a pro",
     icon: "👾",
-    features: ["Brackets", "Rankings", "TV Mode", "Free"],
+    features: ["Brackets", "Rankings", "Export", "Free"],
     gradientColors: ["#0f172a", "#1e3a5f"],
   });
 }

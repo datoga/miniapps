@@ -364,14 +364,18 @@ export function LadderView({ tournament, participants, matches, participantMap }
                 <div className="flex items-center justify-center gap-1">
                   <div className="flex flex-col items-center">
                     <input
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       value={timeMinutes}
                       onChange={(e) => {
-                        setTimeMinutes(e.target.value);
+                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, 3);
+                        setTimeMinutes(cleaned);
                         setReportError(null);
                       }}
-                      min={0}
-                      max={999}
+                      onBlur={(e) => {
+                        const val = parseInt(e.target.value) || 0;
+                        setTimeMinutes(Math.min(999, Math.max(0, val)).toString());
+                      }}
                       placeholder="0"
                       className="w-16 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                     />
@@ -380,15 +384,18 @@ export function LadderView({ tournament, participants, matches, participantMap }
                   <span className="text-2xl font-bold text-gray-400">:</span>
                   <div className="flex flex-col items-center">
                     <input
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       value={timeSeconds}
                       onChange={(e) => {
-                        const val = parseInt(e.target.value) || 0;
-                        setTimeSeconds(Math.min(59, Math.max(0, val)).toString().padStart(2, "0"));
+                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, 2);
+                        setTimeSeconds(cleaned);
                         setReportError(null);
                       }}
-                      min={0}
-                      max={59}
+                      onBlur={(e) => {
+                        const val = parseInt(e.target.value) || 0;
+                        setTimeSeconds(Math.min(59, Math.max(0, val)).toString().padStart(2, "0"));
+                      }}
                       placeholder="00"
                       className="w-16 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                     />
@@ -402,9 +409,12 @@ export function LadderView({ tournament, participants, matches, participantMap }
                       value={timeMillis}
                       onChange={(e) => {
                         const cleaned = e.target.value.replace(/\D/g, "").slice(0, 3);
-                        const val = parseInt(cleaned) || 0;
-                        setTimeMillis(Math.min(999, val).toString().padStart(3, "0"));
+                        setTimeMillis(cleaned);
                         setReportError(null);
+                      }}
+                      onBlur={(e) => {
+                        const val = parseInt(e.target.value) || 0;
+                        setTimeMillis(Math.min(999, val).toString().padStart(3, "0"));
                       }}
                       placeholder="000"
                       className="w-20 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
@@ -450,6 +460,7 @@ export function LadderView({ tournament, participants, matches, participantMap }
               <div className="space-y-1">
                 {localAttempts.map((attempt) => {
                   const participant = participantMap.get(attempt.participantId);
+                  const attemptTime = new Date(attempt.savedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
                   return (
                     <div
                       key={attempt.id}
@@ -459,12 +470,15 @@ export function LadderView({ tournament, participants, matches, participantMap }
                           : "bg-amber-50 dark:bg-amber-900/20"
                       }`}
                     >
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-2">
                         <span className={attempt.wasBetter ? "text-green-600" : "text-amber-600"}>
                           {attempt.wasBetter ? "✓" : "✗"}
                         </span>
                         <span className="font-medium text-gray-700 dark:text-gray-200">
                           {participant?.name || "?"}
+                        </span>
+                        <span className="text-xs text-gray-400 dark:text-gray-500">
+                          {attemptTime}
                         </span>
                       </div>
                       <span className={`font-bold ${

@@ -57,3 +57,12 @@ export function trackNavClick(destination: string, source: string) {
   trackEvent("nav_click", { destination, source });
 }
 
+// ============ Settings Events ============
+
+/**
+ * Track settings changes
+ */
+export function trackSettingsChanged(setting: string) {
+  trackEvent("settings_changed", { setting });
+}
+

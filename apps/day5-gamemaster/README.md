@@ -65,7 +65,7 @@ Gaming tournament organizer with elimination brackets and rankings. 100% client-
 | Environment | Origin |
 |-------------|--------|
 | Local dev | `http://localhost:3005` |
-| Vercel | `https://gamemaster.vercel.app` |
+| Vercel | `https://gamemaster.digital` |
 | Custom domain | `https://yourdomain.com` |
 
 5. Copy the **Client ID**
@@ -94,7 +94,7 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ### 3. Post-Deployment
 
 1. Add your Vercel domain to Google OAuth authorized origins
-2. Submit sitemap to Google Search Console: `https://gamemaster.vercel.app/sitemap.xml`
+2. Submit sitemap to Google Search Console: `https://gamemaster.digital/sitemap.xml`
 
 ## Local Development
 

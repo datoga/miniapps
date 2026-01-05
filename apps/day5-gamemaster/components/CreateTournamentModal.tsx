@@ -95,7 +95,7 @@ export function CreateTournamentModal({ open, onClose, onCreated }: CreateTourna
         {/* Tournament Name */}
         <div>
           <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t("tournament.create.name")}
+            {t("tournament.create.name")} <span className="text-red-500">*</span>
           </label>
           <input
             type="text"

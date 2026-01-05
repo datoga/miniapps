@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button, Footer } from "@miniapps/ui";
 import { LandingHeader } from "./LandingHeader";
 import { trackNavClick } from "@/lib/ga";
-import { isLocalEmpty } from "@/lib/db";
 
 interface LandingPageProps {
   locale: string;
@@ -15,41 +12,10 @@ interface LandingPageProps {
 
 export function LandingPage({ locale }: LandingPageProps) {
   const t = useTranslations();
-  const router = useRouter();
-  const [checking, setChecking] = useState(true);
-
-  // Check if user has existing data and redirect to app
-  useEffect(() => {
-    async function checkExistingData() {
-      try {
-        const isEmpty = await isLocalEmpty();
-        if (!isEmpty) {
-          // User has data, redirect to app
-          router.replace(`/${locale}/app`);
-          return;
-        }
-      } catch {
-        // IndexedDB not available or error, show landing
-      }
-      setChecking(false);
-    }
-    checkExistingData();
-  }, [locale, router]);
 
   const handleNavClick = (destination: string) => {
     trackNavClick(destination, "landing_page");
   };
-
-  // Show loading while checking for existing data
-  if (checking) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white dark:bg-gray-950">
-        <div className="text-center">
-          <div className="mb-4 text-5xl animate-pulse">🏆</div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
@@ -96,11 +62,16 @@ export function LandingPage({ locale }: LandingPageProps) {
             <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 dark:text-white">
               {t("landing.features.title")}
             </h2>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <FeatureCard
                 icon="🏅"
-                title={t("landing.features.bracket.title")}
-                description={t("landing.features.bracket.description")}
+                title={t("landing.features.singleElim.title")}
+                description={t("landing.features.singleElim.description")}
+              />
+              <FeatureCard
+                icon="💔"
+                title={t("landing.features.doubleElim.title")}
+                description={t("landing.features.doubleElim.description")}
               />
               <FeatureCard
                 icon="📊"
@@ -108,14 +79,19 @@ export function LandingPage({ locale }: LandingPageProps) {
                 description={t("landing.features.ladder.description")}
               />
               <FeatureCard
-                icon="📺"
-                title={t("landing.features.tv.title")}
-                description={t("landing.features.tv.description")}
+                icon="👥"
+                title={t("landing.features.participants.title")}
+                description={t("landing.features.participants.description")}
               />
               <FeatureCard
-                icon="📱"
-                title={t("landing.features.offline.title")}
-                description={t("landing.features.offline.description")}
+                icon="💾"
+                title={t("landing.features.local.title")}
+                description={t("landing.features.local.description")}
+              />
+              <FeatureCard
+                icon="🎮"
+                title={t("landing.features.games.title")}
+                description={t("landing.features.games.description")}
               />
             </div>
           </div>
@@ -144,4 +120,3 @@ function FeatureCard({
     </div>
   );
 }
-

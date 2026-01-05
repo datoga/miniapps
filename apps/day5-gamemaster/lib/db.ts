@@ -1,38 +1,31 @@
-import { openDB, type IDBPDatabase, type DBSchema } from "idb";
-import type { Tournament, Participant, Match, Meta } from "./schemas";
-import { defaultMeta, WorkspaceSnapshotSchema } from "./schemas";
+"use client";
 
-const DB_NAME = "tournament_manager";
-const DB_VERSION = 1;
+/**
+ * Database layer - Local storage only (no cloud sync)
+ * Uses IndexedDB via @miniapps/storage for persistence
+ */
 
-// Define the database schema
-interface TournamentDB extends DBSchema {
-  meta: {
-    key: string;
-    value: Meta;
-  };
-  tournaments: {
-    key: string;
-    value: Tournament;
-    indexes: {
-      byStatus: string;
-    };
-  };
-  participants: {
-    key: string;
-    value: Participant;
-  };
-  matches: {
-    key: string;
-    value: Match;
-    indexes: {
-      byTournamentId: string;
-      byStatus: string;
-    };
-  };
+import { getJSON, setJSON, remove } from "@miniapps/storage";
+import type { Tournament, Participant, Match, WorkspaceSnapshot } from "./schemas";
+import { WorkspaceSnapshotSchema } from "./schemas";
+
+const STORAGE_KEY = "gamemaster-data";
+
+// ============ In-Memory Cache ============
+
+interface DataCache {
+  tournaments: Map<string, Tournament>;
+  participants: Map<string, Participant>;
+  matches: Map<string, Match>;
+  loaded: boolean;
 }
 
-let dbPromise: Promise<IDBPDatabase<TournamentDB>> | null = null;
+const cache: DataCache = {
+  tournaments: new Map(),
+  participants: new Map(),
+  matches: new Map(),
+  loaded: false,
+};
 
 // DB change listeners
 type DbChangeListener = () => void;
@@ -59,251 +52,256 @@ export function notifyDbChanged(): void {
   });
 }
 
+// ============ Load/Save to Storage ============
+
 /**
- * Initialize or get the IndexedDB database
+ * Load data from IndexedDB into cache
  */
-export async function getDB(): Promise<IDBPDatabase<TournamentDB>> {
-  if (typeof window === "undefined") {
-    throw new Error("IndexedDB is only available in the browser");
+async function loadFromStorage(): Promise<void> {
+  try {
+    const data = await getJSON<WorkspaceSnapshot>(STORAGE_KEY);
+    if (data) {
+      cache.tournaments.clear();
+      cache.participants.clear();
+      cache.matches.clear();
+
+      for (const t of data.tournaments || []) {
+        cache.tournaments.set(t.id, t);
+      }
+      for (const p of data.participants || []) {
+        cache.participants.set(p.id, p);
+      }
+      for (const m of data.matches || []) {
+        cache.matches.set(m.id, m);
+      }
+    }
+  } catch (error) {
+    console.error("Error loading from storage:", error);
   }
-
-  if (!dbPromise) {
-    dbPromise = openDB<TournamentDB>(DB_NAME, DB_VERSION, {
-      upgrade(db) {
-        // Meta store (singleton)
-        if (!db.objectStoreNames.contains("meta")) {
-          db.createObjectStore("meta", { keyPath: "id" });
-        }
-
-        // Tournaments store
-        if (!db.objectStoreNames.contains("tournaments")) {
-          const store = db.createObjectStore("tournaments", { keyPath: "id" });
-          store.createIndex("byStatus", "status");
-        }
-
-        // Participants store
-        if (!db.objectStoreNames.contains("participants")) {
-          db.createObjectStore("participants", { keyPath: "id" });
-        }
-
-        // Matches store
-        if (!db.objectStoreNames.contains("matches")) {
-          const store = db.createObjectStore("matches", { keyPath: "id" });
-          store.createIndex("byTournamentId", "tournamentId");
-          store.createIndex("byStatus", "status");
-        }
-      },
-    });
-  }
-
-  return dbPromise;
+  cache.loaded = true;
 }
 
-// ============ Meta Operations ============
+/**
+ * Save cache to IndexedDB
+ */
+async function saveToStorage(): Promise<void> {
+  const snapshot: WorkspaceSnapshot = {
+    schemaVersion: 1,
+    appId: "gamemaster",
+    updatedAt: Date.now(),
+    tournaments: Array.from(cache.tournaments.values()),
+    participants: Array.from(cache.participants.values()),
+    matches: Array.from(cache.matches.values()),
+  };
 
-export async function getMeta(): Promise<Meta> {
-  const db = await getDB();
-  const stored = await db.get("meta", "meta");
-  return stored || defaultMeta;
+  try {
+    await setJSON(STORAGE_KEY, snapshot);
+  } catch (error) {
+    console.error("Error saving to storage:", error);
+  }
 }
 
-export async function saveMeta(meta: Partial<Meta>): Promise<void> {
-  const db = await getDB();
-  const current = await getMeta();
-  await db.put("meta", { ...current, ...meta, id: "meta" });
+// ============ Initialization ============
+
+let initPromise: Promise<void> | null = null;
+
+/**
+ * Initialize the database - load data from storage
+ */
+export async function initializeDb(): Promise<void> {
+  if (initPromise) {
+    return initPromise;
+  }
+
+  initPromise = loadFromStorage();
+  await initPromise;
+  notifyDbChanged();
+}
+
+/**
+ * Check if data is loaded
+ */
+export function isDataLoaded(): boolean {
+  return cache.loaded;
 }
 
 // ============ Tournament Operations ============
 
-export async function getAllTournaments(): Promise<Tournament[]> {
-  const db = await getDB();
-  return db.getAll("tournaments");
+export function getAllTournaments(): Tournament[] {
+  return Array.from(cache.tournaments.values()).sort((a, b) => {
+    // Sort by updatedAt descending (newest first)
+    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+  });
 }
 
-export async function getTournament(id: string): Promise<Tournament | undefined> {
-  const db = await getDB();
-  return db.get("tournaments", id);
+export function getTournament(id: string): Tournament | undefined {
+  return cache.tournaments.get(id);
 }
 
-export async function saveTournament(tournament: Tournament): Promise<void> {
-  const db = await getDB();
-  await db.put("tournaments", tournament);
+export function saveTournament(tournament: Tournament): void {
+  cache.tournaments.set(tournament.id, tournament);
   notifyDbChanged();
+  saveToStorage();
 }
 
-export async function deleteTournament(id: string): Promise<void> {
-  const db = await getDB();
-  const tx = db.transaction(["tournaments", "matches"], "readwrite");
-
-  // Delete all matches for this tournament
-  const matches = await tx.objectStore("matches").index("byTournamentId").getAll(id);
-  for (const match of matches) {
-    await tx.objectStore("matches").delete(match.id);
-  }
-
-  // Delete the tournament
-  await tx.objectStore("tournaments").delete(id);
-  await tx.done;
+export function deleteTournament(id: string): void {
+  cache.tournaments.delete(id);
   notifyDbChanged();
+  saveToStorage();
 }
 
 // ============ Participant Operations ============
 
-export async function getAllParticipants(): Promise<Participant[]> {
-  const db = await getDB();
-  return db.getAll("participants");
+export function getAllParticipants(): Participant[] {
+  return Array.from(cache.participants.values());
 }
 
-export async function getParticipant(id: string): Promise<Participant | undefined> {
-  const db = await getDB();
-  return db.get("participants", id);
+export function getParticipant(id: string): Participant | undefined {
+  return cache.participants.get(id);
 }
 
-export async function getParticipantsByIds(ids: string[]): Promise<Participant[]> {
-  const db = await getDB();
-  const results: Participant[] = [];
-  for (const id of ids) {
-    const participant = await db.get("participants", id);
-    if (participant) {
-      results.push(participant);
-    }
-  }
-  return results;
+export function getParticipantsByIds(ids: string[]): Participant[] {
+  return ids.map((id) => cache.participants.get(id)).filter(Boolean) as Participant[];
 }
 
-export async function saveParticipant(participant: Participant): Promise<void> {
-  const db = await getDB();
-  await db.put("participants", participant);
+export function saveParticipant(participant: Participant): void {
+  cache.participants.set(participant.id, participant);
   notifyDbChanged();
+  saveToStorage();
 }
 
-export async function deleteParticipant(id: string): Promise<void> {
-  const db = await getDB();
-  await db.delete("participants", id);
+export function deleteParticipant(id: string): void {
+  cache.participants.delete(id);
   notifyDbChanged();
+  saveToStorage();
 }
 
 // ============ Match Operations ============
 
-export async function getAllMatches(): Promise<Match[]> {
-  const db = await getDB();
-  return db.getAll("matches");
+export function getAllMatches(): Match[] {
+  return Array.from(cache.matches.values());
 }
 
-export async function getMatchesForTournament(tournamentId: string): Promise<Match[]> {
-  const db = await getDB();
-  return db.getAllFromIndex("matches", "byTournamentId", tournamentId);
+export function getMatchesForTournament(tournamentId: string): Match[] {
+  return Array.from(cache.matches.values()).filter(
+    (m) => m.tournamentId === tournamentId
+  );
 }
 
-export async function getMatch(id: string): Promise<Match | undefined> {
-  const db = await getDB();
-  return db.get("matches", id);
+export function getMatch(id: string): Match | undefined {
+  return cache.matches.get(id);
 }
 
-export async function saveMatch(match: Match): Promise<void> {
-  const db = await getDB();
-  await db.put("matches", match);
+export function saveMatch(match: Match): void {
+  cache.matches.set(match.id, match);
   notifyDbChanged();
+  saveToStorage();
 }
 
-export async function deleteMatch(id: string): Promise<void> {
-  const db = await getDB();
-  await db.delete("matches", id);
+export function deleteMatch(id: string): void {
+  cache.matches.delete(id);
   notifyDbChanged();
+  saveToStorage();
 }
 
-// ============ Snapshot Operations (for Drive sync) ============
+// ============ Batch Operations ============
+
+export function saveBatch(data: {
+  tournaments?: Tournament[];
+  participants?: Participant[];
+  matches?: Match[];
+}): void {
+  if (data.tournaments) {
+    for (const t of data.tournaments) {
+      cache.tournaments.set(t.id, t);
+    }
+  }
+  if (data.participants) {
+    for (const p of data.participants) {
+      cache.participants.set(p.id, p);
+    }
+  }
+  if (data.matches) {
+    for (const m of data.matches) {
+      cache.matches.set(m.id, m);
+    }
+  }
+  notifyDbChanged();
+  saveToStorage();
+}
 
 /**
- * Check if local database is empty (no tournaments)
+ * Clear all data
  */
-export async function isLocalEmpty(): Promise<boolean> {
-  const tournaments = await getAllTournaments();
-  return tournaments.length === 0;
+export async function clearAllData(): Promise<void> {
+  cache.tournaments.clear();
+  cache.participants.clear();
+  cache.matches.clear();
+  notifyDbChanged();
+
+  try {
+    await remove(STORAGE_KEY);
+  } catch (error) {
+    console.error("Error clearing storage:", error);
+  }
 }
 
-/**
- * Get a complete snapshot of the workspace for backup
- */
-export async function getWorkspaceSnapshot(): Promise<{
-  schemaVersion: 1;
-  appId: "gamemaster";
-  updatedAt: number;
-  tournaments: Tournament[];
-  participants: Participant[];
-  matches: Match[];
-}> {
-  const [tournaments, participants, matches] = await Promise.all([
-    getAllTournaments(),
-    getAllParticipants(),
-    getAllMatches(),
-  ]);
+// ============ Export/Import ============
 
+/**
+ * Export all data as a JSON object
+ */
+export function exportData(): WorkspaceSnapshot {
   return {
     schemaVersion: 1,
     appId: "gamemaster",
     updatedAt: Date.now(),
-    tournaments,
-    participants,
-    matches,
+    tournaments: Array.from(cache.tournaments.values()),
+    participants: Array.from(cache.participants.values()),
+    matches: Array.from(cache.matches.values()),
   };
 }
 
 /**
- * Apply a workspace snapshot (clear and replace all data)
+ * Import data from a JSON object (replaces all existing data)
  */
-export async function applyWorkspaceSnapshot(snapshot: unknown): Promise<boolean> {
-  // Validate the snapshot
-  const result = WorkspaceSnapshotSchema.safeParse(snapshot);
-  if (!result.success) {
-    console.error("Invalid snapshot schema:", result.error);
-    return false;
-  }
-
-  const data = result.data;
-
-  const db = await getDB();
-  const tx = db.transaction(["tournaments", "participants", "matches"], "readwrite");
-
+export async function importData(data: unknown): Promise<{ success: boolean; error?: string }> {
   try {
+    // Validate the data structure
+    const parsed = WorkspaceSnapshotSchema.safeParse(data);
+
+    if (!parsed.success) {
+      return { success: false, error: "Invalid data format" };
+    }
+
+    const snapshot = parsed.data;
+
     // Clear existing data
-    await tx.objectStore("tournaments").clear();
-    await tx.objectStore("participants").clear();
-    await tx.objectStore("matches").clear();
+    cache.tournaments.clear();
+    cache.participants.clear();
+    cache.matches.clear();
 
-    // Import new data
-    for (const tournament of data.tournaments) {
-      await tx.objectStore("tournaments").put(tournament);
+    // Load new data
+    for (const t of snapshot.tournaments) {
+      cache.tournaments.set(t.id, t);
     }
-    for (const participant of data.participants) {
-      await tx.objectStore("participants").put(participant);
+    for (const p of snapshot.participants) {
+      cache.participants.set(p.id, p);
     }
-    for (const match of data.matches) {
-      await tx.objectStore("matches").put(match);
+    for (const m of snapshot.matches) {
+      cache.matches.set(m.id, m);
     }
 
-    await tx.done;
+    // Save to storage
+    await saveToStorage();
     notifyDbChanged();
-    return true;
+
+    return { success: true };
   } catch (error) {
-    console.error("Error applying snapshot:", error);
-    return false;
+    console.error("Error importing data:", error);
+    return { success: false, error: "Failed to import data" };
   }
 }
 
-/**
- * Clear all data (for testing or reset)
- */
-export async function clearAllData(): Promise<void> {
-  const db = await getDB();
-  const tx = db.transaction(["tournaments", "participants", "matches", "meta"], "readwrite");
-
-  await tx.objectStore("tournaments").clear();
-  await tx.objectStore("participants").clear();
-  await tx.objectStore("matches").clear();
-  await tx.objectStore("meta").clear();
-
-  await tx.done;
-  notifyDbChanged();
-}
-
+// Type re-exports
+export type { Tournament, Participant, Match, WorkspaceSnapshot } from "./schemas";

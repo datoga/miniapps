@@ -26,6 +26,8 @@ export interface ConfirmDialogProps {
   loading?: boolean;
   /** aria-label for close button */
   closeLabel?: string;
+  /** Additional content to render between message and buttons */
+  children?: React.ReactNode;
 }
 
 const variantStyles = {
@@ -62,6 +64,7 @@ export const ConfirmDialog = memo(function ConfirmDialog({
   variant = "default",
   loading = false,
   closeLabel,
+  children,
 }: ConfirmDialogProps) {
   const handleConfirm = () => {
     onConfirm();
@@ -75,9 +78,11 @@ export const ConfirmDialog = memo(function ConfirmDialog({
       size="sm"
       closeLabel={closeLabel}
     >
-      <p className="mb-6 text-gray-600 dark:text-gray-400">{message}</p>
+      <p className="text-gray-600 dark:text-gray-400">{message}</p>
 
-      <div className="flex justify-end gap-3">
+      {children}
+
+      <div className="mt-6 flex justify-end gap-3">
         <Button variant="secondary" onClick={onCancel} disabled={loading}>
           {cancelLabel}
         </Button>

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ThemeToggle, LocaleSwitcher } from "@miniapps/ui";
 import { trackNavClick } from "@/lib/ga";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 interface AppHeaderProps {
   locale: string;
@@ -118,6 +119,7 @@ export function AppHeader({
             )}
           </nav>
           {rightContent}
+          <ProfileDropdown locale={locale} />
           <LocaleSwitcher />
           <ThemeToggle />
         </div>

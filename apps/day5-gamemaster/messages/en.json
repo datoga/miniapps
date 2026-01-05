@@ -3,6 +3,19 @@
     "title": "Game Master",
     "description": "Organize gaming tournaments like a pro"
   },
+  "auth": {
+    "subtitle": "Your personal tournament manager",
+    "description": "Connect your Google account to securely save your tournaments in the cloud.",
+    "signInWithGoogle": "Continue with Google",
+    "connecting": "Connecting...",
+    "signInError": "Could not sign in. Please try again.",
+    "loadError": "Could not load data. Please try again.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "feature1": "Your data safe in Google Drive",
+    "feature2": "Access from any device",
+    "feature3": "Automatic sync",
+    "privacyNote": "We only access a private app folder. We don't read your other files."
+  },
   "nav": {
     "dashboard": "Dashboard",
     "about": "About",
@@ -18,42 +31,48 @@
     },
     "features": {
       "title": "Everything you need",
-      "bracket": {
+      "singleElim": {
         "title": "Single Elimination",
-        "description": "Classic bracket format with automatic BYE handling"
+        "description": "Classic bracket format. Losers are eliminated immediately"
+      },
+      "doubleElim": {
+        "title": "Double Elimination",
+        "description": "Second chance for everyone. You need to lose twice to be eliminated"
       },
       "ladder": {
-        "title": "Score Rankings",
-        "description": "Each participant records their best score or time"
+        "title": "Rankings",
+        "description": "Rank by high score or best time. Perfect for speedruns and high scores"
       },
-      "tv": {
-        "title": "TV Mode",
-        "description": "Optimized display for big screens and projectors"
+      "participants": {
+        "title": "Solo or Pairs",
+        "description": "Create tournaments for individual players or 2-person teams"
       },
-      "offline": {
-        "title": "Works Offline",
-        "description": "All data stored locally. No internet required"
+      "local": {
+        "title": "No Sign-up",
+        "description": "Works offline. Export and import your data as JSON anytime"
+      },
+      "games": {
+        "title": "Any Game",
+        "description": "Mario Kart, FIFA, Smash Bros, board games... whatever you want!"
       }
     }
   },
   "about": {
     "title": "About Game Master",
-    "description": "Game Master is a free, private, and offline-first application for organizing gaming tournaments and competitions.",
+    "description": "Game Master is a free and private application for organizing gaming tournaments and competitions.",
     "features": {
       "title": "Features",
       "list": [
-        "Single elimination brackets with automatic seeding",
+        "Single and double elimination brackets",
         "Score rankings with built-in countdown timer",
-        "Support for individuals, pairs, and teams",
-        "TV-friendly Now Playing display",
-        "Google Drive backup (optional)",
-        "Works completely offline",
-        "No account required"
+        "Support for individuals and pairs",
+        "Export and import JSON backups",
+        "No registration or account required"
       ]
     },
     "privacy": {
       "title": "Privacy",
-      "description": "Your tournament data stays on your device. Google Drive backup is optional and uses a private app folder that only this app can access."
+      "description": "Your tournament data is stored locally in your browser. We don't store your data on any server. You can export and import backups in JSON format."
     }
   },
   "dashboard": {
@@ -198,14 +217,6 @@
       "viewRanking": "View Full Ranking",
       "hideRanking": "Hide Ranking"
     },
-    "tv": {
-      "mode": "TV Display Mode",
-      "syncing": "Syncing...",
-      "lastUpdate": "Last update",
-      "autoRefresh": "Auto-refresh every 15s",
-      "preparing": "Preparing Tournament...",
-      "winner": "Winner"
-    },
     "bracket": {
       "title": "Bracket",
       "singleElimination": "Single Elimination",
@@ -255,6 +266,67 @@
       "offline": "Offline"
     },
     "lastSync": "Last sync"
+  },
+  "settings": {
+    "title": "Settings",
+    "data": {
+      "title": "Your Data",
+      "tournaments": "Tournaments",
+      "participants": "Participants"
+    },
+    "backup": {
+      "title": "Backup",
+      "description": "Export your data to save it or transfer to another device. Import a file to restore a backup.",
+      "export": "Export Data (JSON)",
+      "import": "Import Data",
+      "importConfirmTitle": "Import data?",
+      "importConfirmMessage": "This will replace all your current data with the file contents. This action cannot be undone.",
+      "importConfirm": "Yes, import",
+      "importSuccess": "Data imported successfully",
+      "invalidFile": "Invalid file. Make sure it's a JSON file exported from Game Master.",
+      "error": "Error importing data"
+    },
+    "danger": {
+      "title": "Danger Zone",
+      "description": "These actions are irreversible. Please be careful.",
+      "descriptionLocal": "This will delete all data saved in this browser.",
+      "deleteAll": "Delete All Data",
+      "confirmTitle": "Delete all data?",
+      "confirmMessage": "This will permanently delete all your tournaments, participants, and match history. This action cannot be undone."
+    }
+  },
+  "sync": {
+    "synced": "Synced",
+    "pending": "Pending",
+    "syncing": "Syncing...",
+    "error": "Error",
+    "offline": "Offline",
+    "paused": "Paused",
+    "readOnly": "Read-only",
+    "edit": "Edit",
+    "never": "Never",
+    "justNow": "Just now",
+    "minutesAgo": "{minutes} min ago",
+    "readOnlyMode": "Read-only mode",
+    "pause": "Pause sync",
+    "resume": "Resume sync",
+    "syncNow": "Sync now",
+    "readOnlyInfo": "In read-only mode, changes are not saved to Drive. Useful for viewing tournaments without modifying them.",
+    "autoSyncInfo": "Changes are automatically synced every 30 seconds.",
+    "conflict": {
+      "title": "Data Conflict",
+      "description": "You have data both on this device and in Google Drive. Which do you want to keep?",
+      "local": "This Device",
+      "remote": "Google Drive",
+      "tournaments": "tournaments",
+      "participants": "participants",
+      "lastModified": "Last modified",
+      "keepLocal": "Use local data",
+      "keepRemote": "Use Drive data",
+      "useLocal": "Use this device",
+      "useRemote": "Use Google Drive",
+      "warning": "⚠️ The unselected data will be overwritten"
+    }
   },
   "common": {
     "save": "Save",

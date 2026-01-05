@@ -80,7 +80,7 @@ export const Modal = memo(function Modal({
   const sizeClass = sizeClasses[size] || size;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
@@ -91,10 +91,11 @@ export const Modal = memo(function Modal({
       {/* Modal content */}
       <div
         className={cn(
-          "relative max-h-[90vh] w-full overflow-auto rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-900 border border-gray-100 dark:border-gray-800 transition-all",
+          "relative max-h-[85vh] sm:max-h-[90vh] w-full overflow-y-auto overscroll-contain rounded-t-xl sm:rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-900 border border-gray-100 dark:border-gray-800 transition-all",
           sizeClass,
           className
         )}
+        style={{ WebkitOverflowScrolling: "touch" }}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"

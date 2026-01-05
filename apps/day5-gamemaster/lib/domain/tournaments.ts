@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import * as db from "../db";
 import type { Tournament, TournamentMode, ParticipantType, TournamentStatus, LadderType, GameConfig } from "../schemas";
-import { trackTournamentCreated, trackFirstValue } from "../ga";
+import { trackTournamentCreated } from "../ga";
 
 export interface CreateTournamentInput {
   name: string;
@@ -40,13 +40,6 @@ export async function createTournament(input: CreateTournamentInput): Promise<To
 
   // Track GA event
   trackTournamentCreated(tournament.mode, tournament.participantType);
-
-  // Check and fire first_value event
-  const meta = await db.getMeta();
-  if (!meta.firstValueFired) {
-    trackFirstValue();
-    await db.saveMeta({ firstValueFired: true });
-  }
 
   return tournament;
 }

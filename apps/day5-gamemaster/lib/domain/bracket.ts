@@ -23,6 +23,85 @@ function getNumRounds(size: number): number {
 }
 
 /**
+ * Generate proper bracket seeding
+ *
+ * For n participants in a bracket of size s:
+ * - numByes = s - n (participants that get a bye)
+ * - Top seeds get byes, bottom seeds play in round 1
+ *
+ * Example: 5 participants in 8-bracket
+ * - 3 byes (seeds 1, 2, 3 advance to round 2)
+ * - 1 real match in round 1 (seeds 4 vs 5)
+ *
+ * Standard 8-bracket seeding:
+ * Match 0: Seed 1 vs Seed 8 (slots 0, 1)
+ * Match 1: Seed 4 vs Seed 5 (slots 2, 3)
+ * Match 2: Seed 2 vs Seed 7 (slots 4, 5)
+ * Match 3: Seed 3 vs Seed 6 (slots 6, 7)
+ */
+function generateBracketSeeding(numParticipants: number, bracketSize: number): (number | null)[] {
+  // Generate the bracket slot order (which seed goes to which slot)
+  const slotOrder = generateSlotOrder(bracketSize);
+
+  // slotOrder[i] = which seed (0-indexed) should be in slot i
+  // e.g., for 8: [0, 7, 3, 4, 1, 6, 2, 5]
+  // Meaning slot 0 has seed 0, slot 1 has seed 7, etc.
+
+  // Create the bracket slots, only filling participants we have
+  const slots: (number | null)[] = new Array(bracketSize).fill(null);
+
+  for (let slot = 0; slot < bracketSize; slot++) {
+    const seed = slotOrder[slot];
+    if (seed !== undefined && seed < numParticipants) {
+      slots[slot] = seed;
+    }
+  }
+
+  return slots;
+}
+
+/**
+ * Generate standard tournament bracket slot order
+ * Returns array where index is slot position and value is seed (0-indexed)
+ *
+ * For 8-bracket: [0, 7, 3, 4, 1, 6, 2, 5]
+ * - Slot 0: Seed 0 (1st), Slot 1: Seed 7 (8th) → Match 0: 1 vs 8
+ * - Slot 2: Seed 3 (4th), Slot 3: Seed 4 (5th) → Match 1: 4 vs 5
+ * - Slot 4: Seed 1 (2nd), Slot 5: Seed 6 (7th) → Match 2: 2 vs 7
+ * - Slot 6: Seed 2 (3rd), Slot 7: Seed 5 (6th) → Match 3: 3 vs 6
+ */
+function generateSlotOrder(bracketSize: number): number[] {
+  // Standard seeding algorithm - iterative approach
+  // Start with [0, 1] for size 2, then expand
+  let order = [0, 1];
+
+  while (order.length < bracketSize) {
+    const newOrder: number[] = [];
+    const currentSize = order.length;
+    const newSize = currentSize * 2;
+
+    // For each match in current order, split into two matches
+    // with complementary seeds
+    for (let i = 0; i < currentSize; i += 2) {
+      const seed1 = order[i]!;
+      const seed2 = order[i + 1]!;
+
+      // First match: seed1 vs its complement in new size
+      newOrder.push(seed1);
+      newOrder.push(newSize - 1 - seed1);
+
+      // Second match: seed2 vs its complement in new size
+      newOrder.push(seed2);
+      newOrder.push(newSize - 1 - seed2);
+    }
+
+    order = newOrder;
+  }
+
+  return order;
+}
+
+/**
  * Start a single elimination tournament
  */
 export async function startSingleElimTournament(tournamentId: string): Promise<Tournament | null> {
@@ -36,8 +115,11 @@ export async function startSingleElimTournament(tournamentId: string): Promise<T
   const numRounds = getNumRounds(bracketSize);
   const now = Date.now();
 
-  // Shuffle participants for seeding (simple random)
+  // Shuffle participants for random seeding
   const shuffled = [...participants].sort(() => Math.random() - 0.5);
+
+  // Generate proper bracket seeding
+  const seeding = generateBracketSeeding(shuffled.length, bracketSize);
 
   // Create matches for all rounds
   const matchesByRound: string[][] = [];
@@ -54,12 +136,14 @@ export async function startSingleElimTournament(tournamentId: string): Promise<T
       let aId: string | null = null;
       let bId: string | null = null;
 
-      // Only first round has initial participants
+      // Only first round has initial participants based on seeding
       if (round === 0) {
-        const aIndex = slot * 2;
-        const bIndex = slot * 2 + 1;
-        aId = aIndex < shuffled.length ? (shuffled[aIndex] ?? null) : null;
-        bId = bIndex < shuffled.length ? (shuffled[bIndex] ?? null) : null;
+        const aSlot = slot * 2;
+        const bSlot = slot * 2 + 1;
+        const aSeed = seeding[aSlot];
+        const bSeed = seeding[bSlot];
+        aId = aSeed !== null && aSeed !== undefined ? (shuffled[aSeed] ?? null) : null;
+        bId = bSeed !== null && bSeed !== undefined ? (shuffled[bSeed] ?? null) : null;
       }
 
       const match: Match = {

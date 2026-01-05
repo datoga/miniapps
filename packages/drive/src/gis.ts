@@ -24,10 +24,91 @@ interface GoogleWindow extends Window {
   };
 }
 
-// In-memory token and profile storage (never persisted)
+// Storage keys
+const STORAGE_KEY_TOKEN = "gis_access_token";
+const STORAGE_KEY_TOKEN_EXPIRY = "gis_token_expiry";
+const STORAGE_KEY_PROFILE = "gis_profile";
+
+// In-memory cache (loaded from localStorage on first access)
 let currentAccessToken: string | null = null;
+let tokenExpiry: number | null = null;
 let currentProfile: GoogleProfile | null = null;
 let gisLoaded = false;
+let storageLoaded = false;
+
+/**
+ * Load auth state from localStorage
+ */
+function loadFromStorage(): void {
+  if (storageLoaded || typeof window === "undefined") return;
+  storageLoaded = true;
+
+  try {
+    const token = localStorage.getItem(STORAGE_KEY_TOKEN);
+    const expiry = localStorage.getItem(STORAGE_KEY_TOKEN_EXPIRY);
+    const profile = localStorage.getItem(STORAGE_KEY_PROFILE);
+
+    console.log("[GIS] Loading from storage:", {
+      hasToken: !!token,
+      hasExpiry: !!expiry,
+      hasProfile: !!profile
+    });
+
+    if (token && expiry) {
+      const expiryTime = parseInt(expiry, 10);
+      const timeUntilExpiry = expiryTime - Date.now();
+      console.log("[GIS] Token expiry check:", {
+        expiresIn: Math.round(timeUntilExpiry / 1000 / 60) + " minutes"
+      });
+
+      // Check if token is still valid (with 5 min buffer)
+      if (Date.now() < expiryTime - 5 * 60 * 1000) {
+        currentAccessToken = token;
+        tokenExpiry = expiryTime;
+        console.log("[GIS] Token loaded successfully");
+      } else {
+        // Token expired, clear it
+        console.log("[GIS] Token expired, clearing");
+        localStorage.removeItem(STORAGE_KEY_TOKEN);
+        localStorage.removeItem(STORAGE_KEY_TOKEN_EXPIRY);
+      }
+    }
+
+    if (profile) {
+      currentProfile = JSON.parse(profile);
+      console.log("[GIS] Profile loaded:", currentProfile?.name || currentProfile?.email);
+    }
+  } catch (error) {
+    console.warn("Failed to load auth from storage:", error);
+  }
+}
+
+/**
+ * Save auth state to localStorage
+ */
+function saveToStorage(): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    if (currentAccessToken && tokenExpiry) {
+      localStorage.setItem(STORAGE_KEY_TOKEN, currentAccessToken);
+      localStorage.setItem(STORAGE_KEY_TOKEN_EXPIRY, tokenExpiry.toString());
+      console.log("[GIS] Token saved to storage");
+    } else {
+      localStorage.removeItem(STORAGE_KEY_TOKEN);
+      localStorage.removeItem(STORAGE_KEY_TOKEN_EXPIRY);
+    }
+
+    if (currentProfile) {
+      localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(currentProfile));
+      console.log("[GIS] Profile saved to storage:", currentProfile.name || currentProfile.email);
+    } else {
+      localStorage.removeItem(STORAGE_KEY_PROFILE);
+    }
+  } catch (error) {
+    console.warn("Failed to save auth to storage:", error);
+  }
+}
 
 /**
  * Check if Google Client ID is configured
@@ -141,6 +222,11 @@ export async function requestAccessToken(
           }
 
           currentAccessToken = response.access_token;
+          // Google tokens expire in ~1 hour (3600 seconds)
+          // Use expires_in from response or default to 3600
+          const expiresIn = (response as { expires_in?: number }).expires_in || 3600;
+          tokenExpiry = Date.now() + expiresIn * 1000;
+          saveToStorage();
           resolve(response.access_token);
         },
         error_callback: (error) => {
@@ -163,9 +249,10 @@ export async function requestAccessToken(
 }
 
 /**
- * Get current access token (from memory)
+ * Get current access token (from memory or localStorage)
  */
 export function getAccessToken(): string | null {
+  loadFromStorage();
   return currentAccessToken;
 }
 
@@ -174,7 +261,20 @@ export function getAccessToken(): string | null {
  */
 export function clearAuth(): void {
   currentAccessToken = null;
+  tokenExpiry = null;
   currentProfile = null;
+  storageLoaded = false;
+
+  // Clear from localStorage
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.removeItem(STORAGE_KEY_TOKEN);
+      localStorage.removeItem(STORAGE_KEY_TOKEN_EXPIRY);
+      localStorage.removeItem(STORAGE_KEY_PROFILE);
+    } catch (error) {
+      console.warn("Failed to clear auth from storage:", error);
+    }
+  }
 }
 
 /**
@@ -198,6 +298,7 @@ export async function fetchUserProfile(
       email: data.email || "",
       pictureUrl: data.picture || "",
     };
+    saveToStorage();
     return currentProfile;
   } catch (error) {
     console.error("Failed to fetch user profile:", error);
@@ -206,9 +307,10 @@ export async function fetchUserProfile(
 }
 
 /**
- * Get current profile (from memory)
+ * Get current profile (from memory or localStorage)
  */
 export function getProfile(): GoogleProfile | null {
+  loadFromStorage();
   return currentProfile;
 }
 

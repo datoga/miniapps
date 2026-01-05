@@ -1,29 +1,26 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Footer } from "@miniapps/ui";
 import { AppHeader } from "./AppHeader";
+import { AuthGate } from "./AuthGate";
 import { CreateTournamentModal } from "./CreateTournamentModal";
 import { TournamentCard } from "./TournamentCard";
-import { SyncStatusIndicator } from "./SyncStatusIndicator";
 import { useTournamentList } from "@/lib/hooks/useTournamentData";
-import { initializeSync, setupAutoPush } from "@/lib/sync";
-import { trackFirstValue } from "@/lib/ga";
-import * as db from "@/lib/db";
+import { getAllParticipants } from "@/lib/db";
 
 interface AppHomeProps {
   locale: string;
 }
 
-export function AppHome({ locale }: AppHomeProps) {
+function AppHomeContent({ locale }: AppHomeProps) {
   const t = useTranslations();
   const router = useRouter();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
   const { tournaments, loading, refresh } = useTournamentList();
-  const [initialized, setInitialized] = useState(false);
 
   // Filter tournaments based on archived status
   const filteredTournaments = useMemo(() => {
@@ -38,42 +35,12 @@ export function AppHome({ locale }: AppHomeProps) {
     return tournaments.filter((t) => t.archived).length;
   }, [tournaments]);
 
-  // Initialize sync on mount
-  useEffect(() => {
-    let unsubscribe: (() => void) | undefined;
-
-    async function init() {
-      await initializeSync();
-      unsubscribe = setupAutoPush();
-
-      // Check and fire first_value event
-      const meta = await db.getMeta();
-      if (!meta.firstValueFired && tournaments.length > 0) {
-        trackFirstValue();
-        await db.saveMeta({ firstValueFired: true });
-      }
-
-      setInitialized(true);
-    }
-    init();
-
-    return () => {
-      unsubscribe?.();
-    };
-  }, [tournaments.length]);
-
-  const handleTournamentCreated = async (tournamentId: string) => {
-    // Fire first_value if this is the first tournament
-    const meta = await db.getMeta();
-    if (!meta.firstValueFired) {
-      trackFirstValue();
-      await db.saveMeta({ firstValueFired: true });
-    }
+  const handleTournamentCreated = (tournamentId: string) => {
     router.push(`/${locale}/app/t/${tournamentId}`);
   };
 
   // Loading state
-  if (loading && !initialized) {
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-white dark:bg-gray-950">
         <div className="text-center">
@@ -86,11 +53,7 @@ export function AppHome({ locale }: AppHomeProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
-      <AppHeader
-        locale={locale}
-        currentPath="app"
-        rightContent={<SyncStatusIndicator />}
-      />
+      <AppHeader locale={locale} currentPath="app" />
 
       <main className="flex-1">
         <div className="mx-auto max-w-2xl px-4 py-6">
@@ -204,6 +167,33 @@ export function AppHome({ locale }: AppHomeProps) {
               ))}
             </div>
           )}
+
+          {/* Data Stats Card */}
+          {!loading && (
+            <div className="mt-8 rounded-xl border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+              <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">
+                📊 {t("settings.data.title")}
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-lg bg-gray-50 px-4 py-3 text-center dark:bg-gray-900">
+                  <div className="text-2xl font-bold text-violet-600 dark:text-violet-400">
+                    {tournaments.length}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    {t("settings.data.tournaments")}
+                  </div>
+                </div>
+                <div className="rounded-lg bg-gray-50 px-4 py-3 text-center dark:bg-gray-900">
+                  <div className="text-2xl font-bold text-violet-600 dark:text-violet-400">
+                    {getAllParticipants().length}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    {t("settings.data.participants")}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
@@ -216,5 +206,14 @@ export function AppHome({ locale }: AppHomeProps) {
         onCreated={handleTournamentCreated}
       />
     </div>
+  );
+}
+
+// Main export with AuthGate wrapper
+export function AppHome({ locale }: AppHomeProps) {
+  return (
+    <AuthGate locale={locale}>
+      <AppHomeContent locale={locale} />
+    </AuthGate>
   );
 }

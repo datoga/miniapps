@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { Tournament, Participant, Match, BracketSide } from "@/lib/schemas";
 import { reportDoubleElimMatch, hasAnyDoubleElimResults, regenerateDoubleElimBracket } from "@/lib/domain/doubleElim";
 import { ConfirmDialog } from "./ConfirmDialog";
+import { NowPlayingCard } from "./NowPlayingCard";
 
 interface DoubleElimBracketViewProps {
   tournament: Tournament;
@@ -23,60 +24,103 @@ interface MatchCardProps {
   t: ReturnType<typeof useTranslations>;
 }
 
+// Wrapper component to add connector lines to match cards
+interface MatchWithConnectorProps extends MatchCardProps {
+  roundIndex: number;
+  totalRounds: number;
+}
+
+function MatchWithConnector({
+  roundIndex,
+  totalRounds,
+  ...matchProps
+}: MatchWithConnectorProps) {
+  const isLastRound = roundIndex === totalRounds - 1;
+  const lineColor = matchProps.match.status === "completed"
+    ? "bg-emerald-400 dark:bg-emerald-500"
+    : "bg-gray-300 dark:bg-gray-600";
+
+  return (
+    <div className="relative flex items-center">
+      <MatchCard {...matchProps} />
+
+      {/* Right connector line - horizontal line going to next round */}
+      {!isLastRound && (
+        <div
+          className={`absolute h-0.5 ${lineColor}`}
+          style={{
+            left: "100%",
+            width: "32px",
+            top: "50%",
+            transform: "translateY(-50%)",
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
 function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t }: MatchCardProps) {
-  const participantA = match.aId ? participantMap.get(match.aId) : null;
-  const participantB = match.bId ? participantMap.get(match.bId) : null;
+  // Handle __BYE__ marker for losers bracket BYEs
+  const isByeA = match.aId === "__BYE__";
+  const isByeB = match.bId === "__BYE__";
+  const participantA = match.aId && !isByeA ? participantMap.get(match.aId) : null;
+  const participantB = match.bId && !isByeB ? participantMap.get(match.bId) : null;
 
   const isCompleted = match.status === "completed";
-  const isReady = match.aId && match.bId;
+  const isPlayable = match.aId && match.bId && !isByeA && !isByeB && !isCompleted;
 
-  // Colors based on bracket side
-  const getSideColor = () => {
-    if (bracketSide === "grand_final" || bracketSide === "grand_final_reset") {
-      return "border-amber-500 dark:border-amber-400";
+  // Get card styling based on state - simplified like single elimination
+  const getCardStyle = () => {
+    if (isSelected) {
+      return "border-violet-500 bg-white shadow-lg ring-2 ring-violet-500 dark:border-violet-400 dark:bg-gray-800 dark:ring-violet-400";
     }
-    if (bracketSide === "winners") {
-      return "border-green-500 dark:border-green-400";
+    if (isCompleted) {
+      return "border-emerald-400 bg-white dark:border-emerald-500 dark:bg-gray-800";
     }
-    return "border-red-400 dark:border-red-500";
+    if (isPlayable) {
+      return "cursor-pointer border-amber-400 bg-white hover:border-amber-500 hover:shadow-md dark:border-amber-500 dark:bg-gray-800 dark:hover:border-amber-400";
+    }
+    return "border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800";
   };
 
-  const getHeaderColor = () => {
-    if (bracketSide === "grand_final" || bracketSide === "grand_final_reset") {
-      return "bg-amber-50 dark:bg-amber-900/20";
-    }
-    if (bracketSide === "winners") {
-      return "bg-green-50 dark:bg-green-900/20";
-    }
-    return "bg-red-50 dark:bg-red-900/20";
-  };
+  // Only show header for grand final matches
+  const showHeader = bracketSide === "grand_final" || bracketSide === "grand_final_reset";
 
   return (
     <div
-      onClick={() => isReady && !isCompleted && onSelect()}
-      className={`w-48 rounded-lg border-2 bg-white transition-all dark:bg-gray-800 ${getSideColor()} ${
-        isSelected ? "ring-2 ring-violet-500" : ""
-      } ${isReady && !isCompleted ? "cursor-pointer hover:shadow-lg" : "cursor-default"}`}
+      onClick={() => isPlayable && onSelect()}
+      className={`relative w-44 overflow-hidden rounded-lg border-2 transition-all ${getCardStyle()}`}
     >
-      {/* Header */}
-      <div className={`rounded-t-md px-2 py-1 text-center text-xs font-medium ${getHeaderColor()}`}>
-        {bracketSide === "grand_final" && t("tournament.doubleElim.grandFinal")}
-        {bracketSide === "grand_final_reset" && t("tournament.doubleElim.grandFinalReset")}
-        {bracketSide === "winners" && `${t("tournament.doubleElim.winnersBracket")}`}
-        {bracketSide === "losers" && `${t("tournament.doubleElim.losersBracket")}`}
-      </div>
+      {/* Playable indicator */}
+      {isPlayable && !isSelected && (
+        <div className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs text-white shadow">
+          ▶
+        </div>
+      )}
+
+      {/* Header - only for grand final */}
+      {showHeader && (
+        <div className="bg-amber-100 px-2 py-1 text-center text-xs font-bold text-amber-800 dark:bg-amber-900/50 dark:text-amber-300">
+          {bracketSide === "grand_final" ? "🏆 " + t("tournament.doubleElim.grandFinal") : t("tournament.doubleElim.grandFinalReset")}
+        </div>
+      )}
 
       {/* Participant A */}
       <div
-        className={`flex items-center justify-between border-b border-gray-200 px-2 py-1 dark:border-gray-700 ${
+        className={`flex items-center justify-between border-b px-3 py-2 ${
           isCompleted && match.winnerId === match.aId
-            ? "bg-green-100 font-semibold dark:bg-green-900/30"
-            : ""
+            ? "border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/30"
+            : "border-gray-100 dark:border-gray-700"
         }`}
       >
         <div className="min-w-0 flex-1">
-          <span className="block truncate text-sm text-gray-900 dark:text-white">
-            {participantA?.name || (match.aId === null && isCompleted ? t("tournament.bracket.bye") : t("tournament.bracket.tbd"))}
+          <span className={`block truncate text-sm font-medium ${
+            isCompleted && match.winnerId === match.aId
+              ? "text-emerald-700 dark:text-emerald-400"
+              : "text-gray-900 dark:text-white"
+          }`}>
+            {participantA?.name || (isByeA ? t("tournament.bracket.bye") : t("tournament.bracket.tbd"))}
           </span>
           {participantA?.members && participantA.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -84,25 +128,32 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
             </span>
           )}
         </div>
-        <div className="flex flex-shrink-0 items-center gap-1">
-          {isCompleted && <span className="text-sm text-gray-600 dark:text-gray-300">{match.scoreA}</span>}
-          {bracketSide === "grand_final" && match.aId && (
-            <span className="text-xs" title={t("tournament.doubleElim.twoLives")}>❤️❤️</span>
-          )}
-        </div>
+        {isCompleted && (
+          <span className={`ml-2 text-lg font-bold ${
+            match.winnerId === match.aId
+              ? "text-emerald-600 dark:text-emerald-400"
+              : "text-gray-300 dark:text-gray-600"
+          }`}>
+            {match.scoreA}
+          </span>
+        )}
       </div>
 
       {/* Participant B */}
       <div
-        className={`flex items-center justify-between px-2 py-1 ${
+        className={`flex items-center justify-between px-3 py-2 ${
           isCompleted && match.winnerId === match.bId
-            ? "bg-green-100 font-semibold dark:bg-green-900/30"
+            ? "bg-emerald-50 dark:bg-emerald-900/30"
             : ""
         }`}
       >
         <div className="min-w-0 flex-1">
-          <span className="block truncate text-sm text-gray-900 dark:text-white">
-            {participantB?.name || (match.bId === null && isCompleted ? t("tournament.bracket.bye") : t("tournament.bracket.tbd"))}
+          <span className={`block truncate text-sm font-medium ${
+            isCompleted && match.winnerId === match.bId
+              ? "text-emerald-700 dark:text-emerald-400"
+              : "text-gray-900 dark:text-white"
+          }`}>
+            {participantB?.name || (isByeB ? t("tournament.bracket.bye") : t("tournament.bracket.tbd"))}
           </span>
           {participantB?.members && participantB.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -110,12 +161,15 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
             </span>
           )}
         </div>
-        <div className="flex flex-shrink-0 items-center gap-1">
-          {isCompleted && <span className="text-sm text-gray-600 dark:text-gray-300">{match.scoreB}</span>}
-          {bracketSide === "grand_final" && match.bId && (
-            <span className="text-xs" title={t("tournament.doubleElim.oneLife")}>❤️</span>
-          )}
-        </div>
+        {isCompleted && (
+          <span className={`ml-2 text-lg font-bold ${
+            match.winnerId === match.bId
+              ? "text-emerald-600 dark:text-emerald-400"
+              : "text-gray-300 dark:text-gray-600"
+          }`}>
+            {match.scoreB}
+          </span>
+        )}
       </div>
     </div>
   );
@@ -127,12 +181,19 @@ export function DoubleElimBracketView({
   participantMap,
 }: DoubleElimBracketViewProps) {
   const t = useTranslations();
+  // Use "__HIDDEN__" to explicitly hide the score panel (vs null = auto-select first)
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
-  const [scoreA, setScoreA] = useState(0);
-  const [scoreB, setScoreB] = useState(0);
+  const [scorePanelHidden, setScorePanelHidden] = useState(false);
+  const [scoreAStr, setScoreAStr] = useState("0");
+  const [scoreBStr, setScoreBStr] = useState("0");
   const [reporting, setReporting] = useState(false);
   const [showRegenerateConfirm, setShowRegenerateConfirm] = useState(false);
   const [canRegenerate, setCanRegenerate] = useState(false);
+  // Track last reported match to prefer same bracket side/round
+  const [lastReportedContext, setLastReportedContext] = useState<{
+    bracketSide?: string;
+    round?: number;
+  } | null>(null);
 
   // Check if can regenerate on mount
   useEffect(() => {
@@ -159,39 +220,81 @@ export function DoubleElimBracketView({
   const grandFinalMatch = matches.find((m) => m.id === grandFinalMatchId);
   const grandFinalResetMatch = matches.find((m) => m.id === grandFinalResetMatchId);
 
-  // Find first playable match (priority: winners by round/slot, then losers, then grand final)
+  // Find first playable match (prioritize same bracket side/round as last reported)
   const firstPlayableMatch = useMemo(() => {
-    // Check winners bracket first (by round, then by slot)
-    for (const roundMatches of winnersMatches) {
-      const sortedRound = [...roundMatches].sort((a, b) => (a.slot ?? 0) - (b.slot ?? 0));
-      for (const match of sortedRound) {
-        if (match.status === "pending" && match.aId && match.bId) {
-          return match;
-        }
-      }
-    }
-    // Then losers bracket
-    for (const roundMatches of losersMatches) {
-      const sortedRound = [...roundMatches].sort((a, b) => (a.slot ?? 0) - (b.slot ?? 0));
-      for (const match of sortedRound) {
-        if (match.status === "pending" && match.aId && match.bId) {
-          return match;
-        }
-      }
-    }
-    // Then grand final
-    if (grandFinalMatch && grandFinalMatch.status === "pending" && grandFinalMatch.aId && grandFinalMatch.bId) {
-      return grandFinalMatch;
-    }
-    // Then reset match
-    if (grandFinalResetMatch && grandFinalResetMatch.status === "pending" && grandFinalResetMatch.aId && grandFinalResetMatch.bId) {
-      return grandFinalResetMatch;
-    }
-    return null;
-  }, [winnersMatches, losersMatches, grandFinalMatch, grandFinalResetMatch]);
+    // Collect all playable matches
+    const allPlayable: Match[] = [];
 
-  // Selected match (or first playable if none selected)
+    // Winners
+    for (const roundMatches of winnersMatches) {
+      for (const match of roundMatches) {
+        if (match.status === "pending" && match.aId && match.bId) {
+          allPlayable.push(match);
+        }
+      }
+    }
+    // Losers
+    for (const roundMatches of losersMatches) {
+      for (const match of roundMatches) {
+        if (match.status === "pending" && match.aId && match.bId) {
+          allPlayable.push(match);
+        }
+      }
+    }
+    // Grand final
+    if (grandFinalMatch && grandFinalMatch.status === "pending" && grandFinalMatch.aId && grandFinalMatch.bId) {
+      allPlayable.push(grandFinalMatch);
+    }
+    // Reset match
+    if (grandFinalResetMatch && grandFinalResetMatch.status === "pending" && grandFinalResetMatch.aId && grandFinalResetMatch.bId) {
+      allPlayable.push(grandFinalResetMatch);
+    }
+
+    if (allPlayable.length === 0) return null;
+
+    // Sort to prioritize: same bracket side + same round first, then same bracket side, then by natural order
+    const sorted = [...allPlayable].sort((a, b) => {
+      const ctx = lastReportedContext;
+
+      // If we have context from last report, prioritize same side+round
+      if (ctx) {
+        const aMatchesSide = a.bracketSide === ctx.bracketSide;
+        const bMatchesSide = b.bracketSide === ctx.bracketSide;
+        const aMatchesRound = (a.round ?? 0) === ctx.round;
+        const bMatchesRound = (b.round ?? 0) === ctx.round;
+
+        // Same side + same round is highest priority
+        const aSameContext = aMatchesSide && aMatchesRound;
+        const bSameContext = bMatchesSide && bMatchesRound;
+        if (aSameContext && !bSameContext) return -1;
+        if (!aSameContext && bSameContext) return 1;
+
+        // Same side (different round) is next priority
+        if (aMatchesSide && !bMatchesSide) return -1;
+        if (!aMatchesSide && bMatchesSide) return 1;
+      }
+
+      // Default: winners before losers, earlier rounds first, then by slot
+      const sideOrder: Record<string, number> = { winners: 0, losers: 1, grand_final: 2, grand_final_reset: 3 };
+      const aSideOrder = sideOrder[a.bracketSide || "winners"] ?? 0;
+      const bSideOrder = sideOrder[b.bracketSide || "winners"] ?? 0;
+      if (aSideOrder !== bSideOrder) return aSideOrder - bSideOrder;
+
+      const aRound = a.round ?? 0;
+      const bRound = b.round ?? 0;
+      if (aRound !== bRound) return aRound - bRound;
+
+      return (a.slot ?? 0) - (b.slot ?? 0);
+    });
+
+    return sorted[0];
+  }, [winnersMatches, losersMatches, grandFinalMatch, grandFinalResetMatch, lastReportedContext]);
+
+  // Selected match (or first playable if none selected and panel not hidden)
   const selectedMatch = useMemo(() => {
+    if (scorePanelHidden) {
+      return null;
+    }
     if (selectedMatchId) {
       const match = matches.find((m) => m.id === selectedMatchId);
       if (match && match.status === "pending" && match.aId && match.bId) {
@@ -199,23 +302,65 @@ export function DoubleElimBracketView({
       }
     }
     return firstPlayableMatch;
-  }, [selectedMatchId, matches, firstPlayableMatch]);
+  }, [selectedMatchId, matches, firstPlayableMatch, scorePanelHidden]);
+
+  // Get round name for selected match
+  const selectedMatchRoundName = useMemo(() => {
+    if (!selectedMatch) return undefined;
+
+    const side = selectedMatch.bracketSide;
+    const round = (selectedMatch.round ?? 0) + 1;
+
+    if (side === "grand_final") {
+      return t("tournament.doubleElim.grandFinal");
+    }
+    if (side === "grand_final_reset") {
+      return t("tournament.doubleElim.grandFinalReset");
+    }
+    if (side === "winners") {
+      return t("tournament.doubleElim.winnersRound", { number: round });
+    }
+    if (side === "losers") {
+      return t("tournament.doubleElim.losersRound", { number: round });
+    }
+    return undefined;
+  }, [selectedMatch, t]);
 
   const handleSelectMatch = (matchId: string) => {
     setSelectedMatchId(matchId);
-    setScoreA(0);
-    setScoreB(0);
+    setScorePanelHidden(false);
+    setScoreAStr("0");
+    setScoreBStr("0");
+  };
+
+  const handleCancelSelection = () => {
+    setSelectedMatchId(null);
+    setScorePanelHidden(true);
+    setScoreAStr("0");
+    setScoreBStr("0");
   };
 
   const handleReport = async () => {
-    if (!selectedMatchId || scoreA === scoreB) return;
+    // Use selectedMatch (which falls back to firstPlayableMatch) instead of selectedMatchId
+    if (!selectedMatch) return;
+
+    const scoreA = parseInt(scoreAStr) || 0;
+    const scoreB = parseInt(scoreBStr) || 0;
+
+    if (scoreA === scoreB) return;
+
+    // Save context of the match being reported to prioritize same round next
+    setLastReportedContext({
+      bracketSide: selectedMatch.bracketSide,
+      round: selectedMatch.round ?? 0,
+    });
 
     setReporting(true);
     try {
-      await reportDoubleElimMatch(tournament.id, selectedMatchId, scoreA, scoreB);
+      await reportDoubleElimMatch(tournament.id, selectedMatch.id, scoreA, scoreB);
       setSelectedMatchId(null);
-      setScoreA(0);
-      setScoreB(0);
+      setScoreAStr("0");
+      setScoreBStr("0");
       setCanRegenerate(false);
     } catch (error) {
       console.error("Failed to report match:", error);
@@ -233,93 +378,147 @@ export function DoubleElimBracketView({
     }
   };
 
-  return (
-    <div className="mx-auto max-w-7xl px-4 py-6">
-      {/* Header */}
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {t("tournament.doubleElim.title")}
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-gray-300">
-            {t("tournament.bracket.clickToSelect")}
-          </p>
-        </div>
-        {canRegenerate && (
-          <button
-            onClick={() => setShowRegenerateConfirm(true)}
-            className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
-          >
-            🔄 {t("tournament.bracket.regenerate")}
-          </button>
-        )}
-      </div>
+  // Check if tournament is completed
+  const isTournamentCompleted = tournament.status === "completed";
 
-      {/* Score Input (when match selected) */}
-      {selectedMatch && (
-        <div className="mb-6 rounded-lg border-2 border-violet-500 bg-violet-50 p-4 dark:bg-violet-900/20">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <div className="text-center">
-              <div className="mb-1 font-medium text-gray-900 dark:text-white">
-                {participantMap.get(selectedMatch.aId!)?.name}
-                {selectedMatch.bracketSide === "grand_final" && <span className="ml-1">❤️❤️</span>}
-              </div>
-              {participantMap.get(selectedMatch.aId!)?.members &&
-               participantMap.get(selectedMatch.aId!)!.members!.length > 0 && (
-                <div className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                  {participantMap.get(selectedMatch.aId!)!.members!.map(m => m.name).join(" & ")}
-                </div>
-              )}
-              <input
-                type="number"
-                min={0}
-                value={scoreA}
-                onChange={(e) => setScoreA(Math.max(0, parseInt(e.target.value) || 0))}
-                className="w-20 rounded-lg border border-gray-300 p-2 text-center text-xl dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-              />
-            </div>
-            <span className="text-2xl font-bold text-gray-400">vs</span>
-            <div className="text-center">
-              <div className="mb-1 font-medium text-gray-900 dark:text-white">
-                {participantMap.get(selectedMatch.bId!)?.name}
-                {selectedMatch.bracketSide === "grand_final" && <span className="ml-1">❤️</span>}
-              </div>
-              {participantMap.get(selectedMatch.bId!)?.members &&
-               participantMap.get(selectedMatch.bId!)!.members!.length > 0 && (
-                <div className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-                  {participantMap.get(selectedMatch.bId!)!.members!.map(m => m.name).join(" & ")}
-                </div>
-              )}
-              <input
-                type="number"
-                min={0}
-                value={scoreB}
-                onChange={(e) => setScoreB(Math.max(0, parseInt(e.target.value) || 0))}
-                className="w-20 rounded-lg border border-gray-300 p-2 text-center text-xl dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-              />
-            </div>
-            <button
-              onClick={handleReport}
-              disabled={scoreA === scoreB || reporting}
-              className="ml-4 rounded-lg bg-violet-600 px-4 py-2 text-white hover:bg-violet-700 disabled:opacity-50"
-            >
-              {reporting ? t("common.loading") : t("tournament.nowPlaying.reportResult")}
-            </button>
-            <button
-              onClick={() => setSelectedMatchId(null)}
-              className="ml-2 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-            >
-              {t("common.cancel")}
-            </button>
-          </div>
-          {scoreA === scoreB && scoreA > 0 && (
-            <p className="mt-2 text-center text-sm text-amber-600">{t("tournament.nowPlaying.noDraws")}</p>
+  // Get champion - winner of grand final (or grand final reset if it happened)
+  const getChampion = () => {
+    if (!isTournamentCompleted) return null;
+    // Check reset match first
+    if (grandFinalResetMatch?.status === "completed" && grandFinalResetMatch.winnerId) {
+      return participantMap.get(grandFinalResetMatch.winnerId);
+    }
+    // Otherwise check grand final
+    if (grandFinalMatch?.status === "completed" && grandFinalMatch.winnerId) {
+      return participantMap.get(grandFinalMatch.winnerId);
+    }
+    return null;
+  };
+  const champion = getChampion();
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      {/* Tournament Completed */}
+      {isTournamentCompleted && champion && (
+        <div className="mb-8 rounded-lg border-2 border-yellow-500 bg-yellow-50 p-6 text-center dark:border-yellow-400 dark:bg-yellow-900/20">
+          <div className="mb-2 text-4xl">🏆</div>
+          <h2 className="text-xl font-bold text-yellow-700 dark:text-yellow-400">
+            {t("tournament.completed.title")}
+          </h2>
+          <p className="mt-2 text-2xl font-bold text-gray-900 dark:text-white">
+            {t("tournament.completed.champion")}: {champion.name}
+          </p>
+          {champion.members && champion.members.length > 0 && (
+            <p className="mt-1 text-gray-600 dark:text-gray-300">
+              {champion.members.map(m => m.name).join(" & ")}
+            </p>
           )}
         </div>
       )}
 
-      {/* Bracket Reset Alert */}
-      {isReset && (
+      {/* Score Input (when match selected and not completed) - Using NowPlayingCard for consistency */}
+      {selectedMatch && !isTournamentCompleted && (
+        <NowPlayingCard roundName={selectedMatchRoundName}>
+          <div className="space-y-4">
+            {/* Match Display */}
+            <div className="flex items-center justify-center gap-4">
+              <div className="text-center">
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {participantMap.get(selectedMatch.aId!)?.name}
+                  {selectedMatch.bracketSide === "grand_final" && <span className="ml-2">❤️❤️</span>}
+                </p>
+                {participantMap.get(selectedMatch.aId!)?.members &&
+                 participantMap.get(selectedMatch.aId!)!.members!.length > 0 && (
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {participantMap.get(selectedMatch.aId!)!.members!.map(m => m.name).join(" & ")}
+                  </p>
+                )}
+              </div>
+              <span className="text-xl text-gray-400">{t("tournament.nowPlaying.vsLabel")}</span>
+              <div className="text-center">
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {participantMap.get(selectedMatch.bId!)?.name}
+                  {selectedMatch.bracketSide === "grand_final" && <span className="ml-2">❤️</span>}
+                </p>
+                {participantMap.get(selectedMatch.bId!)?.members &&
+                 participantMap.get(selectedMatch.bId!)!.members!.length > 0 && (
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {participantMap.get(selectedMatch.bId!)!.members!.map(m => m.name).join(" & ")}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Score Inputs */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={scoreAStr}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "" || /^\d+$/.test(val)) {
+                      setScoreAStr(val);
+                    }
+                  }}
+                  onFocus={(e) => e.target.select()}
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-4 text-center text-3xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={scoreBStr}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === "" || /^\d+$/.test(val)) {
+                      setScoreBStr(val);
+                    }
+                  }}
+                  onFocus={(e) => e.target.select()}
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-4 text-center text-3xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                />
+              </div>
+            </div>
+
+            {/* Report Button */}
+            <button
+              onClick={handleReport}
+              disabled={(parseInt(scoreAStr) || 0) === (parseInt(scoreBStr) || 0) || reporting}
+              className="w-full rounded-lg bg-green-600 px-4 py-4 text-lg font-medium text-white hover:bg-green-700 disabled:opacity-50"
+            >
+              {reporting ? t("common.loading") : t("tournament.nowPlaying.reportResult")}
+            </button>
+
+            {/* Cancel Button */}
+            <button
+              onClick={handleCancelSelection}
+              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+            >
+              {t("common.cancel")}
+            </button>
+          </div>
+        </NowPlayingCard>
+      )}
+
+      {/* Regenerate Button - Consistent position with BracketView */}
+      {canRegenerate && !isTournamentCompleted && (
+        <div className="mb-6 flex justify-end">
+          <button
+            onClick={() => setShowRegenerateConfirm(true)}
+            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            🔀 {t("tournament.bracket.regenerate")}
+          </button>
+        </div>
+      )}
+
+      {/* Bracket Reset Alert - Only show when tournament is still in progress */}
+      {isReset && !isTournamentCompleted && (
         <div className="mb-6 rounded-lg border-2 border-amber-500 bg-amber-50 p-4 text-center dark:bg-amber-900/20">
           <div className="text-2xl">🔥</div>
           <h3 className="text-lg font-bold text-amber-800 dark:text-amber-200">
@@ -331,71 +530,137 @@ export function DoubleElimBracketView({
         </div>
       )}
 
-      <div className="flex gap-8 overflow-x-auto pb-4">
-        {/* LEFT: BRACKETS */}
-        <div className="flex-1 space-y-6">
-          {/* WINNERS BRACKET */}
-          <div>
-            <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-green-700 dark:text-green-400">
-              <span>🏆</span> {t("tournament.doubleElim.winnersBracket")}
-              <span className="text-sm font-normal text-gray-500">({t("tournament.doubleElim.twoLives")})</span>
-            </h3>
-            <div className="flex items-start gap-6">
-              {winnersMatches.map((roundMatches, roundIndex) => (
-                <div key={`winners-${roundIndex}`} className="flex flex-col gap-4">
-                  <div className="mb-2 text-center text-xs font-medium text-gray-500">
-                    {roundIndex === winnersMatches.length - 1
-                      ? t("tournament.doubleElim.winnersFinal")
-                      : t("tournament.doubleElim.winnersRound", { number: roundIndex + 1 })}
+      {/* Bracket Display Container - Consistent with BracketView */}
+      <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
+        <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+          {t("tournament.doubleElim.title")}
+        </h3>
+        {!isTournamentCompleted && (
+          <p className="mb-4 text-sm text-gray-500 dark:text-gray-300">
+            {t("tournament.bracket.clickToSelect")}
+          </p>
+        )}
+        <div className="flex flex-col gap-8 overflow-x-auto pb-4 lg:flex-row">
+          {/* LEFT: BRACKETS (on mobile: top) */}
+          <div className="flex-1 space-y-6">
+            {/* WINNERS BRACKET - Tree Layout */}
+            <div>
+              <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-green-700 dark:text-green-400">
+                <span>🏆</span> {t("tournament.doubleElim.winnersBracket")}
+                <span className="text-sm font-normal text-gray-500">({t("tournament.doubleElim.twoLives")})</span>
+              </h3>
+            <div className="flex items-stretch gap-8">
+              {winnersMatches.map((roundMatches, roundIndex) => {
+                // Calculate the gap multiplier for tree alignment
+                // Round 0: gap-4, Round 1: gap-8+card height, Round 2: even more, etc.
+                const baseGap = 16; // 4 in tailwind = 16px
+                const cardHeight = 64; // approximate match card height
+                const gapMultiplier = Math.pow(2, roundIndex);
+                const totalGap = roundIndex === 0
+                  ? baseGap
+                  : (baseGap + cardHeight) * gapMultiplier - cardHeight;
+
+                return (
+                  <div
+                    key={`winners-${roundIndex}`}
+                    className="flex flex-col justify-around"
+                    style={{ gap: `${totalGap}px` }}
+                  >
+                    <div className="mb-2 text-center text-xs font-medium text-gray-500">
+                      {roundIndex === winnersMatches.length - 1
+                        ? t("tournament.doubleElim.winnersFinal")
+                        : t("tournament.doubleElim.winnersRound", { number: roundIndex + 1 })}
+                    </div>
+                    <div
+                      className="flex flex-1 flex-col justify-around"
+                      style={{ gap: `${totalGap}px` }}
+                    >
+                      {roundMatches.map((match) => (
+                        <MatchWithConnector
+                          key={match.id}
+                          match={match}
+                          participantMap={participantMap}
+                          isSelected={selectedMatchId === match.id}
+                          onSelect={() => handleSelectMatch(match.id)}
+                          bracketSide="winners"
+                          t={t}
+                          roundIndex={roundIndex}
+                          totalRounds={winnersMatches.length}
+                        />
+                      ))}
+                    </div>
                   </div>
-                  {roundMatches.map((match) => (
-                    <MatchCard
-                      key={match.id}
-                      match={match}
-                      participantMap={participantMap}
-                      isSelected={selectedMatchId === match.id}
-                      onSelect={() => handleSelectMatch(match.id)}
-                      bracketSide="winners"
-                      t={t}
-                    />
-                  ))}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
-          {/* LOSERS BRACKET */}
-          <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
-            <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-red-600 dark:text-red-400">
-              <span>💔</span> {t("tournament.doubleElim.losersBracket")}
-              <span className="text-sm font-normal text-gray-500">({t("tournament.doubleElim.oneLife")})</span>
-            </h3>
-            <div className="flex items-start gap-6">
-              {losersMatches.map((roundMatches, roundIndex) => (
-                <div key={`losers-${roundIndex}`} className="flex flex-col gap-4">
-                  <div className="mb-2 text-center text-xs font-medium text-gray-500">
-                    {t("tournament.doubleElim.losersRound", { number: roundIndex + 1 })}
-                  </div>
-                  {roundMatches.map((match) => (
-                    <MatchCard
-                      key={match.id}
-                      match={match}
-                      participantMap={participantMap}
-                      isSelected={selectedMatchId === match.id}
-                      onSelect={() => handleSelectMatch(match.id)}
-                      bracketSide="losers"
-                      t={t}
-                    />
-                  ))}
-                </div>
-              ))}
+          {/* LOSERS BRACKET - Tree Layout - Only show if there are losers rounds */}
+          {losersMatches.length > 0 && (
+            <div className="border-t border-gray-200 pt-4 dark:border-gray-700">
+              <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-red-600 dark:text-red-400">
+                <span>💔</span> {t("tournament.doubleElim.losersBracket")}
+                <span className="text-sm font-normal text-gray-500">({t("tournament.doubleElim.oneLife")})</span>
+              </h3>
+              <div className="flex items-stretch gap-8">
+                {losersMatches.map((roundMatches, roundIndex) => {
+                  // Losers bracket has different structure: alternates between halving and integration rounds
+                  // Even rounds (0, 2, 4): halving - reduce by half
+                  // Odd rounds (1, 3, 5): integration - same count as previous
+                  const baseGap = 16;
+                  const cardHeight = 64;
+
+                  // Calculate effective "depth" for gap calculation
+                  // Losers bracket depth increases slower than winners
+                  const effectiveDepth = Math.floor((roundIndex + 1) / 2);
+                  const gapMultiplier = Math.pow(2, effectiveDepth);
+                  const totalGap = effectiveDepth === 0
+                    ? baseGap
+                    : (baseGap + cardHeight) * gapMultiplier - cardHeight;
+
+                  return (
+                    <div
+                      key={`losers-${roundIndex}`}
+                      className="flex flex-col justify-around"
+                      style={{ gap: `${totalGap}px` }}
+                    >
+                      <div className="mb-2 text-center text-xs font-medium text-gray-500">
+                        {t("tournament.doubleElim.losersRound", { number: roundIndex + 1 })}
+                      </div>
+                      <div
+                        className="flex flex-1 flex-col justify-around"
+                        style={{ gap: `${totalGap}px` }}
+                      >
+                        {roundMatches.map((match) => (
+                          <MatchWithConnector
+                            key={match.id}
+                            match={match}
+                            participantMap={participantMap}
+                            isSelected={selectedMatchId === match.id}
+                            onSelect={() => handleSelectMatch(match.id)}
+                            bracketSide="losers"
+                            t={t}
+                            roundIndex={roundIndex}
+                            totalRounds={losersMatches.length}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
-        {/* RIGHT: GRAND FINAL (Separated) */}
+        {/* Separator line between brackets and grand final (mobile only) */}
         {grandFinalMatch && (
-          <div className="flex flex-col items-center border-l-4 border-amber-400 pl-8 dark:border-amber-500">
+          <div className="my-4 h-1 w-full bg-gradient-to-r from-transparent via-amber-400 to-transparent lg:hidden" />
+        )}
+
+        {/* RIGHT: GRAND FINAL (on mobile: bottom) */}
+        {grandFinalMatch && (
+          <div className="flex flex-col items-center pt-2 lg:border-l-4 lg:pl-8 lg:pt-0 border-amber-400 dark:border-amber-500">
             <h3 className="mb-4 text-center text-xl font-bold text-amber-600 dark:text-amber-400">
               🏅 {t("tournament.doubleElim.grandFinal")}
             </h3>
@@ -440,6 +705,7 @@ export function DoubleElimBracketView({
             </div>
           </div>
         )}
+        </div>
       </div>
 
       {/* Confirm Regenerate Dialog */}

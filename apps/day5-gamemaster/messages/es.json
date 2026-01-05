@@ -3,6 +3,19 @@
     "title": "Game Master",
     "description": "Organiza torneos de videojuegos como un pro"
   },
+  "auth": {
+    "subtitle": "Tu gestor de torneos personal",
+    "description": "Conecta tu cuenta de Google para guardar tus torneos de forma segura en la nube.",
+    "signInWithGoogle": "Continuar con Google",
+    "connecting": "Conectando...",
+    "signInError": "No se pudo iniciar sesión. Por favor, intenta de nuevo.",
+    "loadError": "No se pudieron cargar los datos. Por favor, intenta de nuevo.",
+    "sessionExpired": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.",
+    "feature1": "Tus datos seguros en Google Drive",
+    "feature2": "Accede desde cualquier dispositivo",
+    "feature3": "Sincronización automática",
+    "privacyNote": "Solo accedemos a una carpeta privada de la app. No leemos tus otros archivos."
+  },
   "nav": {
     "dashboard": "Panel",
     "about": "Acerca de",
@@ -18,42 +31,48 @@
     },
     "features": {
       "title": "Todo lo que necesitas",
-      "bracket": {
+      "singleElim": {
         "title": "Eliminación Simple",
-        "description": "Formato clásico de llave con gestión automática de BYEs"
+        "description": "Formato clásico de llave. Los perdedores quedan eliminados directamente"
+      },
+      "doubleElim": {
+        "title": "Doble Eliminación",
+        "description": "Segunda oportunidad para todos. Necesitas perder 2 veces para quedar eliminado"
       },
       "ladder": {
-        "title": "Rankings por Puntuación",
-        "description": "Cada participante registra su mejor puntuación o tiempo"
+        "title": "Rankings",
+        "description": "Clasifica por puntuación máxima o mejor tiempo. Ideal para speedruns y high scores"
       },
-      "tv": {
-        "title": "Modo TV",
-        "description": "Visualización optimizada para pantallas grandes y proyectores"
+      "participants": {
+        "title": "Individuos o Parejas",
+        "description": "Crea torneos para jugadores individuales o equipos de 2 personas"
       },
-      "offline": {
-        "title": "Funciona Offline",
-        "description": "Todos los datos guardados localmente. No necesita internet"
+      "local": {
+        "title": "Sin Registro",
+        "description": "Funciona offline. Exporta e importa tus datos en JSON cuando quieras"
+      },
+      "games": {
+        "title": "Cualquier Juego",
+        "description": "Mario Kart, FIFA, Smash Bros, juegos de mesa... ¡lo que quieras!"
       }
     }
   },
   "about": {
     "title": "Acerca de Game Master",
-    "description": "Game Master es una aplicación gratuita, privada y offline-first para organizar torneos de videojuegos y competiciones.",
+    "description": "Game Master es una aplicación gratuita y privada para organizar torneos de videojuegos y competiciones.",
     "features": {
       "title": "Características",
       "list": [
-        "Llaves de eliminación simple con siembra automática",
+        "Llaves de eliminación simple y doble",
         "Rankings por puntuación con cronómetro integrado",
-        "Soporte para individuos, parejas y equipos",
-        "Pantalla Now Playing optimizada para TV",
-        "Respaldo en Google Drive (opcional)",
-        "Funciona completamente sin conexión",
-        "No requiere cuenta"
+        "Soporte para individuos y parejas",
+        "Exporta e importa copias de seguridad en JSON",
+        "Sin necesidad de registro ni cuenta"
       ]
     },
     "privacy": {
       "title": "Privacidad",
-      "description": "Los datos de tu torneo permanecen en tu dispositivo. El respaldo en Google Drive es opcional y usa una carpeta privada de la aplicación que solo esta app puede acceder."
+      "description": "Los datos de tu torneo se guardan localmente en tu navegador. No almacenamos tus datos en ningún servidor. Puedes exportar e importar copias de seguridad en formato JSON."
     }
   },
   "dashboard": {
@@ -198,14 +217,6 @@
       "viewRanking": "Ver Ranking Completo",
       "hideRanking": "Ocultar Ranking"
     },
-    "tv": {
-      "mode": "Modo Visualización TV",
-      "syncing": "Sincronizando...",
-      "lastUpdate": "Última actualización",
-      "autoRefresh": "Auto-actualización cada 15s",
-      "preparing": "Preparando Torneo...",
-      "winner": "Ganador"
-    },
     "bracket": {
       "title": "Cuadro",
       "singleElimination": "Eliminación Simple",
@@ -255,6 +266,67 @@
       "offline": "Sin conexión"
     },
     "lastSync": "Última sincronización"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "data": {
+      "title": "Tus Datos",
+      "tournaments": "Torneos",
+      "participants": "Participantes"
+    },
+    "backup": {
+      "title": "Copia de Seguridad",
+      "description": "Exporta tus datos para guardarlos o transferirlos a otro dispositivo. Importa un archivo para restaurar una copia de seguridad.",
+      "export": "Exportar Datos (JSON)",
+      "import": "Importar Datos",
+      "importConfirmTitle": "¿Importar datos?",
+      "importConfirmMessage": "Esto reemplazará todos tus datos actuales con los del archivo. Esta acción no se puede deshacer.",
+      "importConfirm": "Sí, importar",
+      "importSuccess": "Datos importados correctamente",
+      "invalidFile": "Archivo no válido. Asegúrate de que sea un archivo JSON exportado desde Game Master.",
+      "error": "Error al importar los datos"
+    },
+    "danger": {
+      "title": "Zona de Peligro",
+      "description": "Estas acciones son irreversibles. Por favor, ten cuidado.",
+      "descriptionLocal": "Esto eliminará todos los datos guardados en este navegador.",
+      "deleteAll": "Eliminar Todos los Datos",
+      "confirmTitle": "¿Eliminar todos los datos?",
+      "confirmMessage": "Esto eliminará permanentemente todos tus torneos, participantes e historial de partidos. Esta acción no se puede deshacer."
+    }
+  },
+  "sync": {
+    "synced": "Sincronizado",
+    "pending": "Pendiente",
+    "syncing": "Sincronizando...",
+    "error": "Error",
+    "offline": "Sin conexión",
+    "paused": "Pausado",
+    "readOnly": "Solo lectura",
+    "edit": "Editar",
+    "never": "Nunca",
+    "justNow": "Ahora mismo",
+    "minutesAgo": "Hace {minutes} min",
+    "readOnlyMode": "Modo solo lectura",
+    "pause": "Pausar sincronización",
+    "resume": "Reanudar sincronización",
+    "syncNow": "Sincronizar ahora",
+    "readOnlyInfo": "En modo solo lectura no se guardan cambios en Drive. Útil para ver torneos sin modificarlos.",
+    "autoSyncInfo": "Los cambios se sincronizan automáticamente cada 30 segundos.",
+    "conflict": {
+      "title": "Conflicto de datos",
+      "description": "Tienes datos tanto en este dispositivo como en Google Drive. ¿Cuáles quieres conservar?",
+      "local": "Este dispositivo",
+      "remote": "Google Drive",
+      "tournaments": "torneos",
+      "participants": "participantes",
+      "lastModified": "Última modificación",
+      "keepLocal": "Usar datos locales",
+      "keepRemote": "Usar datos de Drive",
+      "useLocal": "Usar este dispositivo",
+      "useRemote": "Usar Google Drive",
+      "warning": "⚠️ Los datos no seleccionados se sobrescribirán"
+    }
   },
   "common": {
     "save": "Guardar",

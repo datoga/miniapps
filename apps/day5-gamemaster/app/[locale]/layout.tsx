@@ -13,7 +13,6 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
-import { SyncProvider } from "@/components/SyncProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +29,7 @@ const geistMono = Geist_Mono({
 });
 
 const APP_NAME = "Game Master";
-const APP_URL = "https://gamemaster.vercel.app";
+const APP_URL = "https://gamemaster.digital";
 
 const seoContent: Record<string, LocaleSEOContent> = {
   es: {
@@ -118,19 +117,19 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const jsonLdFeatures =
     locale === "es"
       ? [
-          "Brackets de eliminación",
+          "Eliminación simple y doble",
           "Rankings por puntos o tiempo",
+          "Exporta/importa datos en JSON",
           "100% gratuito",
           "Sin registro",
-          "Modo TV para pantallas grandes",
           "Funciona offline",
         ]
       : [
-          "Elimination brackets",
+          "Single and double elimination",
           "Point or time rankings",
+          "Export/import data as JSON",
           "100% free",
           "No registration",
-          "TV mode for big screens",
           "Works offline",
         ];
 
@@ -156,11 +155,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <SyncProvider>
-              <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
-                {children}
-              </div>
-            </SyncProvider>
+            <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
+              {children}
+            </div>
           </NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />

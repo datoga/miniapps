@@ -84,6 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     content: content!,
     category: "games",
+    googleVerification: "2VYFP5B6f-H_cYBhmUNLiSaGPBz1IgEMke_ea1o9osk",
   });
 }
 

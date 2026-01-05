@@ -61,13 +61,12 @@ function MatchWithConnector({
 }
 
 function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t }: MatchCardProps) {
-  // Handle __BYE__ marker for losers bracket BYEs
-  const isByeA = match.aId === "__BYE__";
-  const isByeB = match.bId === "__BYE__";
-  const participantA = match.aId && !isByeA ? participantMap.get(match.aId) : null;
-  const participantB = match.bId && !isByeB ? participantMap.get(match.bId) : null;
-
+  // Handle BYEs: explicit __BYE__ marker OR null when match is completed (auto-resolved BYE)
   const isCompleted = match.status === "completed";
+  const isByeA = match.aId === "__BYE__" || (isCompleted && !match.aId && match.bId);
+  const isByeB = match.bId === "__BYE__" || (isCompleted && !match.bId && match.aId);
+  const participantA = match.aId && match.aId !== "__BYE__" ? participantMap.get(match.aId) : null;
+  const participantB = match.bId && match.bId !== "__BYE__" ? participantMap.get(match.bId) : null;
   const isPlayable = match.aId && match.bId && !isByeA && !isByeB && !isCompleted;
 
   // Get card styling based on state - simplified like single elimination
@@ -118,9 +117,13 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
           <span className={`block truncate text-sm font-medium ${
             isCompleted && match.winnerId === match.aId
               ? "text-emerald-700 dark:text-emerald-400"
-              : "text-gray-900 dark:text-white"
+              : isByeA
+                ? "italic text-gray-400 dark:text-gray-500"
+                : "text-gray-900 dark:text-white"
           }`}>
-            {participantA?.name || (match.aId === null && !isCompleted ? t("tournament.bracket.pending") : participantA?.name || "")}
+            {isByeA
+              ? t("tournament.bracket.bye")
+              : participantA?.name || (match.aId === null ? t("tournament.bracket.tbd") : "")}
           </span>
           {participantA?.members && participantA.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -128,7 +131,7 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
             </span>
           )}
         </div>
-        {isCompleted && (
+        {isCompleted && !isByeA && !isByeB && (
           <span className={`ml-2 text-lg font-bold ${
             match.winnerId === match.aId
               ? "text-emerald-600 dark:text-emerald-400"
@@ -151,9 +154,13 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
           <span className={`block truncate text-sm font-medium ${
             isCompleted && match.winnerId === match.bId
               ? "text-emerald-700 dark:text-emerald-400"
-              : "text-gray-900 dark:text-white"
+              : isByeB
+                ? "italic text-gray-400 dark:text-gray-500"
+                : "text-gray-900 dark:text-white"
           }`}>
-            {participantB?.name || (match.bId === null && !isCompleted ? t("tournament.bracket.pending") : participantB?.name || "")}
+            {isByeB
+              ? t("tournament.bracket.bye")
+              : participantB?.name || (match.bId === null ? t("tournament.bracket.tbd") : "")}
           </span>
           {participantB?.members && participantB.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -161,7 +168,7 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
             </span>
           )}
         </div>
-        {isCompleted && (
+        {isCompleted && !isByeA && !isByeB && (
           <span className={`ml-2 text-lg font-bold ${
             match.winnerId === match.bId
               ? "text-emerald-600 dark:text-emerald-400"

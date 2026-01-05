@@ -523,7 +523,7 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                 const isSelected = match.id === selectedMatch?.id;
                 const isMatchCompleted = match.status === "completed";
                 const isPlayable = match.status === "pending" && match.aId && match.bId;
-                
+
                 // Detect BYEs: match completed with one side missing
                 const isByeA = isMatchCompleted && !match.aId && match.bId;
                 const isByeB = isMatchCompleted && !match.bId && match.aId;
@@ -572,7 +572,7 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                               ? "italic text-gray-400 dark:text-gray-500"
                               : "text-gray-900 dark:text-white"
                         }`}>
-                          {isByeA 
+                          {isByeA
                             ? t("tournament.bracket.bye")
                             : pA?.name || (match.aId === null ? t("tournament.bracket.tbd") : "")}
                         </span>

@@ -124,36 +124,16 @@ export type Match = z.infer<typeof MatchSchema>;
 
 // ============ Meta (Singleton) ============
 
-export const DriveStatusSchema = z.enum(["disconnected", "connected", "needs_reconnect", "syncing"]);
-export type DriveStatus = z.infer<typeof DriveStatusSchema>;
-
 export const MetaSchema = z.object({
   id: z.literal("meta"),
-  driveConnected: z.boolean().default(false),
-  driveFileId: z.string().optional(),
-  lastDriveSyncAt: z.number().optional(), // ms timestamp
   firstValueFired: z.boolean().default(false),
-  lastSnapshotHash: z.string().optional(),
 });
 export type Meta = z.infer<typeof MetaSchema>;
 
 export const defaultMeta: Meta = {
   id: "meta",
-  driveConnected: false,
   firstValueFired: false,
 };
-
-// ============ Workspace Snapshot (for Drive sync) ============
-
-export const WorkspaceSnapshotSchema = z.object({
-  schemaVersion: z.literal(1),
-  appId: z.literal("gamemaster"),
-  updatedAt: z.number(), // ms timestamp
-  tournaments: z.array(TournamentSchema),
-  participants: z.array(ParticipantSchema),
-  matches: z.array(MatchSchema),
-});
-export type WorkspaceSnapshot = z.infer<typeof WorkspaceSnapshotSchema>;
 
 // ============ Form Schemas ============
 
@@ -178,3 +158,14 @@ export const ReportMatchFormSchema = z.object({
 });
 export type ReportMatchFormInput = z.infer<typeof ReportMatchFormSchema>;
 
+// ============ Workspace Snapshot (for storage) ============
+
+export const WorkspaceSnapshotSchema = z.object({
+  schemaVersion: z.literal(1),
+  appId: z.literal("gamemaster"),
+  updatedAt: z.number(),
+  tournaments: z.array(TournamentSchema),
+  participants: z.array(ParticipantSchema),
+  matches: z.array(MatchSchema),
+});
+export type WorkspaceSnapshot = z.infer<typeof WorkspaceSnapshotSchema>;

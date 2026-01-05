@@ -3,19 +3,6 @@
     "title": "Game Master",
     "description": "Organize gaming tournaments like a pro"
   },
-  "auth": {
-    "subtitle": "Your personal tournament manager",
-    "description": "Connect your Google account to securely save your tournaments in the cloud.",
-    "signInWithGoogle": "Continue with Google",
-    "connecting": "Connecting...",
-    "signInError": "Could not sign in. Please try again.",
-    "loadError": "Could not load data. Please try again.",
-    "sessionExpired": "Your session has expired. Please sign in again.",
-    "feature1": "Your data safe in Google Drive",
-    "feature2": "Access from any device",
-    "feature3": "Automatic sync",
-    "privacyNote": "We only access a private app folder. We don't read your other files."
-  },
   "nav": {
     "dashboard": "Dashboard",
     "about": "About",
@@ -252,21 +239,6 @@
       "fromLosers": "From Losers"
     }
   },
-  "drive": {
-    "connect": "Connect Google Drive",
-    "reconnect": "Reconnect",
-    "disconnect": "Disconnect",
-    "notConfigured": "Google Drive not configured",
-    "notConfiguredShort": "Not available",
-    "status": {
-      "disconnected": "Not connected",
-      "connected": "Connected",
-      "syncing": "Syncing...",
-      "needs_reconnect": "Needs reconnect",
-      "offline": "Offline"
-    },
-    "lastSync": "Last sync"
-  },
   "settings": {
     "title": "Settings",
     "data": {
@@ -293,39 +265,6 @@
       "deleteAll": "Delete All Data",
       "confirmTitle": "Delete all data?",
       "confirmMessage": "This will permanently delete all your tournaments, participants, and match history. This action cannot be undone."
-    }
-  },
-  "sync": {
-    "synced": "Synced",
-    "pending": "Pending",
-    "syncing": "Syncing...",
-    "error": "Error",
-    "offline": "Offline",
-    "paused": "Paused",
-    "readOnly": "Read-only",
-    "edit": "Edit",
-    "never": "Never",
-    "justNow": "Just now",
-    "minutesAgo": "{minutes} min ago",
-    "readOnlyMode": "Read-only mode",
-    "pause": "Pause sync",
-    "resume": "Resume sync",
-    "syncNow": "Sync now",
-    "readOnlyInfo": "In read-only mode, changes are not saved to Drive. Useful for viewing tournaments without modifying them.",
-    "autoSyncInfo": "Changes are automatically synced every 30 seconds.",
-    "conflict": {
-      "title": "Data Conflict",
-      "description": "You have data both on this device and in Google Drive. Which do you want to keep?",
-      "local": "This Device",
-      "remote": "Google Drive",
-      "tournaments": "tournaments",
-      "participants": "participants",
-      "lastModified": "Last modified",
-      "keepLocal": "Use local data",
-      "keepRemote": "Use Drive data",
-      "useLocal": "Use this device",
-      "useRemote": "Use Google Drive",
-      "warning": "⚠️ The unselected data will be overwritten"
     }
   },
   "common": {

@@ -3,19 +3,6 @@
     "title": "Game Master",
     "description": "Organiza torneos de videojuegos como un pro"
   },
-  "auth": {
-    "subtitle": "Tu gestor de torneos personal",
-    "description": "Conecta tu cuenta de Google para guardar tus torneos de forma segura en la nube.",
-    "signInWithGoogle": "Continuar con Google",
-    "connecting": "Conectando...",
-    "signInError": "No se pudo iniciar sesión. Por favor, intenta de nuevo.",
-    "loadError": "No se pudieron cargar los datos. Por favor, intenta de nuevo.",
-    "sessionExpired": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión.",
-    "feature1": "Tus datos seguros en Google Drive",
-    "feature2": "Accede desde cualquier dispositivo",
-    "feature3": "Sincronización automática",
-    "privacyNote": "Solo accedemos a una carpeta privada de la app. No leemos tus otros archivos."
-  },
   "nav": {
     "dashboard": "Panel",
     "about": "Acerca de",
@@ -252,21 +239,6 @@
       "fromLosers": "Viene de Perdedores"
     }
   },
-  "drive": {
-    "connect": "Conectar Google Drive",
-    "reconnect": "Reconectar",
-    "disconnect": "Desconectar",
-    "notConfigured": "Google Drive no configurado",
-    "notConfiguredShort": "No disponible",
-    "status": {
-      "disconnected": "No conectado",
-      "connected": "Conectado",
-      "syncing": "Sincronizando...",
-      "needs_reconnect": "Requiere reconexión",
-      "offline": "Sin conexión"
-    },
-    "lastSync": "Última sincronización"
-  },
   "settings": {
     "title": "Ajustes",
     "data": {
@@ -293,39 +265,6 @@
       "deleteAll": "Eliminar Todos los Datos",
       "confirmTitle": "¿Eliminar todos los datos?",
       "confirmMessage": "Esto eliminará permanentemente todos tus torneos, participantes e historial de partidos. Esta acción no se puede deshacer."
-    }
-  },
-  "sync": {
-    "synced": "Sincronizado",
-    "pending": "Pendiente",
-    "syncing": "Sincronizando...",
-    "error": "Error",
-    "offline": "Sin conexión",
-    "paused": "Pausado",
-    "readOnly": "Solo lectura",
-    "edit": "Editar",
-    "never": "Nunca",
-    "justNow": "Ahora mismo",
-    "minutesAgo": "Hace {minutes} min",
-    "readOnlyMode": "Modo solo lectura",
-    "pause": "Pausar sincronización",
-    "resume": "Reanudar sincronización",
-    "syncNow": "Sincronizar ahora",
-    "readOnlyInfo": "En modo solo lectura no se guardan cambios en Drive. Útil para ver torneos sin modificarlos.",
-    "autoSyncInfo": "Los cambios se sincronizan automáticamente cada 30 segundos.",
-    "conflict": {
-      "title": "Conflicto de datos",
-      "description": "Tienes datos tanto en este dispositivo como en Google Drive. ¿Cuáles quieres conservar?",
-      "local": "Este dispositivo",
-      "remote": "Google Drive",
-      "tournaments": "torneos",
-      "participants": "participantes",
-      "lastModified": "Última modificación",
-      "keepLocal": "Usar datos locales",
-      "keepRemote": "Usar datos de Drive",
-      "useLocal": "Usar este dispositivo",
-      "useRemote": "Usar Google Drive",
-      "warning": "⚠️ Los datos no seleccionados se sobrescribirán"
     }
   },
   "common": {

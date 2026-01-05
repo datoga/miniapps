@@ -13,8 +13,8 @@ import { NowPlayingCard } from "./NowPlayingCard";
 
 // Match card dimensions (same as BracketView for consistency)
 const MATCH_WIDTH = 176; // w-44 = 11rem = 176px
-const MATCH_HEIGHT = 72; // Approximate height of match card
-const MATCH_GAP_V = 16;
+const MATCH_HEIGHT = 80; // Approximate height of match card (increased to prevent overlap)
+const MATCH_GAP_V = 24; // Vertical gap between matches (increased for better spacing)
 const ROUND_GAP = 64;
 
 interface MatchPosition {

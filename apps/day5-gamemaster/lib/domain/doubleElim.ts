@@ -201,9 +201,10 @@ async function propagateLosersBacketByes(
         let targetSide: "aId" | "bId";
 
         if (nextRoundIndex % 2 === 1) {
-          // Integration round: winner goes to aId of same slot
+          // Integration round: losers bracket survivor goes to bId of same slot
+          // (aId is reserved for drop-ins from winners bracket)
           nextSlot = slot;
-          targetSide = "aId";
+          targetSide = "bId";
         } else {
           // Halving round: winners pair up
           nextSlot = Math.floor(slot / 2);
@@ -731,13 +732,13 @@ async function advanceLosersWinner(
     }
     nextMatch.updatedAt = Date.now();
     await db.saveMatch(nextMatch);
-    
+
     // Auto-resolve if one side is BYE and other is real participant
     const isByeA = nextMatch.aId === "__BYE__";
     const isByeB = nextMatch.bId === "__BYE__";
     const hasRealA = nextMatch.aId && nextMatch.aId !== "__BYE__";
     const hasRealB = nextMatch.bId && nextMatch.bId !== "__BYE__";
-    
+
     if ((isByeA && hasRealB) || (hasRealA && isByeB)) {
       // Real participant auto-advances
       const realWinner = isByeA ? nextMatch.bId : nextMatch.aId;
@@ -747,7 +748,7 @@ async function advanceLosersWinner(
       nextMatch.playedAt = Date.now();
       nextMatch.updatedAt = Date.now();
       await db.saveMatch(nextMatch);
-      
+
       // Recursively advance the real winner
       await advanceLosersWinner(nextMatch, allMatches, losersBracket);
     } else if (isByeA && isByeB) {
@@ -756,7 +757,7 @@ async function advanceLosersWinner(
       nextMatch.winnerId = "__BYE__";
       nextMatch.updatedAt = Date.now();
       await db.saveMatch(nextMatch);
-      
+
       // Recursively propagate
       await advanceLosersWinner(nextMatch, allMatches, losersBracket);
     }

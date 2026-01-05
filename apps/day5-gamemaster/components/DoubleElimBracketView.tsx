@@ -120,7 +120,7 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
               ? "text-emerald-700 dark:text-emerald-400"
               : "text-gray-900 dark:text-white"
           }`}>
-            {participantA?.name || (isByeA ? t("tournament.bracket.bye") : t("tournament.bracket.tbd"))}
+            {participantA?.name || (match.aId === null && !isCompleted ? t("tournament.bracket.pending") : participantA?.name || "")}
           </span>
           {participantA?.members && participantA.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
@@ -153,7 +153,7 @@ function MatchCard({ match, participantMap, isSelected, onSelect, bracketSide, t
               ? "text-emerald-700 dark:text-emerald-400"
               : "text-gray-900 dark:text-white"
           }`}>
-            {participantB?.name || (isByeB ? t("tournament.bracket.bye") : t("tournament.bracket.tbd"))}
+            {participantB?.name || (match.bId === null && !isCompleted ? t("tournament.bracket.pending") : participantB?.name || "")}
           </span>
           {participantB?.members && participantB.members.length > 0 && (
             <span className="block truncate text-xs text-gray-500 dark:text-gray-400">

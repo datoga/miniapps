@@ -117,6 +117,60 @@ function createMatch(
 }
 
 /**
+ * Auto-resolve a match if one side is BYE and other is a real participant
+ * Or if both sides are BYE
+ */
+async function autoResolveByeMatch(
+  match: Match,
+  allMatches: Match[],
+  losersBracket: string[][],
+  grandFinalMatchId: string,
+  grandFinalResetMatchId: string,
+  winnersBracket: string[][]
+): Promise<void> {
+  if (match.status === "completed") return;
+  
+  const isByeA = match.aId === "__BYE__";
+  const isByeB = match.bId === "__BYE__";
+  const hasRealA = match.aId && match.aId !== "__BYE__";
+  const hasRealB = match.bId && match.bId !== "__BYE__";
+  
+  // Both are BYE -> complete with BYE winner
+  if (isByeA && isByeB) {
+    match.status = "completed";
+    match.winnerId = "__BYE__";
+    match.updatedAt = Date.now();
+    await db.saveMatch(match);
+    // Propagate BYE to next round
+    await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatchId, grandFinalResetMatchId);
+    return;
+  }
+  
+  // One side is BYE, other is real participant -> real participant wins
+  if (isByeA && hasRealB) {
+    match.status = "completed";
+    match.winnerId = match.bId;
+    match.loserId = null; // No real loser
+    match.updatedAt = Date.now();
+    await db.saveMatch(match);
+    // Advance the real participant
+    await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatchId, grandFinalResetMatchId);
+    return;
+  }
+  
+  if (hasRealA && isByeB) {
+    match.status = "completed";
+    match.winnerId = match.aId;
+    match.loserId = null;
+    match.updatedAt = Date.now();
+    await db.saveMatch(match);
+    // Advance the real participant
+    await advanceDoubleElimWinner(match, allMatches, winnersBracket, losersBracket, grandFinalMatchId, grandFinalResetMatchId);
+    return;
+  }
+}
+
+/**
  * Propagate BYEs recursively through the losers bracket
  * When a match has BYE as winner, propagate to next round
  * If both sides of next match are BYE, complete it and continue propagating
@@ -130,12 +184,12 @@ async function propagateLosersBacketByes(
   for (let round = 0; round < losersBracket.length; round++) {
     const roundMatches = losersBracket[round] || [];
     const nextRound = losersBracket[round + 1];
-    
+
     for (let slot = 0; slot < roundMatches.length; slot++) {
       const matchId = roundMatches[slot];
       const match = matchId ? allMatches.find((m) => m.id === matchId) : undefined;
       if (!match) continue;
-      
+
       // If this match completed with BYE winner, propagate to next round
       if (match.status === "completed" && match.winnerId === "__BYE__" && nextRound) {
         // Determine where this BYE goes in the next round
@@ -145,7 +199,7 @@ async function propagateLosersBacketByes(
         const nextRoundIndex = round + 1;
         let nextSlot: number;
         let targetSide: "aId" | "bId";
-        
+
         if (nextRoundIndex % 2 === 1) {
           // Integration round: winner goes to aId of same slot
           nextSlot = slot;
@@ -155,20 +209,20 @@ async function propagateLosersBacketByes(
           nextSlot = Math.floor(slot / 2);
           targetSide = slot % 2 === 0 ? "aId" : "bId";
         }
-        
+
         const nextMatchId = nextRound[nextSlot];
         const nextMatch = nextMatchId ? allMatches.find((m) => m.id === nextMatchId) : undefined;
-        
+
         if (nextMatch && nextMatch.status !== "completed") {
           nextMatch[targetSide] = "__BYE__";
-          
+
           // Check if both sides are now BYE
           if (nextMatch.aId === "__BYE__" && nextMatch.bId === "__BYE__") {
             nextMatch.status = "completed";
             nextMatch.winnerId = "__BYE__";
             nextMatch.updatedAt = now;
           }
-          
+
           await db.saveMatch(nextMatch);
         }
       }
@@ -501,6 +555,9 @@ async function advanceDoubleElimWinner(
         }
         nextMatch.updatedAt = Date.now();
         await db.saveMatch(nextMatch);
+        
+        // Auto-resolve if one side is BYE and other is real participant
+        await autoResolveByeMatch(nextMatch, allMatches, losersBracket, grandFinalMatchId, grandFinalResetMatchId, winnersBracket);
       }
     } else {
       // Winner of losers final goes to grand final as B (with 1 life)
@@ -609,6 +666,21 @@ async function sendToLosersBracket(
     } else {
       // Integration rounds: drop-ins fill A side
       targetMatch.aId = loserId;
+      
+      // Check if the B side (from losers) is a BYE - auto-advance if so
+      if (targetMatch.bId === "__BYE__") {
+        targetMatch.bId = null;
+        targetMatch.status = "completed";
+        targetMatch.winnerId = loserId;
+        targetMatch.loserId = null;
+        targetMatch.playedAt = Date.now();
+        targetMatch.updatedAt = Date.now();
+        await db.saveMatch(targetMatch);
+        
+        // Advance to next losers round
+        await advanceLosersWinner(targetMatch, allMatches, losersBracket);
+        return;
+      }
     }
     targetMatch.updatedAt = Date.now();
     await db.saveMatch(targetMatch);

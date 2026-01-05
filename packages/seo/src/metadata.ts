@@ -99,6 +99,7 @@ export function generateSEOMetadata(config: SEOConfig): Metadata {
       languages: {
         es: `${appUrl}/es`,
         en: `${appUrl}/en`,
+        "x-default": `${appUrl}/es`, // Default to Spanish for x-default
       },
     },
     category,

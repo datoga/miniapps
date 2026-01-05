@@ -1,16 +1,11 @@
 import createMiddleware from "next-intl/middleware";
-import type { NextRequest } from "next/server";
 import { locales, defaultLocale } from "@miniapps/i18n";
 
-const intlMiddleware = createMiddleware({
+export default createMiddleware({
   locales,
   defaultLocale,
   localePrefix: "always",
 });
-
-export function proxy(request: NextRequest) {
-  return intlMiddleware(request);
-}
 
 export const config = {
   matcher: [
@@ -20,7 +15,10 @@ export const config = {
     // - /_vercel (Vercel internals)
     // - /static (static files)
     // - /icon, /apple-icon, /manifest.webmanifest (PWA assets)
+    // - /og-image.png (OG image)
+    // - /sitemap.xml, /robots.txt (SEO files)
     // - files with extensions (e.g. favicon.ico)
-    "/((?!api|_next|_vercel|static|icon|apple-icon|manifest\\.webmanifest|.*\\..*).*)",
+    "/((?!api|_next|_vercel|static|icon|apple-icon|manifest\\.webmanifest|og-image\\.png|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
   ],
 };
+

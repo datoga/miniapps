@@ -667,24 +667,25 @@ async function sendToLosersBracket(
     } else {
       // Integration rounds: drop-ins fill A side
       targetMatch.aId = loserId;
+      targetMatch.updatedAt = Date.now();
+      await db.saveMatch(targetMatch);
 
-      // Check if the B side (from losers) is a BYE - auto-advance if so
-      if (targetMatch.bId === "__BYE__") {
-        targetMatch.bId = null;
-        targetMatch.status = "completed";
-        targetMatch.winnerId = loserId;
-        targetMatch.loserId = null;
-        targetMatch.playedAt = Date.now();
-        targetMatch.updatedAt = Date.now();
-        await db.saveMatch(targetMatch);
+      // Re-read the match from DB to get latest bId (may have been set by propagateLosersBacketByes)
+      const freshMatch = await db.getMatch(targetMatch.id);
+      if (freshMatch && freshMatch.bId === "__BYE__") {
+        // B side is BYE - auto-advance the drop-in
+        freshMatch.status = "completed";
+        freshMatch.winnerId = loserId;
+        freshMatch.loserId = null;
+        freshMatch.playedAt = Date.now();
+        freshMatch.updatedAt = Date.now();
+        await db.saveMatch(freshMatch);
 
         // Advance to next losers round
-        await advanceLosersWinner(targetMatch, allMatches, losersBracket);
+        await advanceLosersWinner(freshMatch, allMatches, losersBracket);
         return;
       }
     }
-    targetMatch.updatedAt = Date.now();
-    await db.saveMatch(targetMatch);
   }
 }
 

@@ -117,6 +117,66 @@ function createMatch(
 }
 
 /**
+ * Propagate BYEs recursively through the losers bracket
+ * When a match has BYE as winner, propagate to next round
+ * If both sides of next match are BYE, complete it and continue propagating
+ */
+async function propagateLosersBacketByes(
+  allMatches: Match[],
+  losersBracket: string[][],
+  now: number
+): Promise<void> {
+  // Process each round of losers bracket
+  for (let round = 0; round < losersBracket.length; round++) {
+    const roundMatches = losersBracket[round] || [];
+    const nextRound = losersBracket[round + 1];
+    
+    for (let slot = 0; slot < roundMatches.length; slot++) {
+      const matchId = roundMatches[slot];
+      const match = matchId ? allMatches.find((m) => m.id === matchId) : undefined;
+      if (!match) continue;
+      
+      // If this match completed with BYE winner, propagate to next round
+      if (match.status === "completed" && match.winnerId === "__BYE__" && nextRound) {
+        // Determine where this BYE goes in the next round
+        // In losers bracket, structure alternates:
+        // - Even rounds (0, 2, 4...): halving rounds, slot -> slot/2
+        // - Odd rounds (1, 3, 5...): integration rounds, slot -> slot
+        const nextRoundIndex = round + 1;
+        let nextSlot: number;
+        let targetSide: "aId" | "bId";
+        
+        if (nextRoundIndex % 2 === 1) {
+          // Integration round: winner goes to aId of same slot
+          nextSlot = slot;
+          targetSide = "aId";
+        } else {
+          // Halving round: winners pair up
+          nextSlot = Math.floor(slot / 2);
+          targetSide = slot % 2 === 0 ? "aId" : "bId";
+        }
+        
+        const nextMatchId = nextRound[nextSlot];
+        const nextMatch = nextMatchId ? allMatches.find((m) => m.id === nextMatchId) : undefined;
+        
+        if (nextMatch && nextMatch.status !== "completed") {
+          nextMatch[targetSide] = "__BYE__";
+          
+          // Check if both sides are now BYE
+          if (nextMatch.aId === "__BYE__" && nextMatch.bId === "__BYE__") {
+            nextMatch.status = "completed";
+            nextMatch.winnerId = "__BYE__";
+            nextMatch.updatedAt = now;
+          }
+          
+          await db.saveMatch(nextMatch);
+        }
+      }
+    }
+  }
+}
+
+/**
  * Start a double elimination tournament
  *
  * Structure:
@@ -279,8 +339,7 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
   // If a winners R0 slot had a BYE, the corresponding losers position won't get a loser
   if (losersBracket.length > 0) {
     const losersR0 = losersBracket[0] || [];
-    const doubleByes: number[] = []; // Track slots with double BYEs
-    
+
     for (let losersSlot = 0; losersSlot < losersR0.length; losersSlot++) {
       const losersMatchId = losersR0[losersSlot];
       const losersMatch = losersMatchId ? allMatches.find((m) => m.id === losersMatchId) : undefined;
@@ -293,39 +352,25 @@ export async function startDoubleElimTournament(tournamentId: string): Promise<T
       const slotBHadBye = byeSlots.has(winnersSlotB);
 
       // Mark slots that will never be filled due to BYEs
-      // We use a special marker to know this slot won't receive a loser
       if (slotAHadBye) {
         losersMatch.aId = "__BYE__";
       }
       if (slotBHadBye) {
         losersMatch.bId = "__BYE__";
       }
-      
-      // If BOTH slots are BYEs, mark match as completed and propagate BYE to next round
+
+      // If BOTH slots are BYEs, mark match as completed with BYE winner
       if (slotAHadBye && slotBHadBye) {
         losersMatch.status = "completed";
         losersMatch.winnerId = "__BYE__";
         losersMatch.updatedAt = now;
-        doubleByes.push(losersSlot);
       }
-      
+
       await db.saveMatch(losersMatch);
     }
-    
-    // Propagate double BYEs to losers R1 (if exists)
-    if (doubleByes.length > 0 && losersBracket.length > 1) {
-      const losersR1 = losersBracket[1] || [];
-      for (const losersSlot of doubleByes) {
-        // In losers R1, winner from L-R0[slot] goes to one side of L-R1[slot]
-        const nextMatchId = losersR1[losersSlot];
-        const nextMatch = nextMatchId ? allMatches.find((m) => m.id === nextMatchId) : undefined;
-        if (nextMatch) {
-          // The winner from this losers slot goes to aId of the next losers match
-          nextMatch.aId = "__BYE__";
-          await db.saveMatch(nextMatch);
-        }
-      }
-    }
+
+    // Recursively propagate BYEs through the entire losers bracket
+    await propagateLosersBacketByes(allMatches, losersBracket, now);
   }
 
   // Find first playable if not found yet

@@ -41,6 +41,8 @@ interface VideoPlayerProps {
   className?: string;
 }
 
+const PLAYBACK_SPEEDS = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2] as const;
+
 export const VideoPlayer = memo(function VideoPlayer({
   src,
   className = "",
@@ -51,6 +53,8 @@ export const VideoPlayer = memo(function VideoPlayer({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showSpeedMenu, setShowSpeedMenu] = useState(false);
 
   const togglePlay = useCallback(() => {
     if (!videoRef.current) return;
@@ -60,6 +64,14 @@ export const VideoPlayer = memo(function VideoPlayer({
       videoRef.current.play();
     }
   }, [isPlaying]);
+
+  const changeSpeed = useCallback((speed: number) => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = speed;
+      setPlaybackRate(speed);
+    }
+    setShowSpeedMenu(false);
+  }, []);
 
   // Smooth time update using requestAnimationFrame
   const updateTime = useCallback(() => {
@@ -154,19 +166,50 @@ export const VideoPlayer = memo(function VideoPlayer({
           className="mb-2 h-1 w-full cursor-pointer appearance-none rounded-full bg-white/30 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
         />
 
-        <div className="flex items-center gap-3">
-          {/* Play/Pause button */}
-          <button
-            onClick={togglePlay}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
-          >
-            {isPlaying ? <PauseIcon className="h-5 w-5" /> : <PlayIcon />}
-          </button>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {/* Play/Pause button */}
+            <button
+              onClick={togglePlay}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+            >
+              {isPlaying ? <PauseIcon className="h-5 w-5" /> : <PlayIcon />}
+            </button>
 
-          {/* Time display */}
-          <span className="font-mono text-sm text-white">
-            {formatTime(currentTime)} / {formatTime(duration)}
-          </span>
+            {/* Time display */}
+            <span className="font-mono text-sm text-white">
+              {formatTime(currentTime)} / {formatTime(duration)}
+            </span>
+          </div>
+
+          {/* Playback speed control */}
+          <div className="relative">
+            <button
+              onClick={() => setShowSpeedMenu(!showSpeedMenu)}
+              className="rounded-lg bg-white/20 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+            >
+              {playbackRate}x
+            </button>
+            
+            {/* Speed menu */}
+            {showSpeedMenu && (
+              <div className="absolute bottom-full right-0 mb-2 overflow-hidden rounded-lg bg-black/90 py-1 shadow-xl backdrop-blur-md">
+                {PLAYBACK_SPEEDS.map((speed) => (
+                  <button
+                    key={speed}
+                    onClick={() => changeSpeed(speed)}
+                    className={`block w-full px-4 py-1.5 text-left text-sm transition-colors ${
+                      playbackRate === speed
+                        ? "bg-white/20 font-medium text-white"
+                        : "text-white/80 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {speed}x
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

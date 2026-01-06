@@ -32,7 +32,7 @@ export function useControlsVisibility(
   options: UseControlsVisibilityOptions = {}
 ): UseControlsVisibilityResult {
   const { hideDelay = 3000 } = options;
-  
+
   const [showControls, setShowControls] = useState(true);
   const hideControlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 

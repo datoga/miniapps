@@ -24,26 +24,26 @@ export const RecordingInfoTooltip = memo(function RecordingInfoTooltip({
       <div className="space-y-2">
         <InfoRow label={t("overlay.infoFolder")} value={info.folderName} />
         <InfoRow label={t("overlay.infoFilename")} value={info.filename} />
-        
+
         <div className="flex items-baseline gap-2 border-t border-white/20 pt-2">
           <span className="shrink-0 text-white/60">{t("overlay.infoFormat")}</span>
           <span className="font-mono text-white/90">{info.mimeType}</span>
         </div>
-        
+
         <div className="flex items-baseline gap-4">
-          <InfoRow 
-            label={t("overlay.infoResolution")} 
-            value={`${info.width}×${info.height}`} 
-            inline 
+          <InfoRow
+            label={t("overlay.infoResolution")}
+            value={`${info.width}×${info.height}`}
+            inline
           />
           <InfoRow label={t("overlay.infoFps")} value={String(info.fps)} inline />
-          <InfoRow 
-            label={t("overlay.infoBitrate")} 
-            value={`${info.bitrateMbps} Mbps`} 
-            inline 
+          <InfoRow
+            label={t("overlay.infoBitrate")}
+            value={`${info.bitrateMbps} Mbps`}
+            inline
           />
         </div>
-        
+
         <div className="flex items-baseline gap-2">
           <span className="shrink-0 text-white/60">{t("overlay.infoAudio")}</span>
           <span className="font-mono text-white/90">
@@ -63,12 +63,12 @@ export const RecordingInfoTooltip = memo(function RecordingInfoTooltip({
 });
 
 // Helper component for info rows
-const InfoRow = memo(function InfoRow({ 
-  label, 
+const InfoRow = memo(function InfoRow({
+  label,
   value,
   inline = false,
-}: { 
-  label: string; 
+}: {
+  label: string;
   value: string;
   inline?: boolean;
 }) {

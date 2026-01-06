@@ -174,9 +174,9 @@ export const VideoPlayer = memo(function VideoPlayer({
         />
       </div>
 
-      {/* Custom controls - not mirrored, z-10 to be above click area */}
+      {/* Custom controls - not mirrored, z-10 to be above click area, overflow-visible for dropdown */}
       <div
-        className={`absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity ${
+        className={`absolute inset-x-0 bottom-0 z-10 overflow-visible bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity ${
           showControls ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -212,22 +212,22 @@ export const VideoPlayer = memo(function VideoPlayer({
             <div className="relative">
               <button
                 onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-                className="rounded-lg bg-white/20 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+                className="flex h-10 items-center justify-center rounded-full bg-white/20 px-4 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
               >
                 {playbackRate}x
               </button>
 
-              {/* Speed menu */}
+              {/* Speed menu - positioned above button */}
               {showSpeedMenu && (
-                <div className="absolute bottom-full right-0 mb-2 overflow-hidden rounded-lg bg-black/90 py-1 shadow-xl backdrop-blur-md">
+                <div className="absolute bottom-12 right-0 overflow-hidden rounded-xl bg-black/80 py-2 shadow-xl backdrop-blur-md">
                   {PLAYBACK_SPEEDS.map((speed) => (
                     <button
                       key={speed}
                       onClick={() => changeSpeed(speed)}
-                      className={`block w-full px-4 py-1.5 text-left text-sm transition-colors ${
+                      className={`block w-full px-5 py-2 text-center text-sm transition-colors ${
                         playbackRate === speed
-                          ? "bg-white/20 font-medium text-white"
-                          : "text-white/80 hover:bg-white/10 hover:text-white"
+                          ? "bg-white/20 font-semibold text-white"
+                          : "text-white/70 hover:bg-white/10 hover:text-white"
                       }`}
                     >
                       {speed}x
@@ -240,7 +240,7 @@ export const VideoPlayer = memo(function VideoPlayer({
             {/* Fullscreen button */}
             <button
               onClick={toggleFullscreen}
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
             >
               {isFullscreen ? <FullscreenExitIcon /> : <FullscreenEnterIcon />}
             </button>

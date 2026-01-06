@@ -137,22 +137,22 @@ export async function createUniqueFile(
   let suffix = 0;
   let finalFilename = filename;
 
+  // Check if file exists and find unique name
   while (true) {
     try {
-      // Try to create the file exclusively (will fail if exists)
-      const fileHandle = await dirHandle.getFileHandle(finalFilename, { create: true });
-      return { fileHandle, finalFilename };
-    } catch (error) {
-      // If file exists, try with a suffix
-      if (error instanceof Error && error.name === "InvalidModificationError") {
-        suffix++;
-        finalFilename = `${base}-${suffix}${ext}`;
-      } else {
-        // For other errors, just create it (might overwrite)
-        const fileHandle = await dirHandle.getFileHandle(finalFilename, { create: true });
-        return { fileHandle, finalFilename };
-      }
+      // Try to get the file WITHOUT creating it - throws if doesn't exist
+      await dirHandle.getFileHandle(finalFilename, { create: false });
+      // File exists, try next suffix
+      suffix++;
+      finalFilename = `${base}-${suffix}${ext}`;
+    } catch {
+      // File doesn't exist - we can use this name
+      break;
     }
   }
+
+  // Now create the file with the unique name
+  const fileHandle = await dirHandle.getFileHandle(finalFilename, { create: true });
+  return { fileHandle, finalFilename };
 }
 

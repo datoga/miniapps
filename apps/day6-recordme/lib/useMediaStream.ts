@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 
+const MIC_STATE_KEY = "recordme-last-mic-state";
+
 export interface MediaDevice {
   deviceId: string;
   label: string;
@@ -154,7 +156,16 @@ export function useMediaStream(options?: UseMediaStreamOptions): UseMediaStreamR
       if (gotMic) {
         const audioTrack = newStream.getAudioTracks()[0];
         if (audioTrack) {
-          const micDefault = options?.micDefaultOn ?? false;
+          // Check localStorage for last mic state, fall back to settings default
+          let micDefault = options?.micDefaultOn ?? false;
+          try {
+            const savedState = localStorage.getItem(MIC_STATE_KEY);
+            if (savedState !== null) {
+              micDefault = savedState === "1";
+            }
+          } catch {
+            // Ignore storage errors
+          }
           audioTrack.enabled = micDefault;
           setIsMicEnabledState(micDefault);
         }
@@ -219,7 +230,7 @@ export function useMediaStream(options?: UseMediaStreamOptions): UseMediaStreamR
   }, [stream, getStream]);
 
   /**
-   * Enable/disable microphone
+   * Enable/disable microphone and save state to localStorage
    */
   const setMicEnabled = useCallback((enabled: boolean) => {
     if (!stream) {return;}
@@ -228,6 +239,12 @@ export function useMediaStream(options?: UseMediaStreamOptions): UseMediaStreamR
     if (audioTrack) {
       audioTrack.enabled = enabled;
       setIsMicEnabledState(enabled);
+      // Save to localStorage for next session
+      try {
+        localStorage.setItem(MIC_STATE_KEY, enabled ? "1" : "0");
+      } catch {
+        // Ignore storage errors
+      }
     }
   }, [stream]);
 

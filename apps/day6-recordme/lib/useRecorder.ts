@@ -1,25 +1,21 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createUniqueFile, generateFilename, getBestMimeType } from "./capabilities";
 import {
-  getBestMimeType,
-  generateFilename,
-  createUniqueFile,
-} from "./capabilities";
-import {
-  getFolderHandle,
-  verifyFolderPermission,
-  pickDirectory,
-  getQualitySettings,
-  type RecorderSettings,
-} from "./settings";
-import {
-  trackRecordingStarted,
-  trackRecordingCompleted,
   trackFirstValue,
+  trackRecordingCompleted,
   trackRecordingPaused,
   trackRecordingResumed,
+  trackRecordingStarted,
 } from "./ga";
+import {
+  getFolderHandle,
+  getQualitySettings,
+  pickDirectory,
+  verifyFolderPermission,
+  type RecorderSettings,
+} from "./settings";
 
 export type RecorderState =
   | "idle"
@@ -51,6 +47,9 @@ export interface RecordingInfo {
   fps: number;
   bitrateMbps: number;
   audioEnabled: boolean;
+  audioCodec: string | null;
+  audioSampleRate: number | null;
+  audioChannels: number | null;
 }
 
 export interface UseRecorderResult {
@@ -108,6 +107,8 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
   const folderNameRef = useRef<string>("Selected folder");
   const filenameRef = useRef<string>("");
   const isClosingRef = useRef<boolean>(false);
+  const canvasCleanupRef = useRef<(() => void) | null>(null);
+  const bytesWrittenRef = useRef<number>(0);
 
   /**
    * Queue a write operation to maintain order
@@ -115,13 +116,21 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
   const queueWrite = useCallback((data: Blob) => {
     writeQueueRef.current = writeQueueRef.current.then(async () => {
       // Skip writes if stream is closing or closed
-      if (!writableRef.current || isClosingRef.current) {return;}
+      if (!writableRef.current || isClosingRef.current) {
+        return;
+      }
 
       try {
         const buffer = await data.arrayBuffer();
         // Double-check before writing (stream might have closed while waiting)
-        if (!writableRef.current || isClosingRef.current) {return;}
+        if (!writableRef.current || isClosingRef.current) {
+          return;
+        }
         await writableRef.current.write(new Uint8Array(buffer));
+        bytesWrittenRef.current += buffer.byteLength;
+        console.log(
+          `[Recording] Wrote ${buffer.byteLength} bytes, total: ${bytesWrittenRef.current}`
+        );
       } catch (err) {
         // Ignore errors when closing (expected)
         if (!isClosingRef.current) {
@@ -231,8 +240,62 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       // 6. Get quality settings
       const quality = getQualitySettings(settings);
 
-      // 7. Create MediaRecorder
-      const recorder = new MediaRecorder(stream, {
+      // 7. Create mirrored stream using canvas (so saved video matches preview)
+      const videoTrack = stream.getVideoTracks()[0];
+      if (!videoTrack) {
+        setError("No video track available");
+        setState("idle");
+        return;
+      }
+      const videoSettings = videoTrack.getSettings();
+      const videoWidth = videoSettings.width || quality.width;
+      const videoHeight = videoSettings.height || quality.height;
+
+      // Create canvas for mirroring
+      const canvas = document.createElement("canvas");
+      canvas.width = videoWidth;
+      canvas.height = videoHeight;
+      const ctx = canvas.getContext("2d");
+
+      // Create video element to draw from
+      const videoEl = document.createElement("video");
+      videoEl.srcObject = stream;
+      videoEl.muted = true;
+      videoEl.playsInline = true;
+      await videoEl.play();
+
+      // Mirror and draw frames to canvas
+      let animationId: number;
+      const drawFrame = () => {
+        if (ctx && videoEl.readyState >= 2) {
+          ctx.save();
+          ctx.scale(-1, 1); // Mirror horizontally
+          ctx.drawImage(videoEl, -videoWidth, 0, videoWidth, videoHeight);
+          ctx.restore();
+        }
+        animationId = requestAnimationFrame(drawFrame);
+      };
+      drawFrame();
+
+      // Capture canvas stream
+      const canvasStream = canvas.captureStream(quality.fps);
+
+      // Add audio track if present
+      const audioTrack = stream.getAudioTracks()[0];
+      if (audioTrack) {
+        canvasStream.addTrack(audioTrack);
+      }
+
+      // Store cleanup function
+      const cleanupCanvas = () => {
+        cancelAnimationFrame(animationId);
+        videoEl.pause();
+        videoEl.srcObject = null;
+      };
+      canvasCleanupRef.current = cleanupCanvas;
+
+      // 8. Create MediaRecorder with mirrored stream
+      const recorder = new MediaRecorder(canvasStream, {
         mimeType,
         videoBitsPerSecond: quality.bitrateMbps * 1_000_000,
       });
@@ -240,6 +303,7 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
 
       // 8. Handle data
       recorder.ondataavailable = (event) => {
+        console.log(`[Recording] ondataavailable: ${event.data.size} bytes`);
         if (event.data.size > 0) {
           queueWrite(event.data);
         }
@@ -251,7 +315,9 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       };
 
       // 9. Start recording with timeslice for incremental writes
+      bytesWrittenRef.current = 0; // Reset bytes counter
       recorder.start(1000); // 1 second chunks
+      console.log("[Recording] Started with mimeType:", mimeType);
 
       // 10. Track state
       setState("recording");
@@ -263,6 +329,31 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       startElapsedTimer();
 
       // 10b. Set recording info for debug display
+      // Extract audio codec from mimeType (e.g., "video/webm;codecs=vp8,opus" -> "opus")
+      let audioCodec: string | null = null;
+      const codecsMatch = mimeType.match(/codecs=([^;]+)/);
+      if (codecsMatch && codecsMatch[1]) {
+        const codecs = codecsMatch[1].split(",");
+        // Audio codec is usually the second one (opus, mp4a, etc.)
+        const secondCodec = codecs[1];
+        const firstCodec = codecs[0];
+        audioCodec = secondCodec ? secondCodec.trim() : firstCodec ? firstCodec.trim() : null;
+      } else if (mimeType.includes("webm")) {
+        audioCodec = "opus";
+      } else if (mimeType.includes("mp4")) {
+        audioCodec = "aac";
+      }
+
+      // Get audio track info for recording info display
+      let audioSampleRate: number | null = null;
+      let audioChannels: number | null = null;
+      const infoAudioTrack = stream.getAudioTracks()[0];
+      if (infoAudioTrack) {
+        const audioSettings = infoAudioTrack.getSettings();
+        audioSampleRate = audioSettings.sampleRate || null;
+        audioChannels = audioSettings.channelCount || null;
+      }
+
       setRecordingInfo({
         filename: finalFilename,
         folderName: folderHandle.name,
@@ -272,11 +363,13 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         fps: quality.fps,
         bitrateMbps: quality.bitrateMbps,
         audioEnabled: isMicEnabled,
+        audioCodec,
+        audioSampleRate,
+        audioChannels,
       });
 
       // 11. Track analytics
       trackRecordingStarted(isMicEnabled, format);
-
     } catch (err) {
       console.error("Start recording error:", err);
       if (err instanceof Error) {
@@ -320,7 +413,9 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
    * Stop recording
    */
   const stopRecording = useCallback(async () => {
-    if (!recorderRef.current) {return;}
+    if (!recorderRef.current) {
+      return;
+    }
 
     setState("processing");
     stopElapsedTimer();
@@ -329,14 +424,45 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
     isClosingRef.current = true;
 
     try {
+      // Request any pending data before stopping (canvas still running!)
+      console.log(`[Recording] Stopping... state: ${recorderRef.current.state}`);
+      if (recorderRef.current.state === "recording") {
+        console.log("[Recording] Calling requestData()");
+        recorderRef.current.requestData();
+      }
+
+      // Small delay to ensure requestData event fires
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
       // Stop recorder - this will trigger final ondataavailable
+      console.log("[Recording] Calling stop()");
       recorderRef.current.stop();
 
       // Small delay to let final data events fire
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // NOW clean up canvas mirroring (after recorder has stopped)
+      if (canvasCleanupRef.current) {
+        canvasCleanupRef.current();
+        canvasCleanupRef.current = null;
+      }
 
       // Wait for all pending writes to complete
       await writeQueueRef.current;
+
+      console.log(`[Recording] Finished. Total bytes written: ${bytesWrittenRef.current}`);
+
+      // Check if we have any data
+      if (bytesWrittenRef.current === 0) {
+        // No data was written - abort and clean up
+        if (writableRef.current) {
+          await writableRef.current.abort();
+          writableRef.current = null;
+        }
+        setError("No video data was captured. Please try recording again for longer.");
+        setState("idle");
+        return;
+      }
 
       // Close writable stream
       if (writableRef.current) {
@@ -365,7 +491,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       // Track analytics
       trackRecordingCompleted(isMicEnabled, formatRef.current);
       trackFirstValue();
-
     } catch (err) {
       console.error("Stop recording error:", err);
       if (err instanceof Error) {
@@ -381,6 +506,12 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
    * Reset recorder to idle state
    */
   const resetRecorder = useCallback(() => {
+    // Clean up canvas mirroring if still active
+    if (canvasCleanupRef.current) {
+      canvasCleanupRef.current();
+      canvasCleanupRef.current = null;
+    }
+
     // Revoke previous URL
     if (resultUrl) {
       URL.revokeObjectURL(resultUrl);
@@ -405,6 +536,10 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
   useEffect(() => {
     return () => {
       stopElapsedTimer();
+      if (canvasCleanupRef.current) {
+        canvasCleanupRef.current();
+        canvasCleanupRef.current = null;
+      }
       if (resultUrl) {
         URL.revokeObjectURL(resultUrl);
       }
@@ -436,4 +571,3 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
     error,
   };
 }
-

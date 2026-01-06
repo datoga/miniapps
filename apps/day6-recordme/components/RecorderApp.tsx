@@ -315,14 +315,31 @@ export function RecorderApp() {
                     <VideoPreview stream={mediaStream.stream} />
                   )}
 
-                  {/* Recording overlay (REC badge + mic indicator + timer) - click to show controls */}
+                  {/* Recording overlay (REC badge + timer) - click to show controls */}
                   <RecordingOverlay
                     state={recorder.state}
                     elapsedMs={recorder.elapsedMs}
                     showTimer={showControls}
-                    isMicEnabled={mediaStream.isMicEnabled}
                     onClick={toggleControls}
                   />
+
+                  {/* Fixed mic indicator - always visible when mic is ON during recording, clickable to turn OFF */}
+                  {(recorder.state === "recording" || recorder.state === "paused") && mediaStream.isMicEnabled && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        mediaStream.setMicEnabled(false);
+                      }}
+                      className="absolute right-4 bottom-4 z-10 flex items-center gap-2 rounded-full bg-green-500/80 px-3 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-sm transition-all hover:bg-green-600"
+                      title={t("mic.on")}
+                    >
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                      </svg>
+                      <span className="font-medium">ON</span>
+                    </button>
+                  )}
 
                   {/* Top right controls during recording - info + fullscreen */}
                   {(recorder.state === "recording" || recorder.state === "paused") && (
@@ -344,39 +361,48 @@ export function RecorderApp() {
                           {/* Info Tooltip */}
                           {showInfoTooltip && (
                             <div
-                              className="absolute right-0 top-10 w-64 rounded-xl bg-black/90 p-4 text-xs text-white shadow-xl backdrop-blur-md"
+                              className="absolute right-0 top-10 min-w-64 max-w-md whitespace-nowrap rounded-xl bg-black/90 p-4 text-xs text-white shadow-xl backdrop-blur-md"
                               onClick={(e) => e.stopPropagation()}
                             >
                               <div className="space-y-2">
-                                <div>
-                                  <span className="text-white/60">{t("overlay.infoFolder")}</span>
-                                  <div className="font-mono text-white/90 truncate">{recorder.recordingInfo.folderName}</div>
+                                <div className="flex items-baseline gap-2">
+                                  <span className="shrink-0 text-white/60">{t("overlay.infoFolder")}</span>
+                                  <span className="font-mono text-white/90">{recorder.recordingInfo.folderName}</span>
                                 </div>
-                                <div>
-                                  <span className="text-white/60">{t("overlay.infoFilename")}</span>
-                                  <div className="font-mono text-white/90 break-all">{recorder.recordingInfo.filename}</div>
+                                <div className="flex items-baseline gap-2">
+                                  <span className="shrink-0 text-white/60">{t("overlay.infoFilename")}</span>
+                                  <span className="font-mono text-white/90">{recorder.recordingInfo.filename}</span>
                                 </div>
-                                <div className="border-t border-white/20 pt-2">
-                                  <span className="text-white/60">{t("overlay.infoFormat")}</span>
-                                  <div className="font-mono text-white/90">{recorder.recordingInfo.mimeType}</div>
+                                <div className="flex items-baseline gap-2 border-t border-white/20 pt-2">
+                                  <span className="shrink-0 text-white/60">{t("overlay.infoFormat")}</span>
+                                  <span className="font-mono text-white/90">{recorder.recordingInfo.mimeType}</span>
                                 </div>
-                                <div>
-                                  <span className="text-white/60">{t("overlay.infoResolution")}</span>
-                                  <div className="font-mono text-white/90">{recorder.recordingInfo.width}×{recorder.recordingInfo.height}</div>
-                                </div>
-                                <div className="flex gap-4">
-                                  <div>
+                                <div className="flex items-baseline gap-4">
+                                  <div className="flex items-baseline gap-2">
+                                    <span className="text-white/60">{t("overlay.infoResolution")}</span>
+                                    <span className="font-mono text-white/90">{recorder.recordingInfo.width}×{recorder.recordingInfo.height}</span>
+                                  </div>
+                                  <div className="flex items-baseline gap-2">
                                     <span className="text-white/60">{t("overlay.infoFps")}</span>
-                                    <div className="font-mono text-white/90">{recorder.recordingInfo.fps}</div>
+                                    <span className="font-mono text-white/90">{recorder.recordingInfo.fps}</span>
                                   </div>
-                                  <div>
+                                  <div className="flex items-baseline gap-2">
                                     <span className="text-white/60">{t("overlay.infoBitrate")}</span>
-                                    <div className="font-mono text-white/90">{recorder.recordingInfo.bitrateMbps} Mbps</div>
+                                    <span className="font-mono text-white/90">{recorder.recordingInfo.bitrateMbps} Mbps</span>
                                   </div>
                                 </div>
-                                <div>
-                                  <span className="text-white/60">{t("overlay.infoAudio")}</span>
-                                  <div className="font-mono text-white/90">{recorder.recordingInfo.audioEnabled ? "✓ ON" : "✗ OFF"}</div>
+                                <div className="flex items-baseline gap-2">
+                                  <span className="shrink-0 text-white/60">{t("overlay.infoAudio")}</span>
+                                  <span className="font-mono text-white/90">
+                                    {mediaStream.isMicEnabled ? "✓ ON" : "✗ OFF"}
+                                    {mediaStream.isMicEnabled && recorder.recordingInfo.audioCodec && (
+                                      <span className="ml-2 text-white/60">
+                                        {recorder.recordingInfo.audioCodec.toUpperCase()}
+                                        {recorder.recordingInfo.audioSampleRate && ` · ${Math.round(recorder.recordingInfo.audioSampleRate / 1000)}kHz`}
+                                        {recorder.recordingInfo.audioChannels && ` · ${recorder.recordingInfo.audioChannels}ch`}
+                                      </span>
+                                    )}
+                                  </span>
                                 </div>
                               </div>
                             </div>
@@ -402,33 +428,20 @@ export function RecorderApp() {
                     </div>
                   )}
 
-                  {/* Mic toggle overlay - only during recording/paused */}
-                  {mediaStream.stream && mediaStream.micPermission !== "denied" && recorder.state !== "idle" && (
+                  {/* Mic toggle overlay - only during recording/paused and ONLY when mic is OFF */}
+                  {mediaStream.stream && mediaStream.micPermission !== "denied" && recorder.state !== "idle" && !mediaStream.isMicEnabled && (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        mediaStream.setMicEnabled(!mediaStream.isMicEnabled);
+                        mediaStream.setMicEnabled(true);
                       }}
-                      className={`absolute bottom-4 right-4 z-10 flex items-center gap-2 rounded-full px-3 py-2 shadow-lg backdrop-blur-sm transition-all ${
-                        mediaStream.isMicEnabled
-                          ? "bg-green-500/80 text-white hover:bg-green-500"
-                          : "bg-black/40 text-white/90 hover:bg-black/60"
-                      } ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-                      title={mediaStream.isMicEnabled ? t("mic.on") : t("mic.off")}
+                      className={`absolute bottom-4 right-4 z-10 flex items-center gap-2 rounded-full bg-black/40 px-3 py-2 text-white/90 shadow-lg backdrop-blur-sm transition-all hover:bg-black/60 ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                      title={t("mic.off")}
                     >
-                      {mediaStream.isMicEnabled ? (
-                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
-                          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
-                        </svg>
-                      ) : (
-                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.55-.9l4.18 4.18 1.27-1.27L4.27 3z" />
-                        </svg>
-                      )}
-                      <span className="text-xs font-medium">
-                        {mediaStream.isMicEnabled ? "ON" : "OFF"}
-                      </span>
+                      <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 11h-1.7c0 .74-.16 1.43-.43 2.05l1.23 1.23c.56-.98.9-2.09.9-3.28zm-4.02.17c0-.06.02-.11.02-.17V5c0-1.66-1.34-3-3-3S9 3.34 9 5v.18l5.98 5.99zM4.27 3L3 4.27l6.01 6.01V11c0 1.66 1.33 3 2.99 3 .22 0 .44-.03.65-.08l1.66 1.66c-.71.33-1.5.52-2.31.52-2.76 0-5.3-2.1-5.3-5.1H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c.91-.13 1.77-.45 2.55-.9l4.18 4.18 1.27-1.27L4.27 3z" />
+                      </svg>
+                      <span className="text-xs font-medium">OFF</span>
                     </button>
                   )}
 
@@ -531,7 +544,7 @@ export function RecorderApp() {
 
                   {/* Filename toggle */}
                   {customFilename ? (
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={customFilename}
@@ -544,15 +557,15 @@ export function RecorderApp() {
                         }}
                         onFocus={(e) => e.target.select()}
                         placeholder="mi-video"
-                        className="w-24 rounded-full bg-gray-200 px-3 py-2 text-center text-xs font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-gray-200"
+                        className="w-40 rounded-lg bg-gray-200 px-4 py-2.5 text-center text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-gray-200"
                         autoFocus
                       />
                       <button
                         onClick={() => setCustomFilename("")}
-                        className="flex h-6 w-6 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700"
+                        className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700"
                         title="Auto"
                       >
-                        <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
@@ -560,10 +573,10 @@ export function RecorderApp() {
                   ) : (
                     <button
                       onClick={() => setCustomFilename("mi-video")}
-                      className="flex items-center gap-1.5 rounded-full bg-gray-200 px-4 py-2 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                      className="flex items-center gap-2 rounded-lg bg-gray-200 px-5 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                       title="Custom name"
                     >
-                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                       </svg>
                       auto

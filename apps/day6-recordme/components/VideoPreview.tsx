@@ -125,8 +125,8 @@ export const VideoPlayer = memo(function VideoPlayer({
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => !isPlaying && setShowControls(true)}
     >
-      {/* Video container - CSS mirrored to match live preview */}
-      <div className="h-full w-full" style={{ transform: "scaleX(-1)" }}>
+      {/* Video container - file is already mirrored from recording */}
+      <div className="h-full w-full">
         <video
           ref={videoRef}
           src={src}

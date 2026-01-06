@@ -60,14 +60,12 @@ export function RecorderApp() {
     setShowInfoTooltip(false);
   }, []);
 
-  // Toggle controls on click - hide if visible, show if hidden
-  const toggleControls = useCallback(() => {
-    if (showControls) {
-      hideControlsNow();
-    } else {
-      showControlsTemporarily();
-    }
-  }, [showControls, hideControlsNow, showControlsTemporarily]);
+  // Handle click on video - always show/extend controls visibility
+  // On mobile, users need to tap to show controls, then tap buttons
+  // So we should NOT toggle (hide on second tap) - just extend visibility
+  const handleVideoClick = useCallback(() => {
+    showControlsTemporarily();
+  }, [showControlsTemporarily]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -292,7 +290,7 @@ export function RecorderApp() {
                 onMouseEnter={showControlsTemporarily}
                 onMouseMove={showControlsTemporarily}
                 onMouseLeave={hideControlsNow}
-                onClick={toggleControls}
+                onClick={handleVideoClick}
                 className={`relative mb-6 aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg ${
                   recorder.state === "recording" || recorder.state === "paused" ? "cursor-pointer" : ""
                 }`}
@@ -319,7 +317,7 @@ export function RecorderApp() {
                     state={recorder.state}
                     elapsedMs={recorder.elapsedMs}
                     showTimer={showControls}
-                    onClick={toggleControls}
+                    onClick={handleVideoClick}
                   />
 
                   {/* Fixed mic indicator - always visible when mic is ON during recording, clickable to turn OFF */}

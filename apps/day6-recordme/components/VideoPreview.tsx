@@ -149,9 +149,9 @@ export const VideoPlayer = memo(function VideoPlayer({
         />
       </div>
 
-      {/* Custom controls - not mirrored */}
+      {/* Custom controls - not mirrored, z-10 to be above click area */}
       <div
-        className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity ${
+        className={`absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity ${
           showControls ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -190,7 +190,7 @@ export const VideoPlayer = memo(function VideoPlayer({
             >
               {playbackRate}x
             </button>
-            
+
             {/* Speed menu */}
             {showSpeedMenu && (
               <div className="absolute bottom-full right-0 mb-2 overflow-hidden rounded-lg bg-black/90 py-1 shadow-xl backdrop-blur-md">
@@ -213,10 +213,10 @@ export const VideoPlayer = memo(function VideoPlayer({
         </div>
       </div>
 
-      {/* Click to play/pause */}
+      {/* Click to play/pause - z-0 so controls are above */}
       <button
         onClick={togglePlay}
-        className="absolute inset-0 cursor-pointer"
+        className="absolute inset-0 z-0 cursor-pointer"
         aria-label={isPlaying ? "Pause" : "Play"}
       />
     </div>

@@ -238,8 +238,8 @@ export const VideoPlayer = memo(function VideoPlayer({
 
             {/* Speed menu - positioned above button */}
             {showSpeedMenu && (
-              <div 
-                className="absolute bottom-12 right-0 overflow-hidden rounded-xl bg-black/80 py-2 shadow-xl backdrop-blur-md"
+              <div
+                className="absolute bottom-full right-0 mb-2 rounded-xl bg-black/80 py-2 shadow-xl backdrop-blur-md"
                 onClick={(e) => e.stopPropagation()}
               >
                 {PLAYBACK_SPEEDS.map((speed) => (
@@ -249,7 +249,7 @@ export const VideoPlayer = memo(function VideoPlayer({
                       e.stopPropagation();
                       changeSpeed(speed);
                     }}
-                    className={`block w-full px-5 py-2 text-center text-sm transition-colors ${
+                    className={`block w-full whitespace-nowrap px-5 py-2 text-center text-sm transition-colors ${
                       playbackRate === speed
                         ? "bg-white/20 font-semibold text-white"
                         : "text-white/70 hover:bg-white/10 hover:text-white"

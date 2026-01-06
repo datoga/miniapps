@@ -55,7 +55,7 @@ export const FinishedView = memo(function FinishedView({
   return (
     <div className="flex flex-col">
       {/* Video Player */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-black/10">
+      <div className="relative aspect-video w-full overflow-visible rounded-2xl bg-black shadow-2xl ring-1 ring-black/10">
         <VideoPlayer src={resultUrl} />
       </div>
 

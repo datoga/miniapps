@@ -240,68 +240,9 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       // 6. Get quality settings
       const quality = getQualitySettings(settings);
 
-      // 7. Create mirrored stream using canvas
-      const videoTrack = stream.getVideoTracks()[0];
-      if (!videoTrack) {
-        setError("errors.noVideoData");
-        setState("idle");
-        return;
-      }
-      const videoSettings = videoTrack.getSettings();
-      const videoWidth = videoSettings.width || quality.width;
-      const videoHeight = videoSettings.height || quality.height;
-
-      // Create canvas for mirroring
-      const canvas = document.createElement("canvas");
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
-      const ctx = canvas.getContext("2d")!;
-
-      // Create video element and wait for it to be ready
-      const videoEl = document.createElement("video");
-      videoEl.srcObject = stream;
-      videoEl.muted = true;
-      videoEl.playsInline = true;
-      
-      // Wait for video to be ready before proceeding
-      await new Promise<void>((resolve) => {
-        videoEl.onloadedmetadata = () => {
-          videoEl.play().then(() => resolve());
-        };
-      });
-
-      // Start drawing mirrored frames
-      let isDrawing = true;
-      const drawFrame = () => {
-        if (!isDrawing) return;
-        if (videoEl.readyState >= 2) {
-          ctx.save();
-          ctx.scale(-1, 1);
-          ctx.drawImage(videoEl, -videoWidth, 0, videoWidth, videoHeight);
-          ctx.restore();
-        }
-        requestAnimationFrame(drawFrame);
-      };
-      drawFrame();
-
-      // Capture canvas stream
-      const canvasStream = canvas.captureStream(quality.fps);
-
-      // Add audio track if present
-      const audioTrack = stream.getAudioTracks()[0];
-      if (audioTrack) {
-        canvasStream.addTrack(audioTrack);
-      }
-
-      // Store cleanup function
-      canvasCleanupRef.current = () => {
-        isDrawing = false;
-        videoEl.pause();
-        videoEl.srcObject = null;
-      };
-
-      // 8. Create MediaRecorder with mirrored stream
-      const recorder = new MediaRecorder(canvasStream, {
+      // 7. Create MediaRecorder with original stream
+      // Note: File is saved as others see you. In-app playback is CSS-mirrored.
+      const recorder = new MediaRecorder(stream, {
         mimeType,
         videoBitsPerSecond: quality.bitrateMbps * 1_000_000,
       });
@@ -320,10 +261,10 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         setError("Recording error occurred");
       };
 
-      // 9. Start recording (no timeslice for canvas stream compatibility)
+      // 9. Start recording with timeslice
       bytesWrittenRef.current = 0; // Reset bytes counter
-      recorder.start();
-      console.log("[Recording] Started with mimeType:", mimeType, "canvas mirroring enabled");
+      recorder.start(1000); // 1 second chunks
+      console.log("[Recording] Started with mimeType:", mimeType);
 
       // 10. Track state
       setState("recording");

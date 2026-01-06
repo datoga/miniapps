@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useRef, useEffect, useState, useCallback } from "react";
-import { PauseIcon, PlayIcon } from "./Icons";
+import { PauseIcon, PlayIcon, FullscreenEnterIcon, FullscreenExitIcon } from "./Icons";
 
 interface VideoPreviewProps {
   stream: MediaStream | null;
@@ -47,6 +47,7 @@ export const VideoPlayer = memo(function VideoPlayer({
   src,
   className = "",
 }: VideoPlayerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const animationRef = useRef<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -55,6 +56,7 @@ export const VideoPlayer = memo(function VideoPlayer({
   const [showControls, setShowControls] = useState(true);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const togglePlay = useCallback(() => {
     if (!videoRef.current) return;
@@ -71,6 +73,28 @@ export const VideoPlayer = memo(function VideoPlayer({
       setPlaybackRate(speed);
     }
     setShowSpeedMenu(false);
+  }, []);
+
+  const toggleFullscreen = useCallback(async () => {
+    if (!containerRef.current) return;
+    try {
+      if (!document.fullscreenElement) {
+        await containerRef.current.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch {
+      // Fullscreen not supported
+    }
+  }, []);
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
   // Smooth time update using requestAnimationFrame
@@ -134,6 +158,7 @@ export const VideoPlayer = memo(function VideoPlayer({
 
   return (
     <div
+      ref={containerRef}
       className={`relative h-full w-full ${className}`}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => !isPlaying && setShowControls(true)}
@@ -182,33 +207,43 @@ export const VideoPlayer = memo(function VideoPlayer({
             </span>
           </div>
 
-          {/* Playback speed control */}
-          <div className="relative">
-            <button
-              onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-              className="rounded-lg bg-white/20 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
-            >
-              {playbackRate}x
-            </button>
+          <div className="flex items-center gap-2">
+            {/* Playback speed control */}
+            <div className="relative">
+              <button
+                onClick={() => setShowSpeedMenu(!showSpeedMenu)}
+                className="rounded-lg bg-white/20 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+              >
+                {playbackRate}x
+              </button>
 
-            {/* Speed menu */}
-            {showSpeedMenu && (
-              <div className="absolute bottom-full right-0 mb-2 overflow-hidden rounded-lg bg-black/90 py-1 shadow-xl backdrop-blur-md">
-                {PLAYBACK_SPEEDS.map((speed) => (
-                  <button
-                    key={speed}
-                    onClick={() => changeSpeed(speed)}
-                    className={`block w-full px-4 py-1.5 text-left text-sm transition-colors ${
-                      playbackRate === speed
-                        ? "bg-white/20 font-medium text-white"
-                        : "text-white/80 hover:bg-white/10 hover:text-white"
-                    }`}
-                  >
-                    {speed}x
-                  </button>
-                ))}
-              </div>
-            )}
+              {/* Speed menu */}
+              {showSpeedMenu && (
+                <div className="absolute bottom-full right-0 mb-2 overflow-hidden rounded-lg bg-black/90 py-1 shadow-xl backdrop-blur-md">
+                  {PLAYBACK_SPEEDS.map((speed) => (
+                    <button
+                      key={speed}
+                      onClick={() => changeSpeed(speed)}
+                      className={`block w-full px-4 py-1.5 text-left text-sm transition-colors ${
+                        playbackRate === speed
+                          ? "bg-white/20 font-medium text-white"
+                          : "text-white/80 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      {speed}x
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Fullscreen button */}
+            <button
+              onClick={toggleFullscreen}
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+            >
+              {isFullscreen ? <FullscreenExitIcon /> : <FullscreenEnterIcon />}
+            </button>
           </div>
         </div>
       </div>

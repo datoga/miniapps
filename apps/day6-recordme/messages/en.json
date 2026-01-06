@@ -1,6 +1,140 @@
 {
   "app": {
-    "title": "VoiceSnap",
-    "description": "Capture your voice, preserve your thoughts"
+    "title": "record.me",
+    "description": "Record webcam videos directly to disk"
+  },
+  "nav": {
+    "settings": "Settings"
+  },
+  "unsupported": {
+    "title": "Browser not supported",
+    "description": "record.me requires File System Access API to save large recordings directly to your disk.",
+    "supportedBrowsers": "Supported browsers:",
+    "browsers": "Chrome, Edge, Android Chrome",
+    "tip": "Please open this app in a supported browser to continue."
+  },
+  "recorder": {
+    "idle": "Ready to record",
+    "recording": "Recording",
+    "paused": "Paused",
+    "processing": "Saving video...",
+    "processingHint": "Please wait, do not close this window",
+    "finished": "Recording saved",
+    "countdown": {
+      "starting": "Starting in..."
+    },
+    "permissions": {
+      "requesting": "Requesting camera access...",
+      "denied": "Camera access denied",
+      "deniedDescription": "Please allow camera access in your browser settings to use this app.",
+      "retry": "Retry",
+      "micDenied": "Microphone access denied. Video will record without audio."
+    }
+  },
+  "controls": {
+    "record": "Record",
+    "stop": "Stop",
+    "pause": "Pause",
+    "resume": "Resume",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit fullscreen"
+  },
+  "filename": {
+    "label": "Custom filename",
+    "placeholder": "Leave empty for auto-generated name"
+  },
+  "preview": {
+    "savedTo": "Saved in {folder}/{file}",
+    "savedToFolder": "Saved in {folder}",
+    "defaultFolder": "Selected folder"
+  },
+  "actions": {
+    "share": "Share",
+    "copyMessage": "Copy message",
+    "copyLink": "Copy link",
+    "recordAgain": "Record again",
+    "copied": "Copied to clipboard!"
+  },
+  "share": {
+    "text": "Recorded with record.me 🎥",
+    "failed": "Sharing failed"
+  },
+  "settings": {
+    "title": "Settings",
+    "saveLocation": {
+      "title": "Save location",
+      "description": "Choose where recordings will be saved",
+      "chooseFolder": "Choose folder...",
+      "currentFolder": "Current: {folder}",
+      "noFolder": "No folder selected"
+    },
+    "countdown": {
+      "title": "Countdown",
+      "description": "Seconds before recording starts",
+      "none": "None",
+      "seconds": "{count}s"
+    },
+    "quality": {
+      "title": "Quality",
+      "low": "Low (480p)",
+      "standard": "Standard (720p)",
+      "high": "High (1080p)",
+      "custom": "Custom",
+      "customWarning": "May fail depending on device/browser.",
+      "width": "Width",
+      "height": "Height",
+      "fps": "FPS",
+      "bitrate": "Bitrate (Mbps)"
+    },
+    "format": {
+      "title": "Preferred format",
+      "preferMp4": "Prefer MP4",
+      "preferWebm": "Prefer WebM",
+      "mp4Warning": "MP4 not supported, saving as WebM."
+    },
+    "mic": {
+      "title": "Microphone default",
+      "on": "On",
+      "off": "Off"
+    },
+    "camera": {
+      "title": "Default camera",
+      "description": "Camera to use when starting (if available)",
+      "front": "Front / Selfie",
+      "back": "Back"
+    },
+    "disabled": "Settings cannot be changed during recording",
+    "resetToDefaults": "Reset to defaults"
+  },
+  "camera": {
+    "select": "Camera",
+    "default": "Default camera",
+    "disabled": "Camera selection disabled during recording"
+  },
+  "mic": {
+    "label": "Microphone",
+    "on": "On",
+    "off": "Off",
+    "disabled": "Microphone access denied"
+  },
+  "overlay": {
+    "rec": "REC",
+    "paused": "PAUSED",
+    "info": "Recording info",
+    "infoFolder": "Folder:",
+    "infoFilename": "Filename:",
+    "infoFormat": "Format:",
+    "infoResolution": "Resolution:",
+    "infoFps": "FPS:",
+    "infoBitrate": "Bitrate:",
+    "infoAudio": "Audio:"
+  },
+  "common": {
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "error": "Error",
+    "loading": "Loading..."
   }
 }

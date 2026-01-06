@@ -15,9 +15,10 @@ const localeLabels: Record<Locale, string> = {
 
 interface LocaleSwitcherProps {
   className?: string;
+  disabled?: boolean;
 }
 
-export const LocaleSwitcher = memo(function LocaleSwitcher({ className }: LocaleSwitcherProps) {
+export const LocaleSwitcher = memo(function LocaleSwitcher({ className, disabled }: LocaleSwitcherProps) {
   const locale = useLocale() as Locale;
   const pathname = usePathname();
   const router = useRouter();
@@ -50,16 +51,18 @@ export const LocaleSwitcher = memo(function LocaleSwitcher({ className }: Locale
   }
 
   return (
-    <div className={cn("flex items-center", className)}>
+    <div className={cn("flex items-center", disabled && "opacity-50", className)}>
       {locales.map((loc) => (
         <button
           key={loc}
           onClick={() => switchLocale(loc)}
+          disabled={disabled}
           className={cn(
             "rounded-md px-2.5 py-1.5 text-xs font-medium transition-all",
             locale === loc
               ? "bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white"
-              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200",
+            disabled && "cursor-not-allowed"
           )}
           title={loc.toUpperCase()}
           type="button"

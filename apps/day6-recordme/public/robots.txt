@@ -3,5 +3,5 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://voicesnap.vercel.app/sitemap.xml
+Sitemap: https://recordme.vercel.app/sitemap.xml
 

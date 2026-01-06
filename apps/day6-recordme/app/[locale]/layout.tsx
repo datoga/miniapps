@@ -6,7 +6,7 @@ import {
   generateViewport,
   type LocaleSEOContent,
 } from "@miniapps/seo";
-import { AppShell, ThemeProvider } from "@miniapps/ui";
+import { ThemeProvider } from "@miniapps/ui";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -28,38 +28,40 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const APP_NAME = "VoiceSnap";
-const APP_URL = "https://voicesnap.vercel.app";
+const APP_NAME = "record.me";
+const APP_URL = "https://recordme.vercel.app";
 
 const seoContent: Record<string, LocaleSEOContent> = {
   es: {
-    title: "VoiceSnap - Grabadora de Voz",
+    title: "record.me - Grabador de Webcam",
     description:
-      "Graba notas de voz rápidamente. App gratuita para capturar ideas, reuniones y pensamientos. Sin registro, privado y funciona offline.",
-    ogAlt: "VoiceSnap - Captura tu voz al instante",
+      "Graba vídeos con tu webcam directamente a tu disco. Sin subidas a la nube, sin registro. Guarda grabaciones grandes de forma privada y segura.",
+    ogAlt: "record.me - Tu grabador de webcam privado",
     keywords: [
-      "grabadora voz",
-      "notas de voz",
-      "grabar audio",
-      "memo voz",
-      "grabación reuniones",
-      "app grabar",
-      "audio recorder",
+      "grabador webcam",
+      "grabar vídeo",
+      "grabación local",
+      "sin nube",
+      "webcam recorder",
+      "video recording",
+      "file system api",
+      "privado",
     ],
   },
   en: {
-    title: "VoiceSnap - Voice Recorder",
+    title: "record.me - Webcam Recorder",
     description:
-      "Record voice notes quickly. Free app to capture ideas, meetings and thoughts. No registration, private and works offline.",
-    ogAlt: "VoiceSnap - Capture your voice instantly",
+      "Record videos from your webcam directly to disk. No cloud uploads, no registration. Save large recordings privately and securely.",
+    ogAlt: "record.me - Your private webcam recorder",
     keywords: [
-      "voice recorder",
-      "voice notes",
-      "record audio",
-      "voice memo",
-      "meeting recording",
-      "audio app",
-      "record voice",
+      "webcam recorder",
+      "video recording",
+      "local recording",
+      "no cloud",
+      "file system api",
+      "private recording",
+      "screen recorder",
+      "camera recorder",
     ],
   },
 };
@@ -70,20 +72,24 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const content = seoContent[locale] || seoContent["en"];
+  const content = seoContent[locale] ?? seoContent["en"];
+  // TypeScript guard - we know "en" exists in seoContent
+  if (!content) {
+    throw new Error("SEO content not found");
+  }
 
   return generateSEOMetadata({
     appName: APP_NAME,
     appUrl: APP_URL,
     locale,
-    content: content!,
+    content,
     category: "productivity",
   });
 }
 
 export const viewport: Viewport = generateViewport({
-  lightThemeColor: "#ffffff",
-  darkThemeColor: "#0a0a0a",
+  lightThemeColor: "#dc2626",
+  darkThemeColor: "#dc2626",
 });
 
 export function generateStaticParams() {
@@ -106,31 +112,37 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   const messages = await getMessages();
   const gaId = process.env["NEXT_PUBLIC_GA_ID"];
-  const content = seoContent[locale] || seoContent["en"];
+  const content = seoContent[locale] ?? seoContent["en"];
+  // TypeScript guard - we know "en" exists in seoContent
+  if (!content) {
+    throw new Error("SEO content not found");
+  }
 
   const jsonLdFeatures =
     locale === "es"
       ? [
-          "Grabación de voz",
-          "Organiza grabaciones",
+          "Grabación directa a disco",
+          "Sin subidas a la nube",
           "100% privado",
           "Sin registro",
-          "Funciona offline",
+          "Soporta grabaciones largas",
+          "Elige cámara y micrófono",
         ]
       : [
-          "Voice recording",
-          "Organize recordings",
+          "Direct-to-disk recording",
+          "No cloud uploads",
           "100% private",
           "No registration",
-          "Works offline",
+          "Supports long recordings",
+          "Choose camera and microphone",
         ];
 
   const jsonLd = generateJsonLd({
     appName: APP_NAME,
     appUrl: APP_URL,
     locale,
-    description: content!.description,
-    applicationCategory: "ProductivityApplication",
+    description: content.description,
+    applicationCategory: "MultimediaApplication",
     featureList: jsonLdFeatures,
   });
 
@@ -147,7 +159,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
-            <AppShell>{children}</AppShell>
+            <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
+              {children}
+            </div>
           </NextIntlClientProvider>
         </ThemeProvider>
         <GoogleAnalyticsScript gaId={gaId} />

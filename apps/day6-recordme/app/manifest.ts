@@ -2,38 +2,38 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "VoiceSnap",
-    short_name: "VoiceSnap",
-    description: "Capture your voice, preserve your thoughts",
+    name: "record.me",
+    short_name: "record.me",
+    description: "Record webcam videos directly to disk. No cloud, no registration.",
     start_url: "/?utm_source=pwa&utm_medium=installed",
     scope: "/",
     display: "standalone",
     background_color: "#ffffff",
-    theme_color: "#ec4899",
+    theme_color: "#dc2626",
     orientation: "portrait",
-    categories: ["utilities", "productivity"],
+    categories: ["productivity", "multimedia"],
     prefer_related_applications: false,
     icons: [
       {
-        src: "/icon?id=192",
+        src: "/icon/192",
         sizes: "192x192",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/icon?id=192",
+        src: "/icon/192",
         sizes: "192x192",
         type: "image/png",
         purpose: "maskable",
       },
       {
-        src: "/icon?id=512",
+        src: "/icon/512",
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/icon?id=512",
+        src: "/icon/512",
         sizes: "512x512",
         type: "image/png",
         purpose: "maskable",
@@ -41,4 +41,3 @@ export default function manifest(): MetadataRoute.Manifest {
     ],
   };
 }
-

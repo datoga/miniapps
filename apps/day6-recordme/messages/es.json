@@ -1,6 +1,140 @@
 {
   "app": {
-    "title": "VoiceSnap",
-    "description": "Captura tu voz, preserva tus pensamientos"
+    "title": "record.me",
+    "description": "Graba vídeos con webcam directamente a disco"
+  },
+  "nav": {
+    "settings": "Ajustes"
+  },
+  "unsupported": {
+    "title": "Navegador no compatible",
+    "description": "record.me requiere File System Access API para guardar grabaciones grandes directamente en tu disco.",
+    "supportedBrowsers": "Navegadores compatibles:",
+    "browsers": "Chrome, Edge, Android Chrome",
+    "tip": "Por favor abre esta app en un navegador compatible para continuar."
+  },
+  "recorder": {
+    "idle": "Listo para grabar",
+    "recording": "Grabando",
+    "paused": "Pausado",
+    "processing": "Guardando vídeo...",
+    "processingHint": "Por favor espera, no cierres esta ventana",
+    "finished": "Grabación guardada",
+    "countdown": {
+      "starting": "Empezando en..."
+    },
+    "permissions": {
+      "requesting": "Solicitando acceso a la cámara...",
+      "denied": "Acceso a cámara denegado",
+      "deniedDescription": "Por favor permite el acceso a la cámara en los ajustes de tu navegador.",
+      "retry": "Reintentar",
+      "micDenied": "Acceso al micrófono denegado. El vídeo se grabará sin audio."
+    }
+  },
+  "controls": {
+    "record": "Grabar",
+    "stop": "Parar",
+    "pause": "Pausar",
+    "resume": "Continuar",
+    "fullscreen": "Pantalla completa",
+    "exitFullscreen": "Salir de pantalla completa"
+  },
+  "filename": {
+    "label": "Nombre personalizado",
+    "placeholder": "Dejar vacío para nombre automático"
+  },
+  "preview": {
+    "savedTo": "Guardado en {folder}/{file}",
+    "savedToFolder": "Guardado en {folder}",
+    "defaultFolder": "Carpeta seleccionada"
+  },
+  "actions": {
+    "share": "Compartir",
+    "copyMessage": "Copiar mensaje",
+    "copyLink": "Copiar enlace",
+    "recordAgain": "Grabar otra vez",
+    "copied": "¡Copiado al portapapeles!"
+  },
+  "share": {
+    "text": "Grabado con record.me 🎥",
+    "failed": "Error al compartir"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "saveLocation": {
+      "title": "Ubicación de guardado",
+      "description": "Elige dónde se guardarán las grabaciones",
+      "chooseFolder": "Elegir carpeta...",
+      "currentFolder": "Actual: {folder}",
+      "noFolder": "Ninguna carpeta seleccionada"
+    },
+    "countdown": {
+      "title": "Cuenta atrás",
+      "description": "Segundos antes de empezar a grabar",
+      "none": "Ninguna",
+      "seconds": "{count}s"
+    },
+    "quality": {
+      "title": "Calidad",
+      "low": "Baja (480p)",
+      "standard": "Estándar (720p)",
+      "high": "Alta (1080p)",
+      "custom": "Personalizada",
+      "customWarning": "Puede fallar según el dispositivo/navegador.",
+      "width": "Ancho",
+      "height": "Alto",
+      "fps": "FPS",
+      "bitrate": "Bitrate (Mbps)"
+    },
+    "format": {
+      "title": "Formato preferido",
+      "preferMp4": "Preferir MP4",
+      "preferWebm": "Preferir WebM",
+      "mp4Warning": "MP4 no soportado, guardando como WebM."
+    },
+    "mic": {
+      "title": "Micrófono por defecto",
+      "on": "Activado",
+      "off": "Desactivado"
+    },
+    "camera": {
+      "title": "Cámara por defecto",
+      "description": "Cámara a usar al iniciar (si está disponible)",
+      "front": "Frontal / Selfie",
+      "back": "Trasera"
+    },
+    "disabled": "Los ajustes no se pueden cambiar durante la grabación",
+    "resetToDefaults": "Restablecer valores por defecto"
+  },
+  "camera": {
+    "select": "Cámara",
+    "default": "Cámara predeterminada",
+    "disabled": "Selección de cámara deshabilitada durante la grabación"
+  },
+  "mic": {
+    "label": "Micrófono",
+    "on": "Activado",
+    "off": "Desactivado",
+    "disabled": "Acceso al micrófono denegado"
+  },
+  "overlay": {
+    "rec": "REC",
+    "paused": "PAUSADO",
+    "info": "Info de grabación",
+    "infoFolder": "Carpeta:",
+    "infoFilename": "Fichero:",
+    "infoFormat": "Formato:",
+    "infoResolution": "Resolución:",
+    "infoFps": "FPS:",
+    "infoBitrate": "Bitrate:",
+    "infoAudio": "Audio:"
+  },
+  "common": {
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "error": "Error",
+    "loading": "Cargando..."
   }
 }

@@ -174,6 +174,16 @@ export const VideoPlayer = memo(function VideoPlayer({
         />
       </div>
 
+      {/* Fullscreen button - top right */}
+      <button
+        onClick={toggleFullscreen}
+        className={`absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-all hover:bg-black/60 ${
+          showControls ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {isFullscreen ? <FullscreenExitIcon /> : <FullscreenEnterIcon />}
+      </button>
+
       {/* Custom controls - not mirrored, z-10 to be above click area, overflow-visible for dropdown */}
       <div
         className={`absolute inset-x-0 bottom-0 z-10 overflow-visible bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity ${
@@ -207,43 +217,33 @@ export const VideoPlayer = memo(function VideoPlayer({
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            {/* Playback speed control */}
-            <div className="relative">
-              <button
-                onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-                className="flex h-10 items-center justify-center rounded-full bg-white/20 px-4 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
-              >
-                {playbackRate}x
-              </button>
-
-              {/* Speed menu - positioned above button */}
-              {showSpeedMenu && (
-                <div className="absolute bottom-12 right-0 overflow-hidden rounded-xl bg-black/80 py-2 shadow-xl backdrop-blur-md">
-                  {PLAYBACK_SPEEDS.map((speed) => (
-                    <button
-                      key={speed}
-                      onClick={() => changeSpeed(speed)}
-                      className={`block w-full px-5 py-2 text-center text-sm transition-colors ${
-                        playbackRate === speed
-                          ? "bg-white/20 font-semibold text-white"
-                          : "text-white/70 hover:bg-white/10 hover:text-white"
-                      }`}
-                    >
-                      {speed}x
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Fullscreen button */}
+          {/* Playback speed control */}
+          <div className="relative">
             <button
-              onClick={toggleFullscreen}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/30"
+              onClick={() => setShowSpeedMenu(!showSpeedMenu)}
+              className="flex h-10 items-center justify-center rounded-full bg-white/20 px-4 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30"
             >
-              {isFullscreen ? <FullscreenExitIcon /> : <FullscreenEnterIcon />}
+              {playbackRate}x
             </button>
+
+            {/* Speed menu - positioned above button */}
+            {showSpeedMenu && (
+              <div className="absolute bottom-12 right-0 overflow-hidden rounded-xl bg-black/80 py-2 shadow-xl backdrop-blur-md">
+                {PLAYBACK_SPEEDS.map((speed) => (
+                  <button
+                    key={speed}
+                    onClick={() => changeSpeed(speed)}
+                    className={`block w-full px-5 py-2 text-center text-sm transition-colors ${
+                      playbackRate === speed
+                        ? "bg-white/20 font-semibold text-white"
+                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {speed}x
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

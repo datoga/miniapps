@@ -105,13 +105,13 @@ export const VideoPlayer = memo(function VideoPlayer({
   }, []);
 
   return (
-    <div 
+    <div
       className={`relative h-full w-full ${className}`}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => !isPlaying && setShowControls(true)}
     >
-      {/* Mirrored video container */}
-      <div className="h-full w-full" style={{ transform: "scaleX(-1)" }}>
+      {/* Video container - video is already mirrored from recording */}
+      <div className="h-full w-full">
         <video
           ref={videoRef}
           src={src}
@@ -123,7 +123,7 @@ export const VideoPlayer = memo(function VideoPlayer({
       </div>
 
       {/* Custom controls - not mirrored */}
-      <div 
+      <div
         className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4 transition-opacity ${
           showControls ? "opacity-100" : "opacity-0"
         }`}
@@ -137,7 +137,7 @@ export const VideoPlayer = memo(function VideoPlayer({
           onChange={handleSeek}
           className="mb-2 h-1 w-full cursor-pointer appearance-none rounded-full bg-white/30 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
         />
-        
+
         <div className="flex items-center gap-3">
           {/* Play/Pause button */}
           <button

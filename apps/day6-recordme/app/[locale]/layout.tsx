@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
 });
 
 const APP_NAME = "record.me";
-const APP_URL = "https://recordme.vercel.app";
+const APP_URL = "https://recordme.live";
 
 const seoContent: Record<string, LocaleSEOContent> = {
   es: {

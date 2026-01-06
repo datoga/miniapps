@@ -200,7 +200,7 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         options.onFolderPrompt?.();
         // Small delay so user can see the toast
         await new Promise((resolve) => setTimeout(resolve, 800));
-        
+
         folderHandle = await pickDirectory();
         if (!folderHandle) {
           // User cancelled
@@ -339,8 +339,16 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       }
       setState("idle");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stream, settings, isMicEnabled, customFilename, queueWrite, startElapsedTimer, options.onFolderPrompt]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    stream,
+    settings,
+    isMicEnabled,
+    customFilename,
+    queueWrite,
+    startElapsedTimer,
+    options.onFolderPrompt,
+  ]);
 
   /**
    * Pause recording

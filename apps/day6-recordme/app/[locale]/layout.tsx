@@ -84,6 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     content,
     category: "productivity",
+    googleVerification: "ky3PGFiLoHwjwZscXsUAJ-tY61aQHNYoCuO2fHECABA",
   });
 }
 

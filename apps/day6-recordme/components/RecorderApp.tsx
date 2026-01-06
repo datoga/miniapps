@@ -610,7 +610,14 @@ export function RecorderApp() {
           {/* Error display - don't show if camera permission is denied (has dedicated UI) */}
           {(mediaStream.error || recorder.error) && mediaStream.cameraPermission !== "denied" && (
             <div className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-400">
-              ⚠️ {mediaStream.error || recorder.error}
+              ⚠️ {(() => {
+                const error = mediaStream.error || recorder.error;
+                // Check if error is a translation key
+                if (error?.startsWith("errors.")) {
+                  return t(error);
+                }
+                return error;
+              })()}
             </div>
           )}
         </div>

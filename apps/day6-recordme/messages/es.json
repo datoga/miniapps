@@ -136,5 +136,9 @@
     "confirm": "Confirmar",
     "error": "Error",
     "loading": "Cargando..."
+  },
+  "errors": {
+    "noVideoData": "No se capturó ningún dato de vídeo. Intenta grabar durante más tiempo.",
+    "recordingFailed": "Error en la grabación"
   }
 }

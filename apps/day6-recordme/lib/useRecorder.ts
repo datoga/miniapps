@@ -404,7 +404,7 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
           await writableRef.current.abort();
           writableRef.current = null;
         }
-        setError("No video data was captured. Please try recording again for longer.");
+        setError("errors.noVideoData"); // Translation key
         setState("idle");
         return;
       }

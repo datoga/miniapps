@@ -41,7 +41,8 @@
   },
   "filename": {
     "label": "Custom filename",
-    "placeholder": "Leave empty for auto-generated name"
+    "placeholder": "Leave empty for auto-generated name",
+    "default": "my-video"
   },
   "preview": {
     "savedTo": "Saved in {folder}/{file}",

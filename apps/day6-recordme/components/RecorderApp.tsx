@@ -555,7 +555,7 @@ export function RecorderApp() {
                           if (!customFilename.trim()) {setCustomFilename("");}
                         }}
                         onFocus={(e) => e.target.select()}
-                        placeholder="mi-video"
+                        placeholder={t("filename.default")}
                         className="w-40 rounded-lg bg-gray-200 px-4 py-2.5 text-center text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 dark:bg-gray-700 dark:text-gray-200"
                         autoFocus
                       />
@@ -571,7 +571,7 @@ export function RecorderApp() {
                     </div>
                   ) : (
                     <button
-                      onClick={() => setCustomFilename("mi-video")}
+                      onClick={() => setCustomFilename(t("filename.default"))}
                       className="flex items-center gap-2 rounded-lg bg-gray-200 px-5 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                       title="Custom name"
                     >

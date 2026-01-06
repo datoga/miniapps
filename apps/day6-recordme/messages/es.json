@@ -41,7 +41,8 @@
   },
   "filename": {
     "label": "Nombre personalizado",
-    "placeholder": "Dejar vacío para nombre automático"
+    "placeholder": "Dejar vacío para nombre automático",
+    "default": "mi-video"
   },
   "preview": {
     "savedTo": "Guardado en {folder}/{file}",

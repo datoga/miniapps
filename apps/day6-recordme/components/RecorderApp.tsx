@@ -293,7 +293,6 @@ export function RecorderApp() {
                 onMouseMove={showControlsTemporarily}
                 onMouseLeave={hideControlsNow}
                 onClick={toggleControls}
-                onTouchStart={toggleControls}
                 className={`relative mb-6 aspect-video w-full overflow-hidden rounded-xl bg-black shadow-lg ${
                   recorder.state === "recording" || recorder.state === "paused" ? "cursor-pointer" : ""
                 }`}

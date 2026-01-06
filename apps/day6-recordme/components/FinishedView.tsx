@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { memo, useCallback, useState, useEffect } from "react";
+import { memo, useCallback, useState } from "react";
 import { VideoPlayer } from "./VideoPreview";
 import type { RecordingResult } from "@/lib/useRecorder";
 import { trackShareAttempted, trackShareCompleted, trackShareFailed } from "@/lib/ga";
@@ -21,15 +21,6 @@ export const FinishedView = memo(function FinishedView({
 }: FinishedViewProps) {
   const t = useTranslations();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [showSavedLocation, setShowSavedLocation] = useState(true);
-
-  // Auto-hide saved location after 5 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSavedLocation(false);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const showToast = useCallback((message: string) => {
     setToastMessage(message);
@@ -67,24 +58,22 @@ export const FinishedView = memo(function FinishedView({
         <VideoPlayer src={resultUrl} />
       </div>
 
-      {/* Saved Location - auto-hides after 5 seconds */}
-      {showSavedLocation && (
-        <div className="mt-4 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 p-4 transition-opacity duration-500 dark:border-green-900 dark:bg-green-900/20">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/50">
-            <svg className="h-5 w-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-            </svg>
-          </div>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-green-800 dark:text-green-300">
-              {result.folderName}
-            </p>
-            <p className="truncate text-sm text-green-600 dark:text-green-400">
-              {result.filename}
-            </p>
-          </div>
+      {/* Saved Location */}
+      <div className="mt-4 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 p-4 dark:border-green-900 dark:bg-green-900/20">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/50">
+          <svg className="h-5 w-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
         </div>
-      )}
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-green-800 dark:text-green-300">
+            {result.folderName}
+          </p>
+          <p className="truncate text-sm text-green-600 dark:text-green-400">
+            {result.filename}
+          </p>
+        </div>
+      </div>
 
       {/* Actions */}
       <div className="mt-6 flex gap-3">

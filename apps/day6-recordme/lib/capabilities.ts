@@ -104,6 +104,94 @@ export function getBestMimeType(preferMp4: boolean): {
 }
 
 /**
+ * Try to create a MediaRecorder with fallback
+ * Some devices report isTypeSupported=true but fail when actually creating the recorder
+ * @param stream - Media stream to record
+ * @param preferMp4 - Whether to prefer MP4 format
+ * @param videoBitsPerSecond - Video bitrate
+ * @returns Object with recorder, format info, and whether fallback was used
+ */
+export function createMediaRecorderWithFallback(
+  stream: MediaStream,
+  preferMp4: boolean,
+  videoBitsPerSecond: number
+): {
+  recorder: MediaRecorder;
+  mimeType: string;
+  format: "webm" | "mp4";
+  matchesPreference: boolean;
+  usedFallback: boolean;
+} {
+  const primary = getBestMimeType(preferMp4);
+  
+  // Try primary format first
+  try {
+    const recorder = new MediaRecorder(stream, {
+      mimeType: primary.mimeType,
+      videoBitsPerSecond,
+    });
+    console.log(`[Recorder] Created with primary format: ${primary.mimeType}`);
+    return {
+      recorder,
+      mimeType: primary.mimeType,
+      format: primary.format,
+      matchesPreference: primary.matchesPreference,
+      usedFallback: false,
+    };
+  } catch (primaryError) {
+    console.warn(`[Recorder] Primary format failed (${primary.mimeType}):`, primaryError);
+  }
+
+  // Try fallback format
+  const fallback = getBestMimeType(!preferMp4);
+  try {
+    const recorder = new MediaRecorder(stream, {
+      mimeType: fallback.mimeType,
+      videoBitsPerSecond,
+    });
+    console.log(`[Recorder] Created with fallback format: ${fallback.mimeType}`);
+    return {
+      recorder,
+      mimeType: fallback.mimeType,
+      format: fallback.format,
+      matchesPreference: false,
+      usedFallback: true,
+    };
+  } catch (fallbackError) {
+    console.warn(`[Recorder] Fallback format failed (${fallback.mimeType}):`, fallbackError);
+  }
+
+  // Ultimate fallback - basic webm without codecs
+  try {
+    const recorder = new MediaRecorder(stream, {
+      mimeType: "video/webm",
+      videoBitsPerSecond,
+    });
+    console.log("[Recorder] Created with ultimate fallback: video/webm");
+    return {
+      recorder,
+      mimeType: "video/webm",
+      format: "webm",
+      matchesPreference: !preferMp4,
+      usedFallback: true,
+    };
+  } catch (ultimateError) {
+    console.error("[Recorder] All formats failed, trying without mimeType");
+  }
+
+  // Last resort - let browser choose
+  const recorder = new MediaRecorder(stream, { videoBitsPerSecond });
+  console.log("[Recorder] Created without specifying mimeType");
+  return {
+    recorder,
+    mimeType: recorder.mimeType || "video/webm",
+    format: recorder.mimeType?.includes("mp4") ? "mp4" : "webm",
+    matchesPreference: false,
+    usedFallback: true,
+  };
+}
+
+/**
  * Generate a filename for the recording
  * @param format - File format (webm or mp4)
  * @param qualityPreset - Quality preset name

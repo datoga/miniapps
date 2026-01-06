@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createUniqueFile, generateFilename, getBestMimeType } from "./capabilities";
+import { createUniqueFile, generateFilename, createMediaRecorderWithFallback } from "./capabilities";
 import {
   trackFirstValue,
   trackRecordingCompleted,
@@ -210,15 +210,31 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         setCountdownValue(0);
       }
 
-      // 3. Determine format
-      const { mimeType, format, matchesPreference } = getBestMimeType(settings.preferMp4);
+      // 3. Get quality settings
+      const quality = getQualitySettings(settings);
+
+      // 4. Create MediaRecorder with fallback support
+      // Some devices (especially mobile) report format as supported but fail at creation
+      const {
+        recorder,
+        mimeType,
+        format,
+        matchesPreference,
+        usedFallback,
+      } = createMediaRecorderWithFallback(
+        stream,
+        settings.preferMp4,
+        quality.bitrateMbps * 1_000_000
+      );
+      recorderRef.current = recorder;
       formatRef.current = format;
 
-      if (!matchesPreference) {
+      // Show warning if format preference couldn't be met
+      if (!matchesPreference || usedFallback) {
         setFormatWarning(settings.preferMp4 ? "mp4_not_supported" : "webm_not_supported");
       }
 
-      // 4. Create file
+      // 5. Create file with the actual format that works
       let filename: string;
       if (customFilename) {
         // Use custom filename, ensure it has the right extension
@@ -235,20 +251,9 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       filenameRef.current = finalFilename;
       setCurrentFilename(finalFilename);
 
-      // 5. Create writable stream
+      // 6. Create writable stream
       const writable = await fileHandle.createWritable();
       writableRef.current = writable;
-
-      // 6. Get quality settings
-      const quality = getQualitySettings(settings);
-
-      // 7. Create MediaRecorder with original stream
-      // Note: File is saved as others see you. In-app playback is CSS-mirrored.
-      const recorder = new MediaRecorder(stream, {
-        mimeType,
-        videoBitsPerSecond: quality.bitrateMbps * 1_000_000,
-      });
-      recorderRef.current = recorder;
 
       // 8. Handle data
       recorder.ondataavailable = (event) => {

@@ -107,7 +107,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
   const folderNameRef = useRef<string>("Selected folder");
   const filenameRef = useRef<string>("");
   const isClosingRef = useRef<boolean>(false);
-  const canvasCleanupRef = useRef<(() => void) | null>(null);
   const bytesWrittenRef = useRef<number>(0);
 
   /**
@@ -240,62 +239,10 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       // 6. Get quality settings
       const quality = getQualitySettings(settings);
 
-      // 7. Create mirrored stream using canvas (so saved video matches preview)
-      const videoTrack = stream.getVideoTracks()[0];
-      if (!videoTrack) {
-        setError("No video track available");
-        setState("idle");
-        return;
-      }
-      const videoSettings = videoTrack.getSettings();
-      const videoWidth = videoSettings.width || quality.width;
-      const videoHeight = videoSettings.height || quality.height;
-
-      // Create canvas for mirroring
-      const canvas = document.createElement("canvas");
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
-      const ctx = canvas.getContext("2d");
-
-      // Create video element to draw from
-      const videoEl = document.createElement("video");
-      videoEl.srcObject = stream;
-      videoEl.muted = true;
-      videoEl.playsInline = true;
-      await videoEl.play();
-
-      // Mirror and draw frames to canvas
-      let animationId: number;
-      const drawFrame = () => {
-        if (ctx && videoEl.readyState >= 2) {
-          ctx.save();
-          ctx.scale(-1, 1); // Mirror horizontally
-          ctx.drawImage(videoEl, -videoWidth, 0, videoWidth, videoHeight);
-          ctx.restore();
-        }
-        animationId = requestAnimationFrame(drawFrame);
-      };
-      drawFrame();
-
-      // Capture canvas stream
-      const canvasStream = canvas.captureStream(quality.fps);
-
-      // Add audio track if present
-      const audioTrack = stream.getAudioTracks()[0];
-      if (audioTrack) {
-        canvasStream.addTrack(audioTrack);
-      }
-
-      // Store cleanup function
-      const cleanupCanvas = () => {
-        cancelAnimationFrame(animationId);
-        videoEl.pause();
-        videoEl.srcObject = null;
-      };
-      canvasCleanupRef.current = cleanupCanvas;
-
-      // 8. Create MediaRecorder with mirrored stream
-      const recorder = new MediaRecorder(canvasStream, {
+      // 7. Create MediaRecorder directly with the original stream
+      // Note: Video is saved as-is (not mirrored). Playback can be mirrored with CSS.
+      // This is the standard approach used by Zoom, Meet, etc.
+      const recorder = new MediaRecorder(stream, {
         mimeType,
         videoBitsPerSecond: quality.bitrateMbps * 1_000_000,
       });
@@ -441,12 +388,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       // Small delay to let final data events fire
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // NOW clean up canvas mirroring (after recorder has stopped)
-      if (canvasCleanupRef.current) {
-        canvasCleanupRef.current();
-        canvasCleanupRef.current = null;
-      }
-
       // Wait for all pending writes to complete
       await writeQueueRef.current;
 
@@ -506,12 +447,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
    * Reset recorder to idle state
    */
   const resetRecorder = useCallback(() => {
-    // Clean up canvas mirroring if still active
-    if (canvasCleanupRef.current) {
-      canvasCleanupRef.current();
-      canvasCleanupRef.current = null;
-    }
-
     // Revoke previous URL
     if (resultUrl) {
       URL.revokeObjectURL(resultUrl);
@@ -536,10 +471,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
   useEffect(() => {
     return () => {
       stopElapsedTimer();
-      if (canvasCleanupRef.current) {
-        canvasCleanupRef.current();
-        canvasCleanupRef.current = null;
-      }
       if (resultUrl) {
         URL.revokeObjectURL(resultUrl);
       }

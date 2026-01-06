@@ -38,11 +38,13 @@ export const VideoPreview = memo(function VideoPreview({
 interface VideoPlayerProps {
   src: string;
   className?: string;
+  mirrored?: boolean;
 }
 
 export const VideoPlayer = memo(function VideoPlayer({
   src,
   className = "",
+  mirrored = true, // Mirror by default to match live preview
 }: VideoPlayerProps) {
   return (
     <video
@@ -50,6 +52,7 @@ export const VideoPlayer = memo(function VideoPlayer({
       controls
       playsInline
       className={`h-full w-full object-contain ${className}`}
+      style={mirrored ? { transform: "scaleX(-1)" } : undefined}
     />
   );
 });

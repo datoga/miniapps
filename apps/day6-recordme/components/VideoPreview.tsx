@@ -38,21 +38,20 @@ export const VideoPreview = memo(function VideoPreview({
 interface VideoPlayerProps {
   src: string;
   className?: string;
-  mirrored?: boolean;
 }
 
 export const VideoPlayer = memo(function VideoPlayer({
   src,
   className = "",
-  mirrored = true, // Mirror by default to match live preview
 }: VideoPlayerProps) {
+  // Note: Video is shown as recorded (not mirrored).
+  // This is the standard behavior - you see yourself as others see you.
   return (
     <video
       src={src}
       controls
       playsInline
       className={`h-full w-full object-contain ${className}`}
-      style={mirrored ? { transform: "scaleX(-1)" } : undefined}
     />
   );
 });

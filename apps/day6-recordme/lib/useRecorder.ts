@@ -367,26 +367,30 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
     setState("processing");
     stopElapsedTimer();
 
-    // Mark as closing to prevent new writes
-    isClosingRef.current = true;
-
     try {
-      // Request any pending data before stopping (canvas still running!)
-      console.log(`[Recording] Stopping... state: ${recorderRef.current.state}`);
-      if (recorderRef.current.state === "recording") {
-        console.log("[Recording] Calling requestData()");
-        recorderRef.current.requestData();
+      const recorder = recorderRef.current;
+      console.log(`[Recording] Stopping... state: ${recorder.state}`);
+
+      // Create a promise that resolves when onstop fires
+      const stopPromise = new Promise<void>((resolve) => {
+        recorder.onstop = () => {
+          console.log("[Recording] onstop event fired");
+          resolve();
+        };
+      });
+
+      // Request any pending data and stop
+      if (recorder.state === "recording" || recorder.state === "paused") {
+        console.log("[Recording] Calling stop()");
+        recorder.stop();
       }
 
-      // Small delay to ensure requestData event fires
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      // Wait for onstop event (fires after all ondataavailable events)
+      await stopPromise;
+      console.log("[Recording] Stop complete, waiting for writes...");
 
-      // Stop recorder - this will trigger final ondataavailable
-      console.log("[Recording] Calling stop()");
-      recorderRef.current.stop();
-
-      // Small delay to let final data events fire
-      await new Promise((resolve) => setTimeout(resolve, 200));
+      // Mark as closing AFTER stop to allow final data to be written
+      isClosingRef.current = true;
 
       // Wait for all pending writes to complete
       await writeQueueRef.current;

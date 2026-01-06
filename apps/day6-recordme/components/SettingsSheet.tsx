@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useState, useEffect } from "react";
-import { Modal } from "@miniapps/ui";
+import { Modal, ConfirmDialog } from "@miniapps/ui";
 import {
   type RecorderSettings,
   type QualityPreset,
@@ -35,6 +35,7 @@ export const SettingsSheet = memo(function SettingsSheet({
 }: SettingsSheetProps) {
   const t = useTranslations();
   const [folderName, setFolderName] = useState<string | null>(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Load folder name on open
   useEffect(() => {
@@ -111,13 +112,18 @@ export const SettingsSheet = memo(function SettingsSheet({
     [settings, onSettingsChange]
   );
 
-  const handleResetToDefaults = useCallback(async () => {
+  const handleResetClick = useCallback(() => {
+    setShowResetConfirm(true);
+  }, []);
+
+  const handleResetConfirm = useCallback(async () => {
     // Reset settings to defaults
     onSettingsChange(DEFAULT_SETTINGS);
     // Clear folder handle
     await clearFolderHandle();
     setFolderName(null);
     trackSettingsChanged("reset_to_defaults");
+    setShowResetConfirm(false);
   }, [onSettingsChange]);
 
   return (
@@ -393,7 +399,7 @@ export const SettingsSheet = memo(function SettingsSheet({
         {/* Reset to Defaults */}
         <section className="border-t border-gray-200 pt-6 dark:border-gray-700">
           <button
-            onClick={handleResetToDefaults}
+            onClick={handleResetClick}
             disabled={disabled}
             className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-red-400"
           >
@@ -401,6 +407,18 @@ export const SettingsSheet = memo(function SettingsSheet({
           </button>
         </section>
       </div>
+
+      {/* Reset Confirmation Dialog */}
+      <ConfirmDialog
+        open={showResetConfirm}
+        title={t("settings.resetConfirm.title")}
+        message={t("settings.resetConfirm.message")}
+        confirmLabel={t("settings.resetConfirm.confirm")}
+        cancelLabel={t("common.cancel")}
+        onConfirm={handleResetConfirm}
+        onCancel={() => setShowResetConfirm(false)}
+        variant="warning"
+      />
     </Modal>
   );
 });

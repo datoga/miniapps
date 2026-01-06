@@ -104,7 +104,12 @@
       "back": "Back"
     },
     "disabled": "Settings cannot be changed during recording",
-    "resetToDefaults": "Reset to defaults"
+    "resetToDefaults": "Reset to defaults",
+    "resetConfirm": {
+      "title": "Reset settings?",
+      "message": "All settings will be restored to their default values and the selected save folder will be cleared.",
+      "confirm": "Reset"
+    }
   },
   "camera": {
     "select": "Camera",

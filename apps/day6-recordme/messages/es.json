@@ -104,7 +104,12 @@
       "back": "Trasera"
     },
     "disabled": "Los ajustes no se pueden cambiar durante la grabación",
-    "resetToDefaults": "Restablecer valores por defecto"
+    "resetToDefaults": "Restablecer valores por defecto",
+    "resetConfirm": {
+      "title": "¿Restablecer ajustes?",
+      "message": "Se restaurarán todos los ajustes a sus valores por defecto y se eliminará la carpeta de guardado seleccionada.",
+      "confirm": "Restablecer"
+    }
   },
   "camera": {
     "select": "Cámara",

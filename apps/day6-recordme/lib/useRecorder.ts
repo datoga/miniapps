@@ -126,7 +126,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
     writeQueueRef.current = writeQueueRef.current.then(async () => {
       // Skip writes if stream is not available
       if (!writableRef.current) {
-        console.log("[Recording] Skipping write - no writable stream");
         return;
       }
 
@@ -134,14 +133,10 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         const buffer = await data.arrayBuffer();
         // Check again after async operation
         if (!writableRef.current) {
-          console.log("[Recording] Skipping write - stream closed during buffer conversion");
           return;
         }
         await writableRef.current.write(new Uint8Array(buffer));
         bytesWrittenRef.current += buffer.byteLength;
-        console.log(
-          `[Recording] Wrote ${buffer.byteLength} bytes, total: ${bytesWrittenRef.current}`
-        );
       } catch (err) {
         console.error("Write error:", err);
       }
@@ -263,7 +258,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
 
       // 8. Handle data
       recorder.ondataavailable = (event) => {
-        console.log(`[Recording] ondataavailable: ${event.data.size} bytes`);
         if (event.data.size > 0) {
           queueWrite(event.data);
         }
@@ -277,7 +271,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       // 9. Start recording with timeslice
       bytesWrittenRef.current = 0; // Reset bytes counter
       recorder.start(1000); // 1 second chunks
-      console.log("[Recording] Started with mimeType:", mimeType);
 
       // 10. Track state
       setState("recording");
@@ -297,7 +290,11 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         // Audio codec is usually the second one (opus, mp4a, etc.)
         const secondCodec = codecs[1];
         const firstCodec = codecs[0];
-        audioCodec = secondCodec ? secondCodec.trim() : firstCodec ? firstCodec.trim() : null;
+        if (secondCodec) {
+          audioCodec = secondCodec.trim();
+        } else if (firstCodec) {
+          audioCodec = firstCodec.trim();
+        }
       } else if (mimeType.includes("webm")) {
         audioCodec = "opus";
       } else if (mimeType.includes("mp4")) {
@@ -391,25 +388,21 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
 
     try {
       const recorder = recorderRef.current;
-      console.log(`[Recording] Stopping... state: ${recorder.state}`);
 
       // Create a promise that resolves when onstop fires
       const stopPromise = new Promise<void>((resolve) => {
         recorder.onstop = () => {
-          console.log("[Recording] onstop event fired");
           resolve();
         };
       });
 
       // Request any pending data and stop
       if (recorder.state === "recording" || recorder.state === "paused") {
-        console.log("[Recording] Calling stop()");
         recorder.stop();
       }
 
       // Wait for onstop event (fires after all ondataavailable events)
       await stopPromise;
-      console.log("[Recording] Stop complete, waiting for writes...");
 
       // Clean up canvas mirroring now that recording is done
       if (canvasCleanupRef.current) {
@@ -422,8 +415,6 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
 
       // Now mark as closing to prevent any stray writes during cleanup
       isClosingRef.current = true;
-
-      console.log(`[Recording] Finished. Total bytes written: ${bytesWrittenRef.current}`);
 
       // Check if we have any data
       if (bytesWrittenRef.current === 0) {

@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { memo } from "react";
+import { PauseIcon } from "./Icons";
 import type { RecorderState } from "@/lib/useRecorder";
 
 function formatElapsedTime(ms: number): string {
@@ -52,9 +53,7 @@ export const RecordingOverlay = memo(function RecordingOverlay({
       )}
       {state === "paused" && (
         <div className="flex cursor-default items-center gap-2 rounded-full bg-amber-500 px-3 py-1 text-sm font-medium text-white shadow-lg">
-          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-          </svg>
+          <PauseIcon />
           {t("overlay.paused")}
         </div>
       )}

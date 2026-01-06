@@ -313,10 +313,11 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         setError("Recording error occurred");
       };
 
-      // 9. Start recording with timeslice for incremental writes
+      // 9. Start recording - no timeslice for better compatibility with canvas stream
+      // Data will be captured in one chunk when stop() is called
       bytesWrittenRef.current = 0; // Reset bytes counter
-      recorder.start(1000); // 1 second chunks
-      console.log("[Recording] Started with mimeType:", mimeType);
+      recorder.start();
+      console.log("[Recording] Started with mimeType:", mimeType, "- no timeslice");
 
       // 10. Track state
       setState("recording");

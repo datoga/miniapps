@@ -1,7 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createUniqueFile, generateFilename, createMediaRecorderWithFallback } from "./capabilities";
+import {
+  createMediaRecorderWithFallback,
+  createUniqueFile,
+  generateFilename,
+} from "./capabilities";
 import {
   trackFirstValue,
   trackRecordingCompleted,
@@ -36,6 +40,8 @@ export interface UseRecorderOptions {
   stream: MediaStream | null;
   isMicEnabled: boolean;
   customFilename?: string;
+  /** Callback called before folder picker is shown (to display a toast) */
+  onFolderPrompt?: () => void;
 }
 
 export interface RecordingInfo {
@@ -190,6 +196,11 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       }
 
       if (!folderHandle) {
+        // Notify before showing folder picker (for toast message)
+        options.onFolderPrompt?.();
+        // Small delay so user can see the toast
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        
         folderHandle = await pickDirectory();
         if (!folderHandle) {
           // User cancelled
@@ -215,17 +226,12 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
 
       // 4. Create MediaRecorder with fallback support
       // Some devices (especially mobile) report format as supported but fail at creation
-      const {
-        recorder,
-        mimeType,
-        format,
-        matchesPreference,
-        usedFallback,
-      } = createMediaRecorderWithFallback(
-        stream,
-        settings.preferMp4,
-        quality.bitrateMbps * 1_000_000
-      );
+      const { recorder, mimeType, format, matchesPreference, usedFallback } =
+        createMediaRecorderWithFallback(
+          stream,
+          settings.preferMp4,
+          quality.bitrateMbps * 1_000_000
+        );
       recorderRef.current = recorder;
       formatRef.current = format;
 
@@ -333,7 +339,8 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
       }
       setState("idle");
     }
-  }, [stream, settings, isMicEnabled, customFilename, queueWrite, startElapsedTimer]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stream, settings, isMicEnabled, customFilename, queueWrite, startElapsedTimer, options.onFolderPrompt]);
 
   /**
    * Pause recording

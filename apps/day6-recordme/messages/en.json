@@ -29,7 +29,8 @@
       "deniedDescription": "Please allow camera access in your browser settings to use this app.",
       "retry": "Retry",
       "micDenied": "Microphone access denied. Video will record without audio."
-    }
+    },
+    "folderPrompt": "Select a folder to save your recordings"
   },
   "controls": {
     "record": "Record",

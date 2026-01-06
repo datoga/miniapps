@@ -29,7 +29,8 @@
       "deniedDescription": "Por favor permite el acceso a la cámara en los ajustes de tu navegador.",
       "retry": "Reintentar",
       "micDenied": "Acceso al micrófono denegado. El vídeo se grabará sin audio."
-    }
+    },
+    "folderPrompt": "Selecciona una carpeta donde guardar tus grabaciones"
   },
   "controls": {
     "record": "Grabar",

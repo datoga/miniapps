@@ -29,6 +29,9 @@ export function RecorderApp() {
   const [settings, setSettings] = useState<RecorderSettings>(() => loadSettings());
   const [formatWarningDismissed, setFormatWarningDismissed] = useState(false);
 
+  // Toast message
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
   // Custom filename
   const [customFilename, setCustomFilename] = useState("");
 
@@ -115,12 +118,19 @@ export function RecorderApp() {
     cameraDefault: settings.cameraDefault,
   });
 
+  // Show toast helper
+  const showToast = useCallback((message: string, duration = 2500) => {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(null), duration);
+  }, []);
+
   // Recorder hook
   const recorder = useRecorder({
     settings,
     stream: mediaStream.stream,
     isMicEnabled: mediaStream.isMicEnabled,
     customFilename: customFilename.trim() || undefined,
+    onFolderPrompt: () => showToast(t("recorder.folderPrompt"), 3000),
   });
 
   // Reset custom filename and close tooltip after recording
@@ -630,6 +640,13 @@ export function RecorderApp() {
         onSettingsChange={handleSettingsChange}
         disabled={settingsDisabled}
       />
+
+      {/* Toast */}
+      {toastMessage && (
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white shadow-xl dark:bg-white dark:text-gray-900">
+          📁 {toastMessage}
+        </div>
+      )}
     </div>
   );
 }

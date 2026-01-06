@@ -112,18 +112,23 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
 
   /**
    * Queue a write operation to maintain order
+   * Note: We don't check isClosingRef here because ondataavailable events
+   * may fire after stop() is called but before onstop fires. Those writes
+   * are valid and must complete.
    */
   const queueWrite = useCallback((data: Blob) => {
     writeQueueRef.current = writeQueueRef.current.then(async () => {
-      // Skip writes if stream is closing or closed
-      if (!writableRef.current || isClosingRef.current) {
+      // Skip writes if stream is not available
+      if (!writableRef.current) {
+        console.log("[Recording] Skipping write - no writable stream");
         return;
       }
 
       try {
         const buffer = await data.arrayBuffer();
-        // Double-check before writing (stream might have closed while waiting)
-        if (!writableRef.current || isClosingRef.current) {
+        // Check again after async operation
+        if (!writableRef.current) {
+          console.log("[Recording] Skipping write - stream closed during buffer conversion");
           return;
         }
         await writableRef.current.write(new Uint8Array(buffer));
@@ -132,10 +137,7 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
           `[Recording] Wrote ${buffer.byteLength} bytes, total: ${bytesWrittenRef.current}`
         );
       } catch (err) {
-        // Ignore errors when closing (expected)
-        if (!isClosingRef.current) {
-          console.error("Write error:", err);
-        }
+        console.error("Write error:", err);
       }
     });
   }, []);
@@ -395,11 +397,11 @@ export function useRecorder(options: UseRecorderOptions): UseRecorderResult {
         canvasCleanupRef.current = null;
       }
 
-      // Mark as closing AFTER stop to allow final data to be written
-      isClosingRef.current = true;
-
-      // Wait for all pending writes to complete
+      // Wait for all pending writes to complete BEFORE marking as closing
       await writeQueueRef.current;
+
+      // Now mark as closing to prevent any stray writes during cleanup
+      isClosingRef.current = true;
 
       console.log(`[Recording] Finished. Total bytes written: ${bytesWrittenRef.current}`);
 

@@ -45,6 +45,7 @@ export const VideoPlayer = memo(function VideoPlayer({
   className = "",
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const animationRef = useRef<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -59,10 +60,12 @@ export const VideoPlayer = memo(function VideoPlayer({
     }
   }, [isPlaying]);
 
-  const handleTimeUpdate = useCallback(() => {
+  // Smooth time update using requestAnimationFrame
+  const updateTime = useCallback(() => {
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
     }
+    animationRef.current = requestAnimationFrame(updateTime);
   }, []);
 
   const handleLoadedMetadata = useCallback(() => {
@@ -89,9 +92,20 @@ export const VideoPlayer = memo(function VideoPlayer({
     const video = videoRef.current;
     if (!video) return;
 
-    const onPlay = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
-    const onEnded = () => setIsPlaying(false);
+    const onPlay = () => {
+      setIsPlaying(true);
+      // Start smooth time updates
+      animationRef.current = requestAnimationFrame(updateTime);
+    };
+    const onPause = () => {
+      setIsPlaying(false);
+      // Stop smooth time updates
+      cancelAnimationFrame(animationRef.current);
+    };
+    const onEnded = () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(animationRef.current);
+    };
 
     video.addEventListener("play", onPlay);
     video.addEventListener("pause", onPause);
@@ -101,8 +115,9 @@ export const VideoPlayer = memo(function VideoPlayer({
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
       video.removeEventListener("ended", onEnded);
+      cancelAnimationFrame(animationRef.current);
     };
-  }, []);
+  }, [updateTime]);
 
   return (
     <div
@@ -116,7 +131,6 @@ export const VideoPlayer = memo(function VideoPlayer({
           ref={videoRef}
           src={src}
           playsInline
-          onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           className="h-full w-full object-contain"
         />
@@ -128,11 +142,12 @@ export const VideoPlayer = memo(function VideoPlayer({
           showControls ? "opacity-100" : "opacity-0"
         }`}
       >
-        {/* Progress bar */}
+        {/* Progress bar - step=0.01 for smooth continuous progress */}
         <input
           type="range"
           min={0}
           max={duration || 100}
+          step={0.01}
           value={currentTime}
           onChange={handleSeek}
           className="mb-2 h-1 w-full cursor-pointer appearance-none rounded-full bg-white/30 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"

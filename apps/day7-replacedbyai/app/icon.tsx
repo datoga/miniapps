@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 
 // Icon configuration - ReplacedByAI
-const APP_ICON = "🔮";
 const BG_GRADIENT_START = "#10b981"; // Emerald
 const BG_GRADIENT_END = "#6366f1"; // Indigo
 
@@ -17,8 +16,8 @@ export function generateImageMetadata() {
 // Generate the icon image
 export default function Icon({ id }: { id: string }) {
   const size = id === "32" ? 32 : id === "192" ? 192 : 512;
-  const fontSize = Math.round(size * 0.6);
-  const borderRadius = Math.round(size * 0.18);
+  const fontSize = Math.round(size * 0.45);
+  const borderRadius = Math.round(size * 0.22);
 
   return new ImageResponse(
     (
@@ -31,10 +30,15 @@ export default function Icon({ id }: { id: string }) {
           justifyContent: "center",
           background: `linear-gradient(135deg, ${BG_GRADIENT_START} 0%, ${BG_GRADIENT_END} 100%)`,
           borderRadius: borderRadius,
+          fontFamily: "system-ui, sans-serif",
+          fontWeight: 900,
           fontSize: fontSize,
+          color: "white",
+          letterSpacing: "-0.02em",
+          textShadow: "0 2px 4px rgba(0,0,0,0.2)",
         }}
       >
-        {APP_ICON}
+        AI
       </div>
     ),
     {
@@ -43,5 +47,3 @@ export default function Icon({ id }: { id: string }) {
     }
   );
 }
-
-

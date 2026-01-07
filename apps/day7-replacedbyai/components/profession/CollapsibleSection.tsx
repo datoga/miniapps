@@ -70,7 +70,7 @@ export function CollapsibleSection({
       {isOpen && (
         <div
           id={`${id}-content`}
-          className="mt-4 animate-fadeIn"
+          className="mt-4 animate-fadeIn overflow-hidden"
         >
           {children}
         </div>

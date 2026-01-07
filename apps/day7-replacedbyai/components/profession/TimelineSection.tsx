@@ -87,7 +87,7 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
       onToggle={onToggle}
     >
       {/* Horizontal timeline slider */}
-      <div className="relative mt-6 mb-10">
+      <div className="relative mt-6 mb-10 overflow-hidden">
         {/* Progress bar background */}
         <div className="absolute top-7 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
 
@@ -147,7 +147,7 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
       </div>
 
       {/* Active phase card - with slide animation and swipe support */}
-      <div 
+      <div
         className="relative touch-pan-y"
         {...swipeHandlers}
       >

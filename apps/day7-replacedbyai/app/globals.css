@@ -26,6 +26,11 @@
   --accent-dark: #10b981;
 }
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

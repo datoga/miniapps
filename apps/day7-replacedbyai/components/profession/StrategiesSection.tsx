@@ -83,7 +83,7 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
       onToggle={onToggle}
     >
       {/* Horizontal timeline slider */}
-      <div className="relative mt-6 mb-6">
+      <div className="relative mt-6 mb-6 overflow-hidden">
         {/* Progress bar background */}
         <div className="absolute top-7 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
 
@@ -136,7 +136,7 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
       </div>
 
       {/* Active strategy card - with swipe support */}
-      <div 
+      <div
         className="relative touch-pan-y"
         {...swipeHandlers}
       >

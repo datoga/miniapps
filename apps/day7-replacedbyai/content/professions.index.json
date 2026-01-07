@@ -213,7 +213,847 @@
         ],
         "es": [
           "Técnico en emergencias médicas",
-          "Socorrista"
+          "TES"
+        ]
+      }
+    },
+    {
+      "id": "p011",
+      "slug": {
+        "en": "primary-school-teacher",
+        "es": "maestro-de-primaria"
+      },
+      "name": {
+        "en": "Primary school teacher",
+        "es": "Maestro de primaria"
+      },
+      "synonyms": {
+        "en": [
+          "Elementary teacher",
+          "Grade school teacher"
+        ],
+        "es": [
+          "Profesor de primaria",
+          "Maestro escolar"
+        ]
+      }
+    },
+    {
+      "id": "p012",
+      "slug": {
+        "en": "secondary-school-teacher",
+        "es": "profesor-de-secundaria"
+      },
+      "name": {
+        "en": "Secondary school teacher",
+        "es": "Profesor de secundaria"
+      },
+      "synonyms": {
+        "en": [
+          "High school teacher",
+          "Middle school teacher"
+        ],
+        "es": [
+          "Profesor de instituto",
+          "Docente de media"
+        ]
+      }
+    },
+    {
+      "id": "p013",
+      "slug": {
+        "en": "university-lecturer",
+        "es": "profesor-universitario"
+      },
+      "name": {
+        "en": "University lecturer",
+        "es": "Profesor universitario"
+      },
+      "synonyms": {
+        "en": [
+          "Professor",
+          "Academic researcher"
+        ],
+        "es": [
+          "Catedrático",
+          "Docente universitario"
+        ]
+      }
+    },
+    {
+      "id": "p014",
+      "slug": {
+        "en": "early-childhood-educator",
+        "es": "educador-infantil"
+      },
+      "name": {
+        "en": "Early childhood educator",
+        "es": "Educador infantil"
+      },
+      "synonyms": {
+        "en": [
+          "Preschool teacher",
+          "Daycare provider"
+        ],
+        "es": [
+          "Maestro de preescolar",
+          "Educador de párvulos"
+        ]
+      }
+    },
+    {
+      "id": "p015",
+      "slug": {
+        "en": "tutor-trainer",
+        "es": "tutor-entrenador"
+      },
+      "name": {
+        "en": "Tutor/Trainer",
+        "es": "Tutor/Entrenador"
+      },
+      "synonyms": {
+        "en": [
+          "Private tutor",
+          "Corporate trainer"
+        ],
+        "es": [
+          "Instructor",
+          "Profesor particular"
+        ]
+      }
+    },
+    {
+      "id": "p016",
+      "slug": {
+        "en": "lawyer",
+        "es": "abogado"
+      },
+      "name": {
+        "en": "Lawyer",
+        "es": "Abogado"
+      },
+      "synonyms": {
+        "en": [
+          "Attorney",
+          "Counsel"
+        ],
+        "es": [
+          "Letrado",
+          "Jurista"
+        ]
+      }
+    },
+    {
+      "id": "p017",
+      "slug": {
+        "en": "paralegal",
+        "es": "asistente-juridico"
+      },
+      "name": {
+        "en": "Paralegal",
+        "es": "Asistente jurídico"
+      },
+      "synonyms": {
+        "en": [
+          "Legal assistant",
+          "Case manager"
+        ],
+        "es": [
+          "Auxiliar jurídico",
+          "Asistente legal"
+        ]
+      }
+    },
+    {
+      "id": "p018",
+      "slug": {
+        "en": "judge",
+        "es": "juez"
+      },
+      "name": {
+        "en": "Judge",
+        "es": "Juez"
+      },
+      "synonyms": {
+        "en": [
+          "Magistrate",
+          "Jurist"
+        ],
+        "es": [
+          "Magistrado",
+          "Togado"
+        ]
+      }
+    },
+    {
+      "id": "p019",
+      "slug": {
+        "en": "notary",
+        "es": "notario"
+      },
+      "name": {
+        "en": "Notary",
+        "es": "Notario"
+      },
+      "synonyms": {
+        "en": [
+          "Notary public",
+          "Closing agent"
+        ],
+        "es": [
+          "Fedatario",
+          "Escribano"
+        ]
+      }
+    },
+    {
+      "id": "p020",
+      "slug": {
+        "en": "police-officer",
+        "es": "oficial-de-policia"
+      },
+      "name": {
+        "en": "Police officer",
+        "es": "Oficial de policía"
+      },
+      "synonyms": {
+        "en": [
+          "Patrol officer",
+          "Law enforcement"
+        ],
+        "es": [
+          "Agente de policía",
+          "Gendarme"
+        ]
+      }
+    },
+    {
+      "id": "p021",
+      "slug": {
+        "en": "accountant",
+        "es": "contador"
+      },
+      "name": {
+        "en": "Accountant",
+        "es": "Contador"
+      },
+      "synonyms": {
+        "en": [
+          "CPA",
+          "Certified Public Accountant"
+        ],
+        "es": [
+          "Contador Público",
+          "Auditor Interno"
+        ]
+      }
+    },
+    {
+      "id": "p022",
+      "slug": {
+        "en": "auditor",
+        "es": "auditor"
+      },
+      "name": {
+        "en": "Auditor",
+        "es": "Auditor"
+      },
+      "synonyms": {
+        "en": [
+          "Internal Auditor",
+          "External Auditor"
+        ],
+        "es": [
+          "Auditor de Cuentas",
+          "Revisor Fiscal"
+        ]
+      }
+    },
+    {
+      "id": "p023",
+      "slug": {
+        "en": "financial-analyst",
+        "es": "analista-financiero"
+      },
+      "name": {
+        "en": "Financial Analyst",
+        "es": "Analista Financiero"
+      },
+      "synonyms": {
+        "en": [
+          "Investment Analyst",
+          "Planning Analyst"
+        ],
+        "es": [
+          "Analista de Inversiones",
+          "Analista de Tesorería"
+        ]
+      }
+    },
+    {
+      "id": "p024",
+      "slug": {
+        "en": "tax-advisor",
+        "es": "asesor-fiscal"
+      },
+      "name": {
+        "en": "Tax Advisor",
+        "es": "Asesor Fiscal"
+      },
+      "synonyms": {
+        "en": [
+          "Tax Accountant",
+          "Tax Consultant"
+        ],
+        "es": [
+          "Asesor Tributario",
+          "Gestor Fiscal"
+        ]
+      }
+    },
+    {
+      "id": "p025",
+      "slug": {
+        "en": "bank-teller",
+        "es": "cajero-de-banco"
+      },
+      "name": {
+        "en": "Bank Teller",
+        "es": "Cajero de Banco"
+      },
+      "synonyms": {
+        "en": [
+          "Customer Service Rep",
+          "Teller"
+        ],
+        "es": [
+          "Cajero Bancario",
+          "Asistente de Ventanilla"
+        ]
+      }
+    },
+    {
+      "id": "p026",
+      "slug": {
+        "en": "insurance-agent",
+        "es": "agente-de-seguros"
+      },
+      "name": {
+        "en": "Insurance Agent",
+        "es": "Agente de Seguros"
+      },
+      "synonyms": {
+        "en": [
+          "Insurance Broker",
+          "Underwriter Assistant"
+        ],
+        "es": [
+          "Corredor de Seguros",
+          "Promotor de Seguros"
+        ]
+      }
+    },
+    {
+      "id": "p027",
+      "slug": {
+        "en": "administrative-assistant",
+        "es": "asistente-administrativo"
+      },
+      "name": {
+        "en": "Administrative Assistant",
+        "es": "Asistente Administrativo"
+      },
+      "synonyms": {
+        "en": [
+          "Office Assistant",
+          "Secretary"
+        ],
+        "es": [
+          "Asistente de Oficina",
+          "Auxiliar Administrativo"
+        ]
+      }
+    },
+    {
+      "id": "p028",
+      "slug": {
+        "en": "receptionist",
+        "es": "recepcionista"
+      },
+      "name": {
+        "en": "Receptionist",
+        "es": "Recepcionista"
+      },
+      "synonyms": {
+        "en": [
+          "Front Desk Coordinator",
+          "Information Clerk"
+        ],
+        "es": [
+          "Recepcionista",
+          "Asistente de Recepción"
+        ]
+      }
+    },
+    {
+      "id": "p029",
+      "slug": {
+        "en": "hr-generalist",
+        "es": "generalista-de-rrhh"
+      },
+      "name": {
+        "en": "HR Generalist",
+        "es": "Generalista de RRHH"
+      },
+      "synonyms": {
+        "en": [
+          "HR Business Partner",
+          "Human Resources Coordinator"
+        ],
+        "es": [
+          "Asistente de Personal",
+          "Coordinador de Talento"
+        ]
+      }
+    },
+    {
+      "id": "p030",
+      "slug": {
+        "en": "recruiter",
+        "es": "reclutador"
+      },
+      "name": {
+        "en": "Recruiter",
+        "es": "Reclutador"
+      },
+      "synonyms": {
+        "en": [
+          "Talent Acquisition",
+          "Headhunter"
+        ],
+        "es": [
+          "Selector de Personal",
+          "Headhunter"
+        ]
+      }
+    },
+    {
+      "id": "p031",
+      "slug": {
+        "en": "customer-support-specialist",
+        "es": "especialista-en-soporte-al-cliente"
+      },
+      "name": {
+        "en": "Customer Support Specialist",
+        "es": "Especialista en Soporte al Cliente"
+      },
+      "synonyms": {
+        "en": [
+          "Support Rep",
+          "CS Agent"
+        ],
+        "es": [
+          "Representante de soporte",
+          "Atención al cliente"
+        ]
+      }
+    },
+    {
+      "id": "p032",
+      "slug": {
+        "en": "call-center-agent",
+        "es": "agente-de-call-center"
+      },
+      "name": {
+        "en": "Call Center Agent",
+        "es": "Agente de Call Center"
+      },
+      "synonyms": {
+        "en": [
+          "Telemarketer",
+          "Phone Agent"
+        ],
+        "es": [
+          "Operador telefónico",
+          "Teleoperador"
+        ]
+      }
+    },
+    {
+      "id": "p033",
+      "slug": {
+        "en": "sales-representative",
+        "es": "representante-de-ventas"
+      },
+      "name": {
+        "en": "Sales Representative",
+        "es": "Representante de Ventas"
+      },
+      "synonyms": {
+        "en": [
+          "Account Exec",
+          "SDR"
+        ],
+        "es": [
+          "Ejecutivo de ventas",
+          "Vendedor"
+        ]
+      }
+    },
+    {
+      "id": "p034",
+      "slug": {
+        "en": "retail-salesperson",
+        "es": "vendedor-de-tienda"
+      },
+      "name": {
+        "en": "Retail Salesperson",
+        "es": "Vendedor de Tienda"
+      },
+      "synonyms": {
+        "en": [
+          "Shop assistant",
+          "Retail clerk"
+        ],
+        "es": [
+          "Dependiente",
+          "Asistente de ventas"
+        ]
+      }
+    },
+    {
+      "id": "p035",
+      "slug": {
+        "en": "cashier",
+        "es": "cajero"
+      },
+      "name": {
+        "en": "Cashier",
+        "es": "Cajero"
+      },
+      "synonyms": {
+        "en": [
+          "Clerk",
+          "Checkout op"
+        ],
+        "es": [
+          "Cajero de supermercado",
+          "Dependiente de caja"
+        ]
+      }
+    },
+    {
+      "id": "p036",
+      "slug": {
+        "en": "store-manager",
+        "es": "gerente-de-tienda"
+      },
+      "name": {
+        "en": "Store Manager",
+        "es": "Gerente de Tienda"
+      },
+      "synonyms": {
+        "en": [
+          "Retail Manager",
+          "Shop Manager"
+        ],
+        "es": [
+          "Administrador de tienda",
+          "Gerente de sucursal"
+        ]
+      }
+    },
+    {
+      "id": "p037",
+      "slug": {
+        "en": "procurement-specialist",
+        "es": "especialista-en-compras"
+      },
+      "name": {
+        "en": "Procurement Specialist",
+        "es": "Especialista en Compras"
+      },
+      "synonyms": {
+        "en": [
+          "Purchasing agent",
+          "Buyer"
+        ],
+        "es": [
+          "Comprador",
+          "Analista de compras"
+        ]
+      }
+    },
+    {
+      "id": "p038",
+      "slug": {
+        "en": "logistics-coordinator",
+        "es": "coordinador-de-logistica"
+      },
+      "name": {
+        "en": "Logistics Coordinator",
+        "es": "Coordinador de Logística"
+      },
+      "synonyms": {
+        "en": [
+          "Transport manager",
+          "Shipping coord"
+        ],
+        "es": [
+          "Coordinador de transporte",
+          "Gestor de envíos"
+        ]
+      }
+    },
+    {
+      "id": "p039",
+      "slug": {
+        "en": "marketing-specialist",
+        "es": "especialista-en-marketing"
+      },
+      "name": {
+        "en": "Marketing Specialist",
+        "es": "Especialista en Marketing"
+      },
+      "synonyms": {
+        "en": [
+          "Marketing coord",
+          "Growth hacker"
+        ],
+        "es": [
+          "Coordinador de marketing",
+          "Estratega digital"
+        ]
+      }
+    },
+    {
+      "id": "p040",
+      "slug": {
+        "en": "community-manager",
+        "es": "community-manager"
+      },
+      "name": {
+        "en": "Community Manager",
+        "es": "Community Manager"
+      },
+      "synonyms": {
+        "en": [
+          "Social media manager",
+          "Online host"
+        ],
+        "es": [
+          "Gestor de comunidades",
+          "Moderador de redes"
+        ]
+      }
+    },
+    {
+      "id": "p041",
+      "slug": {
+        "en": "copywriter",
+        "es": "redactor-publicitario"
+      },
+      "name": {
+        "en": "Copywriter",
+        "es": "Redactor publicitario"
+      },
+      "synonyms": {
+        "en": [
+          "Content Writer",
+          "Advertising Copywriter"
+        ],
+        "es": [
+          "Redactor creativo",
+          "Generador de contenido"
+        ]
+      }
+    },
+    {
+      "id": "p042",
+      "slug": {
+        "en": "graphic-designer",
+        "es": "disenador-grafico"
+      },
+      "name": {
+        "en": "Graphic Designer",
+        "es": "Diseñador gráfico"
+      },
+      "synonyms": {
+        "en": [
+          "Visual Designer",
+          "Creative Specialist"
+        ],
+        "es": [
+          "Diseñador visual",
+          "Creativo gráfico"
+        ]
+      }
+    },
+    {
+      "id": "p043",
+      "slug": {
+        "en": "ux-ui-designer",
+        "es": "disenador-ux-ui"
+      },
+      "name": {
+        "en": "UX/UI Designer",
+        "es": "Diseñador UX/UI"
+      },
+      "synonyms": {
+        "en": [
+          "Product Designer",
+          "User Experience Designer"
+        ],
+        "es": [
+          "Diseñador de producto",
+          "Diseñador de experiencia de usuario"
+        ]
+      }
+    },
+    {
+      "id": "p044",
+      "slug": {
+        "en": "journalist",
+        "es": "periodista"
+      },
+      "name": {
+        "en": "Journalist",
+        "es": "Periodista"
+      },
+      "synonyms": {
+        "en": [
+          "Reporter",
+          "News Correspondent"
+        ],
+        "es": [
+          "Corresponsal",
+          "Redactor de noticias"
+        ]
+      }
+    },
+    {
+      "id": "p045",
+      "slug": {
+        "en": "photographer",
+        "es": "fotografo"
+      },
+      "name": {
+        "en": "Photographer",
+        "es": "Fotógrafo"
+      },
+      "synonyms": {
+        "en": [
+          "Camera Operator",
+          "Visual Documentarian"
+        ],
+        "es": [
+          "Operador de cámara",
+          "Retratista"
+        ]
+      }
+    },
+    {
+      "id": "p046",
+      "slug": {
+        "en": "video-editor",
+        "es": "editor-de-video"
+      },
+      "name": {
+        "en": "Video Editor",
+        "es": "Editor de video"
+      },
+      "synonyms": {
+        "en": [
+          "Film Editor",
+          "Content Creator"
+        ],
+        "es": [
+          "Montador de video",
+          "Postproductor"
+        ]
+      }
+    },
+    {
+      "id": "p047",
+      "slug": {
+        "en": "music-producer",
+        "es": "productor-musical"
+      },
+      "name": {
+        "en": "Music Producer",
+        "es": "Productor musical"
+      },
+      "synonyms": {
+        "en": [
+          "Beatmaker",
+          "Audio Producer"
+        ],
+        "es": [
+          "Productor de audio",
+          "Beatmaker"
+        ]
+      }
+    },
+    {
+      "id": "p048",
+      "slug": {
+        "en": "game-developer",
+        "es": "desarrollador-de-videojuegos"
+      },
+      "name": {
+        "en": "Game Developer",
+        "es": "Desarrollador de videojuegos"
+      },
+      "synonyms": {
+        "en": [
+          "Game Programmer",
+          "Indie Dev"
+        ],
+        "es": [
+          "Programador de juegos",
+          "Desarrollador indie"
+        ]
+      }
+    },
+    {
+      "id": "p049",
+      "slug": {
+        "en": "architect",
+        "es": "arquitecto"
+      },
+      "name": {
+        "en": "Architect",
+        "es": "Arquitecto"
+      },
+      "synonyms": {
+        "en": [
+          "Building Designer",
+          "Licensed Architect"
+        ],
+        "es": [
+          "Arquitecta",
+          "Diseñador de edificios"
+        ]
+      }
+    },
+    {
+      "id": "p050",
+      "slug": {
+        "en": "translator-interpreter",
+        "es": "traductor-interprete"
+      },
+      "name": {
+        "en": "Translator/Interpreter",
+        "es": "Traductor/Intérprete"
+      },
+      "synonyms": {
+        "en": [
+          "Language Specialist",
+          "Linguist"
+        ],
+        "es": [
+          "Especialista en idiomas",
+          "Lingüista"
         ]
       }
     }

@@ -1,0 +1,407 @@
+{
+  "id": "p022",
+  "slug": {
+    "en": "auditor",
+    "es": "auditor"
+  },
+  "name": {
+    "en": "Auditor",
+    "es": "Auditor"
+  },
+  "synonyms": {
+    "en": [
+      "Internal Auditor",
+      "External Auditor"
+    ],
+    "es": [
+      "Auditor de Cuentas",
+      "Revisor Fiscal"
+    ]
+  },
+  "oneLinerKey": "p022.oneLiner",
+  "summaryBulletsKeys": [
+    "p022.summary.0",
+    "p022.summary.1",
+    "p022.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p022.task.0.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.0.why.0",
+        "p022.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.0.human.0",
+        "p022.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.1.why.0",
+        "p022.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.1.human.0",
+        "p022.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.2.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.2.why.0",
+        "p022.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.2.human.0",
+        "p022.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.3.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p022.task.3.why.0",
+        "p022.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.3.human.0",
+        "p022.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.4.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.4.why.0",
+        "p022.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.4.human.0",
+        "p022.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.5.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p022.task.5.why.0",
+        "p022.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.5.human.0",
+        "p022.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.6.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p022.task.6.why.0",
+        "p022.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.6.human.0",
+        "p022.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.7.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.7.why.0",
+        "p022.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.7.human.0",
+        "p022.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.8.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p022.task.8.why.0",
+        "p022.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.8.human.0",
+        "p022.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.9.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.9.why.0",
+        "p022.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.9.human.0",
+        "p022.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.10.why.0",
+        "p022.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.10.human.0",
+        "p022.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.11.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.11.why.0",
+        "p022.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.11.human.0",
+        "p022.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.12.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p022.task.12.why.0",
+        "p022.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.12.human.0",
+        "p022.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.13.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p022.task.13.why.0",
+        "p022.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.13.human.0",
+        "p022.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.14.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.14.why.0",
+        "p022.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.14.human.0",
+        "p022.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.15.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p022.task.15.why.0",
+        "p022.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.15.human.0",
+        "p022.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.16.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p022.task.16.why.0",
+        "p022.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.16.human.0",
+        "p022.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p022.task.17.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p022.task.17.why.0",
+        "p022.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p022.task.17.human.0",
+        "p022.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p022.timeline.now.changes.0",
+        "p022.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p022.timeline.now.impl.0",
+        "p022.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p022.timeline.next.changes.0",
+        "p022.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p022.timeline.next.impl.0",
+        "p022.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p022.timeline.later.changes.0",
+        "p022.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p022.timeline.later.impl.0",
+        "p022.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p022.signal.0.desc",
+      "toolExamplesKeys": [
+        "p022.signal.0.tool.0",
+        "p022.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p022.signal.0.why"
+    },
+    {
+      "signalKey": "p022.signal.1.desc",
+      "toolExamplesKeys": [
+        "p022.signal.1.tool.0",
+        "p022.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p022.signal.1.why"
+    },
+    {
+      "signalKey": "p022.signal.2.desc",
+      "toolExamplesKeys": [
+        "p022.signal.2.tool.0",
+        "p022.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p022.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p022.strategy.0.timeframe",
+      "actionsKeys": [
+        "p022.strategy.0.action.0",
+        "p022.strategy.0.action.1",
+        "p022.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p022.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p022.strategy.1.timeframe",
+      "actionsKeys": [
+        "p022.strategy.1.action.0",
+        "p022.strategy.1.action.1",
+        "p022.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p022.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p022.strategy.2.timeframe",
+      "actionsKeys": [
+        "p022.strategy.2.action.0",
+        "p022.strategy.2.action.1",
+        "p022.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p022.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Accountants and Auditors : OOH",
+      "publisher": "BLS",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/business-and-financial/accountants-and-auditors.htm",
+      "noteKey": "p022.source.0.note"
+    },
+    {
+      "title": "Dynamic Audit Solution expands AI capabilities",
+      "publisher": "CPA.com",
+      "year": "2025",
+      "url": "https://www.cpa.com/news/das-ai-capabilities",
+      "noteKey": "p022.source.1.note"
+    },
+    {
+      "title": "The Evolution of Audit",
+      "publisher": "Stanford Business",
+      "year": "2025",
+      "url": "https://gsb.stanford.edu",
+      "noteKey": "p022.source.2.note"
+    },
+    {
+      "title": "Audit Report Drafting with LLMs",
+      "publisher": "AICPA",
+      "year": "2025",
+      "url": "https://www.aicpa-cima.com",
+      "noteKey": "p022.source.3.note"
+    },
+    {
+      "title": "Fraud Detection and Data Analytics",
+      "publisher": "ACCA",
+      "year": "2025",
+      "url": "https://www.accaglobal.com",
+      "noteKey": "p022.source.4.note"
+    },
+    {
+      "title": "13-2011.00 - Accountants and Auditors",
+      "publisher": "O*NET",
+      "year": "2025",
+      "url": "https://www.onetonline.org",
+      "noteKey": "p022.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p022.notes.assumption.0",
+      "p022.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p022.notes.scope.0",
+      "p022.notes.scope.1"
+    ]
+  }
+}

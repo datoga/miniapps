@@ -1,0 +1,407 @@
+{
+  "id": "p038",
+  "slug": {
+    "en": "logistics-coordinator",
+    "es": "coordinador-de-logistica"
+  },
+  "name": {
+    "en": "Logistics Coordinator",
+    "es": "Coordinador de Logística"
+  },
+  "synonyms": {
+    "en": [
+      "Transport manager",
+      "Shipping coord"
+    ],
+    "es": [
+      "Coordinador de transporte",
+      "Gestor de envíos"
+    ]
+  },
+  "oneLinerKey": "p038.oneLiner",
+  "summaryBulletsKeys": [
+    "p038.summary.0",
+    "p038.summary.1",
+    "p038.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p038.task.0.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.0.why.0",
+        "p038.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.0.human.0",
+        "p038.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.1.why.0",
+        "p038.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.1.human.0",
+        "p038.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.2.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.2.why.0",
+        "p038.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.2.human.0",
+        "p038.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.3.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.3.why.0",
+        "p038.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.3.human.0",
+        "p038.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.4.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p038.task.4.why.0",
+        "p038.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.4.human.0",
+        "p038.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.5.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p038.task.5.why.0",
+        "p038.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.5.human.0",
+        "p038.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.6.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.6.why.0",
+        "p038.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.6.human.0",
+        "p038.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.7.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p038.task.7.why.0",
+        "p038.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.7.human.0",
+        "p038.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p038.task.8.why.0",
+        "p038.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.8.human.0",
+        "p038.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.9.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.9.why.0",
+        "p038.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.9.human.0",
+        "p038.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.10.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p038.task.10.why.0",
+        "p038.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.10.human.0",
+        "p038.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.11.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p038.task.11.why.0",
+        "p038.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.11.human.0",
+        "p038.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.12.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.12.why.0",
+        "p038.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.12.human.0",
+        "p038.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.13.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.13.why.0",
+        "p038.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.13.human.0",
+        "p038.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.14.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.14.why.0",
+        "p038.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.14.human.0",
+        "p038.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.15.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p038.task.15.why.0",
+        "p038.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.15.human.0",
+        "p038.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.16.desc",
+      "automationLevel": "majority",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p038.task.16.why.0",
+        "p038.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.16.human.0",
+        "p038.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p038.task.17.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p038.task.17.why.0",
+        "p038.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p038.task.17.human.0",
+        "p038.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p038.timeline.now.changes.0",
+        "p038.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p038.timeline.now.impl.0",
+        "p038.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p038.timeline.next.changes.0",
+        "p038.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p038.timeline.next.impl.0",
+        "p038.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p038.timeline.later.changes.0",
+        "p038.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p038.timeline.later.impl.0",
+        "p038.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p038.signal.0.desc",
+      "toolExamplesKeys": [
+        "p038.signal.0.tool.0",
+        "p038.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p038.signal.0.why"
+    },
+    {
+      "signalKey": "p038.signal.1.desc",
+      "toolExamplesKeys": [
+        "p038.signal.1.tool.0",
+        "p038.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p038.signal.1.why"
+    },
+    {
+      "signalKey": "p038.signal.2.desc",
+      "toolExamplesKeys": [
+        "p038.signal.2.tool.0",
+        "p038.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p038.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p038.strategy.0.timeframe",
+      "actionsKeys": [
+        "p038.strategy.0.action.0",
+        "p038.strategy.0.action.1",
+        "p038.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p038.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p038.strategy.1.timeframe",
+      "actionsKeys": [
+        "p038.strategy.1.action.0",
+        "p038.strategy.1.action.1",
+        "p038.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p038.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p038.strategy.2.timeframe",
+      "actionsKeys": [
+        "p038.strategy.2.action.0",
+        "p038.strategy.2.action.1",
+        "p038.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p038.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Logistics Trend Radar",
+      "publisher": "DHL",
+      "year": "2024",
+      "url": "https://www.dhl.com",
+      "noteKey": "p038.source.0.note"
+    },
+    {
+      "title": "The Future of Logistics",
+      "publisher": "McKinsey",
+      "year": "2023",
+      "url": "https://www.mckinsey.com",
+      "noteKey": "p038.source.1.note"
+    },
+    {
+      "title": "Occupational Outlook: Logistics",
+      "publisher": "BLS",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/",
+      "noteKey": "p038.source.2.note"
+    },
+    {
+      "title": "Logistics Technology Forecast",
+      "publisher": "Gartner",
+      "year": "2024",
+      "url": "https://www.gartner.com",
+      "noteKey": "p038.source.3.note"
+    },
+    {
+      "title": "Digital Transformation in Freight",
+      "publisher": "Flexport",
+      "year": "2024",
+      "url": "https://www.flexport.com",
+      "noteKey": "p038.source.4.note"
+    },
+    {
+      "title": "O*NET: Logistics Coordinators",
+      "publisher": "U.S. Dept of Labor",
+      "year": "2025",
+      "url": "https://www.onetonline.org/link/summary/13-1081.02",
+      "noteKey": "p038.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p038.notes.assumption.0",
+      "p038.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p038.notes.scope.0",
+      "p038.notes.scope.1"
+    ]
+  }
+}

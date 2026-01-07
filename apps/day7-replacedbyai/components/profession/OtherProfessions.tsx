@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import type { IndexItem } from "../../lib/professions/indexSchema";
@@ -14,31 +14,48 @@ export function OtherProfessions({ locale, currentSlug }: OtherProfessionsProps)
   const t = useTranslations("profession");
   const [professions, setProfessions] = useState<IndexItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  const loadRandomProfessions = useCallback(async () => {
+    setIsLoading(true);
+    setHasError(false);
+
+    try {
+      const response = await fetch("/data/professions.index.json");
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      const data = await response.json();
+      const items: IndexItem[] = data.items;
+
+      if (!items || items.length === 0) {
+        throw new Error("No items in response");
+      }
+
+      // Filter out current profession and shuffle
+      const otherItems = items.filter(
+        (item) => item.slug[locale] !== currentSlug && item.slug.en !== currentSlug
+      );
+
+      // Shuffle and take 3
+      const shuffled = otherItems.sort(() => Math.random() - 0.5);
+      setProfessions(shuffled.slice(0, 3));
+    } catch (error) {
+      console.error("Failed to load professions:", error);
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [locale, currentSlug]);
 
   useEffect(() => {
-    async function loadRandomProfessions() {
-      try {
-        const response = await fetch("/data/professions.index.json");
-        const data = await response.json();
-        const items: IndexItem[] = data.items;
-
-        // Filter out current profession and shuffle
-        const otherItems = items.filter(
-          (item) => item.slug[locale] !== currentSlug && item.slug.en !== currentSlug
-        );
-
-        // Shuffle and take 3
-        const shuffled = otherItems.sort(() => Math.random() - 0.5);
-        setProfessions(shuffled.slice(0, 3));
-      } catch (error) {
-        console.error("Failed to load professions:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
     loadRandomProfessions();
-  }, [locale, currentSlug]);
+  }, [loadRandomProfessions]);
+
+  // Don't render anything if error or no data
+  if (hasError || (!isLoading && professions.length === 0)) {
+    return null;
+  }
 
   if (isLoading) {
     return (
@@ -50,16 +67,12 @@ export function OtherProfessions({ locale, currentSlug }: OtherProfessionsProps)
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-xl h-24"
+              className="animate-pulse bg-gray-200 dark:bg-gray-800 rounded-xl h-24"
             />
           ))}
         </div>
       </section>
     );
-  }
-
-  if (professions.length === 0) {
-    return null;
   }
 
   return (

@@ -1,0 +1,407 @@
+{
+  "id": "p024",
+  "slug": {
+    "en": "tax-advisor",
+    "es": "asesor-fiscal"
+  },
+  "name": {
+    "en": "Tax Advisor",
+    "es": "Asesor Fiscal"
+  },
+  "synonyms": {
+    "en": [
+      "Tax Accountant",
+      "Tax Consultant"
+    ],
+    "es": [
+      "Asesor Tributario",
+      "Gestor Fiscal"
+    ]
+  },
+  "oneLinerKey": "p024.oneLiner",
+  "summaryBulletsKeys": [
+    "p024.summary.0",
+    "p024.summary.1",
+    "p024.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p024.task.0.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.0.why.0",
+        "p024.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.0.human.0",
+        "p024.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.1.why.0",
+        "p024.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.1.human.0",
+        "p024.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.2.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.2.why.0",
+        "p024.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.2.human.0",
+        "p024.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.3.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.3.why.0",
+        "p024.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.3.human.0",
+        "p024.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.4.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.4.why.0",
+        "p024.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.4.human.0",
+        "p024.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.5.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.5.why.0",
+        "p024.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.5.human.0",
+        "p024.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.6.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.6.why.0",
+        "p024.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.6.human.0",
+        "p024.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.7.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.7.why.0",
+        "p024.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.7.human.0",
+        "p024.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.8.why.0",
+        "p024.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.8.human.0",
+        "p024.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.9.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.9.why.0",
+        "p024.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.9.human.0",
+        "p024.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.10.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.10.why.0",
+        "p024.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.10.human.0",
+        "p024.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.11.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p024.task.11.why.0",
+        "p024.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.11.human.0",
+        "p024.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.12.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.12.why.0",
+        "p024.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.12.human.0",
+        "p024.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.13.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p024.task.13.why.0",
+        "p024.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.13.human.0",
+        "p024.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.14.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.14.why.0",
+        "p024.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.14.human.0",
+        "p024.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.15.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.15.why.0",
+        "p024.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.15.human.0",
+        "p024.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.16.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p024.task.16.why.0",
+        "p024.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.16.human.0",
+        "p024.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p024.task.17.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p024.task.17.why.0",
+        "p024.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p024.task.17.human.0",
+        "p024.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p024.timeline.now.changes.0",
+        "p024.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p024.timeline.now.impl.0",
+        "p024.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p024.timeline.next.changes.0",
+        "p024.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p024.timeline.next.impl.0",
+        "p024.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p024.timeline.later.changes.0",
+        "p024.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p024.timeline.later.impl.0",
+        "p024.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p024.signal.0.desc",
+      "toolExamplesKeys": [
+        "p024.signal.0.tool.0",
+        "p024.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p024.signal.0.why"
+    },
+    {
+      "signalKey": "p024.signal.1.desc",
+      "toolExamplesKeys": [
+        "p024.signal.1.tool.0",
+        "p024.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p024.signal.1.why"
+    },
+    {
+      "signalKey": "p024.signal.2.desc",
+      "toolExamplesKeys": [
+        "p024.signal.2.tool.0",
+        "p024.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p024.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p024.strategy.0.timeframe",
+      "actionsKeys": [
+        "p024.strategy.0.action.0",
+        "p024.strategy.0.action.1",
+        "p024.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p024.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p024.strategy.1.timeframe",
+      "actionsKeys": [
+        "p024.strategy.1.action.0",
+        "p024.strategy.1.action.1",
+        "p024.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p024.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p024.strategy.2.timeframe",
+      "actionsKeys": [
+        "p024.strategy.2.action.0",
+        "p024.strategy.2.action.1",
+        "p024.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p024.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Accountants and Auditors : OOH",
+      "publisher": "BLS",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/business-and-financial/accountants-and-auditors.htm",
+      "noteKey": "p024.source.0.note"
+    },
+    {
+      "title": "AI in Accounting Report",
+      "publisher": "CPA.com",
+      "year": "2025",
+      "url": "https://www.cpa.com/ai-accounting-report",
+      "noteKey": "p024.source.1.note"
+    },
+    {
+      "title": "The Next Accounting Revolution",
+      "publisher": "CPA Practice Advisor",
+      "year": "2026",
+      "url": "https://www.cpapracticeadvisor.com",
+      "noteKey": "p024.source.2.note"
+    },
+    {
+      "title": "AI reshaping accounting jobs",
+      "publisher": "Stanford Business",
+      "year": "2025",
+      "url": "https://gsb.stanford.edu",
+      "noteKey": "p024.source.3.note"
+    },
+    {
+      "title": "13-2011.00 - Accountants and Auditors",
+      "publisher": "O*NET",
+      "year": "2025",
+      "url": "https://www.onetonline.org",
+      "noteKey": "p024.source.4.note"
+    },
+    {
+      "title": "Tax Research and AI",
+      "publisher": "NYSSCPA",
+      "year": "2025",
+      "url": "https://www.nysscpa.org",
+      "noteKey": "p024.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p024.notes.assumption.0",
+      "p024.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p024.notes.scope.0",
+      "p024.notes.scope.1"
+    ]
+  }
+}

@@ -1,0 +1,407 @@
+{
+  "id": "p042",
+  "slug": {
+    "en": "graphic-designer",
+    "es": "disenador-grafico"
+  },
+  "name": {
+    "en": "Graphic Designer",
+    "es": "Diseñador gráfico"
+  },
+  "synonyms": {
+    "en": [
+      "Visual Designer",
+      "Creative Specialist"
+    ],
+    "es": [
+      "Diseñador visual",
+      "Creativo gráfico"
+    ]
+  },
+  "oneLinerKey": "p042.oneLiner",
+  "summaryBulletsKeys": [
+    "p042.summary.0",
+    "p042.summary.1",
+    "p042.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p042.task.0.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.0.why.0",
+        "p042.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.0.human.0",
+        "p042.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.1.why.0",
+        "p042.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.1.human.0",
+        "p042.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.2.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.2.why.0",
+        "p042.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.2.human.0",
+        "p042.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.3.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.3.why.0",
+        "p042.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.3.human.0",
+        "p042.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.4.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.4.why.0",
+        "p042.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.4.human.0",
+        "p042.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.5.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.5.why.0",
+        "p042.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.5.human.0",
+        "p042.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.6.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p042.task.6.why.0",
+        "p042.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.6.human.0",
+        "p042.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.7.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.7.why.0",
+        "p042.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.7.human.0",
+        "p042.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.8.why.0",
+        "p042.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.8.human.0",
+        "p042.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.9.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.9.why.0",
+        "p042.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.9.human.0",
+        "p042.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.10.why.0",
+        "p042.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.10.human.0",
+        "p042.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.11.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.11.why.0",
+        "p042.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.11.human.0",
+        "p042.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.12.desc",
+      "automationLevel": "total",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p042.task.12.why.0",
+        "p042.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.12.human.0",
+        "p042.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.13.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.13.why.0",
+        "p042.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.13.human.0",
+        "p042.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.14.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.14.why.0",
+        "p042.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.14.human.0",
+        "p042.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.15.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p042.task.15.why.0",
+        "p042.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.15.human.0",
+        "p042.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.16.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p042.task.16.why.0",
+        "p042.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.16.human.0",
+        "p042.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p042.task.17.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p042.task.17.why.0",
+        "p042.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p042.task.17.human.0",
+        "p042.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p042.timeline.now.changes.0",
+        "p042.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p042.timeline.now.impl.0",
+        "p042.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p042.timeline.next.changes.0",
+        "p042.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p042.timeline.next.impl.0",
+        "p042.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p042.timeline.later.changes.0",
+        "p042.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p042.timeline.later.impl.0",
+        "p042.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p042.signal.0.desc",
+      "toolExamplesKeys": [
+        "p042.signal.0.tool.0",
+        "p042.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p042.signal.0.why"
+    },
+    {
+      "signalKey": "p042.signal.1.desc",
+      "toolExamplesKeys": [
+        "p042.signal.1.tool.0",
+        "p042.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p042.signal.1.why"
+    },
+    {
+      "signalKey": "p042.signal.2.desc",
+      "toolExamplesKeys": [
+        "p042.signal.2.tool.0",
+        "p042.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p042.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p042.strategy.0.timeframe",
+      "actionsKeys": [
+        "p042.strategy.0.action.0",
+        "p042.strategy.0.action.1",
+        "p042.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p042.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p042.strategy.1.timeframe",
+      "actionsKeys": [
+        "p042.strategy.1.action.0",
+        "p042.strategy.1.action.1",
+        "p042.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p042.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p042.strategy.2.timeframe",
+      "actionsKeys": [
+        "p042.strategy.2.action.0",
+        "p042.strategy.2.action.1",
+        "p042.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p042.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "27-1024.00 - Graphic Designers",
+      "publisher": "O*NET OnLine",
+      "year": "2024",
+      "url": "https://www.onetonline.org/link/summary/27-1024.00",
+      "noteKey": "p042.source.0.note"
+    },
+    {
+      "title": "Design Trends Report",
+      "publisher": "Adobe",
+      "year": "2024",
+      "url": "https://www.adobe.com/",
+      "noteKey": "p042.source.1.note"
+    },
+    {
+      "title": "Occupational Outlook Handbook: Graphic Designers",
+      "publisher": "BLS",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/arts-and-design/graphic-designers.htm",
+      "noteKey": "p042.source.2.note"
+    },
+    {
+      "title": "The Impact of AI on Graphic Design",
+      "publisher": "AIGA (Professional Association for Design)",
+      "year": "2024",
+      "url": "https://www.aiga.org/",
+      "noteKey": "p042.source.3.note"
+    },
+    {
+      "title": "GenAI in Design Workflow",
+      "publisher": "Figma Blog",
+      "year": "2024",
+      "url": "https://www.figma.com/blog/",
+      "noteKey": "p042.source.4.note"
+    },
+    {
+      "title": "State of Design",
+      "publisher": "Canva",
+      "year": "2024",
+      "url": "https://www.canva.com/",
+      "noteKey": "p042.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p042.notes.assumption.0",
+      "p042.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p042.notes.scope.0",
+      "p042.notes.scope.1"
+    ]
+  }
+}

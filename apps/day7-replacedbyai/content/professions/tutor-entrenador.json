@@ -1,0 +1,407 @@
+{
+  "id": "p015",
+  "slug": {
+    "en": "tutor-trainer",
+    "es": "tutor-entrenador"
+  },
+  "name": {
+    "en": "Tutor/Trainer",
+    "es": "Tutor/Entrenador"
+  },
+  "synonyms": {
+    "en": [
+      "Private tutor",
+      "Corporate trainer"
+    ],
+    "es": [
+      "Instructor",
+      "Profesor particular"
+    ]
+  },
+  "oneLinerKey": "p015.oneLiner",
+  "summaryBulletsKeys": [
+    "p015.summary.0",
+    "p015.summary.1",
+    "p015.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p015.task.0.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.0.why.0",
+        "p015.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.0.human.0",
+        "p015.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.1.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.1.why.0",
+        "p015.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.1.human.0",
+        "p015.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.2.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p015.task.2.why.0",
+        "p015.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.2.human.0",
+        "p015.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.3.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.3.why.0",
+        "p015.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.3.human.0",
+        "p015.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.4.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p015.task.4.why.0",
+        "p015.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.4.human.0",
+        "p015.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.5.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.5.why.0",
+        "p015.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.5.human.0",
+        "p015.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.6.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p015.task.6.why.0",
+        "p015.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.6.human.0",
+        "p015.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.7.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p015.task.7.why.0",
+        "p015.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.7.human.0",
+        "p015.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.8.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p015.task.8.why.0",
+        "p015.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.8.human.0",
+        "p015.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.9.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p015.task.9.why.0",
+        "p015.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.9.human.0",
+        "p015.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.10.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p015.task.10.why.0",
+        "p015.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.10.human.0",
+        "p015.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.11.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.11.why.0",
+        "p015.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.11.human.0",
+        "p015.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.12.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.12.why.0",
+        "p015.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.12.human.0",
+        "p015.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.13.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p015.task.13.why.0",
+        "p015.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.13.human.0",
+        "p015.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.14.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.14.why.0",
+        "p015.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.14.human.0",
+        "p015.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.15.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.15.why.0",
+        "p015.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.15.human.0",
+        "p015.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.16.desc",
+      "automationLevel": "total",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p015.task.16.why.0",
+        "p015.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.16.human.0",
+        "p015.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p015.task.17.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p015.task.17.why.0",
+        "p015.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p015.task.17.human.0",
+        "p015.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p015.timeline.now.changes.0",
+        "p015.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p015.timeline.now.impl.0",
+        "p015.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p015.timeline.next.changes.0",
+        "p015.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p015.timeline.next.impl.0",
+        "p015.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p015.timeline.later.changes.0",
+        "p015.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p015.timeline.later.impl.0",
+        "p015.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p015.signal.0.desc",
+      "toolExamplesKeys": [
+        "p015.signal.0.tool.0",
+        "p015.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p015.signal.0.why"
+    },
+    {
+      "signalKey": "p015.signal.1.desc",
+      "toolExamplesKeys": [
+        "p015.signal.1.tool.0",
+        "p015.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p015.signal.1.why"
+    },
+    {
+      "signalKey": "p015.signal.2.desc",
+      "toolExamplesKeys": [
+        "p015.signal.2.tool.0",
+        "p015.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p015.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p015.strategy.0.timeframe",
+      "actionsKeys": [
+        "p015.strategy.0.action.0",
+        "p015.strategy.0.action.1",
+        "p015.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p015.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p015.strategy.1.timeframe",
+      "actionsKeys": [
+        "p015.strategy.1.action.0",
+        "p015.strategy.1.action.1",
+        "p015.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p015.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p015.strategy.2.timeframe",
+      "actionsKeys": [
+        "p015.strategy.2.action.0",
+        "p015.strategy.2.action.1",
+        "p015.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p015.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "25-3099.00 - Teachers and Instructors",
+      "publisher": "O*NET OnLine",
+      "year": "2025",
+      "url": "https://www.onetonline.org/link/summary/25-3099.00",
+      "noteKey": "p015.source.0.note"
+    },
+    {
+      "title": "The Tutoring Revolution",
+      "publisher": "National Tutoring Association",
+      "year": "2024",
+      "url": "https://ntatutor.com/resources/",
+      "noteKey": "p015.source.1.note"
+    },
+    {
+      "title": "Future of Corporate Training",
+      "publisher": "Training Industry",
+      "year": "2024",
+      "url": "https://trainingindustry.com/magazine/",
+      "noteKey": "p015.source.2.note"
+    },
+    {
+      "title": "Learning Scientists Research",
+      "publisher": "Learning Scientists",
+      "year": "2023",
+      "url": "https://www.learningscientists.org/",
+      "noteKey": "p015.source.3.note"
+    },
+    {
+      "title": "Self-Enrichment Teachers Outlook",
+      "publisher": "BLS OOH",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/education-training-and-library/self-enrichment-education-teachers.htm",
+      "noteKey": "p015.source.4.note"
+    },
+    {
+      "title": "AI in Tutoring: A Case Study",
+      "publisher": "Stanford GSV",
+      "year": "2024",
+      "url": "https://gsv.vanderbilt.edu/",
+      "noteKey": "p015.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p015.notes.assumption.0",
+      "p015.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p015.notes.scope.0",
+      "p015.notes.scope.1"
+    ]
+  }
+}

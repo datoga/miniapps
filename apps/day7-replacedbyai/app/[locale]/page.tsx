@@ -1,11 +1,11 @@
 import { setRequestLocale } from "next-intl/server";
-import { Header, Footer } from "@miniapps/ui";
+import { Footer } from "@miniapps/ui";
+import { HeaderWithNav } from "@/components/HeaderWithNav";
 import { LandingHero } from "@/components/LandingHero";
 import { ProfessionSearch } from "@/components/ProfessionSearch";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { AboutSection } from "@/components/AboutSection";
 import { RandomProfession } from "@/components/RandomProfession";
-import { BrandTitle } from "@/components/BrandTitle";
 import { getProfessionCount } from "@/lib/professions/load.server";
 
 export const dynamic = "force-static";
@@ -22,7 +22,7 @@ export default async function LandingPage({ params }: Props) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header title={<BrandTitle />} />
+      <HeaderWithNav />
 
       <main className="flex-1">
         {/* Hero Section */}

@@ -39,8 +39,8 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
     const handleScroll = () => {
       if (placeholderRef.current) {
         const rect = placeholderRef.current.getBoundingClientRect();
-        // Make sticky when placeholder reaches the header (64px from top)
-        setIsTabsSticky(rect.top <= 64);
+        // Make sticky when placeholder reaches the header (~71px from top)
+        setIsTabsSticky(rect.top <= 71);
       }
     };
 
@@ -58,7 +58,7 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
     // First, scroll to the section header (before state changes)
     const element = document.getElementById(sectionId);
     if (element) {
-      const offset = 140; // Account for header + sticky tabs
+      const offset = 140; // Account for header (71px) + sticky tabs (~60px) + padding
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -115,8 +115,8 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
 
       {/* Fixed tabs when sticky */}
       {isTabsSticky && (
-        <div className="fixed top-16 left-0 right-0 z-30 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md">
-          <div className="max-w-3xl mx-auto px-4">
+        <div className="fixed top-[71px] left-0 right-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-md border-b border-gray-100 dark:border-gray-800">
+          <div className="max-w-3xl mx-auto">
             <nav className="flex items-center gap-1 overflow-x-auto py-3 scrollbar-hide">
               {sections.map(({ id, icon }) => {
                 const isActive = openSectionId === id;

@@ -309,7 +309,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         <link rel="dns-prefetch" href="https://cusdis.com" />
         <link rel="preconnect" href="https://cusdis.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100`}>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             {children}

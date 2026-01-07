@@ -14,8 +14,7 @@ const nextConfig: NextConfig = {
   // Redirects for SEO and alternative slug forms
   async redirects() {
     return [
-      // Root to default locale
-      { source: "/", destination: "/en", permanent: false },
+      // Root redirect handled by proxy.ts middleware (detects browser language)
 
       // Common URL patterns
       { source: "/profession/:slug", destination: "/en/p/:slug", permanent: true },

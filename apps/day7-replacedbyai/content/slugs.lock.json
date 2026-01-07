@@ -2,15 +2,205 @@
   "version": "2",
   "createdAt": "2026-01-07",
   "slugsById": {
-    "p001": { "en": "physician", "es": "medico" },
-    "p002": { "en": "nurse", "es": "enfermero" },
-    "p003": { "en": "nursing-assistant", "es": "auxiliar-enfermeria" },
-    "p004": { "en": "dentist", "es": "dentista" },
-    "p005": { "en": "pharmacist", "es": "farmaceutico" },
-    "p006": { "en": "psychologist", "es": "psicologo" },
-    "p007": { "en": "physiotherapist", "es": "fisioterapeuta" },
-    "p008": { "en": "veterinarian", "es": "veterinario" },
-    "p009": { "en": "lab-technician", "es": "tecnico-laboratorio" },
-    "p010": { "en": "paramedic", "es": "paramedico" }
+    "p001": {
+      "en": "physician",
+      "es": "medico"
+    },
+    "p002": {
+      "en": "nurse",
+      "es": "enfermero"
+    },
+    "p003": {
+      "en": "nursing-assistant",
+      "es": "auxiliar-enfermeria"
+    },
+    "p004": {
+      "en": "dentist",
+      "es": "dentista"
+    },
+    "p005": {
+      "en": "pharmacist",
+      "es": "farmaceutico"
+    },
+    "p006": {
+      "en": "psychologist",
+      "es": "psicologo"
+    },
+    "p007": {
+      "en": "physiotherapist",
+      "es": "fisioterapeuta"
+    },
+    "p008": {
+      "en": "veterinarian",
+      "es": "veterinario"
+    },
+    "p009": {
+      "en": "lab-technician",
+      "es": "tecnico-laboratorio"
+    },
+    "p010": {
+      "en": "paramedic",
+      "es": "paramedico"
+    },
+    "p011": {
+      "en": "primary-school-teacher",
+      "es": "maestro-de-primaria"
+    },
+    "p012": {
+      "en": "secondary-school-teacher",
+      "es": "profesor-de-secundaria"
+    },
+    "p013": {
+      "en": "university-lecturer",
+      "es": "profesor-universitario"
+    },
+    "p014": {
+      "en": "early-childhood-educator",
+      "es": "educador-infantil"
+    },
+    "p015": {
+      "en": "tutor-trainer",
+      "es": "tutor-entrenador"
+    },
+    "p016": {
+      "en": "lawyer",
+      "es": "abogado"
+    },
+    "p017": {
+      "en": "paralegal",
+      "es": "asistente-juridico"
+    },
+    "p018": {
+      "en": "judge",
+      "es": "juez"
+    },
+    "p019": {
+      "en": "notary",
+      "es": "notario"
+    },
+    "p020": {
+      "en": "police-officer",
+      "es": "oficial-de-policia"
+    },
+    "p021": {
+      "en": "accountant",
+      "es": "contador"
+    },
+    "p022": {
+      "en": "auditor",
+      "es": "auditor"
+    },
+    "p023": {
+      "en": "financial-analyst",
+      "es": "analista-financiero"
+    },
+    "p024": {
+      "en": "tax-advisor",
+      "es": "asesor-fiscal"
+    },
+    "p025": {
+      "en": "bank-teller",
+      "es": "cajero-de-banco"
+    },
+    "p026": {
+      "en": "insurance-agent",
+      "es": "agente-de-seguros"
+    },
+    "p027": {
+      "en": "administrative-assistant",
+      "es": "asistente-administrativo"
+    },
+    "p028": {
+      "en": "receptionist",
+      "es": "recepcionista"
+    },
+    "p029": {
+      "en": "hr-generalist",
+      "es": "generalista-de-rrhh"
+    },
+    "p030": {
+      "en": "recruiter",
+      "es": "reclutador"
+    },
+    "p031": {
+      "en": "customer-support-specialist",
+      "es": "especialista-en-soporte-al-cliente"
+    },
+    "p032": {
+      "en": "call-center-agent",
+      "es": "agente-de-call-center"
+    },
+    "p033": {
+      "en": "sales-representative",
+      "es": "representante-de-ventas"
+    },
+    "p034": {
+      "en": "retail-salesperson",
+      "es": "vendedor-de-tienda"
+    },
+    "p035": {
+      "en": "cashier",
+      "es": "cajero"
+    },
+    "p036": {
+      "en": "store-manager",
+      "es": "gerente-de-tienda"
+    },
+    "p037": {
+      "en": "procurement-specialist",
+      "es": "especialista-en-compras"
+    },
+    "p038": {
+      "en": "logistics-coordinator",
+      "es": "coordinador-de-logistica"
+    },
+    "p039": {
+      "en": "marketing-specialist",
+      "es": "especialista-en-marketing"
+    },
+    "p040": {
+      "en": "community-manager",
+      "es": "community-manager"
+    },
+    "p041": {
+      "en": "copywriter",
+      "es": "redactor-publicitario"
+    },
+    "p042": {
+      "en": "graphic-designer",
+      "es": "disenador-grafico"
+    },
+    "p043": {
+      "en": "ux-ui-designer",
+      "es": "disenador-ux-ui"
+    },
+    "p044": {
+      "en": "journalist",
+      "es": "periodista"
+    },
+    "p045": {
+      "en": "photographer",
+      "es": "fotografo"
+    },
+    "p046": {
+      "en": "video-editor",
+      "es": "editor-de-video"
+    },
+    "p047": {
+      "en": "music-producer",
+      "es": "productor-musical"
+    },
+    "p048": {
+      "en": "game-developer",
+      "es": "desarrollador-de-videojuegos"
+    },
+    "p049": {
+      "en": "architect",
+      "es": "arquitecto"
+    },
+    "p050": {
+      "en": "translator-interpreter",
+      "es": "traductor-interprete"
+    }
   }
 }

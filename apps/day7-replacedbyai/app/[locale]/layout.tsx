@@ -97,6 +97,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     content: content!,
     category: "education",
+    googleVerification: "QZlWfURENKf5JuI4xmFGUjt89t8dBog8WJ5btml5TQA",
   });
 
   // Enhanced metadata with alternates

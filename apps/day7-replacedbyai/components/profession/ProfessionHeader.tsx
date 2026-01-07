@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 import type { Profession } from "../../lib/professions/schema";
 import { t, tMany } from "../../lib/professions/translations";
+import { ShareButton } from "./ShareButton";
 
 interface ProfessionHeaderProps {
   profession: Profession;
@@ -12,16 +13,21 @@ export function ProfessionHeader({ profession }: ProfessionHeaderProps) {
   const locale = useLocale();
   const ui = useTranslations("profession");
 
-  const name = profession.name[locale as "en" | "es"] || profession.name.en;
-  const synonyms = profession.synonyms[locale as "en" | "es"] || profession.synonyms.en;
+  const loc = locale as "en" | "es";
+  const name = profession.name[loc] || profession.name.en;
+  const slug = profession.slug[loc] || profession.slug.en;
+  const synonyms = profession.synonyms[loc] || profession.synonyms.en;
   const oneLiner = t(profession.oneLinerKey, locale);
   const summaryBullets = tMany(profession.summaryBulletsKeys, locale);
 
   return (
     <header id="summary" className="mb-12 scroll-mt-24">
-      <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-        {name}
-      </h1>
+      <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+          {name}
+        </h1>
+        <ShareButton professionName={name} slug={slug} />
+      </div>
 
       {/* Synonyms */}
       <div className="flex flex-wrap gap-2 mb-6">

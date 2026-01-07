@@ -61,13 +61,13 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
       const offset = 140; // Account for header + sticky tabs
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
+
       // Scroll first
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
       });
-      
+
       // Then open the section after a small delay
       setTimeout(() => {
         setOpenSectionId(sectionId);

@@ -55,11 +55,11 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
   const [activeIndex, setActiveIndex] = useState(0);
 
   const activeEntry = profession.timeline[activeIndex];
-  
+
   if (!activeEntry) {
     return null;
   }
-  
+
   const activeConfig = phaseConfig[activeEntry.phase];
   const whatChanges = tMany(activeEntry.whatChangesKeys, locale);
   const implications = tMany(activeEntry.implicationsKeys, locale);

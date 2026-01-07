@@ -50,11 +50,11 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
 
   const activeStrategy = profession.adaptationStrategies[activeIndex];
   const activeConfig = timeframeConfig[activeIndex] ?? timeframeConfig[0]!;
-  
+
   if (!activeStrategy) {
     return null;
   }
-  
+
   const timeframe = t(activeStrategy.timeframeKey, locale);
   const actions = tMany(activeStrategy.actionsKeys, locale);
   const expectedOutcome = t(activeStrategy.expectedOutcomeKey, locale);

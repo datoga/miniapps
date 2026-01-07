@@ -145,8 +145,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     verification: {
-      // Add your verification codes here
-      // google: "your-google-verification-code",
+      google: "QZlWfURENKf5JuI4xmFGUjt89t8dBog8WJ5btml5TQA",
     },
     other: {
       "theme-color": "#10b981",

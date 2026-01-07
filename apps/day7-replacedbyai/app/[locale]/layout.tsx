@@ -90,7 +90,6 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const content = seoContent[locale] || seoContent["en"];
-  const otherLocale = locale === "en" ? "es" : "en";
 
   const baseMetadata = generateSEOMetadata({
     appName: APP_NAME,

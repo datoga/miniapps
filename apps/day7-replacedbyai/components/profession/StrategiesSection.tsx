@@ -49,7 +49,12 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
   const [activeIndex, setActiveIndex] = useState(0);
 
   const activeStrategy = profession.adaptationStrategies[activeIndex];
-  const activeConfig = timeframeConfig[activeIndex] || timeframeConfig[0];
+  const activeConfig = timeframeConfig[activeIndex] ?? timeframeConfig[0]!;
+  
+  if (!activeStrategy) {
+    return null;
+  }
+  
   const timeframe = t(activeStrategy.timeframeKey, locale);
   const actions = tMany(activeStrategy.actionsKeys, locale);
   const expectedOutcome = t(activeStrategy.expectedOutcomeKey, locale);
@@ -77,7 +82,7 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
         {/* Timeline markers - clickable */}
         <div className="relative flex justify-between px-4">
           {profession.adaptationStrategies.map((strategy, index) => {
-            const config = timeframeConfig[index] || timeframeConfig[0];
+            const config = timeframeConfig[index] ?? timeframeConfig[0]!;
             const label = t(strategy.timeframeKey, locale);
             const isActive = index === activeIndex;
             const isPast = index < activeIndex;
@@ -183,7 +188,7 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
       {/* Navigation dots */}
       <div className="flex justify-center gap-2 mt-4">
         {profession.adaptationStrategies.map((_, index) => {
-          const config = timeframeConfig[index] || timeframeConfig[0];
+          const config = timeframeConfig[index] ?? timeframeConfig[0]!;
           return (
             <button
               key={index}

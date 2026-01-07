@@ -55,6 +55,11 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
   const [activeIndex, setActiveIndex] = useState(0);
 
   const activeEntry = profession.timeline[activeIndex];
+  
+  if (!activeEntry) {
+    return null;
+  }
+  
   const activeConfig = phaseConfig[activeEntry.phase];
   const whatChanges = tMany(activeEntry.whatChangesKeys, locale);
   const implications = tMany(activeEntry.implicationsKeys, locale);
@@ -208,16 +213,16 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
 
       {/* Navigation dots */}
       <div className="flex justify-center gap-2 mt-4">
-        {profession.timeline.map((_, index) => (
+        {profession.timeline.map((entry, index) => (
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
             className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
               index === activeIndex
-                ? `w-8 ${phaseConfig[profession.timeline[index].phase].badge}`
+                ? `w-8 ${phaseConfig[entry.phase].badge}`
                 : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
             }`}
-            aria-label={`Go to ${profession.timeline[index].phase}`}
+            aria-label={`Go to ${entry.phase}`}
           />
         ))}
       </div>

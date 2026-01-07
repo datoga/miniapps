@@ -1,12 +1,8 @@
 import type { MetadataRoute } from "next";
-import { getAllLocalizedSlugs, getDataset } from "@/lib/professions/load.server";
+import { getDataset } from "@/lib/professions/load.server";
 
 const APP_URL = "https://replacedbyai.guru";
 const locales = ["en", "es"] as const;
-
-type AlternateRefs = {
-  languages: Record<string, string>;
-};
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const dataset = getDataset();

@@ -23,7 +23,10 @@ export function RandomProfession({ locale }: RandomProfessionProps) {
 
         // Pick a random profession
         const randomIndex = Math.floor(Math.random() * items.length);
-        setProfession(items[randomIndex]);
+        const selected = items[randomIndex];
+        if (selected) {
+          setProfession(selected);
+        }
       } catch (error) {
         console.error("Failed to load professions:", error);
       } finally {

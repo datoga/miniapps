@@ -17,7 +17,7 @@ interface HeaderWithNavProps {
 export function HeaderWithNav({ title, professionSlugs }: HeaderWithNavProps) {
   const router = useRouter();
   const params = useParams();
-  const locale = params.locale as string || "en";
+  const locale = params["locale"] as string || "en";
 
   const handleTitleClick = () => {
     router.push(`/${locale}`);

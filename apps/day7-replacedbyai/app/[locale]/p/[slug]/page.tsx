@@ -1,9 +1,8 @@
 import { setRequestLocale } from "next-intl/server";
-import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Footer } from "@miniapps/ui";
 import { HeaderWithNav } from "@/components/HeaderWithNav";
-import { getAllLocalizedSlugs, getProfessionBySlug, getDataset } from "@/lib/professions/load.server";
+import { getAllLocalizedSlugs, getProfessionBySlug } from "@/lib/professions/load.server";
 import { t as getContentTranslation, tMany } from "@/lib/professions/translations";
 import type { Metadata } from "next";
 import { ProfessionContent } from "@/components/profession/ProfessionContent";
@@ -26,7 +25,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const loc = locale as "en" | "es";
-  const otherLoc = loc === "en" ? "es" : "en";
   const profession = getProfessionBySlug(slug, loc);
 
   if (!profession) {
@@ -35,9 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const t = await getTranslations({ locale, namespace: "profession" });
   const name = profession.name[loc] || profession.name.en;
-  const otherName = profession.name[otherLoc] || profession.name.en;
   const description = getContentTranslation(profession.oneLinerKey, locale);
 
   // Get summary bullets for richer description
@@ -51,7 +47,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // Canonical and alternate URLs
   const canonicalUrl = `${APP_URL}/${loc}/p/${profession.slug[loc]}`;
-  const alternateUrl = `${APP_URL}/${otherLoc}/p/${profession.slug[otherLoc]}`;
 
   // Keywords specific to the profession
   const baseKeywords = loc === "es" ? [

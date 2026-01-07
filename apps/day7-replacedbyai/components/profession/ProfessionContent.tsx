@@ -55,21 +55,26 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
 
   // Navigate to section: scroll + open
   const navigateToSection = useCallback((sectionId: string) => {
-    setOpenSectionId(sectionId);
-
-    // Scroll to section
-    setTimeout(() => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        const offset = 140; // Account for header + sticky tabs
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }, 50);
+    // First, scroll to the section header (before state changes)
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 140; // Account for header + sticky tabs
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      
+      // Scroll first
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      
+      // Then open the section after a small delay
+      setTimeout(() => {
+        setOpenSectionId(sectionId);
+      }, 100);
+    } else {
+      setOpenSectionId(sectionId);
+    }
   }, []);
 
   return (

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllLocalizedSlugs, getDataset } from "@/lib/professions/load.server";
 
-const APP_URL = "https://willaireplaced.com";
+const APP_URL = "https://replacedbyai.guru";
 const locales = ["en", "es"] as const;
 
 type AlternateRefs = {

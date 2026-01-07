@@ -1,8 +1,7 @@
 export function BrandTitle() {
   return (
     <span className="tracking-tight">
-      🔮 Will<span className="font-black">AI</span>Replaced?
+      🔮 Replaced<span className="font-black">By</span>AI
     </span>
   );
 }
-

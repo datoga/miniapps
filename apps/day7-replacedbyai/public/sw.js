@@ -1,7 +1,7 @@
 // Service Worker for Will AI Replace...?
 // Implements caching strategy for offline support
 
-const CACHE_NAME = "willaireplaced-v1";
+const CACHE_NAME = "replacedbyai-v1";
 
 // Assets to precache
 const PRECACHE_ASSETS = [

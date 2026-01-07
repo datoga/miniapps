@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-// Icon configuration - WillAIReplaced
+// Icon configuration - ReplacedByAI
 const APP_ICON = "🔮";
 const BG_GRADIENT_START = "#10b981"; // Emerald
 const BG_GRADIENT_END = "#6366f1"; // Indigo

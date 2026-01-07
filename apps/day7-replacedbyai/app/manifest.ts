@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Will AI Replace Me? — Task-Level Job Analysis",
-    short_name: "WillAIReplaced",
+    name: "Replaced by AI? — Task-Level Job Analysis",
+    short_name: "ReplacedByAI",
     description:
       "Discover how AI will transform your job task by task. Analyze 100+ professions with automation levels and timelines. Free tool.",
     start_url: "/?utm_source=pwa&utm_medium=installed",
@@ -53,7 +53,7 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: "1200x630",
         type: "image/png",
         form_factor: "wide",
-        label: "WillAIReplaced - Task-level AI job analysis",
+        label: "ReplacedByAI - Task-level AI job analysis",
       },
     ],
   };

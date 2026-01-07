@@ -14,7 +14,7 @@ let cachedIndex: ThinIndex | null = null;
 let fetchPromise: Promise<ThinIndex> | null = null;
 
 // IndexedDB key for caching
-const IDB_KEY = "willaireplaced:professions-index";
+const IDB_KEY = "replacedbyai:professions-index";
 
 /**
  * Load the thin index from network or cache

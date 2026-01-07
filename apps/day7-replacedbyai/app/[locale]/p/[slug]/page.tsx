@@ -10,7 +10,7 @@ import { ProfessionContent } from "@/components/profession/ProfessionContent";
 
 export const dynamic = "force-static";
 
-const APP_URL = "https://willaireplaced.com";
+const APP_URL = "https://replacedbyai.guru";
 
 type Props = {
   params: Promise<{ locale: string; slug: string }>;
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description: richDescription.slice(0, 200),
       url: canonicalUrl,
-      siteName: "WillAIReplaced",
+      siteName: "ReplacedByAI",
       type: "article",
       locale: loc === "es" ? "es_ES" : "en_US",
       alternateLocale: loc === "es" ? "en_US" : "es_ES",
@@ -147,12 +147,12 @@ export default async function ProfessionPage({ params }: Props) {
     description,
     author: {
       "@type": "Organization",
-      name: "WillAIReplaced",
+      name: "ReplacedByAI",
       url: APP_URL,
     },
     publisher: {
       "@type": "Organization",
-      name: "WillAIReplaced",
+      name: "ReplacedByAI",
       logo: {
         "@type": "ImageObject",
         url: `${APP_URL}/icon/512`,

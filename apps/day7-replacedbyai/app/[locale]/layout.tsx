@@ -30,8 +30,8 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const APP_NAME = "WillAIReplaced";
-const APP_URL = "https://willaireplaced.com";
+const APP_NAME = "ReplacedByAI";
+const APP_URL = "https://replacedbyai.guru";
 
 // Locale-specific SEO content - optimized for search
 const seoContent: Record<string, LocaleSEOContent> = {

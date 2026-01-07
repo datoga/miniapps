@@ -33,7 +33,7 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemaps
-Sitemap: https://willaireplaced.com/sitemap.xml
+Sitemap: https://replacedbyai.guru/sitemap.xml
 
 # Host
-Host: https://willaireplaced.com
+Host: https://replacedbyai.guru

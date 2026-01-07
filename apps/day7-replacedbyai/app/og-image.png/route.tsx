@@ -5,7 +5,7 @@ export const runtime = "edge";
 
 export async function GET(): Promise<ImageResponse> {
   return generateOgImage({
-    appName: "Will AI Replace Me?",
+    appName: "Replaced by AI?",
     tagline: "Yes, but not yet",
     icon: "🔮",
     features: ["100+ Professions", "Task Analysis", "Free Tool"],

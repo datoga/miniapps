@@ -1,0 +1,168 @@
+{
+  "app": {
+    "title": "¿Me reemplazará la IA? Sí, pero no todavía",
+    "shortTitle": "Sí, pero... todavía no",
+    "tagline": "La IA transforma tareas, no carreras",
+    "description": "Explora cómo la IA está cambiando tareas específicas dentro de las profesiones. Sin clickbait, sin pánico—solo análisis a nivel de tareas sobre qué está cambiando y qué sigue siendo humano."
+  },
+  "landing": {
+    "hero": {
+      "heading": "Sí, pero... todavía no",
+      "subheading": "La IA no reemplazará tu trabajo. Cambiará cómo lo haces.",
+      "description": "Analizamos profesiones tarea por tarea—sin respuestas binarias, sin predicciones apocalípticas. Descubre qué partes de tu trabajo están cambiando y cuáles siguen siendo únicamente humanas."
+    },
+    "search": {
+      "placeholder": "Busca una profesión...",
+      "hint": "Escribe para buscar entre {count} profesiones",
+      "noResults": "No se encontraron profesiones",
+      "examples": "Prueba: médico, profesor, abogado, contador"
+    },
+    "cta": {
+      "explore": "Explorar Profesiones",
+      "learnMore": "Saber Más"
+    },
+    "random": {
+      "label": "Profesión destacada",
+      "cta": "Ver análisis completo →"
+    },
+    "features": {
+      "taskLevel": {
+        "title": "Análisis por Tareas",
+        "description": "Desglosamos cada profesión en más de 18 tareas específicas, analizando el potencial de automatización de cada una."
+      },
+      "noHype": {
+        "title": "Sin Exageraciones",
+        "description": "Basado en fuentes confiables como BLS, O*NET, OMS y NIST. Sin predicciones sensacionalistas—solo análisis fundamentado."
+      },
+      "actionable": {
+        "title": "Estrategias Prácticas",
+        "description": "Cada profesión incluye estrategias de adaptación concretas para 2 semanas, 2 meses y 2 trimestres."
+      }
+    },
+    "about": {
+      "title": "¿Por qué \"Sí, pero... todavía no\"?",
+      "p1": "Los titulares aman las respuestas binarias: \"¡La IA REEMPLAZARÁ a los médicos!\" o \"¡La IA NUNCA reemplazará a los profesores!\" La realidad es más compleja e interesante.",
+      "p2": "Cada profesión es un conjunto de tareas. Algunas tareas son altamente automatizables hoy. Otras requieren juicio, empatía, creatividad o presencia física que la IA actual no puede igualar.",
+      "p3": "Nuestro análisis se centra en este matiz: qué tareas específicas están cambiando, en qué plazo, y qué sigue siendo únicamente humano."
+    },
+    "automationLevels": {
+      "title": "Niveles de Automatización",
+      "assist": {
+        "name": "Asistencia",
+        "description": "La IA ayuda, el humano lidera"
+      },
+      "partial": {
+        "name": "Parcial",
+        "description": "Responsabilidad compartida"
+      },
+      "majority": {
+        "name": "Mayoría",
+        "description": "La IA lidera, el humano supervisa"
+      },
+      "total": {
+        "name": "Total",
+        "description": "Completamente automatizado"
+      }
+    }
+  },
+  "profession": {
+    "meta": {
+      "titleSuffix": "— Sí, pero... todavía no"
+    },
+    "nav": {
+      "toggle": "Ir a sección",
+      "summary": "Resumen",
+      "tasks": "Tareas",
+      "timeline": "Línea temporal",
+      "signals": "Señales",
+      "strategies": "Estrategias",
+      "sources": "Fuentes",
+      "notes": "Notas"
+    },
+    "oneLiner": "Resumen rápido",
+    "summary": "Resumen",
+    "keyTakeaways": "Puntos Clave",
+    "tasks": {
+      "title": "Análisis de Tareas",
+      "subtitle": "Cómo la automatización impacta tareas específicas",
+      "task": "Tarea",
+      "automationLevel": "Nivel de Automatización",
+      "horizon": "Horizonte Temporal",
+      "whyItChanges": "Por qué está cambiando",
+      "whatStaysHuman": "Qué sigue siendo humano",
+      "filterByAutomation": "Por nivel de automatización",
+      "filterByHorizon": "Por horizonte temporal",
+      "showing": "Mostrando {count} de {total} tareas",
+      "clearFilters": "Limpiar filtros",
+      "noResults": "No hay tareas que coincidan con los filtros"
+    },
+    "automationLevels": {
+      "assist": "IA Asiste",
+      "partial": "Automatización Parcial",
+      "majority": "Mayormente Automatizado",
+      "total": "Totalmente Automatizado"
+    },
+    "horizons": {
+      "0-2": "Ahora (0-2 años)",
+      "3-5": "Próximo (3-5 años)",
+      "5-10": "Después (5-10 años)"
+    },
+    "horizonsBadge": {
+      "0-2": "0-2 años",
+      "3-5": "3-5 años",
+      "5-10": "5-10 años"
+    },
+    "timeline": {
+      "title": "Línea de Tiempo del Cambio",
+      "years": "años",
+      "phases": {
+        "Now": "Ahora",
+        "Next": "Próximo",
+        "Later": "Después"
+      },
+      "whatChanges": "Qué está cambiando",
+      "implications": "Implicaciones"
+    },
+    "signals": {
+      "title": "Señales y Herramientas",
+      "subtitle": "Qué observar",
+      "signal": "Señal",
+      "tools": "Ejemplos de Herramientas",
+      "whyItMatters": "Por qué importa"
+    },
+    "strategies": {
+      "title": "Estrategias de Adaptación",
+      "subtitle": "Pasos concretos para prepararte",
+      "timeframe": "Plazo",
+      "actions": "Acciones",
+      "outcome": "Resultado Esperado",
+      "step": "Paso {step} de {total}"
+    },
+    "sources": {
+      "title": "Fuentes",
+      "subtitle": "De dónde viene este análisis"
+    },
+    "notes": {
+      "title": "Notas",
+      "assumptions": "Supuestos",
+      "scope": "Límites del Alcance"
+    },
+    "otherProfessions": "Otras profesiones",
+    "viewMore": "Ver análisis",
+    "backToSearch": "← Volver a la búsqueda"
+  },
+  "offline": {
+    "title": "Sin Conexión",
+    "description": "Parece que has perdido la conexión a internet. Algunas funciones pueden estar limitadas.",
+    "cached": "Este contenido está disponible sin conexión",
+    "tryAgain": "Intentar de Nuevo"
+  },
+  "error": {
+    "notFound": {
+      "title": "Profesión No Encontrada",
+      "description": "No pudimos encontrar la profesión que buscas.",
+      "backHome": "Volver al Inicio"
+    }
+  }
+}
+

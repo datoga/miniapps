@@ -13,11 +13,12 @@ interface NavItem {
 }
 
 interface HeaderProps {
-  title?: string;
+  title?: ReactNode;
   navItems?: NavItem[];
   actions?: ReactNode;
   onTitleClick?: () => void;
   className?: string;
+  localeSwitcher?: ReactNode; // Custom locale switcher
 }
 
 const defaultNavItems: NavItem[] = [];
@@ -28,6 +29,7 @@ export const Header = memo(function Header({
   actions,
   onTitleClick,
   className,
+  localeSwitcher,
 }: HeaderProps) {
   const t = useTranslations();
 
@@ -72,7 +74,7 @@ export const Header = memo(function Header({
         <div className="flex items-center gap-1">
           {actions}
           <div className="ml-2 flex items-center gap-1 rounded-lg bg-gray-100/80 p-1 dark:bg-gray-800/50">
-            <LocaleSwitcher />
+            {localeSwitcher ?? <LocaleSwitcher />}
             <div className="h-4 w-px bg-gray-300 dark:bg-gray-600" />
             <ThemeToggle />
           </div>

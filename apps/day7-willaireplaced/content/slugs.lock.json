@@ -1,0 +1,16 @@
+{
+  "version": "2",
+  "createdAt": "2026-01-07",
+  "slugsById": {
+    "p001": { "en": "physician", "es": "medico" },
+    "p002": { "en": "nurse", "es": "enfermero" },
+    "p003": { "en": "nursing-assistant", "es": "auxiliar-enfermeria" },
+    "p004": { "en": "dentist", "es": "dentista" },
+    "p005": { "en": "pharmacist", "es": "farmaceutico" },
+    "p006": { "en": "psychologist", "es": "psicologo" },
+    "p007": { "en": "physiotherapist", "es": "fisioterapeuta" },
+    "p008": { "en": "veterinarian", "es": "veterinario" },
+    "p009": { "en": "lab-technician", "es": "tecnico-laboratorio" },
+    "p010": { "en": "paramedic", "es": "paramedico" }
+  }
+}

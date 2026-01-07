@@ -1,0 +1,221 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-01-07",
+  "locales": [
+    "en",
+    "es"
+  ],
+  "items": [
+    {
+      "id": "p001",
+      "slug": {
+        "en": "physician",
+        "es": "medico"
+      },
+      "name": {
+        "en": "Physician",
+        "es": "Médico"
+      },
+      "synonyms": {
+        "en": [
+          "Doctor",
+          "General Practitioner"
+        ],
+        "es": [
+          "Doctor",
+          "Médico de cabecera"
+        ]
+      }
+    },
+    {
+      "id": "p002",
+      "slug": {
+        "en": "nurse",
+        "es": "enfermero"
+      },
+      "name": {
+        "en": "Nurse",
+        "es": "Enfermero/a"
+      },
+      "synonyms": {
+        "en": [
+          "Registered Nurse",
+          "RN"
+        ],
+        "es": [
+          "Enfermero graduado",
+          "Personal de enfermería"
+        ]
+      }
+    },
+    {
+      "id": "p003",
+      "slug": {
+        "en": "nursing-assistant",
+        "es": "auxiliar-enfermeria"
+      },
+      "name": {
+        "en": "Nursing Assistant",
+        "es": "Auxiliar de enfermería"
+      },
+      "synonyms": {
+        "en": [
+          "CNA",
+          "Certified Nursing Assistant"
+        ],
+        "es": [
+          "Auxiliar de cuidados",
+          "Ayudante de enfermería"
+        ]
+      }
+    },
+    {
+      "id": "p004",
+      "slug": {
+        "en": "dentist",
+        "es": "dentista"
+      },
+      "name": {
+        "en": "Dentist",
+        "es": "Dentista"
+      },
+      "synonyms": {
+        "en": [
+          "General Dentist",
+          "DDS",
+          "DMD"
+        ],
+        "es": [
+          "Odontólogo",
+          "Cirujano dentista"
+        ]
+      }
+    },
+    {
+      "id": "p005",
+      "slug": {
+        "en": "pharmacist",
+        "es": "farmaceutico"
+      },
+      "name": {
+        "en": "Pharmacist",
+        "es": "Farmacéutico/a"
+      },
+      "synonyms": {
+        "en": [
+          "Druggist",
+          "Clinical Pharmacist"
+        ],
+        "es": [
+          "Regente de farmacia",
+          "Farmacéutico clínico"
+        ]
+      }
+    },
+    {
+      "id": "p006",
+      "slug": {
+        "en": "psychologist",
+        "es": "psicologo"
+      },
+      "name": {
+        "en": "Psychologist",
+        "es": "Psicólogo/a"
+      },
+      "synonyms": {
+        "en": [
+          "Therapist",
+          "Clinical Psychologist"
+        ],
+        "es": [
+          "Psicoterapeuta",
+          "Consejero"
+        ]
+      }
+    },
+    {
+      "id": "p007",
+      "slug": {
+        "en": "physiotherapist",
+        "es": "fisioterapeuta"
+      },
+      "name": {
+        "en": "Physiotherapist",
+        "es": "Fisioterapeuta"
+      },
+      "synonyms": {
+        "en": [
+          "Physical Therapist",
+          "PT"
+        ],
+        "es": [
+          "Kinesiólogo",
+          "Terapeuta físico"
+        ]
+      }
+    },
+    {
+      "id": "p008",
+      "slug": {
+        "en": "veterinarian",
+        "es": "veterinario"
+      },
+      "name": {
+        "en": "Veterinarian",
+        "es": "Veterinario/a"
+      },
+      "synonyms": {
+        "en": [
+          "Vet",
+          "Animal Doctor"
+        ],
+        "es": [
+          "Médico veterinario",
+          "Zootecnista"
+        ]
+      }
+    },
+    {
+      "id": "p009",
+      "slug": {
+        "en": "lab-technician",
+        "es": "tecnico-laboratorio"
+      },
+      "name": {
+        "en": "Lab Technician",
+        "es": "Técnico de laboratorio"
+      },
+      "synonyms": {
+        "en": [
+          "Medical Lab Tech",
+          "MLT"
+        ],
+        "es": [
+          "Técnico en análisis clínicos",
+          "Analista de laboratorio"
+        ]
+      }
+    },
+    {
+      "id": "p010",
+      "slug": {
+        "en": "paramedic",
+        "es": "paramedico"
+      },
+      "name": {
+        "en": "Paramedic",
+        "es": "Paramédico"
+      },
+      "synonyms": {
+        "en": [
+          "EMT-P",
+          "Emergency Medical Technician"
+        ],
+        "es": [
+          "Técnico en emergencias médicas",
+          "Socorrista"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,4062 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-01-06",
+  "contentLocale": "en",
+  "uiLocales": [
+    "en",
+    "es"
+  ],
+  "automationLevels": [
+    "assist",
+    "partial",
+    "majority",
+    "total"
+  ],
+  "horizons": [
+    "0-2",
+    "3-5",
+    "5-10"
+  ],
+  "professions": [
+    {
+      "id": "p001",
+      "slug": "physician",
+      "name": {
+        "en": "Physician",
+        "es": "M\u00e9dico"
+      },
+      "synonyms": {
+        "en": [
+          "Doctor",
+          "General Practitioner"
+        ],
+        "es": [
+          "Doctor",
+          "M\u00e9dico de cabecera"
+        ]
+      },
+      "oneLiner": "Yes, but AI acts as a high-speed diagnostic assistant, not the ultimate bearer of ethical and legal accountability.",
+      "summaryBullets": [
+        "AI accelerates diagnostic data synthesis and imaging interpretation, reducing manual review time.",
+        "Clinical decision-making remains human-centric due to medical ethics, complex patient variables, and legal liability.",
+        "The role is shifting from data-gathering to high-level interpretation and compassionate patient management."
+      ],
+      "tasks": [
+        {
+          "task": "Medical history collection",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Ambient scribing captures patient dialogue automatically",
+            "LLMs summarize past records for quick review"
+          ],
+          "whatStaysHuman": [
+            "Verifying patient honesty and nuance",
+            "Clarifying sensitive or embarrassing symptoms"
+          ]
+        },
+        {
+          "task": "Physical examinations",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Smart sensors augment traditional tools",
+            "Remote monitoring provides continuous data"
+          ],
+          "whatStaysHuman": [
+            "Tactile sensation and manual palpation",
+            "Observing non-verbal cues in person"
+          ]
+        },
+        {
+          "task": "Diagnosing acute illnesses",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Diagnostic algorithms flag rare conditions",
+            "Pattern matching speeds up standard diagnosis"
+          ],
+          "whatStaysHuman": [
+            "Final diagnostic responsibility",
+            "Accounting for idiosyncratic patient history"
+          ]
+        },
+        {
+          "task": "Ordering laboratory tests",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Standard protocols are automated via EHR",
+            "AI suggests tests based on symptoms"
+          ],
+          "whatStaysHuman": [
+            "Overriding AI for unique patient needs",
+            "Explaining test necessity to patients"
+          ]
+        },
+        {
+          "task": "Interpreting diagnostic images",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Computer vision flags anomalies in X-rays/MRIs",
+            "Auto-segmentation identifies tumor boundaries"
+          ],
+          "whatStaysHuman": [
+            "Correlation with clinical presentation",
+            "Communicating results with empathy"
+          ]
+        },
+        {
+          "task": "Prescribing medications",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Drug-interaction checks are fully automated",
+            "Pharmacogenomic tools suggest optimal dosages"
+          ],
+          "whatStaysHuman": [
+            "Final approval of treatment course",
+            "Managing patient concerns about side effects"
+          ]
+        },
+        {
+          "task": "Developing treatment plans",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI optimizes plans based on latest literature",
+            "Predictive modeling forecasts outcomes"
+          ],
+          "whatStaysHuman": [
+            "Aligning treatment with patient values",
+            "Ethical trade-offs in care options"
+          ]
+        },
+        {
+          "task": "Performing surgical procedures",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic-assisted surgery increases precision",
+            "Augmented reality overlays guide incisions"
+          ],
+          "whatStaysHuman": [
+            "Manual dexterity and tactile feedback",
+            "Emergency improvisation during complications"
+          ]
+        },
+        {
+          "task": "Monitoring patient progress",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Wearables provide real-time alerts",
+            "Auto-charting updates vitals in EHR"
+          ],
+          "whatStaysHuman": [
+            "Interpreting psychological recovery",
+            "Direct patient-doctor relationship bond"
+          ]
+        },
+        {
+          "task": "Recording patient data in EHR",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Ambient AI removes the need for typing",
+            "Auto-coding converts notes to billing codes"
+          ],
+          "whatStaysHuman": [
+            "Periodic review for data accuracy",
+            "Signing off on the official record"
+          ]
+        },
+        {
+          "task": "Educating patients on wellness",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI agents provide 24/7 basic education",
+            "Personalized avatars explain procedures"
+          ],
+          "whatStaysHuman": [
+            "Motivating behavior change through trust",
+            "Handling complex cultural nuances"
+          ]
+        },
+        {
+          "task": "Collaborating with specialists",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI platforms facilitate data sharing",
+            "Smart scheduling matches patient needs"
+          ],
+          "whatStaysHuman": [
+            "Interprofessional relationship management",
+            "Synthesizing conflicting expert opinions"
+          ]
+        },
+        {
+          "task": "Managing chronic conditions",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI detects early signs of deterioration",
+            "Automated reminders improve compliance"
+          ],
+          "whatStaysHuman": [
+            "Managing the long-term patient-doctor bond",
+            "Addressing quality-of-life trade-offs"
+          ]
+        },
+        {
+          "task": "Conducting clinical research",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "LLMs scan thousands of papers instantly",
+            "AI identifies potential trial candidates"
+          ],
+          "whatStaysHuman": [
+            "Setting research hypotheses",
+            "Ethical oversight and human safety"
+          ]
+        },
+        {
+          "task": "Responding to medical emergencies",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Real-time decision support for triage",
+            "Telemetry AI predicts cardiac arrest"
+          ],
+          "whatStaysHuman": [
+            "Immediate high-pressure judgment",
+            "Leadership during chaotic scenes"
+          ]
+        },
+        {
+          "task": "Coordinating discharge care",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Auto-generated discharge summaries",
+            "Smart logistics for home-care referrals"
+          ],
+          "whatStaysHuman": [
+            "Ensuring patient understands instructions",
+            "Final clinical safety check before exit"
+          ]
+        },
+        {
+          "task": "Reviewing medical literature",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "RAG systems answer specific clinical questions",
+            "Automatic updates on new standard changes"
+          ],
+          "whatStaysHuman": [
+            "Applying new data to specific context",
+            "Critical skepticism of research bias"
+          ]
+        },
+        {
+          "task": "Supervising medical staff",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Performance metrics tracked by AI",
+            "Skill-gap analysis via training data"
+          ],
+          "whatStaysHuman": [
+            "Mentorship and professional coaching",
+            "Resolving interpersonal conflicts"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "Widespread use of AI scribes",
+            "Automated image screening tools"
+          ],
+          "implications": [
+            "Reduction in burnout from documentation",
+            "Faster triage of critical imaging cases"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Predictive bedside monitoring",
+            "Personalized genomic drug dosing"
+          ],
+          "implications": [
+            "Proactive intervention before crises",
+            "Significant reduction in adverse drug events"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Autonomous micro-robotic surgery",
+            "End-to-end chronic care automation"
+          ],
+          "implications": [
+            "Surgeons act as robot supervisors",
+            "Primary care focuses on holistic health"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Ambient Clinical Intelligence",
+          "toolExamples": [
+            "Nuance DAX",
+            "Abridge"
+          ],
+          "whyItMatters": "Eliminates the 'computer-between-us' barrier in exams."
+        },
+        {
+          "signal": "AI Radiology Platforms",
+          "toolExamples": [
+            "Viz.ai",
+            "Aidoc"
+          ],
+          "whyItMatters": "Moves image interpretation from 'search' to 'verify'."
+        },
+        {
+          "signal": "Digital Health Twins",
+          "toolExamples": [
+            "Dassault Syst\u00e8mes",
+            "Unlearn.ai"
+          ],
+          "whyItMatters": "Allows testing of treatment plans on a digital patient model."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Test an AI scribe tool",
+            "Complete an 'AI in Medicine' webinar",
+            "Review EHR automation settings"
+          ],
+          "expectedOutcome": "Immediate reduction in daily clerical time."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Integrate image AI in practice",
+            "Audit AI-generated summaries for bias",
+            "Join a digital health pilot group"
+          ],
+          "expectedOutcome": "Improved diagnostic confidence and speed."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign workflow for advisory time",
+            "Mentor staff on AI ethics",
+            "Advocate for patient data privacy"
+          ],
+          "expectedOutcome": "Evolution into a higher-value advisory role."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Physicians",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-1211.00",
+          "note": "Primary source for core tasks and requirements."
+        },
+        {
+          "title": "The Future of AI in Medicine",
+          "publisher": "American Medical Association",
+          "year": "2024",
+          "url": "https://www.ama-assn.org/practice-management/digital/artificial-intelligence-medicine",
+          "note": "Supports framing of AI as augmented intelligence."
+        },
+        {
+          "title": "Generative AI in Healthcare",
+          "publisher": "McKinsey & Company",
+          "year": "2023",
+          "url": "https://www.mckinsey.com/industries/healthcare/our-insights/generative-ai-in-healthcare",
+          "note": "Data on administrative and clinical efficiency gains."
+        },
+        {
+          "title": "OECD Health Policy Studies: AI",
+          "publisher": "OECD",
+          "year": "2024",
+          "url": "https://www.oecd.org/health/digital-health.htm",
+          "note": "Global perspective on policy and implementation."
+        },
+        {
+          "title": "WHO guidance on AI in Health",
+          "publisher": "World Health Organization",
+          "year": "2024",
+          "url": "https://www.who.int/news/item/18-01-2024-who-releases-guidance-on-ai-for-health",
+          "note": "Crucial for ethical and human barrier analysis."
+        },
+        {
+          "title": "AI in clinical diagnosis",
+          "publisher": "The Lancet",
+          "year": "2023",
+          "url": "https://www.thelancet.com/journals/lanres/article/PIIS2213-2600(23)00158-7/fulltext",
+          "note": "Peer-reviewed analysis of diagnostic accuracy vs humans."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focuses on General/Internal Medicine; surgical specializations vary.",
+          "Assumes modern hospital/clinic infrastructure."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p002",
+      "slug": "nurse",
+      "name": {
+        "en": "Nurse",
+        "es": "Enfermero/a"
+      },
+      "synonyms": {
+        "en": [
+          "Registered Nurse",
+          "RN"
+        ],
+        "es": [
+          "Enfermero graduado",
+          "Personal de enfermer\u00eda"
+        ]
+      },
+      "oneLiner": "Yes, but AI can't replace the 'last meter' of care\u2014the physical manipulation and emotional intuition at the bedside.",
+      "summaryBullets": [
+        "AI reduces the heavy burden of documentation and vital sign logging.",
+        "Predictive analytics allow nurses to intervene minutes before a patient deteriorates.",
+        "The role shifts from task execution to advanced patient advocacy and complex bedside judgment."
+      ],
+      "tasks": [
+        {
+          "task": "Patient health assessment",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI synthesizes multi-modal sensor data",
+            "Auto-flagging of subtle physiological shifts"
+          ],
+          "whatStaysHuman": [
+            "Interpreting patient pain and discomfort",
+            "Holistic assessment of social determinants"
+          ]
+        },
+        {
+          "task": "Recording vital signs",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Continuous wearable monitoring",
+            "Direct wireless integration into EHR"
+          ],
+          "whatStaysHuman": [
+            "Manual double-checking of outliers",
+            "Comforting the patient during vitals"
+          ]
+        },
+        {
+          "task": "Administering medications",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Smart infusion pumps with safety AI",
+            "Robotic dispensing to the bedside"
+          ],
+          "whatStaysHuman": [
+            "Final verification of patient identity",
+            "Observing for immediate allergic reactions"
+          ]
+        },
+        {
+          "task": "Wound care and dressing",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Image analysis monitors healing rates",
+            "Smart dressings alert on infection"
+          ],
+          "whatStaysHuman": [
+            "Precise manual cleaning and application",
+            "Patient education on home care"
+          ]
+        },
+        {
+          "task": "Managing IV lines",
+          "automationLevel": "partial",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Infrared/AI vein-finding devices",
+            "Automated occlusion detection"
+          ],
+          "whatStaysHuman": [
+            "Insertion of difficult lines",
+            "Troubleshooting patient movement issues"
+          ]
+        },
+        {
+          "task": "Patient education/coaching",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Voice AI explains post-op care",
+            "Interactive videos for common treatments"
+          ],
+          "whatStaysHuman": [
+            "Building the trust needed for compliance",
+            "Answering deep, emotional health questions"
+          ]
+        },
+        {
+          "task": "Care plan coordination",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI optimizes schedules across teams",
+            "Auto-filling of plan templates"
+          ],
+          "whatStaysHuman": [
+            "Advocating for the patient's preferences",
+            "Resolving inter-departmental conflicts"
+          ]
+        },
+        {
+          "task": "Emergency response/CPR",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Auto-defibrillators with voice guidance",
+            "Mechanical compression devices"
+          ],
+          "whatStaysHuman": [
+            "Leadership and decision-making speed",
+            "Interpreting complex scene dynamics"
+          ]
+        },
+        {
+          "task": "Operating medical equipment",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Simplified, intuitive AI interfaces",
+            "Predictive maintenance on devices"
+          ],
+          "whatStaysHuman": [
+            "Ensuring proper patient-device contact",
+            "Ethical usage of life-support tools"
+          ]
+        },
+        {
+          "task": "Documentation in EHR",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Voice-to-text with semantic mapping",
+            "Auto-generation of nursing summaries"
+          ],
+          "whatStaysHuman": [
+            "Verifying clinical intent is captured",
+            "Ensuring data privacy compliance"
+          ]
+        },
+        {
+          "task": "Assisting in exams/surgery",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic tool passing/assistance",
+            "Smart lighting and environment control"
+          ],
+          "whatStaysHuman": [
+            "Anticipating surgeon/MD needs",
+            "Ensuring sterile field integrity"
+          ]
+        },
+        {
+          "task": "Emotional support for families",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Support bots for basic inquiries",
+            "AI-driven family update notifications"
+          ],
+          "whatStaysHuman": [
+            "Grief management and deep empathy",
+            "Providing presence in end-of-life care"
+          ]
+        },
+        {
+          "task": "Advocating for patient needs",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI identifies unmet patient needs",
+            "Benchmarking care against standards"
+          ],
+          "whatStaysHuman": [
+            "Challenging MD orders if unsafe",
+            "Fighting for patient social/legal rights"
+          ]
+        },
+        {
+          "task": "Collaborating with medical team",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Secure smart-messaging automation",
+            "Auto-summaries of specialist notes"
+          ],
+          "whatStaysHuman": [
+            "Interpersonal negotiation and trust",
+            "Relaying non-data-driven bedside observations"
+          ]
+        },
+        {
+          "task": "Collecting lab specimens",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic venipuncture assistance",
+            "Auto-labeling at the point of care"
+          ],
+          "whatStaysHuman": [
+            "Minimizing patient pain and anxiety",
+            "Handling rare or difficult collections"
+          ]
+        },
+        {
+          "task": "Triage of patients",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI scoring systems (qSOFA) in real-time",
+            "Auto-prioritization of incoming vitals"
+          ],
+          "whatStaysHuman": [
+            "Observing for 'something just isn't right'",
+            "Overriding AI in nuanced situations"
+          ]
+        },
+        {
+          "task": "Managing bedside alarms",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Smart filtering of 'noise' alarms",
+            "Direct delivery of critical alerts only"
+          ],
+          "whatStaysHuman": [
+            "Deciding when an alarm is a true crisis",
+            "Responding with speed and focus"
+          ]
+        },
+        {
+          "task": "Mentoring junior staff",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Virtual reality simulation training",
+            "AI-tracked performance feedback"
+          ],
+          "whatStaysHuman": [
+            "Transmitting professional values/ethics",
+            "Providing emotional resilience support"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "AI-driven alarm management",
+            "Ambient voice charting"
+          ],
+          "implications": [
+            "Reduction in 'alarm fatigue'",
+            "Shift from computer back to patient"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Sepsis/deterioration prediction",
+            "Robotic bedside logistics"
+          ],
+          "implications": [
+            "Lower hospital mortality rates",
+            "Less physical strain from fetching supplies"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Holographic patient assistance",
+            "Advanced care plan automation"
+          ],
+          "implications": [
+            "Nursing focus on precision medicine",
+            "Enhanced role in chronic care management"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Smart Bed Monitoring",
+          "toolExamples": [
+            "EarlySense",
+            "Hillrom"
+          ],
+          "whyItMatters": "Detects early signs of distress without wires."
+        },
+        {
+          "signal": "Nursing Predictive Analytics",
+          "toolExamples": [
+            "Epic Sepsis Model",
+            "CleanSlate"
+          ],
+          "whyItMatters": "Enables proactive rather than reactive care."
+        },
+        {
+          "signal": "Robotic Assistance",
+          "toolExamples": [
+            "Moxi",
+            "Diligent Robotics"
+          ],
+          "whyItMatters": "Handles the 'fetching and carrying' tasks for staff."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Master EHR voice-capture features",
+            "Review predictive alert protocols",
+            "Optimize bedside notification settings"
+          ],
+          "expectedOutcome": "Immediate reduction in clerical burnout."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Lead an AI-tool pilot in the ward",
+            "Take a course in clinical data literacy",
+            "Review bias in sepsis protocols"
+          ],
+          "expectedOutcome": "Confidence in using data-driven alerts safely."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign nurse-to-patient ratios with AI",
+            "Mentor students on digital ethics",
+            "Contribute to AI procurement committees"
+          ],
+          "expectedOutcome": "Positioning as a clinical leader in health-tech."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Registered Nurses",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-1141.00",
+          "note": "Primary task definitions for RNs."
+        },
+        {
+          "title": "The Impact of AI on Nursing",
+          "publisher": "American Nurses Association",
+          "year": "2023",
+          "url": "https://www.nursingworld.org/practice-policy/nursing-excellence/innovation/ai-in-nursing/",
+          "note": "Core professional stance on AI augmentation."
+        },
+        {
+          "title": "Nursing in the Age of AI",
+          "publisher": "International Council of Nurses",
+          "year": "2024",
+          "url": "https://www.icn.ch/news/icn-explores-impact-ai-nursing",
+          "note": "Global nursing perspective on technology."
+        },
+        {
+          "title": "AI to address nursing shortage",
+          "publisher": "Brookings Institution",
+          "year": "2024",
+          "url": "https://www.brookings.edu/articles/how-ai-can-help-solve-the-nursing-crisis/",
+          "note": "Focus on administrative relief and productivity."
+        },
+        {
+          "title": "Digital Transformation of Nursing",
+          "publisher": "World Health Organization",
+          "year": "2023",
+          "url": "https://www.who.int/publications/i/item/9789240020924",
+          "note": "Health workforce strategy guidelines."
+        },
+        {
+          "title": "Predictive Analytics in Bedside Nursing",
+          "publisher": "Journal of Nursing Management",
+          "year": "2023",
+          "url": "https://onlinelibrary.wiley.com/journal/13652834",
+          "note": "Academic research on alert efficacy."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on hospital-based Registered Nurses.",
+          "Assumes gradual integration of robotic help."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p003",
+      "slug": "nursing-assistant",
+      "name": {
+        "en": "Nursing Assistant",
+        "es": "Auxiliar de enfermer\u00eda"
+      },
+      "synonyms": {
+        "en": [
+          "CNA",
+          "Certified Nursing Assistant"
+        ],
+        "es": [
+          "Auxiliar de cuidados",
+          "Ayudante de enfermer\u00eda"
+        ]
+      },
+      "oneLiner": "Yes, but AI handles the heavy lifting and vitals, while the 'human touch' becomes the core luxury of care.",
+      "summaryBullets": [
+        "Robotic mobility aids reduce the physical injury risk during patient transfers.",
+        "Automated monitoring sensors handle the constant 'checking in' for basic safety.",
+        "The role evolves toward social interaction, psychological comfort, and advanced hygiene care."
+      ],
+      "tasks": [
+        {
+          "task": "Bathing and dressing patients",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Partial robotic limbs assist in dressing",
+            "Smart hygiene stations facilitate bathing"
+          ],
+          "whatStaysHuman": [
+            "Respecting patient dignity and privacy",
+            "Checking for skin issues during contact"
+          ]
+        },
+        {
+          "task": "Repositioning patients in bed",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Smart beds with auto-turning features",
+            "Exoskeletons assist in manual lifts"
+          ],
+          "whatStaysHuman": [
+            "Ensuring patient comfort and alignment",
+            "Preventing anxiety during movement"
+          ]
+        },
+        {
+          "task": "Feeding and hydration assistance",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic feeding arms for limited mobility",
+            "Automated intake tracking via smart cups"
+          ],
+          "whatStaysHuman": [
+            "Encouraging appetite and social engagement",
+            "Observing for subtle choking risks"
+          ]
+        },
+        {
+          "task": "Emptying catheter bags",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Automated volume sensors in bags",
+            "Smart disposal systems track output data"
+          ],
+          "whatStaysHuman": [
+            "Proper sterile handling of equipment",
+            "Reporting color/consistency changes to RN"
+          ]
+        },
+        {
+          "task": "Measuring intake/output",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Smart trays and cups log data automatically",
+            "Sensors in bathrooms track elimination"
+          ],
+          "whatStaysHuman": [
+            "Verifying sensor data if anomalous",
+            "Educating patient on importance of tracking"
+          ]
+        },
+        {
+          "task": "Transporting patients",
+          "automationLevel": "majority",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Autonomous wheelchairs and stretchers",
+            "Indoor navigation robots for escorts"
+          ],
+          "whatStaysHuman": [
+            "Reassuring anxious patients during transit",
+            "Navigating unexpected building obstacles"
+          ]
+        },
+        {
+          "task": "Tidying patient rooms",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Autonomous vacuum and sanitizing robots",
+            "Smart inventory systems for linens"
+          ],
+          "whatStaysHuman": [
+            "Personalizing the space for patient comfort",
+            "Handling delicate personal items"
+          ]
+        },
+        {
+          "task": "Monitoring for skin breakdown",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Image analysis identifies early redness",
+            "Pressure sensors in beds map risks"
+          ],
+          "whatStaysHuman": [
+            "Application of protective creams",
+            "Physical repositioning to relief areas"
+          ]
+        },
+        {
+          "task": "Relaying patient concerns to RN",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Voice-tagging for immediate nurse alerts",
+            "Real-time communication platforms"
+          ],
+          "whatStaysHuman": [
+            "Judging which concerns are urgent",
+            "Translating patient emotions into clinical words"
+          ]
+        },
+        {
+          "task": "Applying non-sterile dressings",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Guided AR overlays for proper placement",
+            "Smart bandages that alert on wetness"
+          ],
+          "whatStaysHuman": [
+            "Applying the correct pressure and care",
+            "Comforting the patient during the process"
+          ]
+        },
+        {
+          "task": "Assisting with mobility/walking",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Wearable exoskeletons for stabilization",
+            "Motion sensors alert on fall risk"
+          ],
+          "whatStaysHuman": [
+            "Providing physical balance and confidence",
+            "Motivating the patient to keep moving"
+          ]
+        },
+        {
+          "task": "Grooming",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Assisted tools for hair and nail care",
+            "Precision trimmers with safety sensors"
+          ],
+          "whatStaysHuman": [
+            "Aesthetic judgment and patient preference",
+            "Providing the 'spa-like' human care experience"
+          ]
+        },
+        {
+          "task": "Making beds",
+          "automationLevel": "partial",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Self-tidying bed mechanisms",
+            "Automated linen retrieval robots"
+          ],
+          "whatStaysHuman": [
+            "Handling occupied beds with fragile patients",
+            "Ensuring wrinkle-free comfort for skin"
+          ]
+        },
+        {
+          "task": "Answering call lights",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Voice AI triages basic requests (e.g. water)",
+            "Automated routing based on request type"
+          ],
+          "whatStaysHuman": [
+            "Responding to emotional distress/loneliness",
+            "Immediate physical intervention in falls"
+          ]
+        },
+        {
+          "task": "Documenting care activities",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Hands-free voice documentation",
+            "Auto-log from smart bed/vitals data"
+          ],
+          "whatStaysHuman": [
+            "Quick review of the log at shift end",
+            "Adding context to behavioral notes"
+          ]
+        },
+        {
+          "task": "Providing emotional companionship",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Social robots for basic conversation",
+            "Virtual reality for patient engagement"
+          ],
+          "whatStaysHuman": [
+            "Deep human connection and empathy",
+            "Navigating family dynamics and grief"
+          ]
+        },
+        {
+          "task": "Sanitizing equipment",
+          "automationLevel": "total",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "UV-C sanitization robots",
+            "Automated wash stations for basins"
+          ],
+          "whatStaysHuman": [
+            "Checking for visual debris after cleaning",
+            "Managing the chemical supply safety"
+          ]
+        },
+        {
+          "task": "Escorting families",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Wayfinding apps for family members",
+            "Automated lobby check-in systems"
+          ],
+          "whatStaysHuman": [
+            "Providing a warm, welcoming presence",
+            "Managing sensitive family emotions/questions"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "Automated vital logs",
+            "Smart call-light triaging"
+          ],
+          "implications": [
+            "Less time on paperwork",
+            "Focus on the most urgent patient needs"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Exoskeleton assisted lifting",
+            "Autonomous cleaning bots"
+          ],
+          "implications": [
+            "Fewer back injuries for assistants",
+            "Better hygiene standards in facilities"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Social care robots",
+            "Fully autonomous patient transport"
+          ],
+          "implications": [
+            "Assistants focus on complex personal care",
+            "Increased role in psychological support"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Patient Handling Exoskeletons",
+          "toolExamples": [
+            "Cyberdyne HAL",
+            "Sarcos"
+          ],
+          "whyItMatters": "Prevents the #1 cause of career exit: physical injury."
+        },
+        {
+          "signal": "AI Fall Detection",
+          "toolExamples": [
+            "SafelyYou",
+            "Vayyar"
+          ],
+          "whyItMatters": "Allows passive monitoring without invading privacy."
+        },
+        {
+          "signal": "Nursing Service Robots",
+          "toolExamples": [
+            "Aeo",
+            "Tally"
+          ],
+          "whyItMatters": "Automates the logistics of linens and water delivery."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Learn the use of the new lift equipment",
+            "Review voice-documentation keywords",
+            "Master the smart-bed settings"
+          ],
+          "expectedOutcome": "Reduced physical strain and faster charting."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Participate in an 'Empathy in Care' workshop",
+            "Learn to troubleshoot floor robots",
+            "Review fall-data with the RN team"
+          ],
+          "expectedOutcome": "Improved patient safety outcomes and role value."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Obtain certification in specialized care (e.g. Dementia)",
+            "Lead training for new staff on AI tools",
+            "Propose workflow changes for better social care"
+          ],
+          "expectedOutcome": "Career advancement toward senior assistant roles."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Nursing Assistants",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/31-1131.00",
+          "note": "Primary source for CNA tasks."
+        },
+        {
+          "title": "Robotics in Nursing Homes",
+          "publisher": "OECD",
+          "year": "2023",
+          "url": "https://www.oecd.org/els/health-systems/workforce.htm",
+          "note": "Analysis of automation in long-term care."
+        },
+        {
+          "title": "Future of the Care Workforce",
+          "publisher": "Brookings Institution",
+          "year": "2024",
+          "url": "https://www.brookings.edu/research/the-future-of-the-care-economy/",
+          "note": "Focus on human-centric care value."
+        },
+        {
+          "title": "Safety through AI in Care",
+          "publisher": "Journal of Care Management",
+          "year": "2024",
+          "url": "https://www.cmsa.org/",
+          "note": "Research on fall prevention and tech."
+        },
+        {
+          "title": "Technology in Long-term Care",
+          "publisher": "WHO",
+          "year": "2023",
+          "url": "https://www.who.int/publications/i/item/9789240020924",
+          "note": "Guidelines for age-friendly environments."
+        },
+        {
+          "title": "Exoskeletons for Healthcare",
+          "publisher": "Safety Science Journal",
+          "year": "2024",
+          "url": "https://www.sciencedirect.com/journal/safety-science",
+          "note": "Data on injury reduction via assistive tech."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on Certified Nursing Assistants in long-term care or hospitals.",
+          "Robotic adoption depends on facility funding."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p004",
+      "slug": "dentist",
+      "name": {
+        "en": "Dentist",
+        "es": "Dentista"
+      },
+      "synonyms": {
+        "en": [
+          "General Dentist",
+          "DDS",
+          "DMD"
+        ],
+        "es": [
+          "Odont\u00f3logo",
+          "Cirujano dentista"
+        ]
+      },
+      "oneLiner": "Yes, but AI can spot a cavity better than the human eye, but it can't hold the drill or calm a terrified patient.",
+      "summaryBullets": [
+        "AI diagnostic tools improve 'find-rate' for early decay and periodontal disease in radiographs.",
+        "3D printing and CAD/CAM automation are moving prosthetic design into the immediate chairside workflow.",
+        "The role is becoming more focused on precision microsurgery and complex aesthetic rehabilitation."
+      ],
+      "tasks": [
+        {
+          "task": "Conducting oral examinations",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Intraoral cameras highlight issues in real-time",
+            "AI overlays identify suspicious spots live"
+          ],
+          "whatStaysHuman": [
+            "Tactile check for tooth mobility",
+            "Screening for oral cancers and lesions"
+          ]
+        },
+        {
+          "task": "Interpreting dental radiographs",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI auto-flags decay, abscesses, and bone loss",
+            "Volumetric analysis for implant planning"
+          ],
+          "whatStaysHuman": [
+            "Clinical correlation with patient pain",
+            "Final diagnostic sign-off"
+          ]
+        },
+        {
+          "task": "Cleaning teeth and gums",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Ultrasonic tools with AI-pressure feedback",
+            "Guided biofilm therapy sensors"
+          ],
+          "whatStaysHuman": [
+            "Manual cleaning of difficult pockets",
+            "Patient comfort during the process"
+          ]
+        },
+        {
+          "task": "Diagnosing gum disease",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated periodontal probing and logging",
+            "AI trend analysis of gum recession"
+          ],
+          "whatStaysHuman": [
+            "Interpreting systemic health links (e.g. diabetes)",
+            "Patient education on oral hygiene"
+          ]
+        },
+        {
+          "task": "Applying sealants",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AR-guided application for precision",
+            "Auto-curing light systems with timing AI"
+          ],
+          "whatStaysHuman": [
+            "Ensuring a dry, sterile field",
+            "Assessing the fit and occlusion"
+          ]
+        },
+        {
+          "task": "Filling cavities",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Laser-drilling with depth-control AI",
+            "Robotic-assisted precise material delivery"
+          ],
+          "whatStaysHuman": [
+            "Fine motor control and hand-eye coordination",
+            "Artistic shaping of the restoration"
+          ]
+        },
+        {
+          "task": "Performing root canals",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI-guided apex locators",
+            "Robotic endodontic file management"
+          ],
+          "whatStaysHuman": [
+            "Navigating complex root anatomy",
+            "Handling sudden canal blockages"
+          ]
+        },
+        {
+          "task": "Extracting damaged teeth",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "3D planning for minimally invasive exit",
+            "Piezo-electric tools with safety shutoffs"
+          ],
+          "whatStaysHuman": [
+            "Managing surgical complications",
+            "Interpersonal stabilization of the patient"
+          ]
+        },
+        {
+          "task": "Administering local anesthesia",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Computer-controlled delivery for painless injection",
+            "AI calculation of optimal dosage/site"
+          ],
+          "whatStaysHuman": [
+            "Monitoring for systemic reactions",
+            "Reassuring needle-phobic patients"
+          ]
+        },
+        {
+          "task": "Taking dental impressions",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Intraoral scanners replace 'goop' molds",
+            "Auto-stitched 3D digital models"
+          ],
+          "whatStaysHuman": [
+            "Ensuring proper patient positioning",
+            "Reviewing scan for margin clarity"
+          ]
+        },
+        {
+          "task": "Designing dental prosthetics",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Generative design for crowns and bridges",
+            "AI matching of tooth color and texture"
+          ],
+          "whatStaysHuman": [
+            "Aesthetic final approval",
+            "Accounting for complex bite dynamics"
+          ]
+        },
+        {
+          "task": "Fitting crowns or bridges",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Real-time occlusion tracking sensors",
+            "AR overlays for contact point adjustment"
+          ],
+          "whatStaysHuman": [
+            "Manual cementation and cleanup",
+            "Subjective patient 'feel' verification"
+          ]
+        },
+        {
+          "task": "Performing oral surgery",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic-guided implant placement",
+            "Dynamic navigation during surgery"
+          ],
+          "whatStaysHuman": [
+            "Emergency clinical judgment",
+            "Managing soft tissue integrity"
+          ]
+        },
+        {
+          "task": "Advising on oral hygiene",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Personalized AI hygiene apps for patients",
+            "Smart toothbrush data analysis"
+          ],
+          "whatStaysHuman": [
+            "Behavioral motivation and trust",
+            "Addressing social determinants of health"
+          ]
+        },
+        {
+          "task": "Managing dental emergencies",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Tele-dentistry triage with AI screening",
+            "Immediate access to 3D trauma maps"
+          ],
+          "whatStaysHuman": [
+            "Rapid manual stabilization",
+            "Pain management leadership"
+          ]
+        },
+        {
+          "task": "Documenting patient history",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Voice-to-EHR during the procedure",
+            "Auto-coding of clinical codes (ICD/CPT)"
+          ],
+          "whatStaysHuman": [
+            "Reviewing records for accuracy",
+            "Ensuring legal compliance"
+          ]
+        },
+        {
+          "task": "Managing office staff",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI scheduling for staff and patients",
+            "Automated inventory of dental supplies"
+          ],
+          "whatStaysHuman": [
+            "Leading the team culture",
+            "Mentoring dental assistants"
+          ]
+        },
+        {
+          "task": "Coordinating with orthodontists",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Integrated digital case sharing",
+            "Automated referral summaries"
+          ],
+          "whatStaysHuman": [
+            "Inter-professional relationship trust",
+            "Case negotiation for complex patients"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "Intraoral scanning as standard",
+            "AI radiograph analysis"
+          ],
+          "implications": [
+            "End of messy impressions",
+            "Higher early-decay detection rates"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Robotic implant guidance",
+            "Chairside 3D printing of crowns"
+          ],
+          "implications": [
+            "Fewer repeat visits for patients",
+            "Increased surgical precision"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "AI-driven regenerative dentistry",
+            "Full autonomous basic cleaning"
+          ],
+          "implications": [
+            "Focus on biological restoration",
+            "Dentist becomes more of a 'surgical architect'"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "AI Radiology for Dentistry",
+          "toolExamples": [
+            "Overjet",
+            "Pearl"
+          ],
+          "whyItMatters": "Eliminates diagnostic variability between dentists."
+        },
+        {
+          "signal": "Robotic Implant Systems",
+          "toolExamples": [
+            "Yomi by Neocis"
+          ],
+          "whyItMatters": "Enables haptic-guided surgery for extreme precision."
+        },
+        {
+          "signal": "Chairside CAD/CAM",
+          "toolExamples": [
+            "CEREC",
+            "Medit"
+          ],
+          "whyItMatters": "Allows for 'single-visit' crown and bridge procedures."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Install an AI radiograph plugin",
+            "Test an intraoral scanner demo",
+            "Audit your coding/billing AI accuracy"
+          ],
+          "expectedOutcome": "Better patient acceptance of treatment plans."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Upgrade to chairside 3D printing",
+            "Train staff on digital workflow",
+            "Implement AI-driven scheduling"
+          ],
+          "expectedOutcome": "Increased throughput and reduced lab costs."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Master robotic surgical guidance",
+            "Redesign clinic for 'Same-Day' services",
+            "Engage in AI dental research"
+          ],
+          "expectedOutcome": "Competitive advantage as a high-tech practice."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Dentists",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-1021.00",
+          "note": "Detailed task list for general dentists."
+        },
+        {
+          "title": "AI in Dentistry",
+          "publisher": "American Dental Association",
+          "year": "2024",
+          "url": "https://www.ada.org/resources/research/science-and-research-institute/artificial-intelligence",
+          "note": "The ADA's official stance and research."
+        },
+        {
+          "title": "Digital Transformation in Oral Health",
+          "publisher": "Journal of Dental Research",
+          "year": "2023",
+          "url": "https://journals.sagepub.com/home/jdr",
+          "note": "Academic review of AI efficacy."
+        },
+        {
+          "title": "The Robotic Dentist",
+          "publisher": "The Lancet Digital Health",
+          "year": "2024",
+          "url": "https://www.thelancet.com/journals/landig/home",
+          "note": "Study on robotic implant success."
+        },
+        {
+          "title": "Global Dental Technology Trends",
+          "publisher": "World Dental Federation (FDI)",
+          "year": "2023",
+          "url": "https://www.fdiworlddental.org/digital-health",
+          "note": "Global policy on digital oral health."
+        },
+        {
+          "title": "The Economic Impact of CEREC",
+          "publisher": "Dental Economics",
+          "year": "2024",
+          "url": "https://www.dentaleconomics.com/",
+          "note": "Business analysis of automated workflows."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on general practitioners; specialists (e.g. orthodontists) have more specific paths.",
+          "Assumes investment in private practice tech."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p005",
+      "slug": "pharmacist",
+      "name": {
+        "en": "Pharmacist",
+        "es": "Farmac\u00e9utico/a"
+      },
+      "synonyms": {
+        "en": [
+          "Druggist",
+          "Clinical Pharmacist"
+        ],
+        "es": [
+          "Regente de farmacia",
+          "Farmac\u00e9utico cl\u00ednico"
+        ]
+      },
+      "oneLiner": "Yes, but while robots fill bottles, the pharmacist becomes the neighborhood's front-line primary care consultant.",
+      "summaryBullets": [
+        "Robotic dispensing and automated checking are nearly eliminating mechanical errors.",
+        "Pharmacogenomic AI is personalizing dosages at the point of sale.",
+        "The role is shifting from 'pills in bottles' to clinical counseling and public health management."
+      ],
+      "tasks": [
+        {
+          "task": "Verifying prescription accuracy",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Computer vision verifies pill count and type",
+            "E-prescribing removes legibility errors"
+          ],
+          "whatStaysHuman": [
+            "Legal accountability for the final check",
+            "Handling rare or unlisted medication forms"
+          ]
+        },
+        {
+          "task": "Checking for drug interactions",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Real-time screening against full patient history",
+            "AI flags subtle, non-obvious contraindications"
+          ],
+          "whatStaysHuman": [
+            "Deciding if the benefit outweighs the risk",
+            "Consulting with the MD to adjust orders"
+          ]
+        },
+        {
+          "task": "Dispensing medications",
+          "automationLevel": "total",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Robotic 'pick-and-pack' machines",
+            "Automated kiosk-style pickup for routine meds"
+          ],
+          "whatStaysHuman": [
+            "Managing the security of controlled substances",
+            "Emergency manual dispensing"
+          ]
+        },
+        {
+          "task": "Patient counseling on dosage",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Personalized video/AI avatars for instructions",
+            "Smart packaging with digital reminders"
+          ],
+          "whatStaysHuman": [
+            "Addressing patient fear or confusion",
+            "Building the clinical trust bond"
+          ]
+        },
+        {
+          "task": "Managing inventory",
+          "automationLevel": "total",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Predictive ordering based on local disease trends",
+            "RFID tracking of expiration and stock"
+          ],
+          "whatStaysHuman": [
+            "Negotiating with suppliers during shortages",
+            "Strategic selection of generic vs brand"
+          ]
+        },
+        {
+          "task": "Administering vaccinations",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Automated patient screening/registration",
+            "Smart needle systems with depth safety"
+          ],
+          "whatStaysHuman": [
+            "Manual injection and patient calming",
+            "Monitoring for immediate anaphylaxis"
+          ]
+        },
+        {
+          "task": "Supervising pharmacy techs",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI-tracked workflow benchmarks",
+            "Automated training/compliance modules"
+          ],
+          "whatStaysHuman": [
+            "Professional mentoring and leadership",
+            "Managing interpersonal conflicts"
+          ]
+        },
+        {
+          "task": "Processing insurance claims",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Auto-adjudication of most claims",
+            "AI-driven prior authorization assistants"
+          ],
+          "whatStaysHuman": [
+            "Advocating for patient coverage",
+            "Handling complex claim denials manually"
+          ]
+        },
+        {
+          "task": "Compounding specialized meds",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Precision lab robotics for mixing",
+            "AI-guided dosing for rare formulations"
+          ],
+          "whatStaysHuman": [
+            "Judgment on compound stability",
+            "Ensuring sterile lab protocols"
+          ]
+        },
+        {
+          "task": "Reviewing medical histories",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI summarizes multi-provider history",
+            "Automated flagging of risk patterns"
+          ],
+          "whatStaysHuman": [
+            "Synthesizing non-documented patient info",
+            "Providing a second opinion on MD plans"
+          ]
+        },
+        {
+          "task": "Educating on OTC products",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "QR-linked AI bots for basic symptom advice",
+            "Interactive kiosk selection guides"
+          ],
+          "whatStaysHuman": [
+            "Triage to a doctor for serious symptoms",
+            "Detecting potential misuse or addiction"
+          ]
+        },
+        {
+          "task": "Monitoring patient outcomes",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Wearable data integration for heart/BP meds",
+            "Automated follow-up text/call bots"
+          ],
+          "whatStaysHuman": [
+            "Interpreting patient lifestyle impact",
+            "Modifying advice based on outcomes"
+          ]
+        },
+        {
+          "task": "Advising physicians on drug choice",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI provides latest clinical trial data instantly",
+            "Comparison models for cost-effectiveness"
+          ],
+          "whatStaysHuman": [
+            "Interprofessional negotiation",
+            "Contextual clinical wisdom"
+          ]
+        },
+        {
+          "task": "Maintaining sterile environments",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "UV-C disinfection robots",
+            "Smart air quality and particle sensors"
+          ],
+          "whatStaysHuman": [
+            "Final verification of lab safety",
+            "Manual cleaning of sensitive equipment"
+          ]
+        },
+        {
+          "task": "Managing regulatory compliance",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Auto-logging of every transaction for audit",
+            "Digital regulatory update feeds"
+          ],
+          "whatStaysHuman": [
+            "Legal signatory for compliance",
+            "Handling government inspections"
+          ]
+        },
+        {
+          "task": "Smoking cessation help",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Personalized digital coaching apps",
+            "AI-scheduled dosage step-downs"
+          ],
+          "whatStaysHuman": [
+            "Psychological encouragement and empathy",
+            "Managing relapse with compassion"
+          ]
+        },
+        {
+          "task": "Managing high-risk drug lists",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Real-time opioid registries and AI alerts",
+            "Biometric access controls for high-risk meds"
+          ],
+          "whatStaysHuman": [
+            "Professional skepticism of fraud",
+            "Ethical refusal of unsafe requests"
+          ]
+        },
+        {
+          "task": "Coordinating with insurance payers",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated benefit verification",
+            "AI negotiation for tiered pricing"
+          ],
+          "whatStaysHuman": [
+            "Resolving unique patient financial hardship",
+            "Strategic payer relationship management"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "E-prescribing and auto-interaction checks",
+            "Robotic dispensing in high-volume stores"
+          ],
+          "implications": [
+            "Major reduction in mechanical errors",
+            "Technicians handle more physical logistics"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Pharmacogenomic testing in pharmacies",
+            "AI-driven clinical consulting"
+          ],
+          "implications": [
+            "Personalized precision dosing",
+            "Pharmacists bill for services, not just products"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Autonomous pharmacy kiosks",
+            "Full AI medical record synthesis"
+          ],
+          "implications": [
+            "Retail pharmacy focus on logistics",
+            "Hospital pharmacists act as primary care providers"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Pharmacy Robotics",
+          "toolExamples": [
+            "Parata",
+            "ScriptPro"
+          ],
+          "whyItMatters": "Moves the pharmacist from the 'back room' to the 'front counter'."
+        },
+        {
+          "signal": "Pharmacogenomics (PGx)",
+          "toolExamples": [
+            "OneOme",
+            "Genomind"
+          ],
+          "whyItMatters": "Reduces trial-and-error in mental health and cardiac drugs."
+        },
+        {
+          "signal": "AI Prior Authorization",
+          "toolExamples": [
+            "CoverMyMeds",
+            "Waystar"
+          ],
+          "whyItMatters": "Solves the biggest administrative bottleneck in medicine."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Optimize pharmacy software interaction alerts",
+            "Train staff on new e-prescribing protocols",
+            "Review inventory AI accuracy"
+          ],
+          "expectedOutcome": "Reduction in wait times and safety alerts."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Implement a PGx testing pilot",
+            "Obtain 'Clinical Pharmacist' certifications",
+            "Review AI-driven prior auth tools"
+          ],
+          "expectedOutcome": "Expansion of clinical services and revenue."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign store for private consultations",
+            "Collaborate with local MDs on AI data sharing",
+            "Advocate for state-level prescribing rights"
+          ],
+          "expectedOutcome": "Shift in career to a healthcare provider role."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Pharmacists",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-1051.00",
+          "note": "Primary source for pharmacist tasks."
+        },
+        {
+          "title": "The Future of Pharmacy",
+          "publisher": "American Pharmacists Association",
+          "year": "2024",
+          "url": "https://www.pharmacist.com/Future-of-Pharmacy",
+          "note": "Vision for the profession's clinical shift."
+        },
+        {
+          "title": "AI in Pharmaceutical Care",
+          "publisher": "International Pharmaceutical Federation (FIP)",
+          "year": "2023",
+          "url": "https://www.fip.org/digital-health",
+          "note": "Global standards for pharmacy tech."
+        },
+        {
+          "title": "Robotics and Pharmacy Efficiency",
+          "publisher": "Pharmacy Times",
+          "year": "2024",
+          "url": "https://www.pharmacytimes.com/",
+          "note": "Business analysis of automated dispensing."
+        },
+        {
+          "title": "Personalized Medicine in Pharmacy",
+          "publisher": "The Lancet",
+          "year": "2023",
+          "url": "https://www.thelancet.com/journals/lanres/article/PIIS2213-2600(23)00158-7/fulltext",
+          "note": "Study on the impact of pharmacogenomics."
+        },
+        {
+          "title": "Pharmacy Workforce Trends",
+          "publisher": "Brookings Institution",
+          "year": "2024",
+          "url": "https://www.brookings.edu/articles/future-of-pharmacy-workforce/",
+          "note": "Economic and labor analysis."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on community and clinical pharmacists.",
+          "Assumes regulatory support for expanded scope of practice."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p006",
+      "slug": "psychologist",
+      "name": {
+        "en": "Psychologist",
+        "es": "Psic\u00f3logo/a"
+      },
+      "synonyms": {
+        "en": [
+          "Therapist",
+          "Clinical Psychologist"
+        ],
+        "es": [
+          "Psicoterapeuta",
+          "Consejero"
+        ]
+      },
+      "oneLiner": "Yes, but AI can summarize a session and track mood patterns, but it cannot create the therapeutic alliance necessary for deep healing.",
+      "summaryBullets": [
+        "AI improves clinical documentation speed and provides data-driven markers for mental health trends.",
+        "Therapeutic rapport\u2014the core driver of clinical outcomes\u2014remains a uniquely human competency.",
+        "The role is evolving to integrate bio-data and AI summaries to provide more precise, personalized interventions."
+      ],
+      "tasks": [
+        {
+          "task": "Conducting intake interviews",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Pre-session AI bots collect history/symptoms",
+            "Automated risk screening for triage"
+          ],
+          "whatStaysHuman": [
+            "Reading non-verbal body language",
+            "Establishing initial rapport and safety"
+          ]
+        },
+        {
+          "task": "Administering psychometric tests",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Digital scoring and auto-normative comparisons",
+            "Gamified AI assessments for kids"
+          ],
+          "whatStaysHuman": [
+            "Ensuring the client understands the context",
+            "Observing test-taking behaviors/anxiety"
+          ]
+        },
+        {
+          "task": "Formulating clinical diagnoses",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Diagnostic assistants suggest DSM/ICD codes",
+            "Pattern recognition across session history"
+          ],
+          "whatStaysHuman": [
+            "Considering cultural and life context",
+            "Ethical responsibility for the label"
+          ]
+        },
+        {
+          "task": "Developing treatment plans",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI suggests evidence-based protocols (CBT/DBT)",
+            "Predictive models for treatment length"
+          ],
+          "whatStaysHuman": [
+            "Collaborative goal-setting with client",
+            "Adapting to the client's readiness to change"
+          ]
+        },
+        {
+          "task": "Providing individual therapy",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI provides real-time mood/sentiment insights",
+            "Wearable data alerts on anxiety spikes"
+          ],
+          "whatStaysHuman": [
+            "The therapeutic alliance (trust/empathy)",
+            "Managing transference and countertransference"
+          ]
+        },
+        {
+          "task": "Conducting group therapy",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI tracks group dynamics and turn-taking",
+            "Transcription of multi-voice sessions"
+          ],
+          "whatStaysHuman": [
+            "Facilitating human-to-human connection",
+            "Managing interpersonal group conflict"
+          ]
+        },
+        {
+          "task": "Writing clinical progress notes",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Ambient AI generates notes from session audio",
+            "Auto-summarization of key clinical themes"
+          ],
+          "whatStaysHuman": [
+            "Reviewing for therapeutic accuracy",
+            "Ensuring confidentiality of specific details"
+          ]
+        },
+        {
+          "task": "Researching behavioral trends",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "LLMs scan literature and case data",
+            "AI identifies emerging mental health clusters"
+          ],
+          "whatStaysHuman": [
+            "Formulating ethical research questions",
+            "Interpreting human behavior nuances"
+          ]
+        },
+        {
+          "task": "Consulting with psychiatrists",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated summary sharing platforms",
+            "Smart scheduling of care coordination"
+          ],
+          "whatStaysHuman": [
+            "Negotiating holistic treatment views",
+            "Building the professional trust circle"
+          ]
+        },
+        {
+          "task": "Managing mental health crises",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI predicts self-harm risk via digital markers",
+            "Immediate automated resource dispatch"
+          ],
+          "whatStaysHuman": [
+            "De-escalation and emotional stabilization",
+            "Providing human presence in moments of terror"
+          ]
+        },
+        {
+          "task": "Providing forensic evaluations",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI assists in fact-checking and timeline building",
+            "Objective linguistic analysis of statements"
+          ],
+          "whatStaysHuman": [
+            "Legal testimony and expert credibility",
+            "Ethical judgment of human intent"
+          ]
+        },
+        {
+          "task": "Educating clients on coping",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "CBT homework apps and chatbots",
+            "Virtual reality for exposure therapy"
+          ],
+          "whatStaysHuman": [
+            "Explaining 'the why' behind the strategy",
+            "Validating the client's lived experience"
+          ]
+        },
+        {
+          "task": "Reporting abuse or self-harm",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automatic flagging of keyword risks",
+            "Smart reporting templates for legal compliance"
+          ],
+          "whatStaysHuman": [
+            "Final ethical decision to breach privacy",
+            "Handling the aftermath of the report"
+          ]
+        },
+        {
+          "task": "Maintaining confidentiality",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Encrypted AI data siloing",
+            "Automatic redaction of PII in training data"
+          ],
+          "whatStaysHuman": [
+            "Explaining privacy limits to clients",
+            "Ethical oversight of the data systems"
+          ]
+        },
+        {
+          "task": "Developing school/work IEPs",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Auto-generation of IEP text from scores",
+            "Benchmarking against legal requirements"
+          ],
+          "whatStaysHuman": [
+            "Advocating for the child/employee",
+            "Negotiating with institutions"
+          ]
+        },
+        {
+          "task": "Conducting academic research",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated statistical analysis (R/Python)",
+            "AI-driven peer review initial screening"
+          ],
+          "whatStaysHuman": [
+            "Defining original human insights",
+            "Ethical treatment of human subjects"
+          ]
+        },
+        {
+          "task": "Managing private practice",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI-driven billing, scheduling, and marketing",
+            "Auto-insurance verification"
+          ],
+          "whatStaysHuman": [
+            "Setting the practice philosophy",
+            "Managing client relationship lifecycle"
+          ]
+        },
+        {
+          "task": "Marriage/family counseling",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI tracks communication patterns/interruptions",
+            "Real-time feedback on 'hostile' language"
+          ],
+          "whatStaysHuman": [
+            "Neutrality and emotional mediation",
+            "Managing intense interpersonal passion"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "Ambient transcription of sessions",
+            "Self-help CBT chatbots"
+          ],
+          "implications": [
+            "Major time savings on notes",
+            "Clients use AI for 'maintenance' care"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Sentiment and sentiment analysis AI",
+            "VR-based exposure therapy"
+          ],
+          "implications": [
+            "Deeper insights into client mood trends",
+            "More immersive and effective trauma care"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Bio-marker linked therapy",
+            "Autonomous digital twin simulations"
+          ],
+          "implications": [
+            "Integration of physical/mental data",
+            "Therapists simulate interventions before use"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Mental Health Ambient AI",
+          "toolExamples": [
+            "Upheal",
+            "ScribeBird"
+          ],
+          "whyItMatters": "Restores eye contact by removing the need for note-taking."
+        },
+        {
+          "signal": "Digital Therapeutics (DTx)",
+          "toolExamples": [
+            "Woebot",
+            "Happify"
+          ],
+          "whyItMatters": "Acts as a 'therapist in your pocket' between sessions."
+        },
+        {
+          "signal": "VR Therapy",
+          "toolExamples": [
+            "Limbix",
+            "OxfordVR"
+          ],
+          "whyItMatters": "Provides safe, controlled environments for phobia treatment."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Set up an AI transcription tool",
+            "Update informed consent for AI use",
+            "Review digital homework apps"
+          ],
+          "expectedOutcome": "Immediate 2-5 hours saved per week on notes."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Take a course on 'Digital Ethics in Therapy'",
+            "Pilot a VR tool for one patient group",
+            "Integrate wearable data into sessions"
+          ],
+          "expectedOutcome": "Enhanced clinical insight and modern service offering."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign practice as a hybrid AI-human model",
+            "Contribute to AI mental health research",
+            "Mentor peers on tech-enabled care"
+          ],
+          "expectedOutcome": "Positioning as a future-ready clinical leader."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Psychologists",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/19-3033.00",
+          "note": "Primary source for professional competencies."
+        },
+        {
+          "title": "AI in Mental Health",
+          "publisher": "American Psychological Association",
+          "year": "2024",
+          "url": "https://www.apa.org/monitor/2023/07/psychology-ai-future",
+          "note": "Official stance on ethics and rapport."
+        },
+        {
+          "title": "The therapeutic alliance and AI",
+          "publisher": "The Lancet Digital Health",
+          "year": "2023",
+          "url": "https://www.thelancet.com/journals/landig/home",
+          "note": "Study on whether humans trust AI therapists."
+        },
+        {
+          "title": "Digital Mental Health Revolution",
+          "publisher": "World Health Organization",
+          "year": "2023",
+          "url": "https://www.who.int/news-room/feature-stories/detail/digital-health-and-mental-health",
+          "note": "Global health policy for digital therapy."
+        },
+        {
+          "title": "Future of Counseling Work",
+          "publisher": "Brookings Institution",
+          "year": "2024",
+          "url": "https://www.brookings.edu/articles/ai-mental-health-care/",
+          "note": "Analysis of accessibility and workforce."
+        },
+        {
+          "title": "AI in Psychology Ethics",
+          "publisher": "British Psychological Society",
+          "year": "2024",
+          "url": "https://www.bps.org.uk/news-and-blogs",
+          "note": "Focus on data privacy and professional standards."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on Clinical/Counseling psychologists.",
+          "Assumes HIPAA/GDPR compliance of tools."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p007",
+      "slug": "physiotherapist",
+      "name": {
+        "en": "Physiotherapist",
+        "es": "Fisioterapeuta"
+      },
+      "synonyms": {
+        "en": [
+          "Physical Therapist",
+          "PT"
+        ],
+        "es": [
+          "Kinesi\u00f3logo",
+          "Terapeuta f\u00edsico"
+        ]
+      },
+      "oneLiner": "Yes, but AI can track gait with computer vision, but it cannot apply the manual force needed for skeletal manipulation.",
+      "summaryBullets": [
+        "Computer vision and wearable sensors provide objective metrics for patient movement and recovery progress.",
+        "Manual therapy and real-time physical safety during rehabilitation remain core human tasks.",
+        "The role is shifting from 'counting reps' to advanced biomechanical analysis and patient motivation."
+      ],
+      "tasks": [
+        {
+          "task": "Assessing patient mobility",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Computer vision tracks gait and range-of-motion",
+            "Automated movement biomarkers from video"
+          ],
+          "whatStaysHuman": [
+            "Feeling for joint end-feel and resistance",
+            "Clinical interpretation of pain-effort links"
+          ]
+        },
+        {
+          "task": "Measuring range of motion",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Digital goniometers and camera-based tracking",
+            "Real-time 3D skeletons on screens"
+          ],
+          "whatStaysHuman": [
+            "Positioning the patient correctly",
+            "Reviewing data for measurement errors"
+          ]
+        },
+        {
+          "task": "Designing exercise programs",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI suggests plans based on injury type",
+            "Personalized exercise videos for app-use"
+          ],
+          "whatStaysHuman": [
+            "Adapting to the patient's daily fatigue",
+            "Aligning exercises with patient life goals"
+          ]
+        },
+        {
+          "task": "Performing manual therapy",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Haptic feedback for assisted manipulation",
+            "Robotic massage/traction systems"
+          ],
+          "whatStaysHuman": [
+            "Hands-on joint mobilization",
+            "Sensing soft tissue release manually"
+          ]
+        },
+        {
+          "task": "Using ultrasound/heat therapy",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Automated treatment delivery systems",
+            "Safety sensors prevent thermal injury"
+          ],
+          "whatStaysHuman": [
+            "Final approval of therapy settings",
+            "Assessing skin reactions manually"
+          ]
+        },
+        {
+          "task": "Monitoring patient progress",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Wearable sensors track home exercise adherence",
+            "AI dashboards visualize recovery trends"
+          ],
+          "whatStaysHuman": [
+            "Psychological encouragement and motivation",
+            "Deciding when to 'push' vs 'rest'"
+          ]
+        },
+        {
+          "task": "Teaching assistive device use",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AR glasses show optimal gait for crutches",
+            "Voice-guided instruction for walker-use"
+          ],
+          "whatStaysHuman": [
+            "Ensuring patient physical safety",
+            "Addressing patient fear of falling"
+          ]
+        },
+        {
+          "task": "Evaluating neurological function",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI analysis of tremors/reflex speeds",
+            "Digital balance boards with AI feedback"
+          ],
+          "whatStaysHuman": [
+            "Interpreting the 'human' side of disability",
+            "Coordinating with neurologists"
+          ]
+        },
+        {
+          "task": "Recording clinical outcomes",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Ambient voice charting for therapy notes",
+            "Auto-log from sensor-based equipment"
+          ],
+          "whatStaysHuman": [
+            "Reviewing for therapeutic intent",
+            "Ensuring documentation meets legal standards"
+          ]
+        },
+        {
+          "task": "Collaborating with orthopedists",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Digital case sharing of 3D motion data",
+            "Automated post-op progress reports"
+          ],
+          "whatStaysHuman": [
+            "Inter-professional trust and negotiation",
+            "Clinical debate on surgery vs therapy"
+          ]
+        },
+        {
+          "task": "Advising on injury prevention",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Ergonomic analysis via mobile cameras",
+            "AI predictors for future injury risk"
+          ],
+          "whatStaysHuman": [
+            "Building the trust needed for change",
+            "Customizing advice for specific lifestyles"
+          ]
+        },
+        {
+          "task": "Conducting home assessments",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Lidar-based room scanning for hazards",
+            "Remote video-check of home setups"
+          ],
+          "whatStaysHuman": [
+            "Negotiating changes with family members",
+            "Addressing home-life social complexities"
+          ]
+        },
+        {
+          "task": "Managing geriatric mobility",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Balance-training VR systems",
+            "Smart sensors for fall-risk prediction"
+          ],
+          "whatStaysHuman": [
+            "Managing dementia/cognitive barriers",
+            "Providing physical and emotional safety"
+          ]
+        },
+        {
+          "task": "Treating sports injuries",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "High-speed video biomechanical analysis",
+            "Predictive return-to-play modeling"
+          ],
+          "whatStaysHuman": [
+            "Managing athlete psychological pressure",
+            "Manual taping and stabilization"
+          ]
+        },
+        {
+          "task": "Providing pediatric PT",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Gamified rehab with AR interaction",
+            "Robotic pediatric gait trainers"
+          ],
+          "whatStaysHuman": [
+            "Keeping a child engaged and calm",
+            "Working with parents and caregivers"
+          ]
+        },
+        {
+          "task": "Adjusting treatment for pain",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Digital pain-scale tracking with sentiment",
+            "AI-suggested step-downs for therapy"
+          ],
+          "whatStaysHuman": [
+            "Validating the patient's pain experience",
+            "Using clinical intuition to spot 'fake' pain"
+          ]
+        },
+        {
+          "task": "Supervising PT assistants",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI-monitored task completion logs",
+            "Automated skill-assessment feedback"
+          ],
+          "whatStaysHuman": [
+            "Mentorship and professional coaching",
+            "Resolving clinic workflow issues"
+          ]
+        },
+        {
+          "task": "Educating caregivers on lifting",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AR-based lifting tutorials for families",
+            "AI safety-feedback for home carers"
+          ],
+          "whatStaysHuman": [
+            "Building caregiver confidence",
+            "Addressing individual family stressors"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "Computer vision gait analysis",
+            "Remote therapeutic monitoring"
+          ],
+          "implications": [
+            "Objective data replaces visual estimates",
+            "Increased revenue from home-care tracking"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Exoskeleton-assisted gait training",
+            "AI-driven orthopedic triage"
+          ],
+          "implications": [
+            "Therapists can treat more severe injuries",
+            "Better patient-to-provider matching"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Haptic-feedback manual robots",
+            "Full 3D digital-twin recovery models"
+          ],
+          "implications": [
+            "Therapists act as 'Robotic Supervisors'",
+            "Recovery becomes a personalized data science"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Computer Vision PT",
+          "toolExamples": [
+            "Sword Health",
+            "Kaia Health"
+          ],
+          "whyItMatters": "Allows high-quality rehab at home without an in-person tech."
+        },
+        {
+          "signal": "Smart Wearables for PT",
+          "toolExamples": [
+            "Preventice",
+            "Notch"
+          ],
+          "whyItMatters": "Tracks range of motion 24/7, not just in the clinic."
+        },
+        {
+          "signal": "VR Physical Therapy",
+          "toolExamples": [
+            "NeuroRehabVR",
+            "XRHealth"
+          ],
+          "whyItMatters": "Increases patient engagement via gamification."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Pilot a remote monitoring app",
+            "Master a digital goniometer",
+            "Review voice-to-text EHR tools"
+          ],
+          "expectedOutcome": "Better data tracking and less documentation time."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Take a 'Biometrics for PT' course",
+            "Implement a tablet-based gait analysis",
+            "Review patient-bias in AI plans"
+          ],
+          "expectedOutcome": "Enhanced diagnostic authority and modern branding."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign clinic for 'Hybrid' care",
+            "Lead a research project on VR-PT",
+            "Mentor staff on data-driven recovery"
+          ],
+          "expectedOutcome": "Competitive market position as a high-tech clinic."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Physical Therapists",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-1123.00",
+          "note": "Primary task definitions for PTs."
+        },
+        {
+          "title": "AI in Physical Therapy",
+          "publisher": "American Physical Therapy Association",
+          "year": "2024",
+          "url": "https://www.apta.org/article/2023/06/07/ai-physical-therapy",
+          "note": "Official stance on technology and professional scope."
+        },
+        {
+          "title": "Digital Transformation of PT",
+          "publisher": "World Physiotherapy",
+          "year": "2023",
+          "url": "https://world.physio/resources/digital-practice",
+          "note": "Global perspectives on physiotherapy tech."
+        },
+        {
+          "title": "Remote Monitoring in Rehab",
+          "publisher": "Journal of Medical Internet Research",
+          "year": "2024",
+          "url": "https://www.jmir.org/",
+          "note": "Research on the efficacy of digital PT."
+        },
+        {
+          "title": "Future of the Healthcare Workforce",
+          "publisher": "McKinsey Health Institute",
+          "year": "2024",
+          "url": "https://www.mckinsey.com/mhi/our-insights",
+          "note": "Analysis of automation in allied health."
+        },
+        {
+          "title": "Robotics in Gait Training",
+          "publisher": "Nature Medicine",
+          "year": "2023",
+          "url": "https://www.nature.com/nm/",
+          "note": "Peer-reviewed study on exoskeleton efficacy."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on orthopedic and neurological physiotherapy.",
+          "Assumes availability of mobile/wearable tech for patients."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p008",
+      "slug": "veterinarian",
+      "name": {
+        "en": "Veterinarian",
+        "es": "Veterinario/a"
+      },
+      "synonyms": {
+        "en": [
+          "Vet",
+          "Animal Doctor"
+        ],
+        "es": [
+          "M\u00e9dico veterinario",
+          "Zootecnista"
+        ]
+      },
+      "oneLiner": "Yes, but AI can screen a dog's bloodwork faster than a lab, but it can't reassure a grieving pet owner or handle a fractious cat.",
+      "summaryBullets": [
+        "AI imaging and diagnostic tools are standardizing care across multiple animal species.",
+        "The role is shifting from routine diagnostics to complex surgical and multispecies medical judgment.",
+        "Owner communication and non-verbal animal behavioral analysis remain core human skills."
+      ],
+      "tasks": [
+        {
+          "task": "Examining animal health",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Smart stethoscopes with AI heart-murmur detection",
+            "Thermal cameras detect inflammation instantly"
+          ],
+          "whatStaysHuman": [
+            "Physical palpation for masses",
+            "Observing subtle animal behavioral cues"
+          ]
+        },
+        {
+          "task": "Diagnosing illness/injury",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Diagnostic bots suggest causes from symptoms",
+            "Pattern matching for rare zoonotic diseases"
+          ],
+          "whatStaysHuman": [
+            "Clinical judgment across different species",
+            "Final responsibility for the diagnosis"
+          ]
+        },
+        {
+          "task": "Performing surgical operations",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic-assisted precise incisions",
+            "AR-guided orthopedic pet surgery"
+          ],
+          "whatStaysHuman": [
+            "Manual dexterity for tiny species",
+            "Crisis management during surgery"
+          ]
+        },
+        {
+          "task": "Administering vaccinations",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Automated patient reminder systems",
+            "Digital check of vaccination history"
+          ],
+          "whatStaysHuman": [
+            "Handling aggressive or fearful animals",
+            "Monitoring for immediate reactions"
+          ]
+        },
+        {
+          "task": "Interpreting radiographs",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI flags fractures/lesions across species",
+            "Volumetric analysis for tumor sizing"
+          ],
+          "whatStaysHuman": [
+            "Correlation with physical exam",
+            "Explaining findings to the pet owner"
+          ]
+        },
+        {
+          "task": "Prescribing medications",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Dosage calculation AI for weight/species",
+            "Drug interaction checking is fully automated"
+          ],
+          "whatStaysHuman": [
+            "Considering the owner's ability to dose",
+            "Final approval of the treatment plan"
+          ]
+        },
+        {
+          "task": "Educating owners on nutrition",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI-driven personalized meal plans",
+            "Interactive bots for basic dietary FAQs"
+          ],
+          "whatStaysHuman": [
+            "Motivating owner behavior change",
+            "Addressing complex multi-pet dynamics"
+          ]
+        },
+        {
+          "task": "Managing reproductive health",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI analysis of heat cycles via sensors",
+            "Semen morphology tracking via AI vision"
+          ],
+          "whatStaysHuman": [
+            "Manual obstetric assistance",
+            "Managing breeder relationship ethics"
+          ]
+        },
+        {
+          "task": "Performing dental cleanings",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI-guided ultrasonic scaling",
+            "Radiograph tooth decay screening"
+          ],
+          "whatStaysHuman": [
+            "Manual removal of deep plaque",
+            "Monitoring anesthesia safety"
+          ]
+        },
+        {
+          "task": "Conducting lab tests",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "In-house AI blood and urine analyzers",
+            "Digital slide scanning for parasites"
+          ],
+          "whatStaysHuman": [
+            "Troubleshooting anomalous results",
+            "Deciding when to refer to a specialist"
+          ]
+        },
+        {
+          "task": "Managing vet clinic staff",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI scheduling and payroll systems",
+            "Automated staff training and checklists"
+          ],
+          "whatStaysHuman": [
+            "Creating the clinic culture",
+            "Mentoring junior veterinarians"
+          ]
+        },
+        {
+          "task": "Providing emergency triage",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Telemetry data from pet wearables",
+            "Immediate AI access to poison databases"
+          ],
+          "whatStaysHuman": [
+            "High-stress rapid decision making",
+            "Calming frantic pet owners"
+          ]
+        },
+        {
+          "task": "Handling multispecies protocols",
+          "automationLevel": "partial",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Expert systems for exotic/rare species",
+            "Automated translation of species-specific data"
+          ],
+          "whatStaysHuman": [
+            "Intuitive knowledge of exotic handling",
+            "Ethical treatment of diverse life"
+          ]
+        },
+        {
+          "task": "Euthanasia/Grief counseling",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI aids in quality-of-life scoring",
+            "Digital memorial and grief resources"
+          ],
+          "whatStaysHuman": [
+            "Empathy, compassion, and human presence",
+            "Managing the delicate end-of-life moment"
+          ]
+        },
+        {
+          "task": "Maintaining medical records",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Voice-to-EHR ambient capture",
+            "Auto-log of every diagnostic finding"
+          ],
+          "whatStaysHuman": [
+            "Reviewing for record accuracy",
+            "Legal sign-off on the medical log"
+          ]
+        },
+        {
+          "task": "Monitoring post-op recovery",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI video monitoring for distress",
+            "Smart bandages track healing vitals"
+          ],
+          "whatStaysHuman": [
+            "Physical comfort and nursing",
+            "Deciding on discharge readiness"
+          ]
+        },
+        {
+          "task": "Advising on public health",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI tracking of local rabies/parasite outbreaks",
+            "Auto-reporting of zoonotic risks"
+          ],
+          "whatStaysHuman": [
+            "Negotiating with public health agencies",
+            "Educating the community with trust"
+          ]
+        },
+        {
+          "task": "Certifying animals for travel",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated digital travel-health certs",
+            "AI check of international law compliance"
+          ],
+          "whatStaysHuman": [
+            "Final verification of animal health",
+            "Signature as the legal arbiter"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "AI-driven imaging interpretation",
+            "Automated lab analyzers"
+          ],
+          "implications": [
+            "Same-day diagnosis in the clinic",
+            "Technicians spend less time on manual slides"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Pet wearables for continuous vitals",
+            "Robotic surgical assistance"
+          ],
+          "implications": [
+            "Early detection of chronic disease",
+            "Increased precision in small-animal surgery"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Species-specific AI behavioral analysis",
+            "Autonomous emergency vet clinics"
+          ],
+          "implications": [
+            "Deepening understanding of animal pain",
+            "Vets focus on advanced surgical architecting"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Vet AI Imaging",
+          "toolExamples": [
+            "SignalPET",
+            "Vetology"
+          ],
+          "whyItMatters": "Provides specialist-level X-ray reads in seconds."
+        },
+        {
+          "signal": "Pet Health Wearables",
+          "toolExamples": [
+            "Whistle",
+            "FitBark"
+          ],
+          "whyItMatters": "Moves veterinary care from 'once-a-year' to 'continuous'."
+        },
+        {
+          "signal": "AI Diagnostic Analyzers",
+          "toolExamples": [
+            "IDEXX SediVue",
+            "Zoetis VETSCAN"
+          ],
+          "whyItMatters": "Eliminates human error in urine and blood microscopy."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Subscribe to an AI imaging service",
+            "Master the in-house lab AI settings",
+            "Update client communication scripts for tech"
+          ],
+          "expectedOutcome": "Faster diagnosis and increased client trust."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Integrate wearable data into EHR",
+            "Review quality-of-life AI scoring tools",
+            "Audit clinic workflow for tech bottlenecks"
+          ],
+          "expectedOutcome": "New revenue streams and higher patient safety."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign practice for 'Digital First' triage",
+            "Lead a multispecies data research project",
+            "Mentor staff on the ethics of AI diagnosis"
+          ],
+          "expectedOutcome": "Leading a high-margin, tech-forward veterinary practice."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Veterinarians",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-1131.00",
+          "note": "Primary task list for vet medicine."
+        },
+        {
+          "title": "AI in Veterinary Medicine",
+          "publisher": "American Veterinary Medical Association",
+          "year": "2024",
+          "url": "https://www.avma.org/resources-tools/animal-health-and-welfare/artificial-intelligence-veterinary-medicine",
+          "note": "Official guidance and ethical standards."
+        },
+        {
+          "title": "The Digital Vet Clinic",
+          "publisher": "World Small Animal Veterinary Association",
+          "year": "2023",
+          "url": "https://wsava.org/resources/digital-health/",
+          "note": "Global perspectives on veterinary tech."
+        },
+        {
+          "title": "Diagnostic Accuracy of AI in Vet Med",
+          "publisher": "Journal of the AVMA (JAVMA)",
+          "year": "2024",
+          "url": "https://avmajournals.avma.org/",
+          "note": "Academic studies on AI imaging efficacy."
+        },
+        {
+          "title": "Pet Tech Market Analysis",
+          "publisher": "Forbes Health",
+          "year": "2024",
+          "url": "https://www.forbes.com/health/",
+          "note": "Business trends in consumer pet technology."
+        },
+        {
+          "title": "One Health and AI",
+          "publisher": "WHO",
+          "year": "2023",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/one-health",
+          "note": "Context for zoonotic and public health tasks."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on small animal practice; large animal/equine paths differ slightly.",
+          "Assumes gradual integration of robotic surgical tools."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p009",
+      "slug": "lab-technician",
+      "name": {
+        "en": "Lab Technician",
+        "es": "T\u00e9cnico de laboratorio"
+      },
+      "synonyms": {
+        "en": [
+          "Medical Lab Tech",
+          "MLT"
+        ],
+        "es": [
+          "T\u00e9cnico en an\u00e1lisis cl\u00ednicos",
+          "Analista de laboratorio"
+        ]
+      },
+      "oneLiner": "Yes, but AI can count cells and scan slides, but it can't troubleshoot a contaminated sample or manage complex biosafety protocols.",
+      "summaryBullets": [
+        "Robotic sample processing and AI slide scanning are automating high-volume repetitive tasks.",
+        "Technicians are shifting from 'manual counters' to high-level 'data quality auditors' and systems managers.",
+        "Troubleshooting equipment malfunctions and complex specimen handling remain core human skills."
+      ],
+      "tasks": [
+        {
+          "task": "Receive and label samples",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "RFID and barcode scanning for 100% tracking",
+            "Robotic reception systems for sorting"
+          ],
+          "whatStaysHuman": [
+            "Verifying sample integrity (e.g. leaks)",
+            "Handling rare, improperly labeled cases"
+          ]
+        },
+        {
+          "task": "Chemical analysis of fluids",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Fully autonomous chemistry analyzers",
+            "AI flags and verifies unusual results"
+          ],
+          "whatStaysHuman": [
+            "Deciding if results need manual re-run",
+            "Consulting with pathologists on outliers"
+          ]
+        },
+        {
+          "task": "Set up and clean equipment",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Self-cleaning laboratory systems",
+            "Predictive maintenance alerts for setups"
+          ],
+          "whatStaysHuman": [
+            "Calibration of delicate instruments",
+            "Ensuring biosafety of the cleaning process"
+          ]
+        },
+        {
+          "task": "Perform blood group tests",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated gel-column technology",
+            "AI vision verifies agglutination patterns"
+          ],
+          "whatStaysHuman": [
+            "Final verification for high-risk transfusions",
+            "Managing inventory of rare blood types"
+          ]
+        },
+        {
+          "task": "Analyze findings for accuracy",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI identifies anomalies against patient baseline",
+            "Automatic flagging of critical values"
+          ],
+          "whatStaysHuman": [
+            "Cross-referencing with patient clinical history",
+            "Manual review of flagged 'hallucinations'"
+          ]
+        },
+        {
+          "task": "Enter data into LIS",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Direct wireless output from analyzers to LIS",
+            "Voice-to-text for manual entries"
+          ],
+          "whatStaysHuman": [
+            "Ensuring data privacy/HIPAA compliance",
+            "Reviewing the digital trail for errors"
+          ]
+        },
+        {
+          "task": "Operate computerized equipment",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Touchless AI-driven interfaces",
+            "Remote operation of lab systems"
+          ],
+          "whatStaysHuman": [
+            "Physical troubleshooting of jams/leaks",
+            "Ethical oversight of system usage"
+          ]
+        },
+        {
+          "task": "Train or supervise others",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "VR training modules for lab procedures",
+            "AI-tracked performance metrics for staff"
+          ],
+          "whatStaysHuman": [
+            "Mentorship and professional ethics",
+            "Resolving interpersonal lab conflicts"
+          ]
+        },
+        {
+          "task": "Maintain lab safety standards",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Smart sensors for chemical/radiation leaks",
+            "AI video audit of PPE compliance"
+          ],
+          "whatStaysHuman": [
+            "Leadership during biological accidents",
+            "Final accountability for safety culture"
+          ]
+        },
+        {
+          "task": "Prepare reagents",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Automated reagent mixing stations",
+            "Smart inventory alerts for expiry"
+          ],
+          "whatStaysHuman": [
+            "Precise manual prep for rare tests",
+            "Quality check of the raw chemical stock"
+          ]
+        },
+        {
+          "task": "Troubleshoot malfunctions",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AR-guided repair walkthroughs",
+            "AI diagnostics for equipment errors"
+          ],
+          "whatStaysHuman": [
+            "Manual physical repairs",
+            "Judgment on when to call external service"
+          ]
+        },
+        {
+          "task": "Document quality control",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Continuous automated QC logging",
+            "AI flags of systematic drift in data"
+          ],
+          "whatStaysHuman": [
+            "Investigating the 'why' of a drift",
+            "Signing off on official QC reports"
+          ]
+        },
+        {
+          "task": "Communicate with physicians",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated delivery of critical results",
+            "Smart messaging for test clarifications"
+          ],
+          "whatStaysHuman": [
+            "Explaining complex result nuances",
+            "Building trust with the medical team"
+          ]
+        },
+        {
+          "task": "Identify bacteria",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI-driven MALDI-TOF identification",
+            "Digital colony counting and morphology"
+          ],
+          "whatStaysHuman": [
+            "Interpreting mixed-culture complexity",
+            "Manual slide review for confirmation"
+          ]
+        },
+        {
+          "task": "Collect blood samples",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Robotic venipuncture assistance",
+            "Infrared vein-finding visualizations"
+          ],
+          "whatStaysHuman": [
+            "Calming the patient during the draw",
+            "Handling fragile veins manually"
+          ]
+        },
+        {
+          "task": "Manage specimen inventory",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "RFID-tagged storage systems",
+            "Automated retrieval and disposal"
+          ],
+          "whatStaysHuman": [
+            "Deciding on retention for research",
+            "Managing the biological waste path"
+          ]
+        },
+        {
+          "task": "Evaluate new lab tech",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI comparison of tool performance",
+            "Predictive ROI models for tech buy-in"
+          ],
+          "whatStaysHuman": [
+            "Strategic clinical decision making",
+            "Negotiating with vendors"
+          ]
+        },
+        {
+          "task": "Participate in education",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Personalized AI learning pathways",
+            "Auto-summaries of new lab journals"
+          ],
+          "whatStaysHuman": [
+            "Critical thinking on clinical bias",
+            "Applying knowledge to lab practice"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "Automated chemistry/hematology lines",
+            "Digital pathology scanning"
+          ],
+          "implications": [
+            "End of manual cell counting",
+            "Technicians act as systems monitors"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "AI-driven anomaly detection",
+            "Robotic sample sorting"
+          ],
+          "implications": [
+            "Major decrease in reporting errors",
+            "Faster turnaround times for doctors"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Fully 'Lights-Out' high-volume labs",
+            "Point-of-care AI labs in clinics"
+          ],
+          "implications": [
+            "Technicians move to complex R&D",
+            "Focus shifts to systems maintenance and ethics"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Digital Pathology",
+          "toolExamples": [
+            "Philips IntelliSite",
+            "Paige.ai"
+          ],
+          "whyItMatters": "Turns physical slides into 'pixels' for AI analysis."
+        },
+        {
+          "signal": "Lab Automation Tracks",
+          "toolExamples": [
+            "Roche cobas",
+            "Beckman Coulter DxA"
+          ],
+          "whyItMatters": "Automates the entire 'pre-analytical' phase of testing."
+        },
+        {
+          "signal": "AI Microbiology",
+          "toolExamples": [
+            "bioM\u00e9rieux MYLA",
+            "PhenoMatrix"
+          ],
+          "whyItMatters": "Identifies pathogens days faster than manual methods."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Master the LIS automation settings",
+            "Learn to use the new analyzer interface",
+            "Review the QC audit trail features"
+          ],
+          "expectedOutcome": "Immediate efficiency in daily routine."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Take a 'Lab Data Science' course",
+            "Lead an equipment maintenance audit",
+            "Review AI-bias in diagnostic flagging"
+          ],
+          "expectedOutcome": "Enhanced role as a quality assurance leader."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign lab for 'Robotics-First' flow",
+            "Mentor junior techs on digital pathology",
+            "Advocate for lab-wide data ethics"
+          ],
+          "expectedOutcome": "Positioning for a Lab Manager or Systems Director role."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Lab Technicians",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-2012.00",
+          "note": "Primary task definitions for medical lab techs."
+        },
+        {
+          "title": "Future of Lab Medicine",
+          "publisher": "American Association for Clinical Chemistry",
+          "year": "2024",
+          "url": "https://www.aacc.org/clinical-chemistry-trainee-council/trainee-council-in-other-languages/spanish/future-of-the-laboratory",
+          "note": "Vision for automation in clinical labs."
+        },
+        {
+          "title": "AI in Pathology",
+          "publisher": "College of American Pathologists (CAP)",
+          "year": "2023",
+          "url": "https://www.cap.org/advocacy/artificial-intelligence-in-pathology",
+          "note": "Guidelines for digital pathology and AI."
+        },
+        {
+          "title": "Robotics in Clinical Labs",
+          "publisher": "The Lancet Digital Health",
+          "year": "2024",
+          "url": "https://www.thelancet.com/journals/landig/home",
+          "note": "Study on the efficacy of robotic lab tracks."
+        },
+        {
+          "title": "Digital Transformation of Diagnostics",
+          "publisher": "WHO",
+          "year": "2023",
+          "url": "https://www.who.int/publications/i/item/9789240020924",
+          "note": "Context for global lab workforce."
+        },
+        {
+          "title": "LIS Trends 2024",
+          "publisher": "Medical Laboratory Observer",
+          "year": "2024",
+          "url": "https://www.mlo-online.com/",
+          "note": "Industry trends in lab information systems."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on Medical/Clinical Lab Technicians.",
+          "High-volume labs automate faster than small clinics."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    },
+    {
+      "id": "p010",
+      "slug": "paramedic",
+      "name": {
+        "en": "Paramedic",
+        "es": "Param\u00e9dico"
+      },
+      "synonyms": {
+        "en": [
+          "EMT-P",
+          "Emergency Medical Technician"
+        ],
+        "es": [
+          "T\u00e9cnico en emergencias m\u00e9dicas",
+          "Socorrista"
+        ]
+      },
+      "oneLiner": "Yes, but AI can analyze an ECG in the field, but it can't lead a team through a chaotic multi-car accident scene.",
+      "summaryBullets": [
+        "Real-time telemetry and AI decision support are improving pre-hospital diagnostic accuracy.",
+        "The core of the role remains high-pressure leadership, physical patient stabilization, and scene safety.",
+        "Automation focuses on documentation, mechanical interventions (e.g. CPR), and triage logistics."
+      ],
+      "tasks": [
+        {
+          "task": "Patient triage at scene",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI scoring tools suggest priority based on vitals",
+            "Scene-scanning cameras help count victims"
+          ],
+          "whatStaysHuman": [
+            "Judging the 'chaos factor' of the scene",
+            "Immediate ethical triage decisions"
+          ]
+        },
+        {
+          "task": "Administering drugs",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "AI calculators for weight-based dosage",
+            "Safe-injection confirmation sensors"
+          ],
+          "whatStaysHuman": [
+            "Monitoring for rapid clinical changes",
+            "Manual IV/IM administration in crisis"
+          ]
+        },
+        {
+          "task": "Airway management",
+          "automationLevel": "partial",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Video laryngoscopes with AI path-finding",
+            "Smart ventilation with auto-pressure adjustment"
+          ],
+          "whatStaysHuman": [
+            "Manual intubation in difficult anatomy",
+            "Judging the need to switch to surgical airway"
+          ]
+        },
+        {
+          "task": "Conducting ECG analysis",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AI identifies STEMI/Arrhythmias instantly",
+            "Auto-transmission of data to hospital ER"
+          ],
+          "whatStaysHuman": [
+            "Clinical correlation with chest pain",
+            "Decision to activate the Cath Lab"
+          ]
+        },
+        {
+          "task": "Defibrillating",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "AEDs with advanced AI rhythm analysis",
+            "Automated cardioversion timing"
+          ],
+          "whatStaysHuman": [
+            "Ensuring everyone is clear of the patient",
+            "Managing the family during the shock"
+          ]
+        },
+        {
+          "task": "Controlling severe bleeding",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Hemostatic applicators with pressure sensors",
+            "Smart tourniquets with timing alerts"
+          ],
+          "whatStaysHuman": [
+            "Applying high manual pressure",
+            "Deciding on rapid extrication needs"
+          ]
+        },
+        {
+          "task": "Stabilizing fractures",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AR-guided splinting/backboarding",
+            "Smart neck collars with alignment sensors"
+          ],
+          "whatStaysHuman": [
+            "Protecting the patient's spine/limbs",
+            "Checking for distal pulse/sensation"
+          ]
+        },
+        {
+          "task": "Communicating with ER",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Automated telemetry and record sharing",
+            "Speech-to-text 'heads-up' reports for doctors"
+          ],
+          "whatStaysHuman": [
+            "Relaying 'gut feel' about patient stability",
+            "Building inter-professional trust"
+          ]
+        },
+        {
+          "task": "Driving ambulance safely",
+          "automationLevel": "majority",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Autonomous emergency navigation",
+            "AI collision avoidance and traffic pre-emption"
+          ],
+          "whatStaysHuman": [
+            "Deciding when to use sirens/speed",
+            "Navigating active disaster zones"
+          ]
+        },
+        {
+          "task": "Operating ventilators",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Smart-ventilators that match patient breathing",
+            "Auto-alarms for desaturation/pressure"
+          ],
+          "whatStaysHuman": [
+            "Final approval of settings",
+            "Manual bagging if the machine fails"
+          ]
+        },
+        {
+          "task": "Documenting care",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Ambient voice-capture of every action",
+            "Auto-populating timestamps and vitals"
+          ],
+          "whatStaysHuman": [
+            "Reviewing the ePCR for legal accuracy",
+            "Adding qualitative 'scene notes'"
+          ]
+        },
+        {
+          "task": "Assessing scene safety",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Drone-based overhead safety scouting",
+            "AI detection of fire/chemical/threat hazards"
+          ],
+          "whatStaysHuman": [
+            "Intuitive sense of danger/violence",
+            "Leadership during high-stress entries"
+          ]
+        },
+        {
+          "task": "Managing violent patients",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AI behavioral markers for escalation",
+            "Non-lethal robotic containment aids"
+          ],
+          "whatStaysHuman": [
+            "De-escalation through human connection",
+            "Safe manual restraint when necessary"
+          ]
+        },
+        {
+          "task": "Checking medical kits",
+          "automationLevel": "total",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "RFID-tagged inventory in the truck",
+            "Auto-order of used/expired drugs"
+          ],
+          "whatStaysHuman": [
+            "Final visual check before shift",
+            "Ensuring kit ergonomics for the team"
+          ]
+        },
+        {
+          "task": "Assisting with childbirth",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "AR-guided delivery walkthroughs",
+            "Real-time fetal heart monitoring AI"
+          ],
+          "whatStaysHuman": [
+            "Providing emotional support to the mother",
+            "Manual neonate care and stabilization"
+          ]
+        },
+        {
+          "task": "Delivering nebulizers",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": [
+            "Smart nebulizers with flow tracking",
+            "Auto-timing for repeat doses"
+          ],
+          "whatStaysHuman": [
+            "Assessing respiratory effort manually",
+            "Patient reassurance during the attack"
+          ]
+        },
+        {
+          "task": "Rapid extrication",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": [
+            "Exoskeletons for heavy lifting",
+            "AI-guided hydraulic tool paths"
+          ],
+          "whatStaysHuman": [
+            "Protecting the patient's spine/limbs",
+            "Team leadership in physical maneuvers"
+          ]
+        },
+        {
+          "task": "Mentoring EMT partners",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": [
+            "Post-run AI debrief summaries",
+            "VR training for rare trauma scenes"
+          ],
+          "whatStaysHuman": [
+            "Building partner confidence and trust",
+            "Providing mental health/PTSD support"
+          ]
+        }
+      ],
+      "timeline": [
+        {
+          "phase": "Now",
+          "whatChanges": [
+            "AI-ECG interpretation",
+            "Voice-to-EHR documentation"
+          ],
+          "implications": [
+            "Faster hospital handoffs",
+            "Elimination of documentation backlog"
+          ]
+        },
+        {
+          "phase": "Next",
+          "whatChanges": [
+            "Telemetry-driven ER triage",
+            "Exoskeleton lifting aids"
+          ],
+          "implications": [
+            "Pre-arrival prep for trauma teams",
+            "Significant reduction in paramedic back injuries"
+          ]
+        },
+        {
+          "phase": "Later",
+          "whatChanges": [
+            "Autonomous ambulance transport",
+            "Holographic surgical assistance"
+          ],
+          "implications": [
+            "Paramedics focus entirely on treatment",
+            "ER doctors 'tele-present' in the back of the truck"
+          ]
+        }
+      ],
+      "signalsAndTools": [
+        {
+          "signal": "Smart Ambulance",
+          "toolExamples": [
+            "Demers AI",
+            "Ferno iNTRAXX"
+          ],
+          "whyItMatters": "Turns the vehicle into a smart, self-inventorying lab."
+        },
+        {
+          "signal": "Tele-EMS",
+          "toolExamples": [
+            "Pulsara",
+            "Twiage"
+          ],
+          "whyItMatters": "Syncs the paramedic, ambulance, and ER in real-time."
+        },
+        {
+          "signal": "Mechanical CPR",
+          "toolExamples": [
+            "LUCAS Device",
+            "AutoPulse"
+          ],
+          "whyItMatters": "Provides perfect compressions for hours, freeing the human."
+        }
+      ],
+      "adaptationStrategies": [
+        {
+          "timeframe": "2 weeks",
+          "actions": [
+            "Master the voice-EHR app",
+            "Learn the new telemetry sharing settings",
+            "Review AI-ECG protocols"
+          ],
+          "expectedOutcome": "Faster handoffs and better clinical documentation."
+        },
+        {
+          "timeframe": "2 months",
+          "actions": [
+            "Participate in a VR trauma simulation",
+            "Lead an 'AI in EMS' training for EMTs",
+            "Review scene-safety drone protocols"
+          ],
+          "expectedOutcome": "Increased scene safety and leadership confidence."
+        },
+        {
+          "timeframe": "2 quarters",
+          "actions": [
+            "Redesign truck workflows for high-tech tools",
+            "Advocate for hospital-link data standards",
+            "Certify in Advanced Critical Care Transport"
+          ],
+          "expectedOutcome": "Career advancement to Flight or Critical Care Paramedic."
+        }
+      ],
+      "sources": [
+        {
+          "title": "O*NET: Paramedics",
+          "publisher": "U.S. Dept of Labor",
+          "year": "2025",
+          "url": "https://www.onetonline.org/link/summary/29-2042.00",
+          "note": "Primary task definitions for paramedics."
+        },
+        {
+          "title": "The Future of EMS",
+          "publisher": "National Association of EMTs",
+          "year": "2024",
+          "url": "https://www.naemt.org/future-of-ems",
+          "note": "Professional vision for technology in pre-hospital care."
+        },
+        {
+          "title": "AI in Emergency Medicine",
+          "publisher": "Journal of Emergency Medical Services (JEMS)",
+          "year": "2023",
+          "url": "https://www.jems.com/",
+          "note": "Analysis of field diagnostics and AI."
+        },
+        {
+          "title": "Tele-health in EMS",
+          "publisher": "NHTSA Office of EMS",
+          "year": "2024",
+          "url": "https://www.ems.gov/resources/telehealth/",
+          "note": "Government guidance on connected emergency care."
+        },
+        {
+          "title": "Mechanical CPR Efficacy",
+          "publisher": "American Heart Association",
+          "year": "2023",
+          "url": "https://www.heart.org/en/cpr",
+          "note": "Standards for automated resuscitation tools."
+        },
+        {
+          "title": "Impact of Autonomous Ambulances",
+          "publisher": "Brookings Institution",
+          "year": "2024",
+          "url": "https://www.brookings.edu/research/autonomous-vehicles-in-healthcare/",
+          "note": "Economic and safety analysis of future transport."
+        }
+      ],
+      "notes": {
+        "assumptions": [
+          "Focus on advanced life support (ALS) paramedics.",
+          "Scene dynamics and weather remain major inhibitors to full automation."
+        ],
+        "scopeBoundaries": [
+          "Task-level analysis only.",
+          "No binary job replacement claims."
+        ]
+      }
+    }
+  ]
+}

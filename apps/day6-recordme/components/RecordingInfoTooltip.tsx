@@ -80,3 +80,4 @@ const InfoRow = memo(function InfoRow({
   );
 });
 
+

@@ -1,0 +1,168 @@
+{
+  "app": {
+    "title": "Will AI Replace Me? Yes, but not yet",
+    "shortTitle": "Yes, but... not yet",
+    "tagline": "AI transforms tasks, not careers",
+    "description": "Explore how AI is changing specific tasks within professions. No clickbait, no panic—just task-level analysis of what's changing and what stays human."
+  },
+  "landing": {
+    "hero": {
+      "heading": "Yes, but... not yet",
+      "subheading": "AI won't replace your job. It will change how you do it.",
+      "description": "We analyze professions task by task—no binary answers, no doom predictions. Discover which parts of your work are shifting and which remain uniquely human."
+    },
+    "search": {
+      "placeholder": "Search for a profession...",
+      "hint": "Type to search {count} professions",
+      "noResults": "No professions found",
+      "examples": "Try: doctor, teacher, lawyer, accountant"
+    },
+    "cta": {
+      "explore": "Explore Professions",
+      "learnMore": "Learn More"
+    },
+    "random": {
+      "label": "Featured profession",
+      "cta": "See full analysis →"
+    },
+    "features": {
+      "taskLevel": {
+        "title": "Task-Level Analysis",
+        "description": "We break down each profession into 18+ specific tasks, analyzing automation potential for each one individually."
+      },
+      "noHype": {
+        "title": "No Hype, No Panic",
+        "description": "Based on credible sources like BLS, O*NET, WHO, and NIST. No sensational predictions—just grounded analysis."
+      },
+      "actionable": {
+        "title": "Actionable Strategies",
+        "description": "Each profession includes concrete adaptation strategies for 2 weeks, 2 months, and 2 quarters."
+      }
+    },
+    "about": {
+      "title": "Why \"Yes, but... not yet\"?",
+      "p1": "Headlines love binary answers: \"AI WILL replace doctors!\" or \"AI will NEVER replace teachers!\" Reality is messier and more interesting.",
+      "p2": "Every profession is a bundle of tasks. Some tasks are highly automatable today. Others require judgment, empathy, creativity, or physical presence that current AI can't match.",
+      "p3": "Our analysis focuses on this nuance: which specific tasks are changing, on what timeline, and what stays uniquely human."
+    },
+    "automationLevels": {
+      "title": "Automation Levels",
+      "assist": {
+        "name": "Assist",
+        "description": "AI helps, human leads"
+      },
+      "partial": {
+        "name": "Partial",
+        "description": "Shared responsibility"
+      },
+      "majority": {
+        "name": "Majority",
+        "description": "AI leads, human oversees"
+      },
+      "total": {
+        "name": "Total",
+        "description": "Fully automated"
+      }
+    }
+  },
+  "profession": {
+    "meta": {
+      "titleSuffix": "— Yes, but... not yet"
+    },
+    "nav": {
+      "toggle": "Go to section",
+      "summary": "Summary",
+      "tasks": "Tasks",
+      "timeline": "Timeline",
+      "signals": "Signals",
+      "strategies": "Strategies",
+      "sources": "Sources",
+      "notes": "Notes"
+    },
+    "oneLiner": "The quick take",
+    "summary": "Summary",
+    "keyTakeaways": "Key Takeaways",
+    "tasks": {
+      "title": "Task Analysis",
+      "subtitle": "How automation impacts specific tasks",
+      "task": "Task",
+      "automationLevel": "Automation Level",
+      "horizon": "Timeline",
+      "whyItChanges": "Why it's changing",
+      "whatStaysHuman": "What stays human",
+      "filterByAutomation": "By automation level",
+      "filterByHorizon": "By timeline",
+      "showing": "Showing {count} of {total} tasks",
+      "clearFilters": "Clear filters",
+      "noResults": "No tasks match the selected filters"
+    },
+    "automationLevels": {
+      "assist": "AI Assists",
+      "partial": "Partial Automation",
+      "majority": "Mostly Automated",
+      "total": "Fully Automated"
+    },
+    "horizons": {
+      "0-2": "Now (0-2 years)",
+      "3-5": "Next (3-5 years)",
+      "5-10": "Later (5-10 years)"
+    },
+    "horizonsBadge": {
+      "0-2": "0-2 years",
+      "3-5": "3-5 years",
+      "5-10": "5-10 years"
+    },
+    "timeline": {
+      "title": "Change Timeline",
+      "years": "years",
+      "phases": {
+        "Now": "Now",
+        "Next": "Next",
+        "Later": "Later"
+      },
+      "whatChanges": "What's changing",
+      "implications": "Implications"
+    },
+    "signals": {
+      "title": "Signals & Tools",
+      "subtitle": "What to watch for",
+      "signal": "Signal",
+      "tools": "Tool Examples",
+      "whyItMatters": "Why it matters"
+    },
+    "strategies": {
+      "title": "Adaptation Strategies",
+      "subtitle": "Concrete steps to prepare",
+      "timeframe": "Timeframe",
+      "actions": "Actions",
+      "outcome": "Expected Outcome",
+      "step": "Step {step} of {total}"
+    },
+    "sources": {
+      "title": "Sources",
+      "subtitle": "Where this analysis comes from"
+    },
+    "notes": {
+      "title": "Notes",
+      "assumptions": "Assumptions",
+      "scope": "Scope Boundaries"
+    },
+    "otherProfessions": "Other Professions",
+    "viewMore": "View analysis",
+    "backToSearch": "← Back to search"
+  },
+  "offline": {
+    "title": "You're Offline",
+    "description": "It looks like you've lost your internet connection. Some features may be limited.",
+    "cached": "This content is available offline",
+    "tryAgain": "Try Again"
+  },
+  "error": {
+    "notFound": {
+      "title": "Profession Not Found",
+      "description": "We couldn't find the profession you're looking for.",
+      "backHome": "Back to Home"
+    }
+  }
+}
+

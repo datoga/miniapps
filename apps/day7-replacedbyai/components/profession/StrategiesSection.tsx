@@ -83,18 +83,18 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
       onToggle={onToggle}
     >
       {/* Horizontal timeline slider */}
-      <div className="relative mt-6 mb-6 overflow-hidden">
+      <div className="relative mt-6 mb-6 overflow-hidden pt-2 -mt-2">
         {/* Progress bar background */}
-        <div className="absolute top-7 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        <div className="absolute top-9 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
 
         {/* Progress bar fill */}
         <div
-          className="absolute top-7 left-[16.66%] h-1.5 bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 rounded-full transition-all duration-500"
+          className="absolute top-9 left-[16.66%] h-1.5 bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 rounded-full transition-all duration-500"
           style={{ width: `${activeIndex * 33.33}%` }}
         />
 
         {/* Timeline markers - clickable */}
-        <div className="relative flex justify-between px-4">
+        <div className="relative flex justify-between px-4 pt-2">
           {profession.adaptationStrategies.map((strategy, index) => {
             const config = timeframeConfig[index] ?? timeframeConfig[0]!;
             const label = t(strategy.timeframeKey, locale);

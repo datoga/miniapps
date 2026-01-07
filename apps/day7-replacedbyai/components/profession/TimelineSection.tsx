@@ -87,18 +87,18 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
       onToggle={onToggle}
     >
       {/* Horizontal timeline slider */}
-      <div className="relative mt-6 mb-10 overflow-hidden">
+      <div className="relative mt-6 mb-10 overflow-hidden pt-2 -mt-2">
         {/* Progress bar background */}
-        <div className="absolute top-7 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        <div className="absolute top-9 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
 
         {/* Progress bar fill */}
         <div
-          className="absolute top-7 left-[16.66%] h-1.5 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full transition-all duration-500"
+          className="absolute top-9 left-[16.66%] h-1.5 bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 rounded-full transition-all duration-500"
           style={{ width: `${activeIndex * 33.33}%` }}
         />
 
         {/* Timeline markers - clickable */}
-        <div className="relative flex justify-between px-4">
+        <div className="relative flex justify-between px-4 pt-2">
           {profession.timeline.map((entry, index) => {
             const config = phaseConfig[entry.phase];
             const isActive = index === activeIndex;

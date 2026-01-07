@@ -14,7 +14,7 @@ export function ShareButton({ professionName, slug }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
 
   const url = `https://replacedbyai.guru/${locale}/p/${slug}`;
-  
+
   const shareText = locale === "es"
     ? `¿Será reemplazado un ${professionName} por la IA? Sí, pero... todavía no 🔮`
     : `Will a ${professionName} be replaced by AI? Yes, but... not yet 🔮`;

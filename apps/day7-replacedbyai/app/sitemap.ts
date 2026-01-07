@@ -2,25 +2,40 @@ import type { MetadataRoute } from "next";
 import { getDataset } from "@/lib/professions/load.server";
 
 const APP_URL = "https://replacedbyai.guru";
-const locales = ["en", "es"] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const dataset = getDataset();
   const now = new Date();
 
-  // Base routes for each locale with alternates
-  const baseRoutes: MetadataRoute.Sitemap = locales.map((locale) => ({
-    url: `${APP_URL}/${locale}`,
-    lastModified: now,
-    changeFrequency: "weekly" as const,
-    priority: 1,
-    alternates: {
-      languages: {
-        en: `${APP_URL}/en`,
-        es: `${APP_URL}/es`,
+  // Base routes for each locale with alternates (including x-default)
+  const baseRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${APP_URL}/en`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 1,
+      alternates: {
+        languages: {
+          en: `${APP_URL}/en`,
+          es: `${APP_URL}/es`,
+          "x-default": `${APP_URL}/en`,
+        },
       },
     },
-  }));
+    {
+      url: `${APP_URL}/es`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 1,
+      alternates: {
+        languages: {
+          en: `${APP_URL}/en`,
+          es: `${APP_URL}/es`,
+          "x-default": `${APP_URL}/en`,
+        },
+      },
+    },
+  ];
 
   // Profession routes with localized slugs and alternates
   const professionRoutes: MetadataRoute.Sitemap = dataset.professions.flatMap((profession) => {
@@ -37,6 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             en: enUrl,
             es: esUrl,
+            "x-default": enUrl,
           },
         },
       },
@@ -49,6 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           languages: {
             en: enUrl,
             es: esUrl,
+            "x-default": enUrl,
           },
         },
       },

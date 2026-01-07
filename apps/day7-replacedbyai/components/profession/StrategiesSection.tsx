@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import type { Profession } from "../../lib/professions/schema";
 import { t, tMany } from "../../lib/professions/translations";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { useSwipe } from "../../lib/useSwipe";
 
 interface StrategiesSectionProps {
   profession: Profession;
@@ -47,6 +48,19 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
   const locale = useLocale();
   const ui = useTranslations("profession");
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const goNext = useCallback(() => {
+    setActiveIndex((prev) => Math.min(prev + 1, profession.adaptationStrategies.length - 1));
+  }, [profession.adaptationStrategies.length]);
+
+  const goPrev = useCallback(() => {
+    setActiveIndex((prev) => Math.max(prev - 1, 0));
+  }, []);
+
+  const swipeHandlers = useSwipe({
+    onSwipeLeft: goNext,
+    onSwipeRight: goPrev,
+  });
 
   const activeStrategy = profession.adaptationStrategies[activeIndex];
   const activeConfig = timeframeConfig[activeIndex] ?? timeframeConfig[0]!;
@@ -121,8 +135,11 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
         </div>
       </div>
 
-      {/* Active strategy card */}
-      <div className="relative">
+      {/* Active strategy card - with swipe support */}
+      <div 
+        className="relative touch-pan-y"
+        {...swipeHandlers}
+      >
         <div
           key={activeIndex}
           className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${activeConfig.bgGradient} border-2 ${activeConfig.border} animate-fadeIn`}

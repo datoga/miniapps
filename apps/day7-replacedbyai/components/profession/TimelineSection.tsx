@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import type { Profession } from "../../lib/professions/schema";
 import { tMany } from "../../lib/professions/translations";
 import { CollapsibleSection } from "./CollapsibleSection";
+import { useSwipe } from "../../lib/useSwipe";
 
 interface TimelineSectionProps {
   profession: Profession;
@@ -53,6 +54,19 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
   const locale = useLocale();
   const ui = useTranslations("profession");
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const goNext = useCallback(() => {
+    setActiveIndex((prev) => Math.min(prev + 1, profession.timeline.length - 1));
+  }, [profession.timeline.length]);
+
+  const goPrev = useCallback(() => {
+    setActiveIndex((prev) => Math.max(prev - 1, 0));
+  }, []);
+
+  const swipeHandlers = useSwipe({
+    onSwipeLeft: goNext,
+    onSwipeRight: goPrev,
+  });
 
   const activeEntry = profession.timeline[activeIndex];
 
@@ -132,8 +146,11 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
         </div>
       </div>
 
-      {/* Active phase card - with slide animation */}
-      <div className="relative">
+      {/* Active phase card - with slide animation and swipe support */}
+      <div 
+        className="relative touch-pan-y"
+        {...swipeHandlers}
+      >
         <div
           key={activeIndex}
           className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${activeConfig.bgGradient} border-2 ${activeConfig.border} animate-fadeIn`}

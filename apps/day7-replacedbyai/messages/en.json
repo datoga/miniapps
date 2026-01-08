@@ -19,7 +19,7 @@
       "suggested": "Suggested professions",
       "request": {
         "notFound": "We couldn't find \"{query}\"",
-        "cta": "Would you like to request it?",
+        "cta": "Want us to analyze it?",
         "modalTitle": "Request profession",
         "requesting": "Profession requested",
         "success": "Thanks! We'll work on it."

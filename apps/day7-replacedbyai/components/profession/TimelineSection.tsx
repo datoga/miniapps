@@ -7,6 +7,17 @@ import { tMany } from "../../lib/professions/translations";
 import { CollapsibleSection } from "./CollapsibleSection";
 import { useSwipe } from "../../lib/useSwipe";
 
+// Helper to get marker opacity class
+function getMarkerOpacityClass(isActive: boolean, isPast: boolean, ring: string): string {
+  if (isActive) {
+    return `ring-4 ${ring} scale-110`;
+  }
+  if (isPast) {
+    return "opacity-100";
+  }
+  return "opacity-60 grayscale-[30%] group-hover:opacity-100 group-hover:grayscale-0";
+}
+
 interface TimelineSectionProps {
   profession: Profession;
   id?: string;
@@ -114,13 +125,7 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
               >
                 {/* Marker dot */}
                 <div
-                  className={`relative z-10 w-14 h-14 rounded-full bg-gradient-to-br ${config.gradient} flex items-center justify-center text-2xl shadow-lg transition-all duration-300 ${
-                    isActive
-                      ? `ring-4 ${config.ring} scale-110`
-                      : isPast
-                        ? "opacity-100"
-                        : "opacity-60 grayscale-[30%] group-hover:opacity-100 group-hover:grayscale-0"
-                  }`}
+                  className={`relative z-10 w-14 h-14 rounded-full bg-gradient-to-br ${config.gradient} flex items-center justify-center text-2xl shadow-lg transition-all duration-300 ${getMarkerOpacityClass(isActive, isPast, config.ring)}`}
                 >
                   {config.icon}
                 </div>

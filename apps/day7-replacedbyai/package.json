@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "compile:professions": "node scripts/compile-professions.mjs",
     "validate:professions": "node scripts/validate-professions.mjs",
-    "extract:translations": "node scripts/extract-translations.mjs"
+    "extract:translations": "node scripts/extract-translations.mjs",
+    "translate:es": "python3 scripts/translate-es.py"
   },
   "dependencies": {
     "@miniapps/analytics": "*",

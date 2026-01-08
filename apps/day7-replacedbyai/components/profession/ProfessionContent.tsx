@@ -53,39 +53,41 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
     setOpenSectionId((current) => (current === sectionId ? "" : sectionId));
   };
 
-  // Navigate to section: close current, scroll, then open new
+  // Navigate to section: scroll to header first, then toggle
   const navigateToSection = useCallback((sectionId: string) => {
     // If already on this section, do nothing
     if (openSectionId === sectionId) {
       return;
     }
 
-    // First, close current section to get accurate positions
+    const element = document.getElementById(sectionId);
+    if (!element) {
+      setOpenSectionId(sectionId);
+      return;
+    }
+
+    // Close current section first
     setOpenSectionId("");
 
-    // Wait for DOM to update after closing
+    // Use requestAnimationFrame to wait for layout recalculation
     requestAnimationFrame(() => {
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const offset = 140; // Account for header (71px) + sticky tabs (~60px) + padding
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
+      requestAnimationFrame(() => {
+        // Get the position AFTER the previous section closed
+        const rect = element.getBoundingClientRect();
+        const offset = 140; // Header (71px) + sticky tabs (~60px) + padding
+        const targetPosition = rect.top + window.scrollY - offset;
 
-          // Scroll to position
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
+        // Scroll to the section header
+        window.scrollTo({
+          top: Math.max(0, targetPosition),
+          behavior: "smooth",
+        });
 
-          // Open the section after scroll starts
-          setTimeout(() => {
-            setOpenSectionId(sectionId);
-          }, 50);
-        } else {
+        // Open the section after a short delay to let scroll start
+        setTimeout(() => {
           setOpenSectionId(sectionId);
-        }
-      }, 50);
+        }, 100);
+      });
     });
   }, [openSectionId]);
 

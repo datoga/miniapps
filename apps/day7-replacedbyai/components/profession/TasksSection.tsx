@@ -177,7 +177,7 @@ export function TasksSection({ profession, id = "tasks", isOpen = false, onToggl
       </div>
 
       {/* Tasks list */}
-      <div className="space-y-4">
+      <div className="space-y-3 ml-2 md:ml-4 pl-3 md:pl-4 border-l-2 border-gray-200 dark:border-gray-700">
         {filteredTasks.length === 0 ? (
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             {ui("tasks.noResults")}

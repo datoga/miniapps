@@ -1,0 +1,407 @@
+{
+  "id": "p053",
+  "slug": {
+    "en": "cybersecurity-analyst",
+    "es": "analista-de-ciberseguridad"
+  },
+  "name": {
+    "en": "Cybersecurity Analyst",
+    "es": "Analista de Ciberseguridad"
+  },
+  "synonyms": {
+    "en": [
+      "Information Security Analyst",
+      "SOC Analyst"
+    ],
+    "es": [
+      "Analista de Seguridad de la Información",
+      "Analista SOC"
+    ]
+  },
+  "oneLinerKey": "p053.oneLiner",
+  "summaryBulletsKeys": [
+    "p053.summary.0",
+    "p053.summary.1",
+    "p053.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p053.task.0.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.0.why.0",
+        "p053.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.0.human.0",
+        "p053.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.1.why.0",
+        "p053.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.1.human.0",
+        "p053.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.2.desc",
+      "automationLevel": "total",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p053.task.2.why.0",
+        "p053.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.2.human.0",
+        "p053.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.3.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p053.task.3.why.0",
+        "p053.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.3.human.0",
+        "p053.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.4.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p053.task.4.why.0",
+        "p053.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.4.human.0",
+        "p053.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.5.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p053.task.5.why.0",
+        "p053.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.5.human.0",
+        "p053.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.6.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.6.why.0",
+        "p053.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.6.human.0",
+        "p053.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.7.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p053.task.7.why.0",
+        "p053.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.7.human.0",
+        "p053.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.8.why.0",
+        "p053.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.8.human.0",
+        "p053.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.9.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p053.task.9.why.0",
+        "p053.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.9.human.0",
+        "p053.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.10.why.0",
+        "p053.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.10.human.0",
+        "p053.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.11.desc",
+      "automationLevel": "total",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p053.task.11.why.0",
+        "p053.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.11.human.0",
+        "p053.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.12.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.12.why.0",
+        "p053.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.12.human.0",
+        "p053.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.13.desc",
+      "automationLevel": "majority",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p053.task.13.why.0",
+        "p053.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.13.human.0",
+        "p053.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.14.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p053.task.14.why.0",
+        "p053.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.14.human.0",
+        "p053.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.15.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p053.task.15.why.0",
+        "p053.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.15.human.0",
+        "p053.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.16.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p053.task.16.why.0",
+        "p053.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.16.human.0",
+        "p053.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p053.task.17.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p053.task.17.why.0",
+        "p053.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p053.task.17.human.0",
+        "p053.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p053.timeline.now.changes.0",
+        "p053.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p053.timeline.now.impl.0",
+        "p053.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p053.timeline.next.changes.0",
+        "p053.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p053.timeline.next.impl.0",
+        "p053.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p053.timeline.later.changes.0",
+        "p053.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p053.timeline.later.impl.0",
+        "p053.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p053.signal.0.desc",
+      "toolExamplesKeys": [
+        "p053.signal.0.tool.0",
+        "p053.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p053.signal.0.why"
+    },
+    {
+      "signalKey": "p053.signal.1.desc",
+      "toolExamplesKeys": [
+        "p053.signal.1.tool.0",
+        "p053.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p053.signal.1.why"
+    },
+    {
+      "signalKey": "p053.signal.2.desc",
+      "toolExamplesKeys": [
+        "p053.signal.2.tool.0",
+        "p053.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p053.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p053.strategy.0.timeframe",
+      "actionsKeys": [
+        "p053.strategy.0.action.0",
+        "p053.strategy.0.action.1",
+        "p053.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p053.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p053.strategy.1.timeframe",
+      "actionsKeys": [
+        "p053.strategy.1.action.0",
+        "p053.strategy.1.action.1",
+        "p053.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p053.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p053.strategy.2.timeframe",
+      "actionsKeys": [
+        "p053.strategy.2.action.0",
+        "p053.strategy.2.action.1",
+        "p053.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p053.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Information Security Analysts",
+      "publisher": "Bureau of Labor Statistics",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh",
+      "noteKey": "p053.source.0.note"
+    },
+    {
+      "title": "Information Security Analysts Tasks",
+      "publisher": "O*NET OnLine",
+      "year": "2025",
+      "url": "https://www.onetonline.org/link/summary/15-1212.00",
+      "noteKey": "p053.source.1.note"
+    },
+    {
+      "title": "Cybersecurity and the Age of AI",
+      "publisher": "World Economic Forum",
+      "year": "2024",
+      "url": "https://www.weforum.org",
+      "noteKey": "p053.source.2.note"
+    },
+    {
+      "title": "State of Cybersecurity 2024",
+      "publisher": "ISACA",
+      "year": "2024",
+      "url": "https://www.isaca.org",
+      "noteKey": "p053.source.3.note"
+    },
+    {
+      "title": "NIST Cybersecurity Framework 2.0",
+      "publisher": "NIST",
+      "year": "2024",
+      "url": "https://www.nist.gov/cyberframework",
+      "noteKey": "p053.source.4.note"
+    },
+    {
+      "title": "The Cyber Threat Landscape",
+      "publisher": "ENISA",
+      "year": "2024",
+      "url": "https://www.enisa.europa.eu",
+      "noteKey": "p053.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p053.notes.assumption.0",
+      "p053.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p053.notes.scope.0",
+      "p053.notes.scope.1"
+    ]
+  }
+}

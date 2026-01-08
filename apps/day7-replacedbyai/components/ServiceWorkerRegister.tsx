@@ -12,8 +12,6 @@ export function ServiceWorkerRegister() {
     navigator.serviceWorker
       .register("/sw.js")
       .then((registration) => {
-        console.log("[App] Service Worker registered:", registration.scope);
-
         // Check for updates periodically
         registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
@@ -23,8 +21,7 @@ export function ServiceWorkerRegister() {
                 newWorker.state === "installed" &&
                 navigator.serviceWorker.controller
               ) {
-                // New content available
-                console.log("[App] New content available, refresh to update");
+                // New content available - silent update
               }
             });
           }

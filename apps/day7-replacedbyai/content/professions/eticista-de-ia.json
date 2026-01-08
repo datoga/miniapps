@@ -1,0 +1,404 @@
+{
+  "id": "p098",
+  "slug": {
+    "en": "ai-ethicist",
+    "es": "eticista-de-ia"
+  },
+  "name": {
+    "en": "AI Ethicist",
+    "es": "Eticista de IA"
+  },
+  "synonyms": {
+    "en": [
+      "Responsible AI Lead",
+      "AI Policy Advisor"
+    ],
+    "es": [
+      "Responsable de IA Ética",
+      "Asesor de Políticas de IA"
+    ]
+  },
+  "oneLinerKey": "p098.oneLiner",
+  "summaryBulletsKeys": [
+    "p098.summary.0",
+    "p098.summary.1",
+    "p098.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p098.task.0.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.0.why.0",
+        "p098.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.0.human.0",
+        "p098.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.1.why.0",
+        "p098.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.1.human.0",
+        "p098.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.2.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.2.why.0",
+        "p098.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.2.human.0",
+        "p098.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.3.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p098.task.3.why.0",
+        "p098.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.3.human.0",
+        "p098.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.4.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p098.task.4.why.0",
+        "p098.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.4.human.0",
+        "p098.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.5.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.5.why.0",
+        "p098.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.5.human.0",
+        "p098.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.6.desc",
+      "automationLevel": "total",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p098.task.6.why.0",
+        "p098.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.6.human.0",
+        "p098.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.7.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.7.why.0",
+        "p098.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.7.human.0",
+        "p098.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.8.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.8.why.0",
+        "p098.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.8.human.0",
+        "p098.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.9.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p098.task.9.why.0",
+        "p098.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.9.human.0",
+        "p098.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.10.why.0",
+        "p098.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.10.human.0",
+        "p098.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.11.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.11.why.0",
+        "p098.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.11.human.0",
+        "p098.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.12.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p098.task.12.why.0",
+        "p098.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.12.human.0",
+        "p098.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.13.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.13.why.0",
+        "p098.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.13.human.0",
+        "p098.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.14.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p098.task.14.why.0",
+        "p098.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.14.human.0",
+        "p098.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.15.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p098.task.15.why.0",
+        "p098.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.15.human.0",
+        "p098.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.16.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p098.task.16.why.0",
+        "p098.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.16.human.0",
+        "p098.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p098.task.17.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p098.task.17.why.0",
+        "p098.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p098.task.17.human.0",
+        "p098.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p098.timeline.now.changes.0",
+        "p098.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p098.timeline.now.impl.0",
+        "p098.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p098.timeline.next.changes.0",
+        "p098.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p098.timeline.next.impl.0",
+        "p098.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p098.timeline.later.changes.0",
+        "p098.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p098.timeline.later.impl.0",
+        "p098.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p098.signal.0.desc",
+      "toolExamplesKeys": [
+        "p098.signal.0.tool.0",
+        "p098.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p098.signal.0.why"
+    },
+    {
+      "signalKey": "p098.signal.1.desc",
+      "toolExamplesKeys": [
+        "p098.signal.1.tool.0",
+        "p098.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p098.signal.1.why"
+    },
+    {
+      "signalKey": "p098.signal.2.desc",
+      "toolExamplesKeys": [
+        "p098.signal.2.tool.0",
+        "p098.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p098.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p098.strategy.0.timeframe",
+      "actionsKeys": [
+        "p098.strategy.0.action.0",
+        "p098.strategy.0.action.1"
+      ],
+      "expectedOutcomeKey": "p098.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p098.strategy.1.timeframe",
+      "actionsKeys": [
+        "p098.strategy.1.action.0",
+        "p098.strategy.1.action.1"
+      ],
+      "expectedOutcomeKey": "p098.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p098.strategy.2.timeframe",
+      "actionsKeys": [
+        "p098.strategy.2.action.0",
+        "p098.strategy.2.action.1"
+      ],
+      "expectedOutcomeKey": "p098.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "The EU AI Act",
+      "publisher": "European Parliament",
+      "year": "2024",
+      "url": "https://artificialintelligenceact.eu/",
+      "noteKey": "p098.source.0.note"
+    },
+    {
+      "title": "NIST AI Risk Management Framework",
+      "publisher": "NIST",
+      "year": "2023",
+      "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "noteKey": "p098.source.1.note"
+    },
+    {
+      "title": "Ethics of Artificial Intelligence",
+      "publisher": "UNESCO",
+      "year": "2021",
+      "url": "https://unesdoc.unesco.org/ark:/48223/pf0000381115",
+      "noteKey": "p098.source.2.note"
+    },
+    {
+      "title": "AI TRiSM Guide",
+      "publisher": "Gartner",
+      "year": "2024",
+      "url": "https://www.gartner.com/en/information-technology/glossary/ai-trism",
+      "noteKey": "p098.source.3.note"
+    },
+    {
+      "title": "Algorithmic Bias Playbook",
+      "publisher": "Chicago Booth",
+      "year": "2021",
+      "url": "https://www.chicagobooth.edu/research/center-for-applied-artificial-intelligence/research/algorithmic-bias/playbook",
+      "noteKey": "p098.source.4.note"
+    },
+    {
+      "title": "Responsible AI Toolkit",
+      "publisher": "Microsoft",
+      "year": "2024",
+      "url": "https://www.microsoft.com/en-us/ai/responsible-ai",
+      "noteKey": "p098.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p098.notes.assumption.0",
+      "p098.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p098.notes.scope.0",
+      "p098.notes.scope.1"
+    ]
+  }
+}

@@ -23,7 +23,7 @@ export function ShareButton({ professionName, slug }: ShareButtonProps) {
     const shareData = {
       title: shareText,
       text: shareText,
-      url: url,
+      url,
     };
 
     // Try native share first (mobile)
@@ -33,7 +33,7 @@ export function ShareButton({ professionName, slug }: ShareButtonProps) {
         return;
       } catch (err) {
         // User cancelled or error - fall through to clipboard
-        if ((err as Error).name === "AbortError") return;
+        if ((err as Error).name === "AbortError") {return;}
       }
     }
 

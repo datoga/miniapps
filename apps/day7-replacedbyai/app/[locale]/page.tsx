@@ -37,7 +37,7 @@ export default async function LandingPage({ params }: Props) {
             />
 
             {/* Random Profession */}
-            <div className="mt-8">
+            <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
               <RandomProfession locale={locale as "en" | "es"} />
             </div>
           </div>

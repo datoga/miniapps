@@ -118,8 +118,8 @@ export function TimelineSection({ profession, id = "timeline", isOpen = true, on
                     isActive
                       ? `ring-4 ${config.ring} scale-110`
                       : isPast
-                      ? "opacity-100"
-                      : "opacity-60 grayscale-[30%] group-hover:opacity-100 group-hover:grayscale-0"
+                        ? "opacity-100"
+                        : "opacity-60 grayscale-[30%] group-hover:opacity-100 group-hover:grayscale-0"
                   }`}
                 >
                   {config.icon}

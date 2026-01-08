@@ -1,0 +1,408 @@
+{
+  "id": "p071",
+  "slug": {
+    "en": "warehouse-associate",
+    "es": "operario-de-almacen"
+  },
+  "name": {
+    "en": "Warehouse Associate",
+    "es": "Operario de almacén"
+  },
+  "synonyms": {
+    "en": [
+      "picker",
+      "packer",
+      "warehouse worker"
+    ],
+    "es": [
+      "almacenero",
+      "preparador de pedidos"
+    ]
+  },
+  "oneLinerKey": "p071.oneLiner",
+  "summaryBulletsKeys": [
+    "p071.summary.0",
+    "p071.summary.1",
+    "p071.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p071.task.0.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.0.why.0",
+        "p071.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.0.human.0",
+        "p071.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.1.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p071.task.1.why.0",
+        "p071.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.1.human.0",
+        "p071.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.2.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.2.why.0",
+        "p071.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.2.human.0",
+        "p071.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.3.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p071.task.3.why.0",
+        "p071.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.3.human.0",
+        "p071.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.4.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.4.why.0",
+        "p071.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.4.human.0",
+        "p071.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.5.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.5.why.0",
+        "p071.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.5.human.0",
+        "p071.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.6.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p071.task.6.why.0",
+        "p071.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.6.human.0",
+        "p071.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.7.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p071.task.7.why.0",
+        "p071.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.7.human.0",
+        "p071.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.8.why.0",
+        "p071.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.8.human.0",
+        "p071.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.9.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.9.why.0",
+        "p071.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.9.human.0",
+        "p071.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.10.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p071.task.10.why.0",
+        "p071.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.10.human.0",
+        "p071.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.11.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p071.task.11.why.0",
+        "p071.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.11.human.0",
+        "p071.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.12.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.12.why.0",
+        "p071.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.12.human.0",
+        "p071.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.13.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p071.task.13.why.0",
+        "p071.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.13.human.0",
+        "p071.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.14.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.14.why.0",
+        "p071.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.14.human.0",
+        "p071.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.15.desc",
+      "automationLevel": "majority",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p071.task.15.why.0",
+        "p071.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.15.human.0",
+        "p071.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.16.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p071.task.16.why.0",
+        "p071.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.16.human.0",
+        "p071.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p071.task.17.desc",
+      "automationLevel": "total",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p071.task.17.why.0",
+        "p071.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p071.task.17.human.0",
+        "p071.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p071.timeline.now.changes.0",
+        "p071.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p071.timeline.now.impl.0",
+        "p071.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p071.timeline.next.changes.0",
+        "p071.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p071.timeline.next.impl.0",
+        "p071.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p071.timeline.later.changes.0",
+        "p071.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p071.timeline.later.impl.0",
+        "p071.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p071.signal.0.desc",
+      "toolExamplesKeys": [
+        "p071.signal.0.tool.0",
+        "p071.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p071.signal.0.why"
+    },
+    {
+      "signalKey": "p071.signal.1.desc",
+      "toolExamplesKeys": [
+        "p071.signal.1.tool.0",
+        "p071.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p071.signal.1.why"
+    },
+    {
+      "signalKey": "p071.signal.2.desc",
+      "toolExamplesKeys": [
+        "p071.signal.2.tool.0",
+        "p071.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p071.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p071.strategy.0.timeframe",
+      "actionsKeys": [
+        "p071.strategy.0.action.0",
+        "p071.strategy.0.action.1",
+        "p071.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p071.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p071.strategy.1.timeframe",
+      "actionsKeys": [
+        "p071.strategy.1.action.0",
+        "p071.strategy.1.action.1",
+        "p071.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p071.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p071.strategy.2.timeframe",
+      "actionsKeys": [
+        "p071.strategy.2.action.0",
+        "p071.strategy.2.action.1",
+        "p071.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p071.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Material Moving Machine Operators",
+      "publisher": "BLS",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/transportation-and-material-moving/material-moving-machine-operators.htm",
+      "noteKey": "p071.source.0.note"
+    },
+    {
+      "title": "O*NET: Stockers and Order Fillers",
+      "publisher": "O*NET",
+      "year": "2025",
+      "url": "https://www.onetonline.org/link/summary/53-7065.00",
+      "noteKey": "p071.source.1.note"
+    },
+    {
+      "title": "Warehousing and Logistics 4.0",
+      "publisher": "DHL Trend Radar",
+      "year": "2024",
+      "url": "https://www.dhl.com",
+      "noteKey": "p071.source.2.note"
+    },
+    {
+      "title": "Robotics in the Warehouse",
+      "publisher": "MIT Technology Review",
+      "year": "2024",
+      "url": "https://www.technologyreview.com",
+      "noteKey": "p071.source.3.note"
+    },
+    {
+      "title": "Impact of Automation on Warehouse Workers",
+      "publisher": "Economic Policy Institute",
+      "year": "2023",
+      "url": "https://www.epi.org",
+      "noteKey": "p071.source.4.note"
+    },
+    {
+      "title": "Smart Warehousing Market Report",
+      "publisher": "Gartner",
+      "year": "2023",
+      "url": "https://www.gartner.com",
+      "noteKey": "p071.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p071.notes.assumption.0",
+      "p071.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p071.notes.scope.0",
+      "p071.notes.scope.1"
+    ]
+  }
+}

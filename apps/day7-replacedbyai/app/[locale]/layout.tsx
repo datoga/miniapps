@@ -34,7 +34,7 @@ const APP_NAME = "ReplacedByAI";
 const APP_URL = "https://replacedbyai.guru";
 
 // Locale-specific SEO content - optimized for search
-const seoContent: Record<string, LocaleSEOContent> = {
+const seoContent: { en: LocaleSEOContent; es: LocaleSEOContent } = {
   en: {
     title: "Will AI Replace Me? Yes, but not yet | Task-Level Job Analysis",
     description:
@@ -89,13 +89,14 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const content = seoContent[locale] || seoContent["en"];
+  const validLocale = locale === "es" ? "es" : "en";
+  const content = seoContent[validLocale];
 
   const baseMetadata = generateSEOMetadata({
     appName: APP_NAME,
     appUrl: APP_URL,
     locale,
-    content: content!,
+    content,
     category: "education",
     googleVerification: "QZlWfURENKf5JuI4xmFGUjt89t8dBog8WJ5btml5TQA",
   });
@@ -123,14 +124,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           url: `${APP_URL}/og-image.png`,
           width: 1200,
           height: 630,
-          alt: content!.ogAlt,
+          alt: content.ogAlt,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: content!.title,
-      description: content!.description,
+      title: content.title,
+      description: content.description,
       images: [`${APP_URL}/og-image.png`],
     },
     robots: {
@@ -183,7 +184,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   const messages = await getMessages();
   const gaId = process.env["NEXT_PUBLIC_GA_ID"];
-  const content = seoContent[locale] || seoContent["en"];
+  const validLocale = locale === "es" ? "es" : "en";
+  const content = seoContent[validLocale];
 
   // JSON-LD structured data for rich search results
   const jsonLdFeatures =
@@ -213,7 +215,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     appName: APP_NAME,
     appUrl: APP_URL,
     locale,
-    description: content!.description,
+    description: content.description,
     applicationCategory: "EducationalApplication",
     featureList: jsonLdFeatures,
   });

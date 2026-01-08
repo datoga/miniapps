@@ -1,6 +1,6 @@
 {
   "version": "2",
-  "createdAt": "2026-01-07",
+  "createdAt": "2026-01-08",
   "slugsById": {
     "p001": {
       "en": "physician",
@@ -8,11 +8,11 @@
     },
     "p002": {
       "en": "nurse",
-      "es": "enfermero"
+      "es": "enfermero-a"
     },
     "p003": {
       "en": "nursing-assistant",
-      "es": "auxiliar-enfermeria"
+      "es": "auxiliar-de-enfermeria"
     },
     "p004": {
       "en": "dentist",
@@ -20,11 +20,11 @@
     },
     "p005": {
       "en": "pharmacist",
-      "es": "farmaceutico"
+      "es": "farmaceutico-a"
     },
     "p006": {
       "en": "psychologist",
-      "es": "psicologo"
+      "es": "psicologo-a"
     },
     "p007": {
       "en": "physiotherapist",
@@ -32,11 +32,11 @@
     },
     "p008": {
       "en": "veterinarian",
-      "es": "veterinario"
+      "es": "veterinario-a"
     },
     "p009": {
       "en": "lab-technician",
-      "es": "tecnico-laboratorio"
+      "es": "tecnico-de-laboratorio"
     },
     "p010": {
       "en": "paramedic",
@@ -201,6 +201,206 @@
     "p050": {
       "en": "translator-interpreter",
       "es": "traductor-interprete"
+    },
+    "p051": {
+      "en": "devops-engineer",
+      "es": "ingeniero-devops"
+    },
+    "p052": {
+      "en": "systems-administrator",
+      "es": "administrador-de-sistemas"
+    },
+    "p053": {
+      "en": "cybersecurity-analyst",
+      "es": "analista-de-ciberseguridad"
+    },
+    "p054": {
+      "en": "product-manager",
+      "es": "gerente-de-producto"
+    },
+    "p055": {
+      "en": "project-manager",
+      "es": "gerente-de-proyecto"
+    },
+    "p056": {
+      "en": "civil-engineer",
+      "es": "ingeniero-civil"
+    },
+    "p057": {
+      "en": "mechanical-engineer",
+      "es": "ingeniero-mecanico"
+    },
+    "p058": {
+      "en": "electrical-engineer",
+      "es": "ingeniero-electrico"
+    },
+    "p059": {
+      "en": "surveyor",
+      "es": "agrimensor"
+    },
+    "p060": {
+      "en": "maintenance-technician",
+      "es": "tecnico-de-mantenimiento"
+    },
+    "p061": {
+      "en": "construction-worker",
+      "es": "obrero-de-construccion"
+    },
+    "p062": {
+      "en": "electrician",
+      "es": "electricista"
+    },
+    "p063": {
+      "en": "plumber",
+      "es": "fontanero"
+    },
+    "p064": {
+      "en": "carpenter",
+      "es": "carpintero"
+    },
+    "p065": {
+      "en": "welder",
+      "es": "soldador"
+    },
+    "p066": {
+      "en": "machinist",
+      "es": "maquinista"
+    },
+    "p067": {
+      "en": "hvac-technician",
+      "es": "tecnico-de-climatizacion"
+    },
+    "p068": {
+      "en": "truck-driver",
+      "es": "conductor-de-camion"
+    },
+    "p069": {
+      "en": "courier",
+      "es": "mensajero"
+    },
+    "p070": {
+      "en": "ride-driver",
+      "es": "conductor-de-transporte"
+    },
+    "p071": {
+      "en": "warehouse-associate",
+      "es": "operario-de-almacen"
+    },
+    "p072": {
+      "en": "forklift-operator",
+      "es": "conductor-de-carretilla-elevadora"
+    },
+    "p073": {
+      "en": "dispatcher",
+      "es": "despachador"
+    },
+    "p074": {
+      "en": "cook",
+      "es": "cocinero-de-linea"
+    },
+    "p075": {
+      "en": "chef",
+      "es": "jefe-de-cocina"
+    },
+    "p076": {
+      "en": "waiter",
+      "es": "camarero"
+    },
+    "p077": {
+      "en": "barista",
+      "es": "barista"
+    },
+    "p078": {
+      "en": "firefighter",
+      "es": "bombero"
+    },
+    "p079": {
+      "en": "soldier",
+      "es": "soldado"
+    },
+    "p080": {
+      "en": "hairdresser",
+      "es": "peluquero"
+    },
+    "p081": {
+      "en": "beautician",
+      "es": "esteticista"
+    },
+    "p082": {
+      "en": "personal-trainer",
+      "es": "entrenador-personal"
+    },
+    "p083": {
+      "en": "real-estate-agent",
+      "es": "agente-inmobiliario"
+    },
+    "p084": {
+      "en": "general-contractor",
+      "es": "contratista-general"
+    },
+    "p085": {
+      "en": "small-business-owner",
+      "es": "dueno-de-pequeno-negocio"
+    },
+    "p086": {
+      "en": "street-vendor",
+      "es": "vendedor-ambulante"
+    },
+    "p087": {
+      "en": "executive-assistant",
+      "es": "asistente-ejecutivo"
+    },
+    "p088": {
+      "en": "bartender",
+      "es": "bartender"
+    },
+    "p089": {
+      "en": "cleaner",
+      "es": "limpiador"
+    },
+    "p090": {
+      "en": "domestic-worker",
+      "es": "trabajador-domestico"
+    },
+    "p091": {
+      "en": "caregiver",
+      "es": "cuidador"
+    },
+    "p092": {
+      "en": "farmer",
+      "es": "agricultor"
+    },
+    "p093": {
+      "en": "farm-laborer",
+      "es": "peon-agricola"
+    },
+    "p094": {
+      "en": "livestock-farmer",
+      "es": "ganadero"
+    },
+    "p095": {
+      "en": "fisher",
+      "es": "pescador"
+    },
+    "p096": {
+      "en": "miner",
+      "es": "minero"
+    },
+    "p097": {
+      "en": "security-guard",
+      "es": "guardia-de-seguridad"
+    },
+    "p098": {
+      "en": "ai-ethicist",
+      "es": "eticista-de-ia"
+    },
+    "p099": {
+      "en": "prompt-engineer",
+      "es": "ingeniero-de-prompts"
+    },
+    "p100": {
+      "en": "mlops-engineer",
+      "es": "ingeniero-de-mlops"
     }
   }
 }

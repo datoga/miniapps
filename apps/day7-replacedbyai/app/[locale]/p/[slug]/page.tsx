@@ -164,7 +164,7 @@ export default async function ProfessionPage({ params }: Props) {
   const occupationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Occupation",
-    name: name,
+    name,
     description,
     occupationalCategory: profession.id,
   };

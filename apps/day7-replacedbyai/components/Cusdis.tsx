@@ -85,7 +85,13 @@ export function Cusdis({ pageId, pageTitle, pageUrl }: CusdisProps) {
   }, [resolvedTheme, key]);
 
   // Use consistent default theme for SSR to avoid hydration mismatch
-  const theme = mounted ? (resolvedTheme === "dark" ? "dark" : "light") : "light";
+  const getTheme = () => {
+    if (!mounted) {
+      return "light";
+    }
+    return resolvedTheme === "dark" ? "dark" : "light";
+  };
+  const theme = getTheme();
 
   return (
     <section className="mt-20 pt-10 border-t border-gray-200 dark:border-gray-700">

@@ -67,7 +67,6 @@ export function useShare(options: ShareOptions): UseShareResult {
       try {
         const fullText = url ? `${text}\n\n${url}` : text;
         await navigator.clipboard.writeText(fullText);
-        // eslint-disable-next-line no-alert -- Simple notification for clipboard copy
         window.alert(clipboardMessage);
         onSuccess?.("clipboard");
       } catch (error) {

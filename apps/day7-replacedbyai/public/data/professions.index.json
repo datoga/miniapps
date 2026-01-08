@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-01-07",
+  "generatedAt": "2026-01-08",
   "locales": [
     "en",
     "es"
@@ -31,7 +31,7 @@
       "id": "p002",
       "slug": {
         "en": "nurse",
-        "es": "enfermero"
+        "es": "enfermero-a"
       },
       "name": {
         "en": "Nurse",
@@ -52,7 +52,7 @@
       "id": "p003",
       "slug": {
         "en": "nursing-assistant",
-        "es": "auxiliar-enfermeria"
+        "es": "auxiliar-de-enfermeria"
       },
       "name": {
         "en": "Nursing Assistant",
@@ -95,7 +95,7 @@
       "id": "p005",
       "slug": {
         "en": "pharmacist",
-        "es": "farmaceutico"
+        "es": "farmaceutico-a"
       },
       "name": {
         "en": "Pharmacist",
@@ -116,7 +116,7 @@
       "id": "p006",
       "slug": {
         "en": "psychologist",
-        "es": "psicologo"
+        "es": "psicologo-a"
       },
       "name": {
         "en": "Psychologist",
@@ -158,7 +158,7 @@
       "id": "p008",
       "slug": {
         "en": "veterinarian",
-        "es": "veterinario"
+        "es": "veterinario-a"
       },
       "name": {
         "en": "Veterinarian",
@@ -179,7 +179,7 @@
       "id": "p009",
       "slug": {
         "en": "lab-technician",
-        "es": "tecnico-laboratorio"
+        "es": "tecnico-de-laboratorio"
       },
       "name": {
         "en": "Lab Technician",
@@ -1054,6 +1054,1057 @@
         "es": [
           "Especialista en idiomas",
           "Lingüista"
+        ]
+      }
+    },
+    {
+      "id": "p051",
+      "slug": {
+        "en": "devops-engineer",
+        "es": "ingeniero-devops"
+      },
+      "name": {
+        "en": "DevOps Engineer",
+        "es": "Ingeniero DevOps"
+      },
+      "synonyms": {
+        "en": [
+          "Site Reliability Engineer",
+          "Platform Engineer"
+        ],
+        "es": [
+          "Ingeniero de Confiabilidad de Sitio",
+          "Ingeniero de Plataformas"
+        ]
+      }
+    },
+    {
+      "id": "p052",
+      "slug": {
+        "en": "systems-administrator",
+        "es": "administrador-de-sistemas"
+      },
+      "name": {
+        "en": "Systems Administrator",
+        "es": "Administrador de Sistemas"
+      },
+      "synonyms": {
+        "en": [
+          "IT Administrator",
+          "SysAdmin"
+        ],
+        "es": [
+          "Administrador IT",
+          "Administrador de Redes"
+        ]
+      }
+    },
+    {
+      "id": "p053",
+      "slug": {
+        "en": "cybersecurity-analyst",
+        "es": "analista-de-ciberseguridad"
+      },
+      "name": {
+        "en": "Cybersecurity Analyst",
+        "es": "Analista de Ciberseguridad"
+      },
+      "synonyms": {
+        "en": [
+          "Information Security Analyst",
+          "SOC Analyst"
+        ],
+        "es": [
+          "Analista de Seguridad de la Información",
+          "Analista SOC"
+        ]
+      }
+    },
+    {
+      "id": "p054",
+      "slug": {
+        "en": "product-manager",
+        "es": "gerente-de-producto"
+      },
+      "name": {
+        "en": "Product Manager",
+        "es": "Gerente de Producto"
+      },
+      "synonyms": {
+        "en": [
+          "PM",
+          "Product Owner"
+        ],
+        "es": [
+          "Responsable de Producto",
+          "Dueño de Producto"
+        ]
+      }
+    },
+    {
+      "id": "p055",
+      "slug": {
+        "en": "project-manager",
+        "es": "gerente-de-proyecto"
+      },
+      "name": {
+        "en": "Project Manager",
+        "es": "Gerente de Proyecto"
+      },
+      "synonyms": {
+        "en": [
+          "Project Coordinator",
+          "Program Manager"
+        ],
+        "es": [
+          "Coordinador de Proyecto",
+          "Gestor de Programas"
+        ]
+      }
+    },
+    {
+      "id": "p056",
+      "slug": {
+        "en": "civil-engineer",
+        "es": "ingeniero-civil"
+      },
+      "name": {
+        "en": "Civil Engineer",
+        "es": "Ingeniero Civil"
+      },
+      "synonyms": {
+        "en": [
+          "Structural Engineer",
+          "Infrastructure Engineer"
+        ],
+        "es": [
+          "Ingeniero Estructural",
+          "Ingeniero de Infraestructuras"
+        ]
+      }
+    },
+    {
+      "id": "p057",
+      "slug": {
+        "en": "mechanical-engineer",
+        "es": "ingeniero-mecanico"
+      },
+      "name": {
+        "en": "Mechanical Engineer",
+        "es": "Ingeniero Mecánico"
+      },
+      "synonyms": {
+        "en": [
+          "Design Engineer",
+          "Robotics Engineer"
+        ],
+        "es": [
+          "Ingeniero de Diseño",
+          "Ingeniero en Robótica"
+        ]
+      }
+    },
+    {
+      "id": "p058",
+      "slug": {
+        "en": "electrical-engineer",
+        "es": "ingeniero-electrico"
+      },
+      "name": {
+        "en": "Electrical Engineer",
+        "es": "Ingeniero Eléctrico"
+      },
+      "synonyms": {
+        "en": [
+          "Electronics Engineer",
+          "Power Engineer"
+        ],
+        "es": [
+          "Ingeniero Electrónico",
+          "Ingeniero Eléctrico de Potencia"
+        ]
+      }
+    },
+    {
+      "id": "p059",
+      "slug": {
+        "en": "surveyor",
+        "es": "agrimensor"
+      },
+      "name": {
+        "en": "Surveyor",
+        "es": "Agrimensor"
+      },
+      "synonyms": {
+        "en": [
+          "Geospatial Professional",
+          "Land Surveyor"
+        ],
+        "es": [
+          "Profesional Geoespacial",
+          "Topógrafo"
+        ]
+      }
+    },
+    {
+      "id": "p060",
+      "slug": {
+        "en": "maintenance-technician",
+        "es": "tecnico-de-mantenimiento"
+      },
+      "name": {
+        "en": "Maintenance Technician",
+        "es": "Técnico de Mantenimiento"
+      },
+      "synonyms": {
+        "en": [
+          "Facility Technician",
+          "Repair Worker"
+        ],
+        "es": [
+          "Técnico de Instalaciones",
+          "Personal de Reparación"
+        ]
+      }
+    },
+    {
+      "id": "p061",
+      "slug": {
+        "en": "construction-worker",
+        "es": "obrero-de-construccion"
+      },
+      "name": {
+        "en": "Construction Worker",
+        "es": "Obrero de Construcción"
+      },
+      "synonyms": {
+        "en": [
+          "Laborer",
+          "Site Worker"
+        ],
+        "es": [
+          "Peón",
+          "Trabajador de Obra"
+        ]
+      }
+    },
+    {
+      "id": "p062",
+      "slug": {
+        "en": "electrician",
+        "es": "electricista"
+      },
+      "name": {
+        "en": "Electrician",
+        "es": "Electricista"
+      },
+      "synonyms": {
+        "en": [
+          "Wireman",
+          "Electrical Tech"
+        ],
+        "es": [
+          "Técnico Eléctrico",
+          "Instalador"
+        ]
+      }
+    },
+    {
+      "id": "p063",
+      "slug": {
+        "en": "plumber",
+        "es": "fontanero"
+      },
+      "name": {
+        "en": "Plumber",
+        "es": "Fontanero"
+      },
+      "synonyms": {
+        "en": [
+          "Pipefitter",
+          "Steamfitter"
+        ],
+        "es": [
+          "Plomero",
+          "Instalador de Tuberías"
+        ]
+      }
+    },
+    {
+      "id": "p064",
+      "slug": {
+        "en": "carpenter",
+        "es": "carpintero"
+      },
+      "name": {
+        "en": "Carpenter",
+        "es": "Carpintero"
+      },
+      "synonyms": {
+        "en": [
+          "Woodworker",
+          "Cabinetmaker"
+        ],
+        "es": [
+          "Ebanista",
+          "Encofrador"
+        ]
+      }
+    },
+    {
+      "id": "p065",
+      "slug": {
+        "en": "welder",
+        "es": "soldador"
+      },
+      "name": {
+        "en": "Welder",
+        "es": "Soldador"
+      },
+      "synonyms": {
+        "en": [
+          "Welding Tech",
+          "Solderer"
+        ],
+        "es": [
+          "Técnico de Soldadura",
+          "Oxicortador"
+        ]
+      }
+    },
+    {
+      "id": "p066",
+      "slug": {
+        "en": "machinist",
+        "es": "maquinista"
+      },
+      "name": {
+        "en": "Machinist",
+        "es": "Maquinista"
+      },
+      "synonyms": {
+        "en": [
+          "CNC Operator",
+          "Metal Machinist"
+        ],
+        "es": [
+          "Operador CNC",
+          "Tornero"
+        ]
+      }
+    },
+    {
+      "id": "p067",
+      "slug": {
+        "en": "hvac-technician",
+        "es": "tecnico-de-climatizacion"
+      },
+      "name": {
+        "en": "HVAC Technician",
+        "es": "Técnico de climatización"
+      },
+      "synonyms": {
+        "en": [
+          "HVAC Tech",
+          "Air Conditioning Mechanic"
+        ],
+        "es": [
+          "Técnico HVAC",
+          "Instalador de aire acondicionado"
+        ]
+      }
+    },
+    {
+      "id": "p068",
+      "slug": {
+        "en": "truck-driver",
+        "es": "conductor-de-camion"
+      },
+      "name": {
+        "en": "Truck Driver",
+        "es": "Conductor de camión"
+      },
+      "synonyms": {
+        "en": [
+          "heavy truck driver",
+          "lorry driver"
+        ],
+        "es": [
+          "camionero",
+          "transportista"
+        ]
+      }
+    },
+    {
+      "id": "p069",
+      "slug": {
+        "en": "courier",
+        "es": "mensajero"
+      },
+      "name": {
+        "en": "Courier",
+        "es": "Mensajero"
+      },
+      "synonyms": {
+        "en": [
+          "delivery driver",
+          "messenger"
+        ],
+        "es": [
+          "repartidor",
+          "valija"
+        ]
+      }
+    },
+    {
+      "id": "p070",
+      "slug": {
+        "en": "ride-driver",
+        "es": "conductor-de-transporte"
+      },
+      "name": {
+        "en": "Ride Driver",
+        "es": "Conductor de transporte"
+      },
+      "synonyms": {
+        "en": [
+          "taxi driver",
+          "rideshare driver"
+        ],
+        "es": [
+          "taxista",
+          "conductor de Uber"
+        ]
+      }
+    },
+    {
+      "id": "p071",
+      "slug": {
+        "en": "warehouse-associate",
+        "es": "operario-de-almacen"
+      },
+      "name": {
+        "en": "Warehouse Associate",
+        "es": "Operario de almacén"
+      },
+      "synonyms": {
+        "en": [
+          "picker",
+          "packer",
+          "warehouse worker"
+        ],
+        "es": [
+          "almacenero",
+          "preparador de pedidos"
+        ]
+      }
+    },
+    {
+      "id": "p072",
+      "slug": {
+        "en": "forklift-operator",
+        "es": "conductor-de-carretilla-elevadora"
+      },
+      "name": {
+        "en": "Forklift Operator",
+        "es": "Conductor de carretilla elevadora"
+      },
+      "synonyms": {
+        "en": [
+          "lift truck operator",
+          "clamp truck driver"
+        ],
+        "es": [
+          "montacarguista",
+          "carretillero"
+        ]
+      }
+    },
+    {
+      "id": "p073",
+      "slug": {
+        "en": "dispatcher",
+        "es": "despachador"
+      },
+      "name": {
+        "en": "Dispatcher",
+        "es": "Despachador"
+      },
+      "synonyms": {
+        "en": [
+          "transportation dispatcher",
+          "fleet coordinator"
+        ],
+        "es": [
+          "coordinador de tráfico",
+          "operador de logística"
+        ]
+      }
+    },
+    {
+      "id": "p074",
+      "slug": {
+        "en": "cook",
+        "es": "cocinero-de-linea"
+      },
+      "name": {
+        "en": "Cook",
+        "es": "Cocinero (de línea)"
+      },
+      "synonyms": {
+        "en": [
+          "line cook",
+          "prep cook"
+        ],
+        "es": [
+          "cocinero de partida",
+          "ayudante de cocina"
+        ]
+      }
+    },
+    {
+      "id": "p075",
+      "slug": {
+        "en": "chef",
+        "es": "jefe-de-cocina"
+      },
+      "name": {
+        "en": "Chef",
+        "es": "Jefe de cocina"
+      },
+      "synonyms": {
+        "en": [
+          "executive chef",
+          "head chef"
+        ],
+        "es": [
+          "chef ejecutivo",
+          "maestro de cocina"
+        ]
+      }
+    },
+    {
+      "id": "p076",
+      "slug": {
+        "en": "waiter",
+        "es": "camarero"
+      },
+      "name": {
+        "en": "Waiter",
+        "es": "Camarero"
+      },
+      "synonyms": {
+        "en": [
+          "server",
+          "waitstaff"
+        ],
+        "es": [
+          "mesero",
+          "mozo"
+        ]
+      }
+    },
+    {
+      "id": "p077",
+      "slug": {
+        "en": "barista",
+        "es": "barista"
+      },
+      "name": {
+        "en": "Barista",
+        "es": "Barista"
+      },
+      "synonyms": {
+        "en": [
+          "coffee maker",
+          "espresso preparer"
+        ],
+        "es": [
+          "cafetero",
+          "especialista en café"
+        ]
+      }
+    },
+    {
+      "id": "p078",
+      "slug": {
+        "en": "firefighter",
+        "es": "bombero"
+      },
+      "name": {
+        "en": "Firefighter",
+        "es": "Bombero"
+      },
+      "synonyms": {
+        "en": [
+          "Fireman",
+          "First responder"
+        ],
+        "es": [
+          "Extintor",
+          "Bombero forestal"
+        ]
+      }
+    },
+    {
+      "id": "p079",
+      "slug": {
+        "en": "soldier",
+        "es": "soldado"
+      },
+      "name": {
+        "en": "Soldier",
+        "es": "Soldado"
+      },
+      "synonyms": {
+        "en": [
+          "Military personnel",
+          "Infantryman"
+        ],
+        "es": [
+          "Militar",
+          "Infante"
+        ]
+      }
+    },
+    {
+      "id": "p080",
+      "slug": {
+        "en": "hairdresser",
+        "es": "peluquero"
+      },
+      "name": {
+        "en": "Hairdresser",
+        "es": "Peluquero"
+      },
+      "synonyms": {
+        "en": [
+          "Stylist",
+          "Barber"
+        ],
+        "es": [
+          "Estilista",
+          "Barbero"
+        ]
+      }
+    },
+    {
+      "id": "p081",
+      "slug": {
+        "en": "beautician",
+        "es": "esteticista"
+      },
+      "name": {
+        "en": "Beautician",
+        "es": "Esteticista"
+      },
+      "synonyms": {
+        "en": [
+          "Esthetician",
+          "Skin care specialist"
+        ],
+        "es": [
+          "Cosmetóloga",
+          "Especialista en piel"
+        ]
+      }
+    },
+    {
+      "id": "p082",
+      "slug": {
+        "en": "personal-trainer",
+        "es": "entrenador-personal"
+      },
+      "name": {
+        "en": "Personal Trainer",
+        "es": "Entrenador Personal"
+      },
+      "synonyms": {
+        "en": [
+          "Fitness coach",
+          "Athletic trainer"
+        ],
+        "es": [
+          "Preparador físico",
+          "Coach de fitness"
+        ]
+      }
+    },
+    {
+      "id": "p083",
+      "slug": {
+        "en": "real-estate-agent",
+        "es": "agente-inmobiliario"
+      },
+      "name": {
+        "en": "Real Estate Agent",
+        "es": "Agente Inmobiliario"
+      },
+      "synonyms": {
+        "en": [
+          "Realtor",
+          "Property broker"
+        ],
+        "es": [
+          "Corredor de propiedades",
+          "Asesor inmobiliario"
+        ]
+      }
+    },
+    {
+      "id": "p084",
+      "slug": {
+        "en": "general-contractor",
+        "es": "contratista-general"
+      },
+      "name": {
+        "en": "General Contractor",
+        "es": "Contratista General"
+      },
+      "synonyms": {
+        "en": [
+          "Construction manager",
+          "Builder"
+        ],
+        "es": [
+          "Maestro de obra",
+          "Constructor"
+        ]
+      }
+    },
+    {
+      "id": "p085",
+      "slug": {
+        "en": "small-business-owner",
+        "es": "dueno-de-pequeno-negocio"
+      },
+      "name": {
+        "en": "Small Business Owner",
+        "es": "Dueño de Pequeño Negocio"
+      },
+      "synonyms": {
+        "en": [
+          "Entrepreneur",
+          "Sole proprietor"
+        ],
+        "es": [
+          "Emprendedor",
+          "Microempresario"
+        ]
+      }
+    },
+    {
+      "id": "p086",
+      "slug": {
+        "en": "street-vendor",
+        "es": "vendedor-ambulante"
+      },
+      "name": {
+        "en": "Street Vendor",
+        "es": "Vendedor Ambulante"
+      },
+      "synonyms": {
+        "en": [
+          "Street hawker",
+          "Food truck operator"
+        ],
+        "es": [
+          "Vendedor de calle",
+          "Comerciante informal"
+        ]
+      }
+    },
+    {
+      "id": "p087",
+      "slug": {
+        "en": "executive-assistant",
+        "es": "asistente-ejecutivo"
+      },
+      "name": {
+        "en": "Executive Assistant",
+        "es": "Asistente Ejecutivo"
+      },
+      "synonyms": {
+        "en": [
+          "Chief of staff",
+          "Administrative partner"
+        ],
+        "es": [
+          "Secretario ejecutivo",
+          "Asistente de dirección"
+        ]
+      }
+    },
+    {
+      "id": "p088",
+      "slug": {
+        "en": "bartender",
+        "es": "bartender"
+      },
+      "name": {
+        "en": "Bartender",
+        "es": "Bartender"
+      },
+      "synonyms": {
+        "en": [
+          "Mixologist",
+          "Barman"
+        ],
+        "es": [
+          "Cantinero",
+          "Barman"
+        ]
+      }
+    },
+    {
+      "id": "p089",
+      "slug": {
+        "en": "cleaner",
+        "es": "limpiador"
+      },
+      "name": {
+        "en": "Cleaner",
+        "es": "Limpiador"
+      },
+      "synonyms": {
+        "en": [
+          "Janitor",
+          "Custodial Worker"
+        ],
+        "es": [
+          "Conserje",
+          "Personal de limpieza"
+        ]
+      }
+    },
+    {
+      "id": "p090",
+      "slug": {
+        "en": "domestic-worker",
+        "es": "trabajador-domestico"
+      },
+      "name": {
+        "en": "Domestic worker",
+        "es": "Trabajador doméstico"
+      },
+      "synonyms": {
+        "en": [
+          "Housekeeper",
+          "Home Assistant"
+        ],
+        "es": [
+          "Empleado de hogar",
+          "Asistente doméstico"
+        ]
+      }
+    },
+    {
+      "id": "p091",
+      "slug": {
+        "en": "caregiver",
+        "es": "cuidador"
+      },
+      "name": {
+        "en": "Caregiver",
+        "es": "Cuidador"
+      },
+      "synonyms": {
+        "en": [
+          "Personal Care Aide",
+          "Home Health Aide"
+        ],
+        "es": [
+          "Asistente de cuidado personal",
+          "Cuidador de ancianos"
+        ]
+      }
+    },
+    {
+      "id": "p092",
+      "slug": {
+        "en": "farmer",
+        "es": "agricultor"
+      },
+      "name": {
+        "en": "Farmer",
+        "es": "Agricultor"
+      },
+      "synonyms": {
+        "en": [
+          "Agricultural Manager",
+          "Crop Producer"
+        ],
+        "es": [
+          "Productor agrícola",
+          "Cultivador"
+        ]
+      }
+    },
+    {
+      "id": "p093",
+      "slug": {
+        "en": "farm-laborer",
+        "es": "peon-agricola"
+      },
+      "name": {
+        "en": "Farm laborer",
+        "es": "Peón agrícola"
+      },
+      "synonyms": {
+        "en": [
+          "Agricultural Worker",
+          "Field Hand"
+        ],
+        "es": [
+          "Trabajador de campo",
+          "Jornalero"
+        ]
+      }
+    },
+    {
+      "id": "p094",
+      "slug": {
+        "en": "livestock-farmer",
+        "es": "ganadero"
+      },
+      "name": {
+        "en": "Livestock farmer",
+        "es": "Ganadero"
+      },
+      "synonyms": {
+        "en": [
+          "Rancher",
+          "Animal Producer"
+        ],
+        "es": [
+          "Criador de ganado",
+          "Ranchero"
+        ]
+      }
+    },
+    {
+      "id": "p095",
+      "slug": {
+        "en": "fisher",
+        "es": "pescador"
+      },
+      "name": {
+        "en": "Fisher",
+        "es": "Pescador"
+      },
+      "synonyms": {
+        "en": [
+          "Commercial Fisher",
+          "Aquaculturist"
+        ],
+        "es": [
+          "Pescador comercial",
+          "Acuicultor"
+        ]
+      }
+    },
+    {
+      "id": "p096",
+      "slug": {
+        "en": "miner",
+        "es": "minero"
+      },
+      "name": {
+        "en": "Miner",
+        "es": "Minero"
+      },
+      "synonyms": {
+        "en": [
+          "Extraction Worker",
+          "Mining Operator"
+        ],
+        "es": [
+          "Trabajador de extracción",
+          "Operario de mina"
+        ]
+      }
+    },
+    {
+      "id": "p097",
+      "slug": {
+        "en": "security-guard",
+        "es": "guardia-de-seguridad"
+      },
+      "name": {
+        "en": "Security guard",
+        "es": "Guardia de seguridad"
+      },
+      "synonyms": {
+        "en": [
+          "Security Officer",
+          "Patrol Officer"
+        ],
+        "es": [
+          "Vigilante de seguridad",
+          "Oficial de seguridad"
+        ]
+      }
+    },
+    {
+      "id": "p098",
+      "slug": {
+        "en": "ai-ethicist",
+        "es": "eticista-de-ia"
+      },
+      "name": {
+        "en": "AI Ethicist",
+        "es": "Eticista de IA"
+      },
+      "synonyms": {
+        "en": [
+          "Responsible AI Lead",
+          "AI Policy Advisor"
+        ],
+        "es": [
+          "Responsable de IA Ética",
+          "Asesor de Políticas de IA"
+        ]
+      }
+    },
+    {
+      "id": "p099",
+      "slug": {
+        "en": "prompt-engineer",
+        "es": "ingeniero-de-prompts"
+      },
+      "name": {
+        "en": "Prompt Engineer",
+        "es": "Ingeniero de Prompts"
+      },
+      "synonyms": {
+        "en": [
+          "LLM Interaction Specialist",
+          "AI Orchestrator"
+        ],
+        "es": [
+          "Especialista en Interacción con LLM",
+          "Orquestador de IA"
+        ]
+      }
+    },
+    {
+      "id": "p100",
+      "slug": {
+        "en": "mlops-engineer",
+        "es": "ingeniero-de-mlops"
+      },
+      "name": {
+        "en": "MLOps Engineer",
+        "es": "Ingeniero de MLOps"
+      },
+      "synonyms": {
+        "en": [
+          "Machine Learning Operations",
+          "AI Infrastructure Engineer"
+        ],
+        "es": [
+          "Operaciones de Machine Learning",
+          "Ingeniero de Infraestructura de IA"
         ]
       }
     }

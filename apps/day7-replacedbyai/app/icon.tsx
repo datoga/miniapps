@@ -13,9 +13,16 @@ export function generateImageMetadata() {
   ];
 }
 
+// Size mapping for icon IDs
+const SIZE_MAP: Record<string, number> = {
+  "32": 32,
+  "192": 192,
+  "512": 512,
+};
+
 // Generate the icon image
 export default function Icon({ id }: { id: string }) {
-  const size = id === "32" ? 32 : id === "192" ? 192 : 512;
+  const size = SIZE_MAP[id] ?? 512;
   const fontSize = Math.round(size * 0.45);
   const borderRadius = Math.round(size * 0.22);
 
@@ -29,10 +36,10 @@ export default function Icon({ id }: { id: string }) {
           alignItems: "center",
           justifyContent: "center",
           background: `linear-gradient(135deg, ${BG_GRADIENT_START} 0%, ${BG_GRADIENT_END} 100%)`,
-          borderRadius: borderRadius,
+          borderRadius,
           fontFamily: "system-ui, sans-serif",
           fontWeight: 900,
-          fontSize: fontSize,
+          fontSize,
           color: "white",
           letterSpacing: "-0.02em",
           textShadow: "0 2px 4px rgba(0,0,0,0.2)",

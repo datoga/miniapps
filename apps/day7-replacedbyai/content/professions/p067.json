@@ -1,0 +1,407 @@
+{
+  "id": "p067",
+  "slug": {
+    "en": "hvac-technician",
+    "es": "tecnico-de-climatizacion"
+  },
+  "name": {
+    "en": "HVAC Technician",
+    "es": "Técnico de climatización"
+  },
+  "synonyms": {
+    "en": [
+      "HVAC Tech",
+      "Air Conditioning Mechanic"
+    ],
+    "es": [
+      "Técnico HVAC",
+      "Instalador de aire acondicionado"
+    ]
+  },
+  "oneLinerKey": "p067.oneLiner",
+  "summaryBulletsKeys": [
+    "p067.summary.0",
+    "p067.summary.1",
+    "p067.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p067.task.0.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p067.task.0.why.0",
+        "p067.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.0.human.0",
+        "p067.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.1.why.0",
+        "p067.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.1.human.0",
+        "p067.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.2.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p067.task.2.why.0",
+        "p067.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.2.human.0",
+        "p067.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.3.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p067.task.3.why.0",
+        "p067.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.3.human.0",
+        "p067.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.4.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p067.task.4.why.0",
+        "p067.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.4.human.0",
+        "p067.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.5.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.5.why.0",
+        "p067.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.5.human.0",
+        "p067.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.6.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.6.why.0",
+        "p067.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.6.human.0",
+        "p067.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.7.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p067.task.7.why.0",
+        "p067.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.7.human.0",
+        "p067.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.8.why.0",
+        "p067.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.8.human.0",
+        "p067.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.9.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p067.task.9.why.0",
+        "p067.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.9.human.0",
+        "p067.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.10.why.0",
+        "p067.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.10.human.0",
+        "p067.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.11.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p067.task.11.why.0",
+        "p067.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.11.human.0",
+        "p067.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.12.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p067.task.12.why.0",
+        "p067.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.12.human.0",
+        "p067.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.13.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.13.why.0",
+        "p067.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.13.human.0",
+        "p067.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.14.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.14.why.0",
+        "p067.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.14.human.0",
+        "p067.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.15.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p067.task.15.why.0",
+        "p067.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.15.human.0",
+        "p067.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.16.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.16.why.0",
+        "p067.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.16.human.0",
+        "p067.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p067.task.17.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p067.task.17.why.0",
+        "p067.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p067.task.17.human.0",
+        "p067.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p067.timeline.now.changes.0",
+        "p067.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p067.timeline.now.impl.0",
+        "p067.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p067.timeline.next.changes.0",
+        "p067.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p067.timeline.next.impl.0",
+        "p067.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p067.timeline.later.changes.0",
+        "p067.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p067.timeline.later.impl.0",
+        "p067.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p067.signal.0.desc",
+      "toolExamplesKeys": [
+        "p067.signal.0.tool.0",
+        "p067.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p067.signal.0.why"
+    },
+    {
+      "signalKey": "p067.signal.1.desc",
+      "toolExamplesKeys": [
+        "p067.signal.1.tool.0",
+        "p067.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p067.signal.1.why"
+    },
+    {
+      "signalKey": "p067.signal.2.desc",
+      "toolExamplesKeys": [
+        "p067.signal.2.tool.0",
+        "p067.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p067.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p067.strategy.0.timeframe",
+      "actionsKeys": [
+        "p067.strategy.0.action.0",
+        "p067.strategy.0.action.1",
+        "p067.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p067.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p067.strategy.1.timeframe",
+      "actionsKeys": [
+        "p067.strategy.1.action.0",
+        "p067.strategy.1.action.1",
+        "p067.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p067.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p067.strategy.2.timeframe",
+      "actionsKeys": [
+        "p067.strategy.2.action.0",
+        "p067.strategy.2.action.1",
+        "p067.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p067.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "HVAC Technicians Occupational Outlook",
+      "publisher": "BLS OOH",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/installation-maintenance-and-repair/heating-air-conditioning-and-refrigeration-mechanics-and-installers.htm",
+      "noteKey": "p067.source.0.note"
+    },
+    {
+      "title": "O*NET: HVAC Mechanics",
+      "publisher": "O*NET",
+      "year": "2024",
+      "url": "https://www.onetonline.org/link/summary/49-9021.00",
+      "noteKey": "p067.source.1.note"
+    },
+    {
+      "title": "Smart HVAC Technology",
+      "publisher": "ACHR News",
+      "year": "2024",
+      "url": "https://www.achrnews.com",
+      "noteKey": "p067.source.2.note"
+    },
+    {
+      "title": "Building Automation Trends",
+      "publisher": "ASHRAE Journal",
+      "year": "2023",
+      "url": "https://www.ashrae.org",
+      "noteKey": "p067.source.3.note"
+    },
+    {
+      "title": "Predictive Maintenance in HVAC",
+      "publisher": "McKinsey",
+      "year": "2024",
+      "url": "https://www.mckinsey.com/industries/capital-projects-and-infrastructure",
+      "noteKey": "p067.source.4.note"
+    },
+    {
+      "title": "Heat Pump Transition",
+      "publisher": "IEA",
+      "year": "2024",
+      "url": "https://www.iea.org",
+      "noteKey": "p067.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p067.notes.assumption.0",
+      "p067.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p067.notes.scope.0",
+      "p067.notes.scope.1"
+    ]
+  }
+}

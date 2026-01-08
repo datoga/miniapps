@@ -26,7 +26,7 @@ export function useSwipe({
 
   const onTouchEnd = useCallback(
     (e: React.TouchEvent) => {
-      if (touchStartX.current === null) return;
+      if (touchStartX.current === null) {return;}
 
       const touchEndX = e.changedTouches[0]?.clientX ?? 0;
       const diff = touchStartX.current - touchEndX;

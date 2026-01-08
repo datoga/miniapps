@@ -1,0 +1,404 @@
+{
+  "id": "p099",
+  "slug": {
+    "en": "prompt-engineer",
+    "es": "ingeniero-de-prompts"
+  },
+  "name": {
+    "en": "Prompt Engineer",
+    "es": "Ingeniero de Prompts"
+  },
+  "synonyms": {
+    "en": [
+      "LLM Interaction Specialist",
+      "AI Orchestrator"
+    ],
+    "es": [
+      "Especialista en Interacción con LLM",
+      "Orquestador de IA"
+    ]
+  },
+  "oneLinerKey": "p099.oneLiner",
+  "summaryBulletsKeys": [
+    "p099.summary.0",
+    "p099.summary.1",
+    "p099.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p099.task.0.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.0.why.0",
+        "p099.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.0.human.0",
+        "p099.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.1.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.1.why.0",
+        "p099.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.1.human.0",
+        "p099.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.2.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.2.why.0",
+        "p099.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.2.human.0",
+        "p099.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.3.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.3.why.0",
+        "p099.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.3.human.0",
+        "p099.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.4.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.4.why.0",
+        "p099.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.4.human.0",
+        "p099.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.5.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.5.why.0",
+        "p099.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.5.human.0",
+        "p099.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.6.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p099.task.6.why.0",
+        "p099.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.6.human.0",
+        "p099.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.7.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p099.task.7.why.0",
+        "p099.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.7.human.0",
+        "p099.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.8.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.8.why.0",
+        "p099.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.8.human.0",
+        "p099.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.9.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p099.task.9.why.0",
+        "p099.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.9.human.0",
+        "p099.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.10.why.0",
+        "p099.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.10.human.0",
+        "p099.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.11.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p099.task.11.why.0",
+        "p099.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.11.human.0",
+        "p099.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.12.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.12.why.0",
+        "p099.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.12.human.0",
+        "p099.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.13.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p099.task.13.why.0",
+        "p099.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.13.human.0",
+        "p099.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.14.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.14.why.0",
+        "p099.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.14.human.0",
+        "p099.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.15.desc",
+      "automationLevel": "total",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p099.task.15.why.0",
+        "p099.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.15.human.0",
+        "p099.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.16.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p099.task.16.why.0",
+        "p099.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.16.human.0",
+        "p099.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p099.task.17.desc",
+      "automationLevel": "partial",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p099.task.17.why.0",
+        "p099.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p099.task.17.human.0",
+        "p099.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p099.timeline.now.changes.0",
+        "p099.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p099.timeline.now.impl.0",
+        "p099.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p099.timeline.next.changes.0",
+        "p099.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p099.timeline.next.impl.0",
+        "p099.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p099.timeline.later.changes.0",
+        "p099.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p099.timeline.later.impl.0",
+        "p099.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p099.signal.0.desc",
+      "toolExamplesKeys": [
+        "p099.signal.0.tool.0",
+        "p099.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p099.signal.0.why"
+    },
+    {
+      "signalKey": "p099.signal.1.desc",
+      "toolExamplesKeys": [
+        "p099.signal.1.tool.0",
+        "p099.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p099.signal.1.why"
+    },
+    {
+      "signalKey": "p099.signal.2.desc",
+      "toolExamplesKeys": [
+        "p099.signal.2.tool.0",
+        "p099.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p099.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p099.strategy.0.timeframe",
+      "actionsKeys": [
+        "p099.strategy.0.action.0",
+        "p099.strategy.0.action.1"
+      ],
+      "expectedOutcomeKey": "p099.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p099.strategy.1.timeframe",
+      "actionsKeys": [
+        "p099.strategy.1.action.0",
+        "p099.strategy.1.action.1"
+      ],
+      "expectedOutcomeKey": "p099.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p099.strategy.2.timeframe",
+      "actionsKeys": [
+        "p099.strategy.2.action.0",
+        "p099.strategy.2.action.1"
+      ],
+      "expectedOutcomeKey": "p099.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Prompt Engineering Guide",
+      "publisher": "DAIR.AI",
+      "year": "2024",
+      "url": "https://www.promptingguide.ai/",
+      "noteKey": "p099.source.0.note"
+    },
+    {
+      "title": "Language Models are Few-Shot Learners",
+      "publisher": "OpenAI",
+      "year": "2020",
+      "url": "https://arxiv.org/abs/2005.14165",
+      "noteKey": "p099.source.1.note"
+    },
+    {
+      "title": "DSPy: Compiling Declarative Language Model Programs",
+      "publisher": "Stanford NLP",
+      "year": "2023",
+      "url": "https://github.com/stanfordnlp/dspy",
+      "noteKey": "p099.source.2.note"
+    },
+    {
+      "title": "Chain-of-Thought Prompting Elicits Reasoning",
+      "publisher": "Google Research",
+      "year": "2022",
+      "url": "https://arxiv.org/abs/2201.11903",
+      "noteKey": "p099.source.3.note"
+    },
+    {
+      "title": "Prompt Injection Attacks",
+      "publisher": "OWASP",
+      "year": "2023",
+      "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+      "noteKey": "p099.source.4.note"
+    },
+    {
+      "title": "The Art of Prompt Engineering",
+      "publisher": "Microsoft Azure",
+      "year": "2024",
+      "url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering",
+      "noteKey": "p099.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p099.notes.assumption.0",
+      "p099.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p099.notes.scope.0",
+      "p099.notes.scope.1"
+    ]
+  }
+}

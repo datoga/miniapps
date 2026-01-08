@@ -1,0 +1,404 @@
+{
+  "id": "p080",
+  "slug": {
+    "en": "hairdresser",
+    "es": "peluquero"
+  },
+  "name": {
+    "en": "Hairdresser",
+    "es": "Peluquero"
+  },
+  "synonyms": {
+    "en": [
+      "Stylist",
+      "Barber"
+    ],
+    "es": [
+      "Estilista",
+      "Barbero"
+    ]
+  },
+  "oneLinerKey": "p080.oneLiner",
+  "summaryBulletsKeys": [
+    "p080.summary.0",
+    "p080.summary.1",
+    "p080.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p080.task.0.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.0.why.0",
+        "p080.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.0.human.0",
+        "p080.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.1.why.0",
+        "p080.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.1.human.0",
+        "p080.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.2.desc",
+      "automationLevel": "partial",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p080.task.2.why.0",
+        "p080.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.2.human.0",
+        "p080.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.3.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.3.why.0",
+        "p080.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.3.human.0",
+        "p080.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.4.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p080.task.4.why.0",
+        "p080.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.4.human.0",
+        "p080.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.5.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p080.task.5.why.0",
+        "p080.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.5.human.0",
+        "p080.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.6.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.6.why.0",
+        "p080.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.6.human.0",
+        "p080.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.7.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.7.why.0",
+        "p080.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.7.human.0",
+        "p080.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.8.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.8.why.0",
+        "p080.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.8.human.0",
+        "p080.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.9.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p080.task.9.why.0",
+        "p080.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.9.human.0",
+        "p080.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.10.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.10.why.0",
+        "p080.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.10.human.0",
+        "p080.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.11.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.11.why.0",
+        "p080.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.11.human.0",
+        "p080.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.12.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p080.task.12.why.0",
+        "p080.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.12.human.0",
+        "p080.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.13.desc",
+      "automationLevel": "assist",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p080.task.13.why.0",
+        "p080.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.13.human.0",
+        "p080.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.14.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.14.why.0",
+        "p080.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.14.human.0",
+        "p080.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.15.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.15.why.0",
+        "p080.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.15.human.0",
+        "p080.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.16.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p080.task.16.why.0",
+        "p080.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.16.human.0",
+        "p080.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p080.task.17.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p080.task.17.why.0",
+        "p080.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p080.task.17.human.0",
+        "p080.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p080.timeline.now.changes.0",
+        "p080.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p080.timeline.now.impl.0",
+        "p080.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p080.timeline.next.changes.0",
+        "p080.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p080.timeline.next.impl.0",
+        "p080.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p080.timeline.later.changes.0",
+        "p080.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p080.timeline.later.impl.0",
+        "p080.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p080.signal.0.desc",
+      "toolExamplesKeys": [
+        "p080.signal.0.tool.0",
+        "p080.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p080.signal.0.why"
+    },
+    {
+      "signalKey": "p080.signal.1.desc",
+      "toolExamplesKeys": [
+        "p080.signal.1.tool.0",
+        "p080.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p080.signal.1.why"
+    },
+    {
+      "signalKey": "p080.signal.2.desc",
+      "toolExamplesKeys": [
+        "p080.signal.2.tool.0",
+        "p080.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p080.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p080.strategy.0.timeframe",
+      "actionsKeys": [
+        "p080.strategy.0.action.0",
+        "p080.strategy.0.action.1"
+      ],
+      "expectedOutcomeKey": "p080.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p080.strategy.1.timeframe",
+      "actionsKeys": [
+        "p080.strategy.1.action.0",
+        "p080.strategy.1.action.1"
+      ],
+      "expectedOutcomeKey": "p080.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p080.strategy.2.timeframe",
+      "actionsKeys": [
+        "p080.strategy.2.action.0",
+        "p080.strategy.2.action.1"
+      ],
+      "expectedOutcomeKey": "p080.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Hairdressers and Stylists",
+      "publisher": "BLS",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/personal-care-and-service/barbers-hairstylists-and-cosmetologists.htm",
+      "noteKey": "p080.source.0.note"
+    },
+    {
+      "title": "L'Oréal Salon of the Future",
+      "publisher": "L'Oréal Group",
+      "year": "2025",
+      "url": "https://www.loreal.com",
+      "noteKey": "p080.source.1.note"
+    },
+    {
+      "title": "AI in Beauty Trends",
+      "publisher": "WGSN",
+      "year": "2024",
+      "url": "https://www.wgsn.com",
+      "noteKey": "p080.source.2.note"
+    },
+    {
+      "title": "39-5012.00 - Hairdressers",
+      "publisher": "O*NET",
+      "year": "2025",
+      "url": "https://www.onetonline.org/link/summary/39-5012.00",
+      "noteKey": "p080.source.3.note"
+    },
+    {
+      "title": "The Robotic Barber",
+      "publisher": "Barber Robot Inc.",
+      "year": "2025",
+      "url": "https://www.barberrobot.com",
+      "noteKey": "p080.source.4.note"
+    },
+    {
+      "title": "Salon Management and AI",
+      "publisher": "Mindbody",
+      "year": "2024",
+      "url": "https://www.mindbodyonline.com",
+      "noteKey": "p080.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p080.notes.assumption.0",
+      "p080.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p080.notes.scope.0",
+      "p080.notes.scope.1"
+    ]
+  }
+}

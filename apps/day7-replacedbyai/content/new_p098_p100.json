@@ -1,0 +1,502 @@
+{
+  "professions": [
+    {
+      "id": "p098",
+      "name": { "en": "AI Ethicist", "es": "Eticista de IA" },
+      "synonyms": { "en": ["Responsible AI Lead", "AI Policy Advisor"], "es": ["Responsable de IA Ética", "Asesor de Políticas de IA"] },
+      "oneLiner": "Yes, but human values are subjective and cultural, requiring human consensus that code cannot generate.",
+      "summaryBullets": [
+        "Ensures AI systems align with human rights, fairness, and transparency standards.",
+        "Audits algorithmic bias and develops mitigation frameworks for technical teams.",
+        "Navigates the intersection of emerging global regulations and corporate responsibility."
+      ],
+      "tasks": [
+        {
+          "task": "Develop organizational AI principles",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": ["LLMs draft baseline ethical codes based on global standards", "Benchmarking against peers is automated"],
+          "whatStaysHuman": ["Final philosophical alignment with brand values", "Cultural nuance in ethical trade-offs"]
+        },
+        {
+          "task": "Perform algorithmic bias audits",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated toolkits detect statistical disparities in datasets", "Real-time monitoring flags drift in fairness metrics"],
+          "whatStaysHuman": ["Interpreting the root cause of systemic bias", "Defining what 'fairness' means for specific contexts"]
+        },
+        {
+          "task": "Draft AI impact assessments",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Templates populated via automated workflow data", "Regulatory mapping handled by legal-AI tools"],
+          "whatStaysHuman": ["Evaluating high-stakes societal impacts", "Stakeholder interview synthesis"]
+        },
+        {
+          "task": "Design fairness constraints for models",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": ["AI assists in writing objective functions for fairness", "Simulation of edge cases is automated"],
+          "whatStaysHuman": ["Deciding between competing mathematical definitions of fairness", "Human-in-the-loop oversight"]
+        },
+        {
+          "task": "Conduct stakeholder consultation",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": ["AI summarizes feedback from thousands of users", "Sentiment analysis tracks community concerns"],
+          "whatStaysHuman": ["Building trust with marginalized groups", "Conflict resolution between diverse stakeholders"]
+        },
+        {
+          "task": "Monitor regulatory compliance",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated alerts for new global AI laws", "Cross-referencing codebases with legal text"],
+          "whatStaysHuman": ["Interpreting ambiguous legal language", "Strategic lobbying and advocacy"]
+        },
+        {
+          "task": "Review training data for consent",
+          "automationLevel": "total",
+          "horizon": "3-5",
+          "whyItChanges": ["Metadata scrapers verify license and consent tags", "Automated lineage tracking of datasets"],
+          "whatStaysHuman": ["Handling legal edge cases of 'fair use'", "Setting the 'zero-trust' data policy"]
+        },
+        {
+          "task": "Explain model decisions (Explainability)",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["SHAP/LIME values generated automatically", "LLMs translate technical weights into natural language"],
+          "whatStaysHuman": ["Validating the accuracy of the 'explanation'", "Communicating risks to non-technical boards"]
+        },
+        {
+          "task": "Incident response for AI failures",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": ["AI flags anomalous behavior or 'hallucinations'", "Automated kill-switches based on risk thresholds"],
+          "whatStaysHuman": ["Managing public relations and accountability", "Post-mortem ethical analysis"]
+        },
+        {
+          "task": "Train staff on ethical AI use",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": ["AI-generated personalized learning paths", "Interactive VR/AI roleplay for ethical dilemmas"],
+          "whatStaysHuman": ["Inspiring an ethical culture", "Mentoring junior practitioners"]
+        },
+        {
+          "task": "Vet third-party AI vendors",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated scanning of vendor transparency reports", "Security/Ethics scorecards generated via API"],
+          "whatStaysHuman": ["Negotiating ethical liability clauses", "Final risk-benefit judgment"]
+        },
+        {
+          "task": "Red-teaming for safety",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated adversarial prompt generation", "AI bots simulate malicious user behavior"],
+          "whatStaysHuman": ["Creative 'jailbreaking' based on human psychology", "Assessing long-term existential risks"]
+        },
+        {
+          "task": "Establish data privacy standards",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": ["Differential privacy applied via automated libraries", "PII detection in unstructured data is total"],
+          "whatStaysHuman": ["Defining the boundary of 'public good' vs. 'private right'", "Strategic data sovereignty decisions"]
+        },
+        {
+          "task": "Review AI-generated content",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Watermarking and deepfake detection tools", "Fact-checking pipelines for LLM outputs"],
+          "whatStaysHuman": ["Subjective quality and 'truth' assessment", "Creative direction and intent validation"]
+        },
+        {
+          "task": "Analyze societal labor impacts",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": ["Economic modeling of displacement trends", "Large-scale data synthesis of job shifts"],
+          "whatStaysHuman": ["Policy recommendations for social safety nets", "Empathy-led transition management"]
+        },
+        {
+          "task": "Audit for environmental impact",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Carbon footprint trackers for compute time", "Optimizing model efficiency automatically"],
+          "whatStaysHuman": ["Setting sustainability goals for the enterprise", "Trading off performance for eco-impact"]
+        },
+        {
+          "task": "Manage 'Human-in-the-loop' workflows",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": ["AI identifies which tasks require human review", "Routing of tasks based on expert availability"],
+          "whatStaysHuman": ["Final arbitration on high-risk cases", "Designing the loop to prevent human fatigue"]
+        },
+        {
+          "task": "Advocate for inclusive design",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": ["Accessibility audit tools for AI interfaces", "Translation of tools for global accessibility"],
+          "whatStaysHuman": ["Advocating for marginalized voices in boardrooms", "Empathetic design thinking"]
+        }
+      ],
+      "timeline": [
+        { "phase": "Now", "whatChanges": ["Bias auditing becomes standardized", "Explainability tools integrated into devops"], "implications": ["Ethicists move from 'advisory' to 'audit' roles", "Demand for technical ethics increases"] },
+        { "phase": "Next", "whatChanges": ["Real-time ethical guardrails (active monitoring)", "Automated compliance with EU AI Act"], "implications": ["Shift to 'preventative' ethics", "Focus on automated documentation"] },
+        { "phase": "Later", "whatChanges": ["Autonomous AI agents self-correct for bias", "Global ethical consensus protocols"], "implications": ["Ethicists focus on high-level moral philosophy", "Role evolves into 'Societal Impact Officer'"] }
+      ],
+      "signalsAndTools": [
+        { "signal": "Rise of AI TRiSM (Trust, Risk and Security Management)", "toolExamples": ["Arthur.ai", "Fiddler AI"], "whyItMatters": "Standardizes how companies monitor AI performance and ethics." },
+        { "signal": "EU AI Act Enforcement", "toolExamples": ["Compliance trackers", "Audit templates"], "whyItMatters": "Makes ethical documentation a legal requirement, not a choice." },
+        { "signal": "Open-source Bias Toolkits", "toolExamples": ["IBM AI Fairness 360", "Fairlearn"], "whyItMatters": "Lowers the barrier to entry for technical bias testing." }
+      ],
+      "adaptationStrategies": [
+        { "timeframe": "2 weeks", "actions": ["Audit one existing model using Fairlearn", "Review the EU AI Act summary"], "expectedOutcome": "Identify immediate bias risks." },
+        { "timeframe": "2 months", "actions": ["Implement an AI Ethics Board", "Draft a Responsible AI Manifesto"], "expectedOutcome": "Establish organizational governance." },
+        { "timeframe": "2 quarters", "actions": ["Integrate bias monitoring into CI/CD pipelines", "Upskill 50% of devs on ethical coding"], "expectedOutcome": "Ethical considerations become part of the dev lifecycle." }
+      ],
+      "sources": [
+        { "title": "The EU AI Act", "publisher": "European Parliament", "year": "2024", "url": "https://artificialintelligenceact.eu/", "note": "Primary regulatory framework for AI Ethicists." },
+        { "title": "NIST AI Risk Management Framework", "publisher": "NIST", "year": "2023", "url": "https://www.nist.gov/itl/ai-risk-management-framework", "note": "Core methodology for risk assessment." },
+        { "title": "Ethics of Artificial Intelligence", "publisher": "UNESCO", "year": "2021", "url": "https://unesdoc.unesco.org/ark:/48223/pf0000381115", "note": "Global standards for human rights in AI." },
+        { "title": "AI TRiSM Guide", "publisher": "Gartner", "year": "2024", "url": "https://www.gartner.com/en/information-technology/glossary/ai-trism", "note": "Industry trend for AI trust and risk." },
+        { "title": "Algorithmic Bias Playbook", "publisher": "Chicago Booth", "year": "2021", "url": "https://www.chicagobooth.edu/research/center-for-applied-artificial-intelligence/research/algorithmic-bias/playbook", "note": "Practical guide for bias mitigation." },
+        { "title": "Responsible AI Toolkit", "publisher": "Microsoft", "year": "2024", "url": "https://www.microsoft.com/en-us/ai/responsible-ai", "note": "Technical implementation examples." }
+      ],
+      "notes": {
+        "assumptions": ["Assumes global adoption of AI regulations similar to the EU AI Act.", "Assumes 'AI Ethicist' remains a distinct role rather than a shared responsibility."],
+        "scopeBoundaries": ["Task-level analysis only.", "No binary job replacement claims."]
+      }
+    },
+    {
+      "id": "p099",
+      "name": { "en": "Prompt Engineer", "es": "Ingeniero de Prompts" },
+      "synonyms": { "en": ["LLM Interaction Specialist", "AI Orchestrator"], "es": ["Especialista en Interacción con LLM", "Orquestador de IA"] },
+      "oneLiner": "Yes, but as models get better at following intent, the role shifts from 'magic words' to complex system architecture.",
+      "summaryBullets": [
+        "Designs and optimizes inputs to maximize the accuracy and safety of LLM outputs.",
+        "Creates reusable prompt templates and 'chains' for enterprise workflows.",
+        "Bridges the gap between non-technical business needs and technical model capabilities."
+      ],
+      "tasks": [
+        {
+          "task": "Design few-shot prompt templates",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["AI helps generate varied examples for few-shot learning", "Automated testing of example effectiveness"],
+          "whatStaysHuman": ["Selecting the most representative 'gold' examples", "Defining the desired tone and voice"]
+        },
+        {
+          "task": "Implement Chain-of-Thought reasoning",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": ["Models are natively getting better at reasoning steps", "AI can suggest intermediate logical steps"],
+          "whatStaysHuman": ["Verifying the logical validity of the chain", "Debugging complex reasoning failures"]
+        },
+        {
+          "task": "A/B test prompt performance",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated evaluation frameworks (e.g., Promptfoo) calculate scores", "Synthetic data generation for testing at scale"],
+          "whatStaysHuman": ["Determining the success criteria (KPIs)", "Qualitative review of 'vibes' and nuance"]
+        },
+        {
+          "task": "Develop RAG system prompts",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["AI optimizes the retrieval-to-generation context window", "Automated chunking strategies"],
+          "whatStaysHuman": ["Ensuring retrieved context is relevant and ethically sourced", "Preventing information leakage"]
+        },
+        {
+          "task": "Secure prompts against 'jailbreaking'",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated red-teaming bots test for exploits", "Pattern matching for known prompt injections"],
+          "whatStaysHuman": ["Creative anticipation of new social engineering tactics", "Policy-level safety decisions"]
+        },
+        {
+          "task": "Optimize prompt cost/token usage",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["Algorithms automatically compress prompts while maintaining meaning", "Real-time token cost monitoring and routing"],
+          "whatStaysHuman": ["Deciding the trade-off between cost and quality", "High-level architectural choices"]
+        },
+        {
+          "task": "Build multi-agent workflows",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": ["AI orchestrators (e.g., AutoGPT) handle task delegation", "Templates for agent personas are automated"],
+          "whatStaysHuman": ["Defining the overarching mission and constraints", "Intervening when agents loop or fail"]
+        },
+        {
+          "task": "Fine-tune models via prompts",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": ["Prompt-based fine-tuning (PEFT/LoRA) is highly automated", "Automated dataset preparation from user logs"],
+          "whatStaysHuman": ["Determining if a prompt or a fine-tune is the right solution", "Curating the final training dataset"]
+        },
+        {
+          "task": "Maintain a prompt library/catalog",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["Version control (PromptOps) handles updates and rollbacks", "Automated documentation of prompt intent"],
+          "whatStaysHuman": ["Governance of who can access/edit prompts", "Aligning prompts with business evolution"]
+        },
+        {
+          "task": "Translate business requirements to prompts",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": ["Business users can use 'meta-prompts' to generate prompts", "AI analyzes requirement docs to suggest prompt logic"],
+          "whatStaysHuman": ["Empathy for the end-user's actual problem", "Managing stakeholder expectations"]
+        },
+        {
+          "task": "Monitor for prompt drift",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated monitoring of model output shifts over time", "Alerts when safety filters are triggered"],
+          "whatStaysHuman": ["Deciding when a fundamental redesign is needed", "Investigating unexpected model updates"]
+        },
+        {
+          "task": "Design conversational UX flows",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": ["AI generates varied dialogue trees", "Automated testing of user frustration points"],
+          "whatStaysHuman": ["Designing for human delight and empathy", "Ethics of persuasive AI design"]
+        },
+        {
+          "task": "Debug hallucination issues",
+          "automationLevel": "assist",
+          "horizon": "0-2",
+          "whyItChanges": ["Fact-checking agents cross-reference outputs", "Probabilistic scoring of output reliability"],
+          "whatStaysHuman": ["Intuition for 'why' the model is hallucinating", "Creative fixes involving context or logic"]
+        },
+        {
+          "task": "Integrate prompts with APIs",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": ["AI 'tool-use' (Function Calling) is becoming native", "Automated generation of JSON schemas for prompts"],
+          "whatStaysHuman": ["System security and API access governance", "Architecture of the data pipeline"]
+        },
+        {
+          "task": "Train non-experts on prompting",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Self-paced AI tutorials", "AI-assisted 'prompt fixers' for end-users"],
+          "whatStaysHuman": ["Change management and cultural adoption", "Solving complex, non-standard user queries"]
+        },
+        {
+          "task": "Standardize 'System' prompts",
+          "automationLevel": "total",
+          "horizon": "5-10",
+          "whyItChanges": ["Standardized system prompts for common industries", "Universal safety layers"],
+          "whatStaysHuman": ["Brand-specific personality tuning", "Regulatory legal compliance checks"]
+        },
+        {
+          "task": "Analyze prompt ROI",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": ["Automated dashboarding of token cost vs. output quality", "Linking prompt usage to business conversion metrics"],
+          "whatStaysHuman": ["Strategic decisions on AI investment", "Value-based prioritization"]
+        },
+        {
+          "task": "Evaluate new LLM releases",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Benchmark suites (MMLU, etc.) run automatically", "LLM-as-a-judge (using GPT-4 to grade others)"],
+          "whatStaysHuman": ["Subjective testing for specific use cases", "Final vendor selection based on trust/terms"]
+        }
+      ],
+      "timeline": [
+        { "phase": "Now", "whatChanges": ["Manual prompt engineering for text generation", "Basic A/B testing of inputs"], "implications": ["High demand for 'prompt whisperers'", "Heavy focus on trial-and-error"] },
+        { "phase": "Next", "whatChanges": ["Prompt-to-Function calling integration", "Systematic evaluation frameworks (PromptOps)"], "implications": ["Role merges with Software Engineering", "Focus shifts to reliability and testing"] },
+        { "phase": "Later", "whatChanges": ["Natural language intent is perfectly captured", "AI-optimized prompts (DSPy)"], "implications": ["Prompting as a skill is commoditized", "Role evolves into 'AI Product Architect'"] }
+      ],
+      "signalsAndTools": [
+        { "signal": "Rise of Programmatic Prompting", "toolExamples": ["DSPy", "LangChain"], "whyItMatters": "Moves from manual strings to code-defined optimization." },
+        { "signal": "LLM-as-a-Judge trend", "toolExamples": ["G-Eval", "Prometheus"], "whyItMatters": "Uses stronger AI to automatically evaluate the outputs of prompts." },
+        { "signal": "Native Tool-Use/Function Calling", "toolExamples": ["OpenAI Functions", "Claude Tools"], "whyItMatters": "Prompts are no longer just for text, but for action." }
+      ],
+      "adaptationStrategies": [
+        { "timeframe": "2 weeks", "actions": ["Learn the DSPy framework basics", "Set up an evaluation suite for your top 3 prompts"], "expectedOutcome": "Move beyond manual trial-and-error." },
+        { "timeframe": "2 months", "actions": ["Integrate RAG (Vector DB) into a workflow", "Build a small multi-agent demo"], "expectedOutcome": "Master complex context-aware prompting." },
+        { "timeframe": "2 quarters", "actions": ["Implement a 'PromptOps' lifecycle in your company", "Certify 10 staff members in basic prompting"], "expectedOutcome": "Establish enterprise-grade AI interaction standards." }
+      ],
+      "sources": [
+        { "title": "Prompt Engineering Guide", "publisher": "DAIR.AI", "year": "2024", "url": "https://www.promptingguide.ai/", "note": "Comprehensive community-driven resource." },
+        { "title": "Language Models are Few-Shot Learners", "publisher": "OpenAI", "year": "2020", "url": "https://arxiv.org/abs/2005.14165", "note": "Foundational paper for the profession." },
+        { "title": "DSPy: Compiling Declarative Language Model Programs", "publisher": "Stanford NLP", "year": "2023", "url": "https://github.com/stanfordnlp/dspy", "note": "Signals the shift to programmatic prompting." },
+        { "title": "Chain-of-Thought Prompting Elicits Reasoning", "publisher": "Google Research", "year": "2022", "url": "https://arxiv.org/abs/2201.11903", "note": "Core logic-task methodology." },
+        { "title": "Prompt Injection Attacks", "publisher": "OWASP", "year": "2023", "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/", "note": "Security and safety reference." },
+        { "title": "The Art of Prompt Engineering", "publisher": "Microsoft Azure", "year": "2024", "url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering", "note": "Enterprise implementation standards." }
+      ],
+      "notes": {
+        "assumptions": ["Assumes models continue to require structured 'prompts' even if natural language improves.", "Assumes the role remains separate from general Software Engineering for the mid-term."],
+        "scopeBoundaries": ["Task-level analysis only.", "No binary job replacement claims."]
+      }
+    },
+    {
+      "id": "p100",
+      "name": { "en": "MLOps Engineer", "es": "Ingeniero de MLOps" },
+      "synonyms": { "en": ["Machine Learning Operations", "AI Infrastructure Engineer"], "es": ["Operaciones de Machine Learning", "Ingeniero de Infraestructura de IA"] },
+      "oneLiner": "Yes, but the focus shifts from managing servers to managing data drift and model lifecycle reliability.",
+      "summaryBullets": [
+        "Automates the deployment, scaling, and monitoring of machine learning models.",
+        "Ensures data pipelines are reliable, secure, and reproducible for continuous training.",
+        "Collaborates with Data Scientists to turn experimental code into production-ready software."
+      ],
+      "tasks": [
+        {
+          "task": "Automate CI/CD pipelines for ML",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["GitHub Actions/GitLab CI templates for ML are standard", "Automated containerization (Docker) is native"],
+          "whatStaysHuman": ["Designing the overall pipeline architecture", "Setting failure thresholds and rollback logic"]
+        },
+        {
+          "task": "Monitor for data and model drift",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Tools like EvidentlyAI or Arize provide real-time alerts", "Automated statistical comparison of training vs. production data"],
+          "whatStaysHuman": ["Deciding if drift is 'natural' or requires model retraining", "Investigating data source changes"]
+        },
+        {
+          "task": "Manage Feature Stores",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": ["Tecton/Feast automate feature calculation and serving", "AI-assisted feature engineering suggestions"],
+          "whatStaysHuman": ["Defining business-relevant features", "Governing data access and consistency"]
+        },
+        {
+          "task": "Optimize model inference speed",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Auto-quantization tools (NVIDIA TensorRT) are total", "Automated pruning and distillation"],
+          "whatStaysHuman": ["Balancing latency vs. accuracy trade-offs", "Selecting hardware/GPU instance types"]
+        },
+        {
+          "task": "Deploy models to the Edge",
+          "automationLevel": "partial",
+          "horizon": "3-5",
+          "whyItChanges": ["Frameworks like TinyML automate cross-compilation", "Remote device management is standardized"],
+          "whatStaysHuman": ["Handling hardware-specific limitations", "Designing local data privacy protocols"]
+        },
+        {
+          "task": "Version control for data and models",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["DVC (Data Version Control) automates lineage", "MLflow/W&B track model iterations automatically"],
+          "whatStaysHuman": ["Governance and audit trail requirements", "Final release approval"]
+        },
+        {
+          "task": "Secure ML pipelines (MLSecOps)",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated scanning for malicious code in pickle files", "Vulnerability databases for AI libraries"],
+          "whatStaysHuman": ["Security threat modeling", "Incident response leadership"]
+        },
+        {
+          "task": "Manage GPU resource allocation",
+          "automationLevel": "total",
+          "horizon": "3-5",
+          "whyItChanges": ["Kubernetes (K8s) operators for GPUs automate scaling", "Dynamic scheduling based on cost/load"],
+          "whatStaysHuman": ["Budgetary planning and vendor negotiations", "Strategic capacity planning"]
+        },
+        {
+          "task": "Collaborate on model testing",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Automated generation of unit tests for data schemas", "AI-assisted code reviews"],
+          "whatStaysHuman": ["Ensuring tests align with business KPIs", "Cross-team communication"]
+        },
+        {
+          "task": "Set up centralized logging",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["Observability stacks (ELK, Prometheus) are mature", "Automated log analysis for error patterns"],
+          "whatStaysHuman": ["Defining 'what' matters to log for compliance", "Troubleshooting systemic outages"]
+        },
+        {
+          "task": "Design scalable RAG architecture",
+          "automationLevel": "assist",
+          "horizon": "3-5",
+          "whyItChanges": ["Serverless vector databases (Pinecone/Weaviate) handle scaling", "Automated re-indexing pipelines"],
+          "whatStaysHuman": ["Selecting the right embedding models", "System-level cost/performance design"]
+        },
+        {
+          "task": "Implement A/B and Canary deployments",
+          "automationLevel": "majority",
+          "horizon": "0-2",
+          "whyItChanges": ["Service meshes (Istio) automate traffic splitting", "Automated rollback if canary metrics fail"],
+          "whatStaysHuman": ["Defining the rollout strategy", "Interpreting user impact results"]
+        },
+        {
+          "task": "Audit for environmental compute cost",
+          "automationLevel": "majority",
+          "horizon": "5-10",
+          "whyItChanges": ["Automatic tracking of carbon intensity of cloud regions", "Auto-scheduling of training for low-carbon hours"],
+          "whatStaysHuman": ["Setting enterprise ESG goals", "Policy-level trade-offs"]
+        },
+        {
+          "task": "Maintain documentation (Model Cards)",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["LLMs generate documentation from code and metadata", "Automated updates to dependency lists"],
+          "whatStaysHuman": ["Ensuring legal/ethical clarity for non-technical users", "Final accuracy check"]
+        },
+        {
+          "task": "Manage distributed training jobs",
+          "automationLevel": "majority",
+          "horizon": "3-5",
+          "whyItChanges": ["Ray/Horovod automate cluster management", "Fault-tolerant training (checkpointing) is standard"],
+          "whatStaysHuman": ["Architecture of large-scale distributed systems", "Strategic partnership with cloud providers"]
+        },
+        {
+          "task": "Integrate LLM APIs into legacy systems",
+          "automationLevel": "partial",
+          "horizon": "0-2",
+          "whyItChanges": ["Connector libraries and low-code middleware", "AI-generated shim code/wrappers"],
+          "whatStaysHuman": ["Understanding legacy business logic constraints", "Managing technical debt"]
+        },
+        {
+          "task": "Review model license compliance",
+          "automationLevel": "total",
+          "horizon": "0-2",
+          "whyItChanges": ["Software Composition Analysis (SCA) for ML licenses", "Automated tagging of 'permissive' vs. 'copyleft'"],
+          "whatStaysHuman": ["Legal interpretation of commercial usage rights", "Policy creation"]
+        },
+        {
+          "task": "Develop internal MLOps tools",
+          "automationLevel": "assist",
+          "horizon": "5-10",
+          "whyItChanges": ["AI-assisted coding of infrastructure as code (IaC)", "Automated UI generation for internal dashboards"],
+          "whatStaysHuman": ["Identifying unique organizational bottlenecks", "Long-term tool strategy"]
+        }
+      ],
+      "timeline": [
+        { "phase": "Now", "whatChanges": ["Manual deployment of models as APIs", "Custom scripts for monitoring"], "implications": ["High reliance on 'unicorn' engineers", "Slow deployment cycles"] },
+        { "phase": "Next", "whatChanges": ["Standardized MLOps platforms (Vertex AI, SageMaker)", "Automated drift detection"], "implications": ["Shift to 'platform engineering' mindset", "Increased focus on reliability and cost"] },
+        { "phase": "Later", "whatChanges": ["Self-healing ML infrastructure", "Automated cross-cloud model migration"], "implications": ["MLOps becomes a background utility", "Role moves toward 'AI Strategy & Infrastructure Design'"] }
+      ],
+      "signalsAndTools": [
+        { "signal": "Consolidation of MLOps Platforms", "toolExamples": ["Weights & Biases", "MLflow"], "whyItMatters": "Standardizes the workflow from experiment to production." },
+        { "signal": "Rise of LLMOps", "toolExamples": ["LangSmith", "Arize Phoenix"], "whyItMatters": "Specific tools for managing non-deterministic language models." },
+        { "signal": "Serverless ML Inference", "toolExamples": ["Modal", "Replicate"], "whyItMatters": "Removes the need for manual server management for most use cases." }
+      ],
+      "adaptationStrategies": [
+        { "timeframe": "2 weeks", "actions": ["Learn DVC for data versioning", "Set up a basic MLflow tracking server"], "expectedOutcome": "Improve experiment reproducibility." },
+        { "timeframe": "2 months", "actions": ["Deploy a model using Kubernetes and Helm", "Implement drift monitoring on a live API"], "expectedOutcome": "Master production-grade scaling." },
+        { "timeframe": "2 quarters", "actions": ["Build an end-to-end automated retraining pipeline", "Certify in a major cloud MLOps platform"], "expectedOutcome": "Achieve full lifecycle automation." }
+      ],
+      "sources": [
+        { "title": "MLOps Roadmap", "publisher": "MLOps.community", "year": "2024", "url": "https://mlops.community/", "note": "Primary community-driven standard." },
+        { "title": "Practitioners Guide to MLOps", "publisher": "Google Cloud", "year": "2021", "url": "https://cloud.google.com/resources/mlops-whitepaper", "note": "Foundational enterprise framework." },
+        { "title": "Rules of Machine Learning", "publisher": "Google Developers", "year": "2022", "url": "https://developers.google.com/machine-learning/guides/rules-of-ml", "note": "Best practices for production ML." },
+        { "title": "MLOps State of the Industry", "publisher": "Weights & Biases", "year": "2023", "url": "https://wandb.ai/site/reports/", "note": "Market trends and tool adoption." },
+        { "title": "Data Management for Machine Learning", "publisher": "O'Reilly", "year": "2023", "url": "https://www.oreilly.com/", "note": "Technical architecture reference." },
+        { "title": "Operationalizing AI", "publisher": "Gartner", "year": "2024", "url": "https://www.gartner.com/", "note": "Strategic business alignment of MLOps." }
+      ],
+      "notes": {
+        "assumptions": ["Assumes 'LLMOps' remains a subset of 'MLOps'.", "Assumes Kubernetes remains the dominant orchestration layer."],
+        "scopeBoundaries": ["Task-level analysis only.", "No binary job replacement claims."]
+      }
+    }
+  ]
+}

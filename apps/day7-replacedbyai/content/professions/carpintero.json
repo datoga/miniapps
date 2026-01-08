@@ -1,0 +1,407 @@
+{
+  "id": "p064",
+  "slug": {
+    "en": "carpenter",
+    "es": "carpintero"
+  },
+  "name": {
+    "en": "Carpenter",
+    "es": "Carpintero"
+  },
+  "synonyms": {
+    "en": [
+      "Woodworker",
+      "Cabinetmaker"
+    ],
+    "es": [
+      "Ebanista",
+      "Encofrador"
+    ]
+  },
+  "oneLinerKey": "p064.oneLiner",
+  "summaryBulletsKeys": [
+    "p064.summary.0",
+    "p064.summary.1",
+    "p064.summary.2"
+  ],
+  "tasks": [
+    {
+      "taskKey": "p064.task.0.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.0.why.0",
+        "p064.task.0.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.0.human.0",
+        "p064.task.0.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.1.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.1.why.0",
+        "p064.task.1.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.1.human.0",
+        "p064.task.1.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.2.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p064.task.2.why.0",
+        "p064.task.2.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.2.human.0",
+        "p064.task.2.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.3.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p064.task.3.why.0",
+        "p064.task.3.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.3.human.0",
+        "p064.task.3.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.4.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p064.task.4.why.0",
+        "p064.task.4.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.4.human.0",
+        "p064.task.4.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.5.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p064.task.5.why.0",
+        "p064.task.5.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.5.human.0",
+        "p064.task.5.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.6.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p064.task.6.why.0",
+        "p064.task.6.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.6.human.0",
+        "p064.task.6.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.7.desc",
+      "automationLevel": "majority",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p064.task.7.why.0",
+        "p064.task.7.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.7.human.0",
+        "p064.task.7.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.8.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.8.why.0",
+        "p064.task.8.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.8.human.0",
+        "p064.task.8.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.9.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.9.why.0",
+        "p064.task.9.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.9.human.0",
+        "p064.task.9.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.10.desc",
+      "automationLevel": "partial",
+      "horizon": "3-5",
+      "whyItChangesKeys": [
+        "p064.task.10.why.0",
+        "p064.task.10.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.10.human.0",
+        "p064.task.10.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.11.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p064.task.11.why.0",
+        "p064.task.11.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.11.human.0",
+        "p064.task.11.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.12.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.12.why.0",
+        "p064.task.12.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.12.human.0",
+        "p064.task.12.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.13.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.13.why.0",
+        "p064.task.13.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.13.human.0",
+        "p064.task.13.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.14.desc",
+      "automationLevel": "majority",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.14.why.0",
+        "p064.task.14.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.14.human.0",
+        "p064.task.14.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.15.desc",
+      "automationLevel": "assist",
+      "horizon": "5-10",
+      "whyItChangesKeys": [
+        "p064.task.15.why.0",
+        "p064.task.15.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.15.human.0",
+        "p064.task.15.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.16.desc",
+      "automationLevel": "total",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.16.why.0",
+        "p064.task.16.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.16.human.0",
+        "p064.task.16.human.1"
+      ]
+    },
+    {
+      "taskKey": "p064.task.17.desc",
+      "automationLevel": "assist",
+      "horizon": "0-2",
+      "whyItChangesKeys": [
+        "p064.task.17.why.0",
+        "p064.task.17.why.1"
+      ],
+      "whatStaysHumanKeys": [
+        "p064.task.17.human.0",
+        "p064.task.17.human.1"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "phase": "Now",
+      "whatChangesKeys": [
+        "p064.timeline.now.changes.0",
+        "p064.timeline.now.changes.1"
+      ],
+      "implicationsKeys": [
+        "p064.timeline.now.impl.0",
+        "p064.timeline.now.impl.1"
+      ]
+    },
+    {
+      "phase": "Next",
+      "whatChangesKeys": [
+        "p064.timeline.next.changes.0",
+        "p064.timeline.next.changes.1"
+      ],
+      "implicationsKeys": [
+        "p064.timeline.next.impl.0",
+        "p064.timeline.next.impl.1"
+      ]
+    },
+    {
+      "phase": "Later",
+      "whatChangesKeys": [
+        "p064.timeline.later.changes.0",
+        "p064.timeline.later.changes.1"
+      ],
+      "implicationsKeys": [
+        "p064.timeline.later.impl.0",
+        "p064.timeline.later.impl.1"
+      ]
+    }
+  ],
+  "signalsAndTools": [
+    {
+      "signalKey": "p064.signal.0.desc",
+      "toolExamplesKeys": [
+        "p064.signal.0.tool.0",
+        "p064.signal.0.tool.1"
+      ],
+      "whyItMattersKey": "p064.signal.0.why"
+    },
+    {
+      "signalKey": "p064.signal.1.desc",
+      "toolExamplesKeys": [
+        "p064.signal.1.tool.0",
+        "p064.signal.1.tool.1"
+      ],
+      "whyItMattersKey": "p064.signal.1.why"
+    },
+    {
+      "signalKey": "p064.signal.2.desc",
+      "toolExamplesKeys": [
+        "p064.signal.2.tool.0",
+        "p064.signal.2.tool.1"
+      ],
+      "whyItMattersKey": "p064.signal.2.why"
+    }
+  ],
+  "adaptationStrategies": [
+    {
+      "timeframeKey": "p064.strategy.0.timeframe",
+      "actionsKeys": [
+        "p064.strategy.0.action.0",
+        "p064.strategy.0.action.1",
+        "p064.strategy.0.action.2"
+      ],
+      "expectedOutcomeKey": "p064.strategy.0.outcome"
+    },
+    {
+      "timeframeKey": "p064.strategy.1.timeframe",
+      "actionsKeys": [
+        "p064.strategy.1.action.0",
+        "p064.strategy.1.action.1",
+        "p064.strategy.1.action.2"
+      ],
+      "expectedOutcomeKey": "p064.strategy.1.outcome"
+    },
+    {
+      "timeframeKey": "p064.strategy.2.timeframe",
+      "actionsKeys": [
+        "p064.strategy.2.action.0",
+        "p064.strategy.2.action.1",
+        "p064.strategy.2.action.2"
+      ],
+      "expectedOutcomeKey": "p064.strategy.2.outcome"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Carpenters Occupational Outlook",
+      "publisher": "BLS OOH",
+      "year": "2024",
+      "url": "https://www.bls.gov/ooh/construction-and-extraction/carpenters.htm",
+      "noteKey": "p064.source.0.note"
+    },
+    {
+      "title": "Robotics in Timber Construction",
+      "publisher": "ETH Zurich",
+      "year": "2023",
+      "url": "https://ethz.ch",
+      "noteKey": "p064.source.1.note"
+    },
+    {
+      "title": "O*NET: Carpenters",
+      "publisher": "O*NET",
+      "year": "2024",
+      "url": "https://www.onetonline.org/link/summary/47-2031.00",
+      "noteKey": "p064.source.2.note"
+    },
+    {
+      "title": "The Future of Woodworking",
+      "publisher": "Woodworking Network",
+      "year": "2024",
+      "url": "https://www.woodworkingnetwork.com",
+      "noteKey": "p064.source.3.note"
+    },
+    {
+      "title": "AR in the Construction Industry",
+      "publisher": "Journal of Building Engineering",
+      "year": "2023",
+      "url": "https://www.sciencedirect.com",
+      "noteKey": "p064.source.4.note"
+    },
+    {
+      "title": "Sustainable Prefab Trends",
+      "publisher": "Architectural Record",
+      "year": "2024",
+      "url": "https://www.architecturalrecord.com",
+      "noteKey": "p064.source.5.note"
+    }
+  ],
+  "notes": {
+    "assumptionsKeys": [
+      "p064.notes.assumption.0",
+      "p064.notes.assumption.1"
+    ],
+    "scopeBoundariesKeys": [
+      "p064.notes.scope.0",
+      "p064.notes.scope.1"
+    ]
+  }
+}

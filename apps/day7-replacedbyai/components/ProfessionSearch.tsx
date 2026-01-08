@@ -10,6 +10,8 @@ import {
   type IndexItem,
 } from "@/lib/professions/loadIndex.client";
 import type { ThinIndex } from "@/lib/professions/indexSchema";
+import { ProfessionRequestButton } from "./ProfessionRequestButton";
+import { ProfessionRequestModal } from "./ProfessionRequestModal";
 
 type Props = {
   locale: "en" | "es";
@@ -25,6 +27,10 @@ export function ProfessionSearch({ locale, professionCount }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  // Modal state lives here so it persists when dropdown closes
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalQuery, setModalQuery] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -56,10 +62,16 @@ export function ProfessionSearch({ locale, professionCount }: Props) {
     setSelectedIndex(-1);
   }, [query, locale]);
 
+  const navigateToProfession = useCallback((slug: string) => {
+    router.push(`/${locale}/p/${slug}`);
+  }, [router, locale]);
+
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (!results.length) return;
+      if (!results.length) {
+        return;
+      }
 
       switch (e.key) {
         case "ArrowDown":
@@ -89,11 +101,12 @@ export function ProfessionSearch({ locale, professionCount }: Props) {
           break;
       }
     },
-    [results, selectedIndex]
+    [results, selectedIndex, locale, navigateToProfession]
   );
 
-  const navigateToProfession = (slug: string) => {
-    router.push(`/${locale}/p/${slug}`);
+  const handleOpenRequestModal = (searchQuery: string) => {
+    setModalQuery(searchQuery);
+    setIsModalOpen(true);
   };
 
   // Scroll selected item into view
@@ -181,7 +194,7 @@ export function ProfessionSearch({ locale, professionCount }: Props) {
         <div
           id="search-results"
           ref={resultsRef}
-          className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 max-h-80 overflow-y-auto"
+          className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border-2 border-gray-200 dark:border-gray-700 max-h-80 overflow-y-auto"
           role="listbox"
         >
           {results.length > 0 ? (
@@ -208,14 +221,22 @@ export function ProfessionSearch({ locale, professionCount }: Props) {
               </button>
             ))
           ) : (
-            <div className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
-              <p>{t("noResults")}</p>
-              <p className="text-sm mt-2">{t("examples")}</p>
-            </div>
+            <ProfessionRequestButton
+              searchQuery={query}
+              locale={locale}
+              onRequestClick={handleOpenRequestModal}
+            />
           )}
         </div>
       )}
+
+      {/* Modal rendered outside dropdown so it doesn't unmount */}
+      <ProfessionRequestModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        searchQuery={modalQuery}
+        locale={locale}
+      />
     </div>
   );
 }
-

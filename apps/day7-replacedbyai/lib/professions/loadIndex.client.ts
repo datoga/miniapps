@@ -172,7 +172,7 @@ export function searchIndex(
 
   // Sort by score (descending), then by name
   results.sort((a, b) => {
-    if (b.score !== a.score) return b.score - a.score;
+    if (b.score !== a.score) {return b.score - a.score;}
     return a.item.name[locale].localeCompare(b.item.name[locale]);
   });
 
@@ -191,7 +191,7 @@ export async function getAllItems(): Promise<IndexItem[]> {
  * Preload the index (call early to warm cache)
  */
 export function preloadIndex(): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined") {return;}
 
   // Fire and forget
   loadIndex().catch(() => {

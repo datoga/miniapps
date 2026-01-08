@@ -15,15 +15,23 @@
       "placeholder": "Search for a profession...",
       "hint": "Type to search {count} professions",
       "noResults": "No professions found",
-      "examples": "Try: doctor, teacher, lawyer, accountant"
+      "examples": "Try: doctor, teacher, lawyer, accountant",
+      "suggested": "Suggested professions",
+      "request": {
+        "notFound": "We couldn't find \"{query}\"",
+        "cta": "Would you like to request it?",
+        "modalTitle": "Request profession",
+        "requesting": "Profession requested",
+        "success": "Thanks! We'll work on it."
+      }
     },
     "cta": {
       "explore": "Explore Professions",
       "learnMore": "Learn More"
     },
     "random": {
-      "label": "Featured profession",
-      "cta": "See full analysis →"
+      "label": "Suggested professions",
+      "cta": "View analysis →"
     },
     "features": {
       "taskLevel": {

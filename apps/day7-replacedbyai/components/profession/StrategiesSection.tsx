@@ -63,7 +63,16 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
   });
 
   const activeStrategy = profession.adaptationStrategies[activeIndex];
-  const activeConfig = timeframeConfig[activeIndex] ?? timeframeConfig[0]!;
+  const defaultConfig = {
+    icon: "🏃",
+    gradient: "from-green-500 to-emerald-500",
+    bgGradient: "from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20",
+    border: "border-green-300 dark:border-green-700",
+    text: "text-green-700 dark:text-green-300",
+    badge: "bg-green-500",
+    ring: "ring-green-500/30",
+  };
+  const activeConfig = timeframeConfig[activeIndex] ?? defaultConfig;
 
   if (!activeStrategy) {
     return null;
@@ -96,7 +105,7 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
         {/* Timeline markers - clickable */}
         <div className="relative flex justify-between px-4 pt-2">
           {profession.adaptationStrategies.map((strategy, index) => {
-            const config = timeframeConfig[index] ?? timeframeConfig[0]!;
+            const config = timeframeConfig[index] ?? defaultConfig;
             const label = t(strategy.timeframeKey, locale);
             const isActive = index === activeIndex;
             const isPast = index < activeIndex;
@@ -115,8 +124,8 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
                     isActive
                       ? `ring-4 ${config.ring} scale-110`
                       : isPast
-                      ? "opacity-100"
-                      : "opacity-60 grayscale-[30%] group-hover:opacity-100 group-hover:grayscale-0"
+                        ? "opacity-100"
+                        : "opacity-60 grayscale-[30%] group-hover:opacity-100 group-hover:grayscale-0"
                   }`}
                 >
                   {config.icon}
@@ -205,14 +214,14 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
       {/* Navigation dots */}
       <div className="flex justify-center gap-2 mt-4">
         {profession.adaptationStrategies.map((_, index) => {
-          const config = timeframeConfig[index] ?? timeframeConfig[0]!;
+          const dotConfig = timeframeConfig[index] ?? defaultConfig;
           return (
             <button
               key={index}
               onClick={() => setActiveIndex(index)}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                 index === activeIndex
-                  ? `w-8 ${config.badge}`
+                  ? `w-8 ${dotConfig.badge}`
                   : "bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
               }`}
               aria-label={`Go to strategy ${index + 1}`}

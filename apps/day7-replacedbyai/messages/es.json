@@ -15,15 +15,23 @@
       "placeholder": "Busca una profesión...",
       "hint": "Escribe para buscar entre {count} profesiones",
       "noResults": "No se encontraron profesiones",
-      "examples": "Prueba: médico, profesor, abogado, contador"
+      "examples": "Prueba: médico, profesor, abogado, contador",
+      "suggested": "Profesiones sugeridas",
+      "request": {
+        "notFound": "No hemos encontrado «{query}»",
+        "cta": "¿Quieres pedirla?",
+        "modalTitle": "Solicitar profesión",
+        "requesting": "Profesión solicitada",
+        "success": "¡Gracias! Trabajaremos en ello."
+      }
     },
     "cta": {
       "explore": "Explorar Profesiones",
       "learnMore": "Saber Más"
     },
     "random": {
-      "label": "Profesión destacada",
-      "cta": "Ver análisis completo →"
+      "label": "Profesiones sugeridas",
+      "cta": "Ver análisis →"
     },
     "features": {
       "taskLevel": {

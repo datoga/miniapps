@@ -94,16 +94,16 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
       {/* Horizontal timeline slider */}
       <div className="relative mt-6 mb-6 overflow-hidden pt-2 -mt-2">
         {/* Progress bar background */}
-        <div className="absolute top-9 left-[16.66%] right-[16.66%] h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        <div className="absolute top-8 sm:top-9 left-[20%] right-[20%] h-1 sm:h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full" />
 
         {/* Progress bar fill */}
         <div
-          className="absolute top-9 left-[16.66%] h-1.5 bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 rounded-full transition-all duration-500"
-          style={{ width: `${activeIndex * 33.33}%` }}
+          className="absolute top-8 sm:top-9 left-[20%] h-1 sm:h-1.5 bg-gradient-to-r from-green-500 via-blue-500 to-violet-500 rounded-full transition-all duration-500"
+          style={{ width: `${activeIndex * 30}%` }}
         />
 
         {/* Timeline markers - clickable */}
-        <div className="relative flex justify-between px-4 pt-2">
+        <div className="relative flex justify-between px-8 sm:px-12 pt-2">
           {profession.adaptationStrategies.map((strategy, index) => {
             const config = timeframeConfig[index] ?? defaultConfig;
             const label = t(strategy.timeframeKey, locale);
@@ -114,13 +114,11 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
               <button
                 key={index}
                 onClick={() => setActiveIndex(index)}
-                className={`flex flex-col items-center transition-all duration-300 group ${
-                  isActive ? "scale-110" : "hover:scale-105"
-                }`}
+                className="flex flex-col items-center transition-all duration-300 group"
               >
                 {/* Marker dot */}
                 <div
-                  className={`relative z-10 w-14 h-14 rounded-full bg-gradient-to-br ${config.gradient} flex items-center justify-center text-2xl shadow-lg transition-all duration-300 ${
+                  className={`relative z-10 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br ${config.gradient} flex items-center justify-center text-xl sm:text-2xl shadow-lg transition-all duration-300 ${
                     isActive
                       ? `ring-4 ${config.ring} scale-110`
                       : isPast
@@ -132,9 +130,9 @@ export function StrategiesSection({ profession, id = "strategies", isOpen = fals
                 </div>
                 {/* Timeframe label */}
                 <div
-                  className={`mt-2 px-3 py-1 rounded-full text-xs font-bold text-white transition-all duration-300 ${
+                  className={`mt-2 px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold text-white whitespace-nowrap transition-all duration-300 ${
                     config.badge
-                  } ${isActive ? "scale-105" : "opacity-80"}`}
+                  } ${isActive ? "" : "opacity-80"}`}
                 >
                   {label}
                 </div>

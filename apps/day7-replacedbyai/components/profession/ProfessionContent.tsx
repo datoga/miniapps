@@ -53,29 +53,41 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
     setOpenSectionId((current) => (current === sectionId ? "" : sectionId));
   };
 
-  // Navigate to section: scroll + open
+  // Navigate to section: close current, scroll, then open new
   const navigateToSection = useCallback((sectionId: string) => {
-    // First, scroll to the section header (before state changes)
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offset = 140; // Account for header (71px) + sticky tabs (~60px) + padding
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      // Scroll first
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
-      // Then open the section after a small delay
-      setTimeout(() => {
-        setOpenSectionId(sectionId);
-      }, 100);
-    } else {
-      setOpenSectionId(sectionId);
+    // If already on this section, do nothing
+    if (openSectionId === sectionId) {
+      return;
     }
-  }, []);
+
+    // First, close current section to get accurate positions
+    setOpenSectionId("");
+
+    // Wait for DOM to update after closing
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const offset = 140; // Account for header (71px) + sticky tabs (~60px) + padding
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+          // Scroll to position
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+
+          // Open the section after scroll starts
+          setTimeout(() => {
+            setOpenSectionId(sectionId);
+          }, 50);
+        } else {
+          setOpenSectionId(sectionId);
+        }
+      }, 50);
+    });
+  }, [openSectionId]);
 
   return (
     <>

@@ -8,7 +8,6 @@
  * 2. Loads/generates the slug lock file
  * 3. Converts to compiled format with translation keys
  * 4. Produces thin index for client-side search
- * 5. Writes chunked per-profession JSON files
  *
  * Usage: node scripts/compile-professions.mjs
  */
@@ -27,7 +26,6 @@ const RAW_FILE = join(CONTENT_DIR, "professions.raw.json");
 const SLUGS_LOCK_FILE = join(CONTENT_DIR, "slugs.lock.json");
 const COMPILED_FILE = join(CONTENT_DIR, "professions.compiled.json");
 const INDEX_FILE = join(CONTENT_DIR, "professions.index.json");
-const CHUNKS_DIR = join(CONTENT_DIR, "professions");
 const PUBLIC_DATA_DIR = join(ROOT_DIR, "public", "data");
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -260,23 +258,7 @@ function main() {
   writeFileSync(INDEX_FILE, JSON.stringify(indexData, null, 2) + "\n");
   console.log(`   Written to ${INDEX_FILE}`);
 
-  // 9. Write per-profession chunks (by ID for consistency)
-  console.log("\n📦 Writing per-profession chunks...");
-  ensureDir(CHUNKS_DIR);
-  for (const profession of compiledProfessions) {
-    // Write by ID (stable) and by both slugs for quick lookup
-    const chunkPath = join(CHUNKS_DIR, `${profession.id}.json`);
-    writeFileSync(chunkPath, JSON.stringify(profession, null, 2) + "\n");
-    // Also write by English slug for backward compatibility
-    const enChunkPath = join(CHUNKS_DIR, `${profession.slug.en}.json`);
-    writeFileSync(enChunkPath, JSON.stringify(profession, null, 2) + "\n");
-    // And by Spanish slug
-    const esChunkPath = join(CHUNKS_DIR, `${profession.slug.es}.json`);
-    writeFileSync(esChunkPath, JSON.stringify(profession, null, 2) + "\n");
-  }
-  console.log(`   Written ${compiledProfessions.length * 3} chunks to ${CHUNKS_DIR}`);
-
-  // 10. Copy to public/data for client access
+  // 9. Copy to public/data for client access
   console.log("\n📂 Copying to public/data...");
   ensureDir(PUBLIC_DATA_DIR);
   cpSync(INDEX_FILE, join(PUBLIC_DATA_DIR, "professions.index.json"));
@@ -287,7 +269,7 @@ function main() {
   );
   console.log(`   Index and translations copied to ${PUBLIC_DATA_DIR}`);
 
-  // 11. Summary
+  // 10. Summary
   console.log("\n" + "═".repeat(60));
   console.log("✅ Compilation complete!");
   console.log(`   Professions: ${compiledProfessions.length}`);

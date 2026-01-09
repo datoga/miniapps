@@ -126,13 +126,13 @@ export function TournamentDraft({ tournament, participants }: TournamentDraftPro
     if (!trimmed || trimmed.length < 1) return [];
 
     const seenNames = new Set<string>();
-    // Map tournament participantType to participant type (pair vs individual)
     const expectedType = tournament.participantType;
 
     return allExistingParticipants
       .filter((p) => {
         // Only show participants of the same type (individual or pair)
-        if (p.type !== expectedType) return false;
+        // Also include participants without type for backwards compatibility
+        if (p.type && p.type !== expectedType) return false;
 
         const nameLower = p.name.toLowerCase();
         // Skip duplicates (same name from different tournaments)
@@ -298,8 +298,8 @@ export function TournamentDraft({ tournament, participants }: TournamentDraftPro
                 className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800"
               >
                 <p className="border-b border-gray-100 px-3 py-1.5 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-300">
-{tournament.participantType === "pair" 
-                    ? t("tournament.draft.suggestionsPairs") 
+{tournament.participantType === "pair"
+                    ? t("tournament.draft.suggestionsPairs")
                     : t("tournament.draft.suggestions")}
                 </p>
                 {mainSuggestions.map((p) => (

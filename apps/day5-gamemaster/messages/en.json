@@ -79,7 +79,8 @@
       "double_elim": "Double Elimination",
       "ladder": "Ladder"
     },
-    "participants": "{count} participants",
+    "participantCount": "{count, plural, =1 {1 participant} other {# participants}}",
+    "pairCount": "{count, plural, =1 {1 pair} other {# pairs}}",
     "archive": "Archive",
     "unarchive": "Restore",
     "delete": "Delete",

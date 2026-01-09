@@ -121,7 +121,9 @@ export function TournamentCard({ tournament, locale, basePath = "", onUpdate }: 
                   </>
                 )}
                 {t("dashboard.mode." + tournament.mode)} •{" "}
-                {t("dashboard.participants", { count: tournament.participantIds.length })}
+                {tournament.participantType === "team"
+                  ? t("dashboard.pairCount", { count: tournament.participantIds.length })
+                  : t("dashboard.participantCount", { count: tournament.participantIds.length })}
               </p>
             </div>
           </div>

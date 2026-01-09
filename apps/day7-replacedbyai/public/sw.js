@@ -1,7 +1,7 @@
 // Service Worker for Will AI Replace...?
 // Implements caching strategy for offline support
 
-const CACHE_NAME = "replacedbyai-v2";
+const CACHE_NAME = "replacedbyai-v3";
 
 // Assets to precache (avoid root "/" as it redirects to locale)
 const PRECACHE_ASSETS = [
@@ -119,10 +119,12 @@ async function staleWhileRevalidate(request) {
   const cached = await caches.match(request);
 
   const fetchPromise = fetch(request)
-    .then((response) => {
+    .then(async (response) => {
       if (response.ok) {
-        const cache = caches.open(CACHE_NAME);
-        cache.then((c) => c.put(request, response.clone()));
+        // Clone BEFORE any other operation to avoid "body already used" error
+        const responseToCache = response.clone();
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(request, responseToCache);
       }
       return response;
     })

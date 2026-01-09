@@ -1,11 +1,10 @@
 // Service Worker for Will AI Replace...?
 // Implements caching strategy for offline support
 
-const CACHE_NAME = "replacedbyai-v1";
+const CACHE_NAME = "replacedbyai-v2";
 
-// Assets to precache
+// Assets to precache (avoid root "/" as it redirects to locale)
 const PRECACHE_ASSETS = [
-  "/",
   "/en",
   "/es",
   "/data/professions.index.json",
@@ -53,6 +52,16 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // Skip root path (redirects to locale, SW can't handle redirects)
+  if (url.pathname === "/") {
+    return;
+  }
+
+  // Skip navigation requests that might redirect
+  if (request.mode === "navigate" && !url.pathname.match(/^\/[a-z]{2}(\/|$)/)) {
+    return;
+  }
+
   // Strategy: Cache First for static assets
   if (
     url.pathname.startsWith("/_next/static/") ||
@@ -96,8 +105,8 @@ async function cacheFirst(request) {
     }
     return response;
   } catch (error) {
-    // Return offline fallback if available
-    const offlinePage = await caches.match("/");
+    // Return offline fallback if available (use /en as fallback, not / which redirects)
+    const offlinePage = await caches.match("/en") || await caches.match("/es");
     if (offlinePage) {
       return offlinePage;
     }

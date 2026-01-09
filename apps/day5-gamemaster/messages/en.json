@@ -144,7 +144,8 @@
       "minParticipants": "Need at least 2 participants to start",
       "minPairs": "Need at least 2 pairs to start",
       "nameDuplicate": "This name is already in use",
-      "suggestions": "Previous participants"
+      "suggestions": "Previous participants",
+      "suggestionsPairs": "Previous pairs"
     },
     "nowPlaying": {
       "title": "Now Playing",

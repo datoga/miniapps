@@ -144,7 +144,8 @@
       "minParticipants": "Se necesitan al menos 2 participantes para iniciar",
       "minPairs": "Se necesitan al menos 2 parejas para iniciar",
       "nameDuplicate": "Este nombre ya está en uso",
-      "suggestions": "Participantes anteriores"
+      "suggestions": "Participantes anteriores",
+      "suggestionsPairs": "Parejas anteriores"
     },
     "nowPlaying": {
       "title": "En Juego",

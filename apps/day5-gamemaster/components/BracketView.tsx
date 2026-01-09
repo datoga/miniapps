@@ -13,6 +13,8 @@ interface BracketViewProps {
   matches: Match[];
   participantMap: Map<string, Participant>;
   locale: string;
+  isFullscreen?: boolean;
+  onToggleFullscreen?: () => void;
 }
 
 // Match card dimensions
@@ -29,7 +31,7 @@ interface MatchPosition {
   slot: number;
 }
 
-export function BracketView({ tournament, matches, participantMap }: BracketViewProps) {
+export function BracketView({ tournament, matches, participantMap, isFullscreen = false, onToggleFullscreen }: BracketViewProps) {
   const t = useTranslations();
   const [scoreAStr, setScoreAStr] = useState("0");
   const [scoreBStr, setScoreBStr] = useState("0");
@@ -364,8 +366,8 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
         </div>
       )}
 
-      {/* Now Playing Section - Show selected match */}
-      {selectedMatch && participantA && participantB && !isCompleted && (
+      {/* Now Playing Section - Show selected match (hidden in fullscreen) */}
+      {!isFullscreen && selectedMatch && participantA && participantB && !isCompleted && (
         <NowPlayingCard roundName={selectedMatchRoundName}>
           <div className="space-y-4">
             {/* Match selector if multiple playable */}
@@ -460,8 +462,8 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
         </NowPlayingCard>
       )}
 
-      {/* Regenerate Button */}
-      {canRegenerate && !isCompleted && (
+      {/* Regenerate Button (hidden in fullscreen) */}
+      {!isFullscreen && canRegenerate && !isCompleted && (
         <div className="mb-6 flex justify-end">
           <button
             onClick={() => setShowRegenerateConfirm(true)}
@@ -476,9 +478,22 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
       {/* Bracket Display with SVG */}
       {tournament.bracket && (
         <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
-          <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-            {t("tournament.bracket.title")}
-          </h3>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {t("tournament.bracket.title")}
+            </h3>
+            {!isFullscreen && onToggleFullscreen && (
+              <button
+                onClick={onToggleFullscreen}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                title={t("common.fullscreen")}
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                </svg>
+              </button>
+            )}
+          </div>
 
           <p className="mb-4 text-sm text-gray-500 dark:text-gray-300">
             {t("tournament.bracket.clickToSelect")}
@@ -568,7 +583,7 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                         <span className={`block truncate text-sm font-medium ${
                           isMatchCompleted && match.winnerId === match.aId
                             ? "text-emerald-700 dark:text-emerald-400"
-                            : isByeA
+                            : isByeA || match.aId === null
                               ? "italic text-gray-400 dark:text-gray-500"
                               : "text-gray-900 dark:text-white"
                         }`}>
@@ -605,7 +620,7 @@ export function BracketView({ tournament, matches, participantMap }: BracketView
                         <span className={`block truncate text-sm font-medium ${
                           isMatchCompleted && match.winnerId === match.bId
                             ? "text-emerald-700 dark:text-emerald-400"
-                            : isByeB
+                            : isByeB || match.bId === null
                               ? "italic text-gray-400 dark:text-gray-500"
                               : "text-gray-900 dark:text-white"
                         }`}>

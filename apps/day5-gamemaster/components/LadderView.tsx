@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { useTranslations } from "next-intl";
-import type { Tournament, Participant, Match } from "@/lib/schemas";
-import { computeLadderStandings, reportLadderScore, reorderTieGroup } from "@/lib/domain/ladder";
+import { computeLadderStandings, reorderTieGroup, reportLadderScore } from "@/lib/domain/ladder";
 import { updateTournamentStatus } from "@/lib/domain/tournaments";
+import type { Match, Participant, Tournament } from "@/lib/schemas";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 interface LadderViewProps {
@@ -12,6 +12,8 @@ interface LadderViewProps {
   participants: Participant[];
   matches: Match[];
   participantMap: Map<string, Participant>;
+  isFullscreen?: boolean;
+  onToggleFullscreen?: () => void;
 }
 
 // Countdown timer presets in seconds (5m, 10m, 15m)
@@ -28,7 +30,14 @@ interface LocalAttempt {
   wasBetter: boolean;
 }
 
-export function LadderView({ tournament, participants, matches, participantMap }: LadderViewProps) {
+export function LadderView({
+  tournament,
+  participants,
+  matches,
+  participantMap,
+  isFullscreen = false,
+  onToggleFullscreen,
+}: LadderViewProps) {
   const t = useTranslations();
   const [selectedParticipant, setSelectedParticipant] = useState<string>("");
   const [score, setScore] = useState<string>("");
@@ -111,7 +120,10 @@ export function LadderView({ tournament, participants, matches, participantMap }
       setTimerFinished(true);
       // Play sound
       try {
-        audioRef.current = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" + "AAAP//" .repeat(1000));
+        audioRef.current = new Audio(
+          "data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" +
+            "AAAP//".repeat(1000)
+        );
         audioRef.current.play().catch(() => {});
       } catch {
         // Audio not supported
@@ -167,7 +179,12 @@ export function LadderView({ tournament, participants, matches, participantMap }
 
     setReporting(true);
     try {
-      const result = await reportLadderScore(tournament.id, selectedParticipant, valueToReport, ladderType);
+      const result = await reportLadderScore(
+        tournament.id,
+        selectedParticipant,
+        valueToReport,
+        ladderType
+      );
 
       const wasBetter = result !== null;
 
@@ -226,294 +243,370 @@ export function LadderView({ tournament, participants, matches, participantMap }
     if (rank === 1) {
       return {
         badge: "🥇",
-        style: "bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 border-l-4 border-yellow-400",
+        style:
+          "bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 border-l-4 border-yellow-400",
       };
     }
     if (rank === 2) {
       return {
         badge: "🥈",
-        style: "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-800/50 dark:to-slate-800/50 border-l-4 border-gray-400",
+        style:
+          "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-800/50 dark:to-slate-800/50 border-l-4 border-gray-400",
       };
     }
     if (rank === 3) {
       return {
         badge: "🥉",
-        style: "bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 border-l-4 border-amber-600",
+        style:
+          "bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 border-l-4 border-amber-600",
       };
     }
     return { badge: null, style: "" };
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-4">
+    <div className={`mx-auto px-4 py-4 ${isFullscreen ? "max-w-5xl" : "max-w-7xl"}`}>
       {/* Main Grid Layout: Timer+Controls on left, Ranking on right (desktop) */}
-      <div className="grid gap-6 lg:grid-cols-5">
-
-        {/* LEFT COLUMN: Timer + Score Entry (2 cols on desktop) */}
-        <div className="space-y-4 lg:col-span-2">
-
-          {/* TIMER - Hero Section */}
-          <div className={`rounded-2xl p-6 shadow-lg transition-all ${
-            timerFinished
-              ? "animate-pulse bg-gradient-to-br from-red-500 to-red-600"
-              : timerRunning
-              ? "bg-gradient-to-br from-green-500 to-emerald-600"
-              : "bg-gradient-to-br from-violet-600 to-purple-700"
-          }`}>
-            {/* Timer Display */}
-            <div className="mb-4 text-center">
-              <div className={`font-mono text-7xl font-black tracking-tight text-white drop-shadow-lg md:text-8xl ${
-                timerFinished ? "animate-pulse" : ""
-              }`}>
-                {formatTime(timeRemaining)}
+      <div className={`grid gap-6 ${isFullscreen ? "" : "lg:grid-cols-5"}`}>
+        {/* LEFT COLUMN: Timer + Score Entry (2 cols on desktop) - hidden in fullscreen */}
+        {!isFullscreen && (
+          <div className="space-y-4 lg:col-span-2">
+            {/* TIMER - Hero Section */}
+            <div
+              className={`rounded-2xl p-6 shadow-lg transition-all ${
+                timerFinished
+                  ? "animate-pulse bg-gradient-to-br from-red-500 to-red-600"
+                  : timerRunning
+                    ? "bg-gradient-to-br from-green-500 to-emerald-600"
+                    : "bg-gradient-to-br from-violet-600 to-purple-700"
+              }`}
+            >
+              {/* Timer Display */}
+              <div className="mb-4 text-center">
+                <div
+                  className={`font-mono text-7xl font-black tracking-tight text-white drop-shadow-lg md:text-8xl ${
+                    timerFinished ? "animate-pulse" : ""
+                  }`}
+                >
+                  {formatTime(timeRemaining)}
+                </div>
+                {timeRemaining <= 10 && timerRunning && !timerFinished && (
+                  <p className="mt-2 text-lg font-medium text-white/80">
+                    ⚠️ {t("tournament.ladder.timeWarning")}
+                  </p>
+                )}
               </div>
-              {timeRemaining <= 10 && timerRunning && !timerFinished && (
-                <p className="mt-2 text-lg font-medium text-white/80">⚠️ {t("tournament.ladder.timeWarning")}</p>
-              )}
+
+              {/* Timer Controls */}
+              <div className="flex flex-wrap justify-center gap-2">
+                {!timerRunning ? (
+                  <button
+                    onClick={startTimer}
+                    disabled={timeRemaining === 0}
+                    className="flex items-center gap-2 rounded-xl bg-white/20 px-6 py-3 text-lg font-bold text-white backdrop-blur-sm transition hover:bg-white/30 disabled:opacity-50"
+                  >
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                    {t("tournament.ladder.timerStart")}
+                  </button>
+                ) : (
+                  <button
+                    onClick={pauseTimer}
+                    className="flex items-center gap-2 rounded-xl bg-white/20 px-6 py-3 text-lg font-bold text-white backdrop-blur-sm transition hover:bg-white/30"
+                  >
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                    </svg>
+                    {t("tournament.ladder.timerPause")}
+                  </button>
+                )}
+                <button
+                  onClick={resetTimer}
+                  className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-white backdrop-blur-sm transition hover:bg-white/20"
+                >
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Presets + Extensions */}
+              <div className="mt-4 flex flex-wrap justify-center gap-1">
+                {TIMER_PRESETS.map((preset) => (
+                  <button
+                    key={preset}
+                    onClick={() => setPresetTime(preset)}
+                    className={`rounded-full px-3 py-1 text-sm font-medium transition ${
+                      timerDuration === preset && !timerRunning
+                        ? "bg-white text-violet-700"
+                        : "bg-white/20 text-white hover:bg-white/30"
+                    }`}
+                  >
+                    {preset < 60 ? `${preset}s` : `${preset / 60}m`}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-2 flex flex-wrap justify-center gap-1">
+                {TIME_EXTENSIONS.map((ext) => (
+                  <button
+                    key={ext}
+                    onClick={() => addTime(ext)}
+                    className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white/90 transition hover:bg-white/20"
+                  >
+                    +{ext < 60 ? `${ext}s` : `${ext / 60}m`}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Timer Controls */}
-            <div className="flex flex-wrap justify-center gap-2">
-              {!timerRunning ? (
-                <button
-                  onClick={startTimer}
-                  disabled={timeRemaining === 0}
-                  className="flex items-center gap-2 rounded-xl bg-white/20 px-6 py-3 text-lg font-bold text-white backdrop-blur-sm transition hover:bg-white/30 disabled:opacity-50"
-                >
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                  {t("tournament.ladder.timerStart")}
-                </button>
-              ) : (
-                <button
-                  onClick={pauseTimer}
-                  className="flex items-center gap-2 rounded-xl bg-white/20 px-6 py-3 text-lg font-bold text-white backdrop-blur-sm transition hover:bg-white/30"
-                >
-                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                  </svg>
-                  {t("tournament.ladder.timerPause")}
-                </button>
-              )}
-              <button
-                onClick={resetTimer}
-                className="flex items-center gap-2 rounded-xl bg-white/10 px-4 py-3 text-white backdrop-blur-sm transition hover:bg-white/20"
+            {/* Score Entry - Compact */}
+            <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+              <h4 className="mb-3 text-center text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
+                {isTimeMode
+                  ? t("tournament.ladder.registerTime")
+                  : t("tournament.ladder.registerScore")}
+              </h4>
+
+              {/* Participant Selection */}
+              <select
+                value={selectedParticipant}
+                onChange={(e) => {
+                  setSelectedParticipant(e.target.value);
+                  setReportError(null);
+                }}
+                className="mb-3 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
               >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
+                <option value="">{t("tournament.ladder.selectParticipant")}</option>
+                {participants.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+
+              {/* Score/Time Input */}
+              {isTimeMode ? (
+                <div className="mb-3 flex flex-col items-center gap-2">
+                  <div className="flex items-center justify-center gap-1">
+                    <div className="flex flex-col items-center">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        value={timeMinutes}
+                        onChange={(e) => {
+                          const cleaned = e.target.value.replace(/\D/g, "").slice(0, 3);
+                          setTimeMinutes(cleaned);
+                          setReportError(null);
+                        }}
+                        onBlur={(e) => {
+                          const val = parseInt(e.target.value) || 0;
+                          setTimeMinutes(Math.min(999, Math.max(0, val)).toString());
+                        }}
+                        placeholder="0"
+                        className="w-16 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                      />
+                      <span className="text-xs text-gray-500 dark:text-gray-400">min</span>
+                    </div>
+                    <span className="text-2xl font-bold text-gray-400">:</span>
+                    <div className="flex flex-col items-center">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        value={timeSeconds}
+                        onChange={(e) => {
+                          const cleaned = e.target.value.replace(/\D/g, "").slice(0, 2);
+                          setTimeSeconds(cleaned);
+                          setReportError(null);
+                        }}
+                        onBlur={(e) => {
+                          const val = parseInt(e.target.value) || 0;
+                          setTimeSeconds(
+                            Math.min(59, Math.max(0, val)).toString().padStart(2, "0")
+                          );
+                        }}
+                        placeholder="00"
+                        className="w-16 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                      />
+                      <span className="text-xs text-gray-500 dark:text-gray-400">seg</span>
+                    </div>
+                    <span className="text-2xl font-bold text-gray-400">.</span>
+                    <div className="flex flex-col items-center">
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        value={timeMillis}
+                        onChange={(e) => {
+                          const cleaned = e.target.value.replace(/\D/g, "").slice(0, 3);
+                          setTimeMillis(cleaned);
+                          setReportError(null);
+                        }}
+                        onBlur={(e) => {
+                          const val = parseInt(e.target.value) || 0;
+                          setTimeMillis(Math.min(999, val).toString().padStart(3, "0"));
+                        }}
+                        placeholder="000"
+                        className="w-20 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                      />
+                      <span className="text-xs text-gray-500 dark:text-gray-400">ms</span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <input
+                  type="number"
+                  value={score}
+                  onChange={(e) => setScore(e.target.value)}
+                  min={0}
+                  placeholder="0"
+                  className="mb-3 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                />
+              )}
+
+              {/* Error message */}
+              {reportError && (
+                <p className="mb-2 text-center text-sm text-amber-600 dark:text-amber-400">
+                  {reportError}
+                </p>
+              )}
+
+              {/* Report Button */}
+              <button
+                onClick={handleReport}
+                disabled={
+                  !selectedParticipant ||
+                  (isTimeMode
+                    ? (parseInt(timeMinutes) || 0) === 0 &&
+                      (parseInt(timeSeconds) || 0) === 0 &&
+                      (parseInt(timeMillis) || 0) === 0
+                    : !score) ||
+                  reporting
+                }
+                className="w-full rounded-lg bg-green-600 px-4 py-3 font-medium text-white hover:bg-green-700 disabled:opacity-50"
+              >
+                {reporting
+                  ? t("common.loading")
+                  : isTimeMode
+                    ? t("tournament.ladder.saveTime")
+                    : t("tournament.ladder.saveScore")}
               </button>
             </div>
 
-            {/* Presets + Extensions */}
-            <div className="mt-4 flex flex-wrap justify-center gap-1">
-              {TIMER_PRESETS.map((preset) => (
-                <button
-                  key={preset}
-                  onClick={() => setPresetTime(preset)}
-                  className={`rounded-full px-3 py-1 text-sm font-medium transition ${
-                    timerDuration === preset && !timerRunning
-                      ? "bg-white text-violet-700"
-                      : "bg-white/20 text-white hover:bg-white/30"
-                  }`}
-                >
-                  {preset < 60 ? `${preset}s` : `${preset / 60}m`}
-                </button>
-              ))}
-            </div>
-            <div className="mt-2 flex flex-wrap justify-center gap-1">
-              {TIME_EXTENSIONS.map((ext) => (
-                <button
-                  key={ext}
-                  onClick={() => addTime(ext)}
-                  className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white/90 transition hover:bg-white/20"
-                >
-                  +{ext < 60 ? `${ext}s` : `${ext / 60}m`}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Score Entry - Compact */}
-          <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-900">
-            <h4 className="mb-3 text-center text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
-              {isTimeMode ? t("tournament.ladder.registerTime") : t("tournament.ladder.registerScore")}
-            </h4>
-
-            {/* Participant Selection */}
-            <select
-              value={selectedParticipant}
-              onChange={(e) => {
-                setSelectedParticipant(e.target.value);
-                setReportError(null);
-              }}
-              className="mb-3 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-            >
-              <option value="">{t("tournament.ladder.selectParticipant")}</option>
-              {participants.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-
-            {/* Score/Time Input */}
-            {isTimeMode ? (
-              <div className="mb-3 flex flex-col items-center gap-2">
-                <div className="flex items-center justify-center gap-1">
-                  <div className="flex flex-col items-center">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={timeMinutes}
-                      onChange={(e) => {
-                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, 3);
-                        setTimeMinutes(cleaned);
-                        setReportError(null);
-                      }}
-                      onBlur={(e) => {
-                        const val = parseInt(e.target.value) || 0;
-                        setTimeMinutes(Math.min(999, Math.max(0, val)).toString());
-                      }}
-                      placeholder="0"
-                      className="w-16 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-                    />
-                    <span className="text-xs text-gray-500 dark:text-gray-400">min</span>
-                  </div>
-                  <span className="text-2xl font-bold text-gray-400">:</span>
-                  <div className="flex flex-col items-center">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={timeSeconds}
-                      onChange={(e) => {
-                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, 2);
-                        setTimeSeconds(cleaned);
-                        setReportError(null);
-                      }}
-                      onBlur={(e) => {
-                        const val = parseInt(e.target.value) || 0;
-                        setTimeSeconds(Math.min(59, Math.max(0, val)).toString().padStart(2, "0"));
-                      }}
-                      placeholder="00"
-                      className="w-16 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-                    />
-                    <span className="text-xs text-gray-500 dark:text-gray-400">seg</span>
-                  </div>
-                  <span className="text-2xl font-bold text-gray-400">.</span>
-                  <div className="flex flex-col items-center">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={timeMillis}
-                      onChange={(e) => {
-                        const cleaned = e.target.value.replace(/\D/g, "").slice(0, 3);
-                        setTimeMillis(cleaned);
-                        setReportError(null);
-                      }}
-                      onBlur={(e) => {
-                        const val = parseInt(e.target.value) || 0;
-                        setTimeMillis(Math.min(999, val).toString().padStart(3, "0"));
-                      }}
-                      placeholder="000"
-                      className="w-20 rounded-lg border border-gray-300 bg-white px-2 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-                    />
-                    <span className="text-xs text-gray-500 dark:text-gray-400">ms</span>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <input
-                type="number"
-                value={score}
-                onChange={(e) => setScore(e.target.value)}
-                min={0}
-                placeholder="0"
-                className="mb-3 w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-center text-2xl font-bold text-gray-900 focus:border-violet-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
-              />
-            )}
-
-            {/* Error message */}
-            {reportError && (
-              <p className="mb-2 text-center text-sm text-amber-600 dark:text-amber-400">
-                {reportError}
-              </p>
-            )}
-
-            {/* Report Button */}
-            <button
-              onClick={handleReport}
-              disabled={!selectedParticipant || (isTimeMode ? ((parseInt(timeMinutes) || 0) === 0 && (parseInt(timeSeconds) || 0) === 0 && (parseInt(timeMillis) || 0) === 0) : !score) || reporting}
-              className="w-full rounded-lg bg-green-600 px-4 py-3 font-medium text-white hover:bg-green-700 disabled:opacity-50"
-            >
-              {reporting ? t("common.loading") : (isTimeMode ? t("tournament.ladder.saveTime") : t("tournament.ladder.saveScore"))}
-            </button>
-          </div>
-
-          {/* Recent Attempts - Small */}
-          {localAttempts.length > 0 && (
-            <div className="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
-              <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
-                {isTimeMode ? t("tournament.ladder.recentTimes") : t("tournament.ladder.recentScores")}
-              </h4>
-              <div className="space-y-1">
-                {localAttempts.map((attempt) => {
-                  const participant = participantMap.get(attempt.participantId);
-                  const attemptTime = new Date(attempt.savedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-                  return (
-                    <div
-                      key={attempt.id}
-                      className={`flex items-center justify-between rounded-lg px-2 py-1 text-sm ${
-                        attempt.wasBetter
-                          ? "bg-green-50 dark:bg-green-900/20"
-                          : "bg-amber-50 dark:bg-amber-900/20"
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className={attempt.wasBetter ? "text-green-600" : "text-amber-600"}>
-                          {attempt.wasBetter ? "✓" : "✗"}
-                        </span>
-                        <span className="font-medium text-gray-700 dark:text-gray-200">
-                          {participant?.name || "?"}
-                        </span>
-                        <span className="text-xs text-gray-400 dark:text-gray-500">
-                          {attemptTime}
+            {/* Recent Attempts - Small */}
+            {localAttempts.length > 0 && (
+              <div className="rounded-xl border border-gray-200 bg-white p-3 dark:border-gray-700 dark:bg-gray-900">
+                <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
+                  {isTimeMode
+                    ? t("tournament.ladder.recentTimes")
+                    : t("tournament.ladder.recentScores")}
+                </h4>
+                <div className="space-y-1">
+                  {localAttempts.map((attempt) => {
+                    const participant = participantMap.get(attempt.participantId);
+                    const attemptTime = new Date(attempt.savedAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    });
+                    return (
+                      <div
+                        key={attempt.id}
+                        className={`flex items-center justify-between rounded-lg px-2 py-1 text-sm ${
+                          attempt.wasBetter
+                            ? "bg-green-50 dark:bg-green-900/20"
+                            : "bg-amber-50 dark:bg-amber-900/20"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className={attempt.wasBetter ? "text-green-600" : "text-amber-600"}>
+                            {attempt.wasBetter ? "✓" : "✗"}
+                          </span>
+                          <span className="font-medium text-gray-700 dark:text-gray-200">
+                            {participant?.name || "?"}
+                          </span>
+                          <span className="text-xs text-gray-400 dark:text-gray-500">
+                            {attemptTime}
+                          </span>
+                        </div>
+                        <span
+                          className={`font-bold ${
+                            attempt.wasBetter
+                              ? "text-green-600 dark:text-green-400"
+                              : "text-amber-600 dark:text-amber-400"
+                          }`}
+                        >
+                          {formatScoreValue(attempt.value)}
                         </span>
                       </div>
-                      <span className={`font-bold ${
-                        attempt.wasBetter
-                          ? "text-green-600 dark:text-green-400"
-                          : "text-amber-600 dark:text-amber-400"
-                      }`}>
-                        {formatScoreValue(attempt.value)}
-                      </span>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* End Tournament - Compact */}
-          <button
-            onClick={() => setShowEndConfirm(true)}
-            className="w-full rounded-lg border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 dark:border-red-700 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
-          >
-            {t("tournament.ladder.finishTournament")}
-          </button>
-        </div>
+            {/* End Tournament - Compact */}
+            <button
+              onClick={() => setShowEndConfirm(true)}
+              className="w-full rounded-lg border border-red-300 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 dark:border-red-700 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30"
+            >
+              {t("tournament.ladder.finishTournament")}
+            </button>
+          </div>
+        )}
 
-        {/* RIGHT COLUMN: Live Ranking (3 cols on desktop) */}
-        <div className="lg:col-span-3">
+        {/* RIGHT COLUMN: Live Ranking (3 cols on desktop, full in fullscreen) */}
+        <div className={isFullscreen ? "" : "lg:col-span-3"}>
           <div className="sticky top-4 rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900">
             {/* Header */}
-            <div className="border-b border-gray-200 px-6 py-4 dark:border-gray-700">
-              <h2 className="text-center text-2xl font-bold text-gray-900 dark:text-white">
-                🏆 {t("tournament.ladder.title")}
-              </h2>
-              <p className="text-center text-sm text-gray-500 dark:text-gray-300">
-                {isTimeMode ? t("tournament.ladder.rankingByTime") : t("tournament.ladder.rankingByPoints")}
+            <div
+              className={`border-b border-gray-200 dark:border-gray-700 ${isFullscreen ? "px-8 py-6" : "px-6 py-4"}`}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex-1" />
+                <h2
+                  className={`text-center font-bold text-gray-900 dark:text-white ${isFullscreen ? "text-4xl" : "text-2xl"}`}
+                >
+                  🏆 {t("tournament.ladder.title")}
+                </h2>
+                <div className="flex flex-1 justify-end">
+                  {!isFullscreen && onToggleFullscreen && (
+                    <button
+                      onClick={onToggleFullscreen}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+                      title={t("common.fullscreen")}
+                    >
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              </div>
+              <p
+                className={`text-center text-gray-500 dark:text-gray-300 ${isFullscreen ? "mt-2 text-lg" : "text-sm"}`}
+              >
+                {isTimeMode
+                  ? t("tournament.ladder.rankingByTime")
+                  : t("tournament.ladder.rankingByPoints")}
               </p>
             </div>
 
@@ -528,18 +621,28 @@ export function LadderView({ tournament, participants, matches, participantMap }
                 return (
                   <div
                     key={standing.participantId}
-                    className={`flex items-center gap-4 px-6 py-4 transition-colors ${style}`}
+                    className={`flex items-center gap-4 transition-colors ${style} ${
+                      isFullscreen ? "px-8 py-5" : "px-6 py-4"
+                    }`}
                   >
                     {/* Rank */}
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
+                    <div
+                      className={`flex flex-shrink-0 items-center justify-center ${
+                        isFullscreen ? "h-16 w-16" : "h-12 w-12"
+                      }`}
+                    >
                       {badge ? (
-                        <span className="text-3xl">{badge}</span>
+                        <span className={isFullscreen ? "text-5xl" : "text-3xl"}>{badge}</span>
                       ) : (
-                        <span className={`flex h-10 w-10 items-center justify-center rounded-full text-lg font-bold ${
-                          standing.hasScore
-                            ? "bg-violet-100 text-violet-700 dark:bg-violet-900/50 dark:text-violet-300"
-                            : "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
-                        }`}>
+                        <span
+                          className={`flex items-center justify-center rounded-full font-bold ${
+                            isFullscreen ? "h-14 w-14 text-2xl" : "h-10 w-10 text-lg"
+                          } ${
+                            standing.hasScore
+                              ? "bg-violet-100 text-violet-700 dark:bg-violet-900/50 dark:text-violet-300"
+                              : "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-300"
+                          }`}
+                        >
                           {rank}
                         </span>
                       )}
@@ -547,32 +650,40 @@ export function LadderView({ tournament, participants, matches, participantMap }
 
                     {/* Name */}
                     <div className="flex-grow">
-                      <span className={`font-semibold ${
-                        rank <= 3 && standing.hasScore
-                          ? "text-xl text-gray-900 dark:text-white"
-                          : standing.hasScore
-                          ? "text-lg text-gray-700 dark:text-gray-200"
-                          : "text-lg text-gray-500 dark:text-gray-300"
-                      }`}>
+                      <span
+                        className={`font-semibold ${
+                          rank <= 3 && standing.hasScore
+                            ? `${isFullscreen ? "text-3xl" : "text-xl"} text-gray-900 dark:text-white`
+                            : standing.hasScore
+                              ? `${isFullscreen ? "text-2xl" : "text-lg"} text-gray-700 dark:text-gray-200`
+                              : `${isFullscreen ? "text-2xl" : "text-lg"} text-gray-500 dark:text-gray-300`
+                        }`}
+                      >
                         {participant?.name || "Unknown"}
                       </span>
                     </div>
 
                     {/* Score/Time */}
                     <div className="flex items-center gap-2">
-                      <span className={`font-mono font-bold ${
-                        rank === 1 && standing.hasScore
-                          ? "text-3xl text-yellow-600 dark:text-yellow-400"
-                          : rank <= 3 && standing.hasScore
-                          ? "text-2xl text-gray-900 dark:text-white"
-                          : standing.hasScore
-                          ? "text-xl text-gray-700 dark:text-gray-200"
-                          : "text-lg text-gray-500 dark:text-gray-400"
-                      }`}>
+                      <span
+                        className={`font-mono font-bold ${
+                          rank === 1 && standing.hasScore
+                            ? `${isFullscreen ? "text-5xl" : "text-3xl"} text-yellow-600 dark:text-yellow-400`
+                            : rank <= 3 && standing.hasScore
+                              ? `${isFullscreen ? "text-4xl" : "text-2xl"} text-gray-900 dark:text-white`
+                              : standing.hasScore
+                                ? `${isFullscreen ? "text-3xl" : "text-xl"} text-gray-700 dark:text-gray-200`
+                                : `${isFullscreen ? "text-2xl" : "text-lg"} text-gray-500 dark:text-gray-400`
+                        }`}
+                      >
                         {standing.hasScore ? formatScoreValue(standing.score) : "-"}
                       </span>
                       {!isTimeMode && standing.hasScore && (
-                        <span className="text-sm text-gray-500 dark:text-gray-300">pts</span>
+                        <span
+                          className={`text-gray-500 dark:text-gray-300 ${isFullscreen ? "text-lg" : "text-sm"}`}
+                        >
+                          pts
+                        </span>
                       )}
                     </div>
 
@@ -584,8 +695,18 @@ export function LadderView({ tournament, participants, matches, participantMap }
                             onClick={() => handleReorder(standing.participantId, "up")}
                             className="rounded p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700"
                           >
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 15l7-7 7 7"
+                              />
                             </svg>
                           </button>
                         )}
@@ -594,8 +715,18 @@ export function LadderView({ tournament, participants, matches, participantMap }
                             onClick={() => handleReorder(standing.participantId, "down")}
                             className="rounded p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-600 dark:hover:bg-gray-700"
                           >
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 9l-7 7-7-7"
+                              />
                             </svg>
                           </button>
                         )}

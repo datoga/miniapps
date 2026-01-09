@@ -31,6 +31,8 @@ interface DoubleElimBracketViewProps {
   matches: Match[];
   participantMap: Map<string, Participant>;
   locale: string;
+  isFullscreen?: boolean;
+  onToggleFullscreen?: () => void;
 }
 
 interface MatchCardProps {
@@ -116,7 +118,7 @@ function MatchCard({
             className={`block truncate text-sm font-medium ${
               isCompleted && match.winnerId === match.aId
                 ? "text-emerald-700 dark:text-emerald-400"
-                : isByeA
+                : isByeA || match.aId === null
                   ? "italic text-gray-400 dark:text-gray-500"
                   : "text-gray-900 dark:text-white"
             }`}
@@ -164,7 +166,7 @@ function MatchCard({
             className={`block truncate text-sm font-medium ${
               isCompleted && match.winnerId === match.bId
                 ? "text-emerald-700 dark:text-emerald-400"
-                : isByeB
+                : isByeB || match.bId === null
                   ? "italic text-gray-400 dark:text-gray-500"
                   : "text-gray-900 dark:text-white"
             }`}
@@ -782,6 +784,8 @@ export function DoubleElimBracketView({
   tournament,
   matches,
   participantMap,
+  isFullscreen = false,
+  onToggleFullscreen,
 }: DoubleElimBracketViewProps) {
   const t = useTranslations();
   // Use "__HIDDEN__" to explicitly hide the score panel (vs null = auto-select first)
@@ -1057,8 +1061,8 @@ export function DoubleElimBracketView({
         </div>
       )}
 
-      {/* Score Input (when match selected and not completed) - Using NowPlayingCard for consistency */}
-      {selectedMatch && !isTournamentCompleted && (
+      {/* Score Input (when match selected and not completed) - Using NowPlayingCard for consistency (hidden in fullscreen) */}
+      {!isFullscreen && selectedMatch && !isTournamentCompleted && (
         <NowPlayingCard roundName={selectedMatchRoundName}>
           <div className="space-y-4">
             {/* Match Display */}
@@ -1154,8 +1158,8 @@ export function DoubleElimBracketView({
         </NowPlayingCard>
       )}
 
-      {/* Regenerate Button - Consistent position with BracketView */}
-      {canRegenerate && !isTournamentCompleted && (
+      {/* Regenerate Button - Consistent position with BracketView (hidden in fullscreen) */}
+      {!isFullscreen && canRegenerate && !isTournamentCompleted && (
         <div className="mb-6 flex justify-end">
           <button
             onClick={() => setShowRegenerateConfirm(true)}
@@ -1166,8 +1170,8 @@ export function DoubleElimBracketView({
         </div>
       )}
 
-      {/* Bracket Reset Alert - Only show when tournament is still in progress */}
-      {isReset && !isTournamentCompleted && (
+      {/* Bracket Reset Alert - Only show when tournament is still in progress (hidden in fullscreen) */}
+      {!isFullscreen && isReset && !isTournamentCompleted && (
         <div className="mb-6 rounded-lg border-2 border-amber-500 bg-amber-50 p-4 text-center dark:bg-amber-900/20">
           <div className="text-2xl">🔥</div>
           <h3 className="text-lg font-bold text-amber-800 dark:text-amber-200">
@@ -1181,9 +1185,22 @@ export function DoubleElimBracketView({
 
       {/* Bracket Display Container - Consistent with BracketView */}
       <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
-        <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-          {t("tournament.doubleElim.title")}
-        </h3>
+        <div className="mb-2 flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("tournament.doubleElim.title")}
+          </h3>
+          {!isFullscreen && onToggleFullscreen && (
+            <button
+              onClick={onToggleFullscreen}
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
+              title={t("common.fullscreen")}
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+              </svg>
+            </button>
+          )}
+        </div>
         {!isTournamentCompleted && (
           <p className="mb-4 text-sm text-gray-500 dark:text-gray-300">
             {t("tournament.bracket.clickToSelect")}

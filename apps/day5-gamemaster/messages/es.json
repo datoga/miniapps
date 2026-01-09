@@ -237,6 +237,12 @@
       "losersFinal": "Final Perdedores",
       "fromWinners": "Viene de Ganadores",
       "fromLosers": "Viene de Perdedores"
+    },
+    "active": {
+      "editParticipants": "Editar Participantes",
+      "editParticipantsTitle": "¿Editar Participantes?",
+      "editParticipantsConfirm": "Esto reiniciará el torneo al modo de configuración para que puedas añadir o eliminar participantes. Los emparejamientos actuales se descartarán.",
+      "editParticipantsButton": "Sí, editar participantes"
     }
   },
   "settings": {

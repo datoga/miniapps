@@ -237,6 +237,12 @@
       "losersFinal": "Losers Final",
       "fromWinners": "From Winners",
       "fromLosers": "From Losers"
+    },
+    "active": {
+      "editParticipants": "Edit Participants",
+      "editParticipantsTitle": "Edit Participants?",
+      "editParticipantsConfirm": "This will reset the tournament to setup mode so you can add or remove participants. The current bracket/matchups will be discarded.",
+      "editParticipantsButton": "Yes, edit participants"
     }
   },
   "settings": {

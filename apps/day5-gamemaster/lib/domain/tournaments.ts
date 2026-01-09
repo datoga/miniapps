@@ -235,3 +235,33 @@ export async function deleteTournament(tournamentId: string): Promise<void> {
   await db.deleteTournament(tournamentId);
 }
 
+/**
+ * Revert an active tournament back to draft status
+ * This allows editing participants before matches have been played
+ */
+export async function revertToDraft(tournamentId: string): Promise<Tournament | null> {
+  const tournament = await db.getTournament(tournamentId);
+  if (!tournament || tournament.status !== "active") {
+    return null;
+  }
+
+  // Delete all existing matches for this tournament
+  const existingMatches = await db.getMatchesForTournament(tournamentId);
+  for (const match of existingMatches) {
+    await db.deleteMatch(match.id);
+  }
+
+  // Reset tournament to draft and clear bracket/doubleBracket structures
+  const resetTournament: Tournament = {
+    ...tournament,
+    status: "draft",
+    bracket: undefined,
+    doubleBracket: undefined,
+    ladderOrder: undefined,
+    nowPlaying: {},
+    updatedAt: Date.now(),
+  };
+
+  await db.saveTournament(resetTournament);
+  return resetTournament;
+}

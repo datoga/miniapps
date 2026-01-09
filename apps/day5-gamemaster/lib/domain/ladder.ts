@@ -5,6 +5,16 @@ import { updateTournamentStatus, updateLadderOrder, getTournament } from "./tour
 import { trackMatchReported } from "../ga";
 
 /**
+ * Check if a ladder tournament has any recorded scores
+ * (used to determine if we can revert to draft)
+ */
+export async function hasAnyScores(tournamentId: string): Promise<boolean> {
+  const matches = await db.getMatchesForTournament(tournamentId);
+  // Score records in ladder mode have bId = null
+  return matches.some((m) => m.bId === null && m.status === "completed");
+}
+
+/**
  * Start a ladder tournament
  */
 export async function startLadderTournament(tournamentId: string): Promise<Tournament | null> {

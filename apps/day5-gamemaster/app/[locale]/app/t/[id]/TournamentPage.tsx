@@ -1,16 +1,16 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Footer } from "@miniapps/ui";
 import { AppHeader } from "@/components/AppHeader";
 import { AuthGate } from "@/components/AuthGate";
-import { useTournamentDetail } from "@/lib/hooks/useTournamentData";
-import { TournamentDraft } from "@/components/TournamentDraft";
 import { TournamentActive } from "@/components/TournamentActive";
 import { TournamentCompleted } from "@/components/TournamentCompleted";
-import { getGameEmoji } from "@/lib/games";
+import { TournamentDraft } from "@/components/TournamentDraft";
+import { getGameEmoji, getGamePreset } from "@/lib/games";
+import { useTournamentDetail } from "@/lib/hooks/useTournamentData";
 import type { Tournament } from "@/lib/schemas";
+import { Footer } from "@miniapps/ui";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 interface TournamentPageProps {
   locale: string;
@@ -43,6 +43,16 @@ function TournamentInfo({ tournament, participantCount, locale }: TournamentInfo
     ? getGameEmoji(tournament.game.gameKey, tournament.game.customEmoji)
     : null;
 
+  // Get game name
+  const getGameName = (): string | null => {
+    if (!tournament.game) return null;
+    if (tournament.game.customName) return tournament.game.customName;
+    const preset = getGamePreset(tournament.game.gameKey);
+    if (preset) return t(preset.nameKey);
+    return null;
+  };
+  const gameName = getGameName();
+
   // Format date
   const formatDate = (dateStr: string): string => {
     const date = new Date(dateStr + "T00:00:00");
@@ -74,7 +84,9 @@ function TournamentInfo({ tournament, participantCount, locale }: TournamentInfo
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                 {tournament.name}
               </h1>
-              <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[tournament.status]}`}>
+              <span
+                className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[tournament.status]}`}
+              >
                 {t("dashboard.status." + tournament.status)}
               </span>
             </div>
@@ -88,17 +100,11 @@ function TournamentInfo({ tournament, participantCount, locale }: TournamentInfo
                   ? t("dashboard.pairCount", { count: participantCount })
                   : t("dashboard.participantCount", { count: participantCount })}
               </span>
-              {dateDisplay && (
-                <span className="flex items-center gap-1">
-                  📅 {dateDisplay}
-                </span>
-              )}
+              {dateDisplay && <span className="flex items-center gap-1">📅 {dateDisplay}</span>}
             </div>
 
-            {tournament.game?.name && (
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">
-                🎮 {tournament.game.name}
-              </p>
+            {gameName && (
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-500">🎮 {gameName}</p>
             )}
           </div>
         </div>
@@ -174,10 +180,7 @@ function TournamentPageContent({ locale, tournamentId }: TournamentPageProps) {
       />
       <main className="flex-1">
         {tournament.status === "draft" && (
-          <TournamentDraft
-            tournament={tournament}
-            participants={participants}
-          />
+          <TournamentDraft tournament={tournament} participants={participants} />
         )}
         {tournament.status === "active" && (
           <TournamentActive

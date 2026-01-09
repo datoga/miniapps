@@ -7,8 +7,8 @@ import { LadderView } from "./LadderView";
 import { BracketView } from "./BracketView";
 import { DoubleElimBracketView } from "./DoubleElimBracketView";
 import { ConfirmDialog } from "./ConfirmDialog";
-import { hasAnyResults } from "@/lib/domain/bracket";
-import { hasAnyDoubleElimResults } from "@/lib/domain/doubleElim";
+import { hasAnyResults, regenerateBracket } from "@/lib/domain/bracket";
+import { hasAnyDoubleElimResults, regenerateDoubleElimBracket } from "@/lib/domain/doubleElim";
 import { hasAnyScores } from "@/lib/domain/ladder";
 import { revertToDraft } from "@/lib/domain/tournaments";
 
@@ -26,6 +26,11 @@ export function TournamentActive({ tournament, participants, matches, locale }: 
   const [reverting, setReverting] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Regenerate state (for bracket modes)
+  const [canRegenerate, setCanRegenerate] = useState<boolean | null>(null);
+  const [showRegenerateConfirm, setShowRegenerateConfirm] = useState(false);
+  const [regenerating, setRegenerating] = useState(false);
 
   // Handle fullscreen change events
   useEffect(() => {
@@ -37,7 +42,7 @@ export function TournamentActive({ tournament, participants, matches, locale }: 
   }, []);
 
   const toggleFullscreen = useCallback(async () => {
-    if (!containerRef.current) return;
+    if (!containerRef.current) {return;}
 
     try {
       if (!document.fullscreenElement) {
@@ -50,7 +55,7 @@ export function TournamentActive({ tournament, participants, matches, locale }: 
     }
   }, []);
 
-  // Check if we can edit participants (no matches played yet)
+  // Check if we can edit participants and regenerate (no matches played yet)
   useEffect(() => {
     const checkCanEdit = async () => {
       let hasResults = false;
@@ -64,6 +69,7 @@ export function TournamentActive({ tournament, participants, matches, locale }: 
       }
 
       setCanEditParticipants(!hasResults);
+      setCanRegenerate(!hasResults);
     };
 
     checkCanEdit();
@@ -82,36 +88,80 @@ export function TournamentActive({ tournament, participants, matches, locale }: 
     }
   };
 
+  const handleRegenerate = async () => {
+    setShowRegenerateConfirm(false);
+    setRegenerating(true);
+    try {
+      if (tournament.mode === "double_elim") {
+        await regenerateDoubleElimBracket(tournament.id);
+      } else {
+        await regenerateBracket(tournament.id);
+      }
+    } catch (error) {
+      console.error("Failed to regenerate bracket:", error);
+    } finally {
+      setRegenerating(false);
+    }
+  };
+
   // Create a map for quick participant lookup
   const participantMap = new Map(participants.map((p) => [p.id, p]));
 
 
-  // Confirmation Dialog
+  // Confirmation Dialogs
   const confirmDialog = (
-    <ConfirmDialog
-      open={showEditConfirm}
-      onClose={() => setShowEditConfirm(false)}
-      onConfirm={handleRevertToDraft}
-      title={t("tournament.active.editParticipantsTitle")}
-      message={t("tournament.active.editParticipantsConfirm")}
-      confirmLabel={t("tournament.active.editParticipantsButton")}
-      variant="warning"
-      loading={reverting}
-    />
+    <>
+      <ConfirmDialog
+        open={showEditConfirm}
+        onClose={() => setShowEditConfirm(false)}
+        onConfirm={handleRevertToDraft}
+        title={t("tournament.active.editParticipantsTitle")}
+        message={t("tournament.active.editParticipantsConfirm")}
+        confirmLabel={t("tournament.active.editParticipantsButton")}
+        variant="warning"
+        loading={reverting}
+      />
+      <ConfirmDialog
+        open={showRegenerateConfirm}
+        onClose={() => setShowRegenerateConfirm(false)}
+        onConfirm={handleRegenerate}
+        title={t("tournament.bracket.regenerate")}
+        message={t("tournament.bracket.regenerateConfirm")}
+        variant="warning"
+        loading={regenerating}
+      />
+    </>
   );
 
-  // Toolbar with edit participants button (only shown when applicable)
-  const Toolbar = canEditParticipants ? (
+  // Determine if we should show the toolbar (any button available)
+  const isBracketMode = tournament.mode === "single_elim" || tournament.mode === "double_elim";
+  const showToolbar = canEditParticipants || (isBracketMode && canRegenerate);
+
+  // Toolbar with edit participants and regenerate buttons
+  const Toolbar = showToolbar ? (
     <div className="mx-auto max-w-4xl px-4 py-4">
-      <button
-        onClick={() => setShowEditConfirm(true)}
-        className="flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-700 hover:bg-amber-100 dark:border-amber-600 dark:bg-amber-900/20 dark:text-amber-400 dark:hover:bg-amber-900/30"
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-        </svg>
-        {t("tournament.active.editParticipants")}
-      </button>
+      <div className="flex flex-wrap items-center gap-3">
+        {canEditParticipants && (
+          <button
+            onClick={() => setShowEditConfirm(true)}
+            className="flex items-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-medium text-amber-700 hover:bg-amber-100 dark:border-amber-600 dark:bg-amber-900/20 dark:text-amber-400 dark:hover:bg-amber-900/30"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+            </svg>
+            {t("tournament.active.editParticipants")}
+          </button>
+        )}
+        {isBracketMode && canRegenerate && tournament.status !== "completed" && (
+          <button
+            onClick={() => setShowRegenerateConfirm(true)}
+            disabled={regenerating}
+            className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            {regenerating ? t("common.loading") : `🔀 ${t("tournament.bracket.regenerate")}`}
+          </button>
+        )}
+      </div>
     </div>
   ) : null;
 

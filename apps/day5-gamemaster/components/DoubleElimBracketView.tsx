@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  hasAnyDoubleElimResults,
-  regenerateDoubleElimBracket,
-  reportDoubleElimMatch,
-} from "@/lib/domain/doubleElim";
+import { reportDoubleElimMatch } from "@/lib/domain/doubleElim";
 import type { BracketSide, Match, Participant, Tournament } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useMemo, useState } from "react";
-import { ConfirmDialog } from "./ConfirmDialog";
+import React, { useMemo, useState } from "react";
 import { NowPlayingCard } from "./NowPlayingCard";
 
 // Match card dimensions (same as BracketView for consistency)
@@ -794,20 +789,11 @@ export function DoubleElimBracketView({
   const [scoreAStr, setScoreAStr] = useState("0");
   const [scoreBStr, setScoreBStr] = useState("0");
   const [reporting, setReporting] = useState(false);
-  const [showRegenerateConfirm, setShowRegenerateConfirm] = useState(false);
-  const [canRegenerate, setCanRegenerate] = useState(false);
   // Track last reported match to prefer same bracket side/round
   const [lastReportedContext, setLastReportedContext] = useState<{
     bracketSide?: string;
     round?: number;
   } | null>(null);
-
-  // Check if can regenerate on mount
-  useEffect(() => {
-    hasAnyDoubleElimResults(tournament.id).then((hasResults) => {
-      setCanRegenerate(!hasResults);
-    });
-  }, [tournament.id]);
 
   if (!tournament.doubleBracket) {
     return <div>No bracket data</div>;
@@ -1004,20 +990,10 @@ export function DoubleElimBracketView({
       setSelectedMatchId(null);
       setScoreAStr("0");
       setScoreBStr("0");
-      setCanRegenerate(false);
     } catch (error) {
       console.error("Failed to report match:", error);
     } finally {
       setReporting(false);
-    }
-  };
-
-  const handleRegenerate = async () => {
-    try {
-      await regenerateDoubleElimBracket(tournament.id);
-      setShowRegenerateConfirm(false);
-    } catch (error) {
-      console.error("Failed to regenerate:", error);
     }
   };
 
@@ -1158,18 +1134,6 @@ export function DoubleElimBracketView({
         </NowPlayingCard>
       )}
 
-      {/* Regenerate Button - Consistent position with BracketView (hidden in fullscreen) */}
-      {!isFullscreen && canRegenerate && !isTournamentCompleted && (
-        <div className="mb-6 flex justify-end">
-          <button
-            onClick={() => setShowRegenerateConfirm(true)}
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-          >
-            🔀 {t("tournament.bracket.regenerate")}
-          </button>
-        </div>
-      )}
-
       {/* Bracket Reset Alert - Only show when tournament is still in progress (hidden in fullscreen) */}
       {!isFullscreen && isReset && !isTournamentCompleted && (
         <div className="mb-6 rounded-lg border-2 border-amber-500 bg-amber-50 p-4 text-center dark:bg-amber-900/20">
@@ -1184,9 +1148,13 @@ export function DoubleElimBracketView({
       )}
 
       {/* Bracket Display Container - Consistent with BracketView */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
-        <div className="mb-2 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+      <div
+        className={`rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 ${isFullscreen ? "p-8" : "p-4"}`}
+      >
+        <div className={`flex items-center justify-between ${isFullscreen ? "mb-6" : "mb-2"}`}>
+          <h3
+            className={`font-semibold text-gray-900 dark:text-white ${isFullscreen ? "text-2xl" : "text-lg"}`}
+          >
             {t("tournament.doubleElim.title")}
           </h3>
           {!isFullscreen && onToggleFullscreen && (
@@ -1195,20 +1163,28 @@ export function DoubleElimBracketView({
               className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
               title={t("common.fullscreen")}
             >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                />
               </svg>
             </button>
           )}
         </div>
-        {!isTournamentCompleted && (
-          <p className="mb-4 text-sm text-gray-500 dark:text-gray-300">
-            {t("tournament.bracket.clickToSelect")}
-          </p>
-        )}
-        <div className="flex flex-col gap-8 overflow-x-auto pb-4 lg:flex-row">
-          {/* LEFT: BRACKETS (on mobile: top) */}
-          <div className="flex-1 space-y-6">
+        <div
+          className={`flex flex-col gap-8 pb-4 ${isFullscreen ? "overflow-visible" : "overflow-x-auto lg:flex-row"}`}
+          style={{ zoom: isFullscreen ? 1.2 : 1 }}
+        >
+          {/* LEFT: BRACKETS (on mobile/fullscreen: top) */}
+          <div className={`space-y-6 ${isFullscreen ? "" : "flex-1"}`}>
             {/* WINNERS BRACKET - SVG Tree Layout */}
             <div>
               <h3 className="mb-3 flex items-center gap-2 text-lg font-bold text-green-700 dark:text-green-400">
@@ -1246,19 +1222,25 @@ export function DoubleElimBracketView({
             )}
           </div>
 
-          {/* Separator line between brackets and grand final (mobile only) */}
+          {/* Separator line between brackets and grand final (mobile and fullscreen) */}
           {grandFinalMatch && (
-            <div className="my-4 h-1 w-full bg-gradient-to-r from-transparent via-amber-400 to-transparent lg:hidden" />
+            <div
+              className={`my-4 h-1 w-full bg-gradient-to-r from-transparent via-amber-400 to-transparent ${isFullscreen ? "" : "lg:hidden"}`}
+            />
           )}
 
-          {/* RIGHT: GRAND FINAL (on mobile: bottom) */}
+          {/* BOTTOM/RIGHT: GRAND FINAL */}
           {grandFinalMatch && (
-            <div className="flex flex-col items-center pt-2 lg:border-l-4 lg:pl-8 lg:pt-0 border-amber-400 dark:border-amber-500">
-              <h3 className="mb-4 text-center text-xl font-bold text-amber-600 dark:text-amber-400">
+            <div
+              className={`flex flex-col items-center pt-2 border-amber-400 dark:border-amber-500 ${isFullscreen ? "border-t-4 pt-6" : "lg:border-l-4 lg:pl-8 lg:pt-0"}`}
+            >
+              <h3
+                className={`mb-4 text-center font-bold text-amber-600 dark:text-amber-400 ${isFullscreen ? "text-2xl" : "text-xl"}`}
+              >
                 🏅 {t("tournament.doubleElim.grandFinal")}
               </h3>
 
-              <div className="flex flex-col items-center gap-4">
+              <div className={`flex items-center gap-4 ${isFullscreen ? "flex-row" : "flex-col"}`}>
                 {/* Grand Final Match */}
                 <div className="rounded-xl border-2 border-amber-400 bg-gradient-to-br from-amber-50 to-yellow-50 p-2 shadow-lg dark:border-amber-500 dark:from-amber-900/30 dark:to-yellow-900/30">
                   <MatchCard
@@ -1273,9 +1255,12 @@ export function DoubleElimBracketView({
 
                 {/* Connector line from Grand Final to Grand Final Reset */}
                 {isReset && grandFinalResetMatch && (
-                  <svg className="h-8 w-2" viewBox="0 0 8 32">
+                  <svg
+                    className={isFullscreen ? "h-2 w-8" : "h-8 w-2"}
+                    viewBox={isFullscreen ? "0 0 32 8" : "0 0 8 32"}
+                  >
                     <path
-                      d="M 4 0 V 32"
+                      d={isFullscreen ? "M 0 4 H 32" : "M 4 0 V 32"}
                       fill="none"
                       className={
                         grandFinalMatch.status === "completed"
@@ -1307,25 +1292,17 @@ export function DoubleElimBracketView({
                 )}
               </div>
 
-              {/* Legend */}
-              <div className="mt-6 rounded-lg bg-gray-100 p-3 text-center text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400">
-                <p>❤️❤️ = {t("tournament.doubleElim.fromWinners")}</p>
-                <p>❤️ = {t("tournament.doubleElim.fromLosers")}</p>
-              </div>
+              {/* Legend - hide in fullscreen */}
+              {!isFullscreen && (
+                <div className="mt-6 rounded-lg bg-gray-100 p-3 text-center text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                  <p>❤️❤️ = {t("tournament.doubleElim.fromWinners")}</p>
+                  <p>❤️ = {t("tournament.doubleElim.fromLosers")}</p>
+                </div>
+              )}
             </div>
           )}
         </div>
       </div>
-
-      {/* Confirm Regenerate Dialog */}
-      <ConfirmDialog
-        open={showRegenerateConfirm}
-        onClose={() => setShowRegenerateConfirm(false)}
-        onConfirm={handleRegenerate}
-        title={t("tournament.bracket.regenerate")}
-        message={t("tournament.bracket.regenerateConfirm")}
-        variant="warning"
-      />
     </div>
   );
 }

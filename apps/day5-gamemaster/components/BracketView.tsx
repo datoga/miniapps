@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import { reportBracketMatch } from "@/lib/domain/bracket";
+import type { Match, Participant, Tournament } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
-import type { Tournament, Participant, Match } from "@/lib/schemas";
-import { reportBracketMatch, regenerateBracket, hasAnyResults } from "@/lib/domain/bracket";
+import React, { useCallback, useMemo, useState } from "react";
 import { NowPlayingCard } from "./NowPlayingCard";
-import { ConfirmDialog } from "./ConfirmDialog";
 
 interface BracketViewProps {
   tournament: Tournament;
@@ -31,25 +30,21 @@ interface MatchPosition {
   slot: number;
 }
 
-export function BracketView({ tournament, matches, participantMap, isFullscreen = false, onToggleFullscreen }: BracketViewProps) {
+export function BracketView({
+  tournament,
+  matches,
+  participantMap,
+  isFullscreen = false,
+  onToggleFullscreen,
+}: BracketViewProps) {
   const t = useTranslations();
   const [scoreAStr, setScoreAStr] = useState("0");
   const [scoreBStr, setScoreBStr] = useState("0");
   const [reporting, setReporting] = useState(false);
-  const [regenerating, setRegenerating] = useState(false);
-  const [canRegenerate, setCanRegenerate] = useState<boolean | null>(null);
   const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
   const [scorePanelHidden, setScorePanelHidden] = useState(false);
-  const [showRegenerateConfirm, setShowRegenerateConfirm] = useState(false);
   // Track last reported round to prefer same round next
   const [lastReportedRound, setLastReportedRound] = useState<number | null>(null);
-
-  // Check if can regenerate on mount
-  useEffect(() => {
-    hasAnyResults(tournament.id).then((hasResults) => {
-      setCanRegenerate(!hasResults);
-    });
-  }, [tournament.id]);
 
   // Get all playable matches (pending with both participants), sorted prioritizing last reported round
   const playableMatches = useMemo(() => {
@@ -63,8 +58,12 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
         if (lastReportedRound !== null) {
           const aIsSameRound = aRound === lastReportedRound;
           const bIsSameRound = bRound === lastReportedRound;
-          if (aIsSameRound && !bIsSameRound) return -1;
-          if (!aIsSameRound && bIsSameRound) return 1;
+          if (aIsSameRound && !bIsSameRound) {
+            return -1;
+          }
+          if (!aIsSameRound && bIsSameRound) {
+            return 1;
+          }
         }
 
         // Then by round (earlier rounds first)
@@ -95,25 +94,38 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
   const participantB = selectedMatch?.bId ? participantMap.get(selectedMatch.bId) : null;
 
   // Get round name
-  const getRoundName = (roundIndex: number, totalRounds: number) => {
-    const roundsFromEnd = totalRounds - roundIndex - 1;
-    if (roundsFromEnd === 0) return t("tournament.bracket.finals");
-    if (roundsFromEnd === 1) return t("tournament.bracket.semifinal");
-    if (roundsFromEnd === 2) return t("tournament.bracket.quarterfinal");
-    return t("tournament.bracket.round", { number: roundIndex + 1 });
-  };
+  const getRoundName = useCallback(
+    (roundIndex: number, totalRounds: number) => {
+      const roundsFromEnd = totalRounds - roundIndex - 1;
+      if (roundsFromEnd === 0) {
+        return t("tournament.bracket.finals");
+      }
+      if (roundsFromEnd === 1) {
+        return t("tournament.bracket.semifinal");
+      }
+      if (roundsFromEnd === 2) {
+        return t("tournament.bracket.quarterfinal");
+      }
+      return t("tournament.bracket.round", { number: roundIndex + 1 });
+    },
+    [t]
+  );
 
   // Get round name for selected match
   const selectedMatchRoundName = useMemo(() => {
-    if (!selectedMatch || !tournament.bracket) return undefined;
+    if (!selectedMatch || !tournament.bracket) {
+      return undefined;
+    }
     const totalRounds = tournament.bracket.matchesByRound.length;
     const matchRound = selectedMatch.round ?? 0;
     return getRoundName(matchRound, totalRounds);
-  }, [selectedMatch, tournament.bracket]);
+  }, [selectedMatch, tournament.bracket, getRoundName]);
 
   // Calculate match positions for SVG lines
   const { positions, svgHeight } = useMemo(() => {
-    if (!tournament.bracket) return { positions: [], svgHeight: 0 };
+    if (!tournament.bracket) {
+      return { positions: [], svgHeight: 0 };
+    }
 
     const matchesByRound = tournament.bracket.matchesByRound;
     const numRounds = matchesByRound.length;
@@ -131,7 +143,9 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
 
       for (let slot = 0; slot < numMatches; slot++) {
         const matchId = roundMatchIds[slot];
-        if (!matchId) continue;
+        if (!matchId) {
+          continue;
+        }
 
         positions.push({
           matchId,
@@ -148,12 +162,16 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
   }, [tournament.bracket]);
 
   const handleReport = async () => {
-    if (!selectedMatch) return;
+    if (!selectedMatch) {
+      return;
+    }
 
     const scoreA = parseInt(scoreAStr) || 0;
     const scoreB = parseInt(scoreBStr) || 0;
 
-    if (scoreA === scoreB) return;
+    if (scoreA === scoreB) {
+      return;
+    }
 
     // Save the round of the match being reported to prioritize same round next
     setLastReportedRound(selectedMatch.round ?? 0);
@@ -164,23 +182,10 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
       setScoreAStr("0");
       setScoreBStr("0");
       setSelectedMatchId(null); // Reset selection
-      setCanRegenerate(false);
     } catch (error) {
       console.error("Failed to report match:", error);
     } finally {
       setReporting(false);
-    }
-  };
-
-  const handleRegenerate = async () => {
-    setShowRegenerateConfirm(false);
-    setRegenerating(true);
-    try {
-      await regenerateBracket(tournament.id);
-    } catch (error) {
-      console.error("Failed to regenerate bracket:", error);
-    } finally {
-      setRegenerating(false);
     }
   };
 
@@ -207,14 +212,17 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
     ? matches.find(
         (m) =>
           tournament.bracket &&
-          m.id === tournament.bracket.matchesByRound[tournament.bracket.matchesByRound.length - 1]?.[0]
+          m.id ===
+            tournament.bracket.matchesByRound[tournament.bracket.matchesByRound.length - 1]?.[0]
       )
     : null;
   const champion = finalMatch?.winnerId ? participantMap.get(finalMatch.winnerId) : null;
 
   // Generate SVG connector lines - proper bracket style
   const renderConnectorLines = () => {
-    if (!tournament.bracket || positions.length === 0) return null;
+    if (!tournament.bracket || positions.length === 0) {
+      return null;
+    }
 
     const lines: React.ReactElement[] = [];
     const matchesByRound = tournament.bracket.matchesByRound;
@@ -244,7 +252,9 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
         const nextMatchId = nextRoundMatchIds[pairIndex];
         const nextPos = nextMatchId ? positions.find((p) => p.matchId === nextMatchId) : null;
 
-        if (!nextPos) continue;
+        if (!nextPos) {
+          continue;
+        }
 
         const endX = nextPos.x;
         // Add HEADER_OFFSET to Y coordinates to match card positions
@@ -252,17 +262,30 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
 
         // Calculate Y positions (with header offset)
         const topCenterY = topPos ? topPos.y + HEADER_OFFSET + MATCH_HEIGHT / 2 : nextMatchCenterY;
-        const bottomCenterY = bottomPos ? bottomPos.y + HEADER_OFFSET + MATCH_HEIGHT / 2 : nextMatchCenterY;
+        const bottomCenterY = bottomPos
+          ? bottomPos.y + HEADER_OFFSET + MATCH_HEIGHT / 2
+          : nextMatchCenterY;
 
         // The junction point where lines meet - exactly between the two source matches
-        const junctionY = topPos && bottomPos
-          ? (topCenterY + bottomCenterY) / 2
-          : topPos
-            ? topCenterY
-            : bottomCenterY;
+        const getJunctionY = () => {
+          if (topPos && bottomPos) {
+            return (topCenterY + bottomCenterY) / 2;
+          }
+          return topPos ? topCenterY : bottomCenterY;
+        };
+        const junctionY = getJunctionY();
 
         // midX is halfway between source matches and destination
-        const sourceEndX = topPos ? topPos.x + MATCH_WIDTH : (bottomPos ? bottomPos.x + MATCH_WIDTH : endX);
+        const getSourceEndX = () => {
+          if (topPos) {
+            return topPos.x + MATCH_WIDTH;
+          }
+          if (bottomPos) {
+            return bottomPos.x + MATCH_WIDTH;
+          }
+          return endX;
+        };
+        const sourceEndX = getSourceEndX();
         const midX = sourceEndX + (endX - sourceEndX) / 2;
 
         // Check if this is a single-source pair (no pair partner)
@@ -274,24 +297,40 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
           const startX = topPos.x + MATCH_WIDTH;
           const startY = topCenterY;
           const isComplete = topMatch.status === "completed";
-          const lineColor = isComplete ? "stroke-emerald-500" : "stroke-gray-300 dark:stroke-gray-600";
+          const lineColor = isComplete
+            ? "stroke-emerald-500"
+            : "stroke-gray-300 dark:stroke-gray-600";
 
           if (singleSource) {
             // Single source: draw direct line to next match (L-shape)
             lines.push(
-              <path key={`single-${topMatchId}`}
+              <path
+                key={`single-${topMatchId}`}
                 d={`M ${startX} ${startY} H ${endX - 10} V ${nextMatchCenterY} H ${endX}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
           } else {
             // Has pair: draw to junction
             lines.push(
-              <path key={`top-h-${topMatchId}`} d={`M ${startX} ${startY} H ${midX}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+              <path
+                key={`top-h-${topMatchId}`}
+                d={`M ${startX} ${startY} H ${midX}`}
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
             lines.push(
-              <path key={`top-v-${topMatchId}`} d={`M ${midX} ${startY} V ${junctionY}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+              <path
+                key={`top-v-${topMatchId}`}
+                d={`M ${midX} ${startY} V ${junctionY}`}
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
           }
         }
@@ -301,24 +340,40 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
           const startX = bottomPos.x + MATCH_WIDTH;
           const startY = bottomCenterY;
           const isComplete = bottomMatch.status === "completed";
-          const lineColor = isComplete ? "stroke-emerald-500" : "stroke-gray-300 dark:stroke-gray-600";
+          const lineColor = isComplete
+            ? "stroke-emerald-500"
+            : "stroke-gray-300 dark:stroke-gray-600";
 
           if (singleSource) {
             // Single source: draw direct line to next match (L-shape)
             lines.push(
-              <path key={`single-${bottomMatchId}`}
+              <path
+                key={`single-${bottomMatchId}`}
                 d={`M ${startX} ${startY} H ${endX - 10} V ${nextMatchCenterY} H ${endX}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
           } else {
             // Has pair: draw to junction
             lines.push(
-              <path key={`bot-h-${bottomMatchId}`} d={`M ${startX} ${startY} H ${midX}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+              <path
+                key={`bot-h-${bottomMatchId}`}
+                d={`M ${startX} ${startY} H ${midX}`}
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
             lines.push(
-              <path key={`bot-v-${bottomMatchId}`} d={`M ${midX} ${startY} V ${junctionY}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+              <path
+                key={`bot-v-${bottomMatchId}`}
+                d={`M ${midX} ${startY} V ${junctionY}`}
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
           }
         }
@@ -327,21 +382,32 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
         if (hasBothSources) {
           const topComplete = topMatch?.status === "completed";
           const bottomComplete = bottomMatch?.status === "completed";
-          const lineColor = (topComplete || bottomComplete)
-            ? "stroke-emerald-500"
-            : "stroke-gray-300 dark:stroke-gray-600";
+          const lineColor =
+            topComplete || bottomComplete
+              ? "stroke-emerald-500"
+              : "stroke-gray-300 dark:stroke-gray-600";
 
           // Horizontal from junction to destination X
           lines.push(
-            <path key={`h-to-${nextMatchId}`} d={`M ${midX} ${junctionY} H ${endX}`}
-              fill="none" className={lineColor} strokeWidth={2} />
+            <path
+              key={`h-to-${nextMatchId}`}
+              d={`M ${midX} ${junctionY} H ${endX}`}
+              fill="none"
+              className={lineColor}
+              strokeWidth={2}
+            />
           );
 
           // Vertical from junctionY to next match center (if different)
           if (Math.abs(junctionY - nextMatchCenterY) > 1) {
             lines.push(
-              <path key={`v-to-${nextMatchId}`} d={`M ${endX} ${junctionY} V ${nextMatchCenterY}`}
-                fill="none" className={lineColor} strokeWidth={2} />
+              <path
+                key={`v-to-${nextMatchId}`}
+                d={`M ${endX} ${junctionY} V ${nextMatchCenterY}`}
+                fill="none"
+                className={lineColor}
+                strokeWidth={2}
+              />
             );
           }
         }
@@ -374,7 +440,8 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
             {playableMatches.length > 1 && (
               <div className="mb-2 text-center">
                 <span className="text-sm text-gray-500 dark:text-gray-300">
-                  {t("tournament.nowPlaying.selectMatch")} ({playableMatches.length} {t("tournament.bracket.pending").toLowerCase()})
+                  {t("tournament.nowPlaying.selectMatch")} ({playableMatches.length}{" "}
+                  {t("tournament.bracket.pending").toLowerCase()})
                 </span>
               </div>
             )}
@@ -387,7 +454,7 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                 </p>
                 {participantA.members && participantA.members.length > 0 && (
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {participantA.members.map(m => m.name).join(" & ")}
+                    {participantA.members.map((m) => m.name).join(" & ")}
                   </p>
                 )}
               </div>
@@ -398,7 +465,7 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                 </p>
                 {participantB.members && participantB.members.length > 0 && (
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {participantB.members.map(m => m.name).join(" & ")}
+                    {participantB.members.map((m) => m.name).join(" & ")}
                   </p>
                 )}
               </div>
@@ -462,24 +529,15 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
         </NowPlayingCard>
       )}
 
-      {/* Regenerate Button (hidden in fullscreen) */}
-      {!isFullscreen && canRegenerate && !isCompleted && (
-        <div className="mb-6 flex justify-end">
-          <button
-            onClick={() => setShowRegenerateConfirm(true)}
-            disabled={regenerating}
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-          >
-            {regenerating ? t("common.loading") : `🔀 ${t("tournament.bracket.regenerate")}`}
-          </button>
-        </div>
-      )}
-
       {/* Bracket Display with SVG */}
       {tournament.bracket && (
-        <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-900">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div
+          className={`rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 ${isFullscreen ? "p-8" : "p-4"}`}
+        >
+          <div className={`flex items-center justify-between ${isFullscreen ? "mb-6" : "mb-4"}`}>
+            <h3
+              className={`font-semibold text-gray-900 dark:text-white ${isFullscreen ? "text-2xl" : "text-lg"}`}
+            >
               {t("tournament.bracket.title")}
             </h3>
             {!isFullscreen && onToggleFullscreen && (
@@ -488,23 +546,32 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
                 title={t("common.fullscreen")}
               >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                  />
                 </svg>
               </button>
             )}
           </div>
 
-          <p className="mb-4 text-sm text-gray-500 dark:text-gray-300">
-            {t("tournament.bracket.clickToSelect")}
-          </p>
-
-          <div className="overflow-x-auto pb-4">
+          <div className="overflow-x-auto pb-4" style={{ zoom: isFullscreen ? 1.4 : 1 }}>
             <div
               className="relative"
               style={{
-                width: tournament.bracket.matchesByRound.length * (MATCH_WIDTH + ROUND_GAP) - ROUND_GAP + 20,
-                height: svgHeight
+                width:
+                  tournament.bracket.matchesByRound.length * (MATCH_WIDTH + ROUND_GAP) -
+                  ROUND_GAP +
+                  20,
+                height: svgHeight,
               }}
             >
               {/* SVG for connector lines */}
@@ -523,7 +590,7 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                     className="text-center text-sm font-medium text-gray-500 dark:text-gray-300"
                     style={{ width: MATCH_WIDTH }}
                   >
-                    {getRoundName(roundIndex, tournament.bracket!.matchesByRound.length)}
+                    {getRoundName(roundIndex, tournament.bracket?.matchesByRound.length ?? 0)}
                   </div>
                 ))}
               </div>
@@ -531,7 +598,9 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
               {/* Match cards positioned absolutely */}
               {positions.map((pos) => {
                 const match = matches.find((m) => m.id === pos.matchId);
-                if (!match) return null;
+                if (!match) {
+                  return null;
+                }
 
                 const pA = match.aId ? participantMap.get(match.aId) : null;
                 const pB = match.bId ? participantMap.get(match.bId) : null;
@@ -540,22 +609,43 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                 const isPlayable = match.status === "pending" && match.aId && match.bId;
 
                 // Detect BYEs: match completed with one side missing
-                const isByeA = isMatchCompleted && !match.aId && match.bId;
-                const isByeB = isMatchCompleted && !match.bId && match.aId;
+                const isByeA = !!(isMatchCompleted && !match.aId && match.bId);
+                const isByeB = !!(isMatchCompleted && !match.bId && match.aId);
+
+                // Helper to get match card border/bg class
+                const getMatchCardClass = () => {
+                  if (isSelected) {
+                    return "border-violet-500 bg-violet-50 shadow-lg shadow-violet-200 ring-2 ring-violet-500 dark:border-violet-400 dark:bg-violet-900/20 dark:shadow-violet-900/30 dark:ring-violet-400";
+                  }
+                  if (isMatchCompleted) {
+                    return "border-emerald-300 bg-emerald-50/50 dark:border-emerald-600 dark:bg-emerald-900/10";
+                  }
+                  if (isPlayable) {
+                    return "cursor-pointer border-amber-300 bg-amber-50/50 hover:border-amber-400 hover:bg-amber-100/50 dark:border-amber-600 dark:bg-amber-900/10 dark:hover:border-amber-500 dark:hover:bg-amber-900/20";
+                  }
+                  return "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800";
+                };
+
+                // Helper to get participant text class
+                const getParticipantTextClass = (
+                  isWinner: boolean,
+                  isBye: boolean,
+                  isNull: boolean
+                ) => {
+                  if (isWinner) {
+                    return "text-emerald-700 dark:text-emerald-400";
+                  }
+                  if (isBye || isNull) {
+                    return "italic text-gray-400 dark:text-gray-500";
+                  }
+                  return "text-gray-900 dark:text-white";
+                };
 
                 return (
                   <div
                     key={pos.matchId}
                     onClick={() => isPlayable && handleMatchClick(match.id)}
-                    className={`absolute rounded-lg border transition-all ${
-                      isSelected
-                        ? "border-violet-500 bg-violet-50 shadow-lg shadow-violet-200 ring-2 ring-violet-500 dark:border-violet-400 dark:bg-violet-900/20 dark:shadow-violet-900/30 dark:ring-violet-400"
-                        : isMatchCompleted
-                        ? "border-emerald-300 bg-emerald-50/50 dark:border-emerald-600 dark:bg-emerald-900/10"
-                        : isPlayable
-                        ? "cursor-pointer border-amber-300 bg-amber-50/50 hover:border-amber-400 hover:bg-amber-100/50 dark:border-amber-600 dark:bg-amber-900/10 dark:hover:border-amber-500 dark:hover:bg-amber-900/20"
-                        : "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
-                    }`}
+                    className={`absolute rounded-lg border transition-all ${getMatchCardClass()}`}
                     style={{
                       left: pos.x,
                       top: pos.y + 28, // offset for header
@@ -580,29 +670,31 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                       style={{ height: MATCH_HEIGHT / 2 }}
                     >
                       <div className="min-w-0 flex-1">
-                        <span className={`block truncate text-sm font-medium ${
-                          isMatchCompleted && match.winnerId === match.aId
-                            ? "text-emerald-700 dark:text-emerald-400"
-                            : isByeA || match.aId === null
-                              ? "italic text-gray-400 dark:text-gray-500"
-                              : "text-gray-900 dark:text-white"
-                        }`}>
+                        <span
+                          className={`block truncate text-sm font-medium ${getParticipantTextClass(
+                            !!(isMatchCompleted && match.winnerId === match.aId),
+                            isByeA,
+                            !match.aId
+                          )}`}
+                        >
                           {isByeA
                             ? t("tournament.bracket.bye")
                             : pA?.name || (match.aId === null ? t("tournament.bracket.tbd") : "")}
                         </span>
                         {pA?.members && pA.members.length > 0 && (
                           <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
-                            {pA.members.map(m => m.name).join(" & ")}
+                            {pA.members.map((m) => m.name).join(" & ")}
                           </span>
                         )}
                       </div>
                       {isMatchCompleted && !isByeA && !isByeB && (
-                        <span className={`ml-1 flex-shrink-0 text-sm font-bold ${
-                          match.winnerId === match.aId
-                            ? "text-emerald-600 dark:text-emerald-400"
-                            : "text-gray-400"
-                        }`}>
+                        <span
+                          className={`ml-1 flex-shrink-0 text-sm font-bold ${
+                            match.winnerId === match.aId
+                              ? "text-emerald-600 dark:text-emerald-400"
+                              : "text-gray-400"
+                          }`}
+                        >
                           {match.scoreA}
                         </span>
                       )}
@@ -617,29 +709,31 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
                       style={{ height: MATCH_HEIGHT / 2 }}
                     >
                       <div className="min-w-0 flex-1">
-                        <span className={`block truncate text-sm font-medium ${
-                          isMatchCompleted && match.winnerId === match.bId
-                            ? "text-emerald-700 dark:text-emerald-400"
-                            : isByeB || match.bId === null
-                              ? "italic text-gray-400 dark:text-gray-500"
-                              : "text-gray-900 dark:text-white"
-                        }`}>
+                        <span
+                          className={`block truncate text-sm font-medium ${getParticipantTextClass(
+                            !!(isMatchCompleted && match.winnerId === match.bId),
+                            isByeB,
+                            !match.bId
+                          )}`}
+                        >
                           {isByeB
                             ? t("tournament.bracket.bye")
                             : pB?.name || (match.bId === null ? t("tournament.bracket.tbd") : "")}
                         </span>
                         {pB?.members && pB.members.length > 0 && (
                           <span className="block truncate text-xs text-gray-500 dark:text-gray-400">
-                            {pB.members.map(m => m.name).join(" & ")}
+                            {pB.members.map((m) => m.name).join(" & ")}
                           </span>
                         )}
                       </div>
                       {isMatchCompleted && !isByeA && !isByeB && (
-                        <span className={`ml-1 flex-shrink-0 text-sm font-bold ${
-                          match.winnerId === match.bId
-                            ? "text-emerald-600 dark:text-emerald-400"
-                            : "text-gray-400"
-                        }`}>
+                        <span
+                          className={`ml-1 flex-shrink-0 text-sm font-bold ${
+                            match.winnerId === match.bId
+                              ? "text-emerald-600 dark:text-emerald-400"
+                              : "text-gray-400"
+                          }`}
+                        >
                           {match.scoreB}
                         </span>
                       )}
@@ -651,17 +745,6 @@ export function BracketView({ tournament, matches, participantMap, isFullscreen 
           </div>
         </div>
       )}
-
-      {/* Regenerate Confirmation Dialog */}
-      <ConfirmDialog
-        open={showRegenerateConfirm}
-        onClose={() => setShowRegenerateConfirm(false)}
-        onConfirm={handleRegenerate}
-        title={t("tournament.bracket.regenerate")}
-        message={t("tournament.bracket.regenerateConfirm")}
-        variant="warning"
-        loading={regenerating}
-      />
     </div>
   );
 }

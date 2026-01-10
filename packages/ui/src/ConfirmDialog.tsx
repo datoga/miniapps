@@ -3,11 +3,14 @@
 import { memo } from "react";
 import { Button } from "./Button";
 import { Modal } from "./Modal";
+import { useModalLabels } from "./ModalLabelsContext";
 import { cn } from "./utils";
 
 export interface ConfirmDialogProps {
   /** Whether the dialog is open */
-  open: boolean;
+  open?: boolean;
+  /** @deprecated Use `open` instead */
+  isOpen?: boolean;
   /** Dialog title */
   title: string;
   /** Dialog message/description */
@@ -15,15 +18,23 @@ export interface ConfirmDialogProps {
   /** Callback when confirmed */
   onConfirm: () => void;
   /** Callback when cancelled (also used to close) */
-  onCancel: () => void;
+  onCancel?: () => void;
+  /** @deprecated Use `onCancel` instead */
+  onClose?: () => void;
   /** Custom confirm button label */
   confirmLabel?: string;
+  /** @deprecated Use `confirmLabel` instead */
+  confirmText?: string;
   /** Custom cancel button label */
   cancelLabel?: string;
+  /** @deprecated Use `cancelLabel` instead */
+  cancelText?: string;
   /** Visual variant - affects confirm button color */
   variant?: "default" | "danger" | "warning";
   /** Whether the confirm action is loading */
   loading?: boolean;
+  /** @deprecated Use `loading` instead */
+  isLoading?: boolean;
   /** aria-label for close button */
   closeLabel?: string;
   /** Additional content to render between message and buttons */
@@ -55,43 +66,57 @@ const variantStyles = {
  */
 export const ConfirmDialog = memo(function ConfirmDialog({
   open,
+  isOpen,
   title,
   message,
   onConfirm,
   onCancel,
-  confirmLabel = "Confirm",
-  cancelLabel = "Cancel",
+  onClose,
+  confirmLabel,
+  confirmText,
+  cancelLabel,
+  cancelText,
   variant = "default",
-  loading = false,
+  loading,
+  isLoading,
   closeLabel,
   children,
 }: ConfirmDialogProps) {
+  const labels = useModalLabels();
+  // Support backward compatible props
+  const isDialogOpen = open ?? isOpen ?? false;
+  const handleCancel = onCancel ?? onClose ?? (() => {});
+  const isLoadingState = loading ?? isLoading ?? false;
+  const resolvedConfirmLabel = confirmLabel ?? confirmText ?? labels.confirm ?? "Confirm";
+  const resolvedCancelLabel = cancelLabel ?? cancelText ?? labels.cancel ?? "Cancel";
+  const resolvedCloseLabel = closeLabel ?? labels.close ?? "Close";
+
   const handleConfirm = () => {
     onConfirm();
   };
 
   return (
     <Modal
-      open={open}
-      onClose={onCancel}
+      open={isDialogOpen}
+      onClose={handleCancel}
       title={title}
       size="sm"
-      closeLabel={closeLabel}
+      closeLabel={resolvedCloseLabel}
     >
       <p className="text-gray-600 dark:text-gray-400">{message}</p>
 
       {children}
 
       <div className="mt-6 flex justify-end gap-3">
-        <Button variant="secondary" onClick={onCancel} disabled={loading}>
-          {cancelLabel}
+        <Button variant="secondary" onClick={handleCancel} disabled={isLoadingState}>
+          {resolvedCancelLabel}
         </Button>
         <Button
           onClick={handleConfirm}
-          disabled={loading}
+          disabled={isLoadingState}
           className={cn(variantStyles[variant])}
         >
-          {loading ? (
+          {isLoadingState ? (
             <span className="flex items-center gap-2">
               <svg
                 className="h-4 w-4 animate-spin"
@@ -112,10 +137,10 @@ export const ConfirmDialog = memo(function ConfirmDialog({
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 />
               </svg>
-              {confirmLabel}
+              {resolvedConfirmLabel}
             </span>
           ) : (
-            confirmLabel
+            resolvedConfirmLabel
           )}
         </Button>
       </div>

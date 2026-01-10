@@ -260,9 +260,9 @@
       "description": "Exporta tus datos para guardarlos o transferirlos a otro dispositivo. Importa un archivo para restaurar una copia de seguridad.",
       "export": "Exportar Datos (JSON)",
       "import": "Importar Datos",
-      "importConfirmTitle": "¿Importar datos?",
-      "importConfirmMessage": "Esto reemplazará todos tus datos actuales con los del archivo. Esta acción no se puede deshacer.",
-      "importConfirm": "Sí, importar",
+      "importConfirmTitle": "⚠️ ¿Importar datos?",
+      "importConfirmMessage": "Se BORRARÁN todos tus torneos y configuración actuales. Serán reemplazados por los datos del archivo importado. Esta acción no se puede deshacer.",
+      "importConfirm": "Sí, borrar y reemplazar",
       "importSuccess": "Datos importados correctamente",
       "invalidFile": "Archivo no válido. Asegúrate de que sea un archivo JSON exportado desde Game Master.",
       "error": "Error al importar los datos"

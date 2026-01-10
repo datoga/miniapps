@@ -1,7 +1,7 @@
 "use client";
 
+import { Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Modal } from "./Modal";
 import type { FirstConnectionConflict } from "@/lib/drive";
 
 interface FirstConnectionConflictModalProps {

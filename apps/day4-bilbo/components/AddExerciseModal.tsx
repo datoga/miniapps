@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { Button, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
-import { ExerciseIcon, availableEmojis } from "@/lib/icons";
+import { useCallback, useEffect, useState } from "react";
+import { availableEmojis, ExerciseIcon } from "@/lib/icons";
 import { estimate1RM, format2, fromKg, toKg } from "@/lib/math";
 import type { PresetType, UnitsUI } from "@/lib/schemas";
 

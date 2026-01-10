@@ -7,5 +7,12 @@ export { Footer } from "./Footer";
 export { Button } from "./Button";
 export { Modal, type ModalProps } from "./Modal";
 export { ConfirmDialog, type ConfirmDialogProps } from "./ConfirmDialog";
+export {
+  ModalLabelsProvider,
+  useModalLabels,
+  type ModalLabels,
+  type ModalLabelsProviderProps,
+} from "./ModalLabelsContext";
+export { ModalLabelsWrapper, type ModalLabelsWrapperProps } from "./ModalLabelsWrapper";
 export { cn } from "./utils";
 export { useShare, buildShareText, type ShareOptions, type UseShareResult } from "./useShare";

@@ -55,18 +55,10 @@ export function getBestMimeType(preferMp4: boolean): {
   matchesPreference: boolean;
 } {
   // MP4 MIME types to try
-  const mp4Types = [
-    "video/mp4",
-    "video/mp4;codecs=avc1",
-    "video/mp4;codecs=h264",
-  ];
+  const mp4Types = ["video/mp4", "video/mp4;codecs=avc1", "video/mp4;codecs=h264"];
 
   // WebM MIME types to try
-  const webmTypes = [
-    "video/webm;codecs=vp9",
-    "video/webm;codecs=vp8",
-    "video/webm",
-  ];
+  const webmTypes = ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"];
 
   const checkTypes = (types: string[]): string | null => {
     for (const type of types) {
@@ -123,7 +115,7 @@ export function createMediaRecorderWithFallback(
   usedFallback: boolean;
 } {
   const primary = getBestMimeType(preferMp4);
-  
+
   // Try primary format first
   try {
     const recorder = new MediaRecorder(stream, {
@@ -175,7 +167,7 @@ export function createMediaRecorderWithFallback(
       matchesPreference: !preferMp4,
       usedFallback: true,
     };
-  } catch (ultimateError) {
+  } catch {
     console.error("[Recorder] All formats failed, trying without mimeType");
   }
 
@@ -243,4 +235,3 @@ export async function createUniqueFile(
   const fileHandle = await dirHandle.getFileHandle(finalFilename, { create: true });
   return { fileHandle, finalFilename };
 }
-

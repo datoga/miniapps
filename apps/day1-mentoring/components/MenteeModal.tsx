@@ -1,10 +1,10 @@
 "use client";
 
+import { Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useState } from "react";
 import type { Mentee, MenteeFormInput, Note } from "../lib/schemas";
 import { MenteeFormSchema } from "../lib/schemas";
-import { Modal } from "./Modal";
 
 interface MenteeModalProps {
   open: boolean;
@@ -121,7 +121,7 @@ export const MenteeModal = memo(function MenteeModal({
       open={open}
       onClose={onClose}
       title={isEdit ? t("menteeModal.editTitle") : t("menteeModal.createTitle")}
-      maxWidth="max-w-xl"
+      size="max-w-xl"
     >
       <form onSubmit={handleSubmit} className="space-y-8 py-4">
         {/* Basic Info */}

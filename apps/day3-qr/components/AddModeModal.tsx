@@ -1,8 +1,8 @@
 "use client";
 
-import { memo } from "react";
+import { Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Modal } from "./Modal";
+import { memo } from "react";
 
 interface AddModeModalProps {
   open: boolean;

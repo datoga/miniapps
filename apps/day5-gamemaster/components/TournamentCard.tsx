@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { ConfirmDialog } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import type { Tournament } from "@/lib/schemas";
-import { archiveTournament, unarchiveTournament, deleteTournament } from "@/lib/domain/tournaments";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { useState } from "react";
+import { archiveTournament, deleteTournament, unarchiveTournament } from "@/lib/domain/tournaments";
 import { getGameEmoji } from "@/lib/games";
+import type { Tournament } from "@/lib/schemas";
 
 interface TournamentCardProps {
   tournament: Tournament;

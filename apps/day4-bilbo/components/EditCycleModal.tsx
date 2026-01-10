@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Button, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
-import type { Cycle, UnitsUI } from "@/lib/schemas";
+import { useEffect, useState } from "react";
 import { format2, fromKg, toKg } from "@/lib/math";
+import type { Cycle, UnitsUI } from "@/lib/schemas";
 
 interface EditCycleModalProps {
   isOpen: boolean;

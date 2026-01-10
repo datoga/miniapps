@@ -1,16 +1,18 @@
 # Mini Apps Monorepo
 
-A Turborepo-based monorepo template for building and deploying "1 mini app per day" projects to Vercel. Each app is a standalone Next.js application with shared packages for UI components, internationalization, analytics, and browser storage.
+A Turborepo-based monorepo template for building and deploying "1 mini app per day" projects to Vercel. Each app is a standalone Next.js application with shared packages for UI components, internationalization, analytics, SEO, and browser storage.
 
 ## Features
 
 - **Turborepo + npm workspaces** - Fast, efficient monorepo management
-- **Next.js 15 App Router** - Modern React framework with TypeScript
+- **Next.js 16 App Router** - Modern React framework with TypeScript
 - **PWA Installable** - Web App Manifest and dynamic icons for every miniapp
 - **Internationalization (ES/EN)** - Full i18n support with `next-intl` and localized routing
 - **Theme Support** - Light, dark, and system themes with `next-themes`
+- **SEO Optimized** - Metadata, JSON-LD, sitemaps, and OG images
 - **Google Analytics GA4** - Optional analytics integration
 - **Browser Persistence** - IndexedDB and localStorage helpers
+- **Google Drive Sync** - Optional cloud backup with `@miniapps/drive`
 - **Shared UI Components** - Reusable components across all apps
 - **Static/Client-only** - No API routes by default
 
@@ -74,18 +76,20 @@ npm run lint
 ```
 ├── apps/
 │   ├── whitelabel-demo/     # Full example app with all features
-│   ├── day1-mentoring/      # Placeholder app
-│   ├── day2-verbs/          # Placeholder app
-│   ├── day3-qr/             # Placeholder app
-│   ├── day4-bilbo/          # Placeholder app
-│   ├── day5-gamemaster/     # Game Master - Tournament management
-│   ├── day6-recordme/       # Placeholder app
-│   └── day7-jobkanban/      # Placeholder app
+│   ├── day1-mentoring/      # Mentoring Tracker - Manage mentees and sessions
+│   ├── day2-verbs/          # VerbMaster - English irregular verbs learning
+│   ├── day3-qr/             # QR Library - Save and manage QR codes
+│   ├── day4-bilbo/          # BilboTracker - Strength training tracker with charts
+│   ├── day5-gamemaster/     # GameMaster - Tournament management (brackets, ladders)
+│   ├── day6-recordme/       # RecordMe - Browser-based video recorder
+│   └── day7-replacedbyai/   # Will AI Replace? - AI job impact analysis
 ├── packages/
 │   ├── ui/                  # Shared UI components
 │   ├── i18n/                # Internationalization utilities
 │   ├── analytics/           # Google Analytics helpers
 │   ├── storage/             # Browser persistence (IndexedDB/localStorage)
+│   ├── seo/                 # SEO utilities (metadata, JSON-LD, sitemaps, OG images)
+│   ├── drive/               # Google Drive sync integration
 │   ├── config/              # Shared Tailwind and PostCSS configs
 │   ├── eslint-config/       # Shared ESLint configuration
 │   └── typescript-config/   # Shared TypeScript configuration
@@ -203,8 +207,8 @@ npm run dev --workspace=whitelabel-demo
 
 ### Notes
 
-- **No Service Worker**: This iteration intentionally does not include offline caching or service workers
-- **start_url**: Set to `/` which works with locale routing (redirects to default locale)
+- **Service Worker**: Optional - some apps (e.g., `day7-replacedbyai`) include Service Workers for offline caching
+- **start_url**: Set to `/?utm_source=pwa&utm_medium=installed` for PWA install tracking in Analytics
 - **Icons**: Generated on-the-fly with app initials and unique theme colors per app
 
 ## Browser Storage
@@ -318,6 +322,10 @@ Shared UI components:
 - `Header` - App header component
 - `Footer` - App footer with contact link and copyright
 - `Button` - Reusable button component
+- `Modal` - Accessible modal dialog with i18n support
+- `ConfirmDialog` - Confirmation dialog with variants (default, warning, danger)
+- `ModalLabelsProvider` / `ModalLabelsWrapper` - Context for translated modal labels
+- `useShare` / `buildShareText` - Web Share API utilities
 - `cn` - Utility for merging Tailwind classes
 
 ### @miniapps/i18n
@@ -343,7 +351,24 @@ Browser storage utilities:
 - `getJSON`, `setJSON`, `remove` - IndexedDB operations
 - `local.getJSON`, `local.setJSON`, `local.remove` - localStorage operations
 
+### @miniapps/seo
+
+SEO utilities:
+
+- `generateSEOMetadata` - Generate comprehensive Next.js metadata
+- `generateJsonLd` - Generate JSON-LD structured data for WebApplication
+- `generateSitemap` - Generate sitemap with locale support
+- `generateOgImage` - Generate dynamic OpenGraph images
+- `generateViewport` - Generate viewport config with theme colors
+
+### @miniapps/drive
+
+Google Drive sync integration:
+
+- `DriveProvider` - Context provider for Drive sync state
+- `useDrive` - Hook for Drive operations
+- `DrivePickerScript` - Google Picker integration
+
 ## License
 
 MIT
-# willaireplaced-comments

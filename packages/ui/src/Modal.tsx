@@ -1,11 +1,14 @@
 "use client";
 
 import { memo, useCallback, useEffect, type ReactNode } from "react";
+import { useModalLabels } from "./ModalLabelsContext";
 import { cn } from "./utils";
 
 export interface ModalProps {
   /** Whether the modal is open */
-  open: boolean;
+  open?: boolean;
+  /** @deprecated Use `open` instead */
+  isOpen?: boolean;
   /** Callback when the modal should close */
   onClose: () => void;
   /** Modal title - can be a string or ReactNode */
@@ -18,7 +21,7 @@ export interface ModalProps {
   showCloseButton?: boolean;
   /** Additional class name for the modal container */
   className?: string;
-  /** aria-label for close button (for i18n) */
+  /** aria-label for close button - overrides context value */
   closeLabel?: string;
 }
 
@@ -42,14 +45,19 @@ const sizeClasses: Record<string, string> = {
  */
 export const Modal = memo(function Modal({
   open,
+  isOpen,
   onClose,
   title,
   children,
   size = "md",
   showCloseButton = true,
   className,
-  closeLabel = "Close",
+  closeLabel,
 }: ModalProps) {
+  const labels = useModalLabels();
+  const resolvedCloseLabel = closeLabel ?? labels.close ?? "Close";
+  // Support both `open` and `isOpen` for backward compatibility
+  const isModalOpen = open ?? isOpen ?? false;
   // Close on escape key
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -62,7 +70,7 @@ export const Modal = memo(function Modal({
 
   // Handle body scroll lock and escape key listener
   useEffect(() => {
-    if (open) {
+    if (isModalOpen) {
       document.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";
     }
@@ -70,9 +78,9 @@ export const Modal = memo(function Modal({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [open, handleKeyDown]);
+  }, [isModalOpen, handleKeyDown]);
 
-  if (!open) {
+  if (!isModalOpen) {
     return null;
   }
 
@@ -112,7 +120,7 @@ export const Modal = memo(function Modal({
             <button
               onClick={onClose}
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300 transition-colors"
-              aria-label={closeLabel}
+              aria-label={resolvedCloseLabel}
             >
               <svg
                 width="20"

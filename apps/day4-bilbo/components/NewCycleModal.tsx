@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Button, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
+import { useCallback, useState } from "react";
+import { estimate1RM, format2, formatWeight, fromKg, toKg } from "@/lib/math";
 import type { Cycle, UnitsUI } from "@/lib/schemas";
-import { formatWeight, format2, fromKg, toKg, estimate1RM } from "@/lib/math";
 
 interface NewCycleModalProps {
   isOpen: boolean;

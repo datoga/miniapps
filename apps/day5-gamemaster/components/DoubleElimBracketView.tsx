@@ -795,24 +795,33 @@ export function DoubleElimBracketView({
     round?: number;
   } | null>(null);
 
-  if (!tournament.doubleBracket) {
-    return <div>No bracket data</div>;
-  }
-
-  const { winnersBracket, losersBracket, grandFinalMatchId, grandFinalResetMatchId, isReset } =
-    tournament.doubleBracket;
+  // Extract bracket data (may be undefined)
+  const doubleBracket = tournament.doubleBracket;
+  const winnersBracket = doubleBracket?.winnersBracket ?? [];
+  const losersBracket = doubleBracket?.losersBracket ?? [];
+  const grandFinalMatchId = doubleBracket?.grandFinalMatchId;
+  const grandFinalResetMatchId = doubleBracket?.grandFinalResetMatchId;
+  const isReset = doubleBracket?.isReset ?? false;
 
   // Organize matches by bracket side
   const winnersMatches: Match[][] = winnersBracket.map((roundIds) =>
-    roundIds.map((id) => matches.find((m) => m.id === id)!).filter(Boolean)
+    roundIds
+      .map((id) => matches.find((m) => m.id === id))
+      .filter((m): m is Match => m !== undefined)
   );
 
   const losersMatches: Match[][] = losersBracket.map((roundIds) =>
-    roundIds.map((id) => matches.find((m) => m.id === id)!).filter(Boolean)
+    roundIds
+      .map((id) => matches.find((m) => m.id === id))
+      .filter((m): m is Match => m !== undefined)
   );
 
-  const grandFinalMatch = matches.find((m) => m.id === grandFinalMatchId);
-  const grandFinalResetMatch = matches.find((m) => m.id === grandFinalResetMatchId);
+  const grandFinalMatch = grandFinalMatchId
+    ? matches.find((m) => m.id === grandFinalMatchId)
+    : undefined;
+  const grandFinalResetMatch = grandFinalResetMatchId
+    ? matches.find((m) => m.id === grandFinalResetMatchId)
+    : undefined;
 
   // Find first playable match (prioritize same bracket side/round as last reported)
   const firstPlayableMatch = useMemo(() => {
@@ -950,6 +959,11 @@ export function DoubleElimBracketView({
     }
     return undefined;
   }, [selectedMatch, t]);
+
+  // Early return if no bracket data (after all hooks)
+  if (!doubleBracket) {
+    return <div>No bracket data</div>;
+  }
 
   const handleSelectMatch = (matchId: string) => {
     setSelectedMatchId(matchId);

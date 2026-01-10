@@ -4,7 +4,10 @@
     "description": "Registra tus sesiones de mentoría, define objetivos y ayuda a crecer a las personas que acompañas"
   },
   "common": {
-    "appTitle": "MentorFlow"
+    "appTitle": "MentorFlow",
+    "close": "Cerrar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar"
   },
   "nav": {
     "dashboard": "Panel",

@@ -1,10 +1,10 @@
 "use client";
 
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
-import { AppShell } from "@miniapps/ui";
+import { useLocale, useTranslations } from "next-intl";
+import { AppShell, ModalLabelsWrapper } from "@miniapps/ui";
 import { SearchModal } from "./SearchModal";
 import { useMentoringData } from "../lib/hooks/useMentoringData";
 
@@ -61,6 +61,7 @@ function InfoIcon() {
 export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps) {
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations();
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Load data for search
@@ -131,7 +132,7 @@ export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps)
   );
 
   return (
-    <>
+    <ModalLabelsWrapper t={t}>
       <AppShell
         navItems={[]}
         headerActions={headerActions}
@@ -149,7 +150,7 @@ export function AppShellWrapper({ children, currentPath }: AppShellWrapperProps)
         onSelectMentee={handleSelectMentee}
         onClose={handleSearchClose}
       />
-    </>
+    </ModalLabelsWrapper>
   );
 }
 

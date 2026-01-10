@@ -1,28 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Footer, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Footer } from "@miniapps/ui";
-import { AppHeader } from "./AppHeader";
-import { Modal } from "./Modal";
-import { SyncStatusIndicator } from "./SyncStatusIndicator";
-import { useBilboData } from "@/lib/hooks/useBilboData";
-import { fromKg, toKg, format2 } from "@/lib/math";
-import { trackSettingsChanged } from "@/lib/ga";
+import { useEffect, useState } from "react";
 import {
-  signInWithGoogle,
-  signOut,
-  performSync,
-  getAccessToken,
-  deleteBackupFromDrive,
   checkFirstConnectionConflict,
+  deleteBackupFromDrive,
+  getAccessToken,
+  performSync,
   resolveConflictKeepLocal,
   resolveConflictKeepRemote,
+  signInWithGoogle,
+  signOut,
   type FirstConnectionConflict,
 } from "@/lib/drive";
+import { trackSettingsChanged } from "@/lib/ga";
+import { useBilboData } from "@/lib/hooks/useBilboData";
+import { format2, fromKg, toKg } from "@/lib/math";
 import type { DriveProfile, DriveSyncState } from "@/lib/schemas";
+import { AppHeader } from "./AppHeader";
 import { FirstConnectionConflictModal } from "./FirstConnectionConflictModal";
+import { SyncStatusIndicator } from "./SyncStatusIndicator";
 
 interface SettingsPageProps {
   locale: string;

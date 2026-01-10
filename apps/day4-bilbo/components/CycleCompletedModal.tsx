@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Button, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
-import type { UnitsUI } from "@/lib/schemas";
+import { useState } from "react";
 import { format2, fromKg } from "@/lib/math";
+import type { UnitsUI } from "@/lib/schemas";
 import { formatCycleShare, shareContent } from "@/lib/share";
 
 interface CycleCompletedModalProps {

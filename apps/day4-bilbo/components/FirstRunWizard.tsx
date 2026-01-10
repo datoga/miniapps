@@ -1,13 +1,12 @@
 "use client";
 
+import { Button, Modal } from "@miniapps/ui";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useState } from "react";
 import { signInWithGoogle } from "@/lib/drive";
 import { availableEmojis, ExerciseIcon, presetIcons } from "@/lib/icons";
 import { estimate1RM, format2, fromKg, toKg } from "@/lib/math";
 import type { PresetType, UnitsUI } from "@/lib/schemas";
-import { Button } from "@miniapps/ui";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { Modal } from "./Modal";
 
 interface WizardData {
   unitsUI: UnitsUI;

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import type { DriveProfile, DriveSyncState } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
-import type { DriveSyncState, DriveProfile } from "@/lib/schemas";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 interface SyncStatusIndicatorProps {
   state: DriveSyncState;
@@ -16,7 +16,16 @@ interface SyncStatusIndicatorProps {
   isConnecting?: boolean;
 }
 
-export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick, onSignOut, onConnect, lastSyncedAt, isConnecting }: SyncStatusIndicatorProps) {
+export function SyncStatusIndicator({
+  state,
+  profile,
+  errorMessage,
+  onErrorClick,
+  onSignOut,
+  onConnect,
+  lastSyncedAt,
+  isConnecting,
+}: SyncStatusIndicatorProps) {
   const t = useTranslations();
   const [showErrorTooltip, setShowErrorTooltip] = useState(false);
   const [showSyncedTooltip, setShowSyncedTooltip] = useState(false);
@@ -48,8 +57,19 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
       >
         {isConnecting ? (
           <svg className="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            />
           </svg>
         ) : (
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -100,66 +120,86 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
       return (
         <div className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-blue-500 ring-2 ring-white dark:ring-gray-900">
           <svg className="h-2 w-2 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            />
           </svg>
         </div>
       );
     }
     if (state === "synced") {
       return (
-        <button
+        <div
           onClick={handleBadgeClick}
-          className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-green-500 ring-2 ring-white transition-transform hover:scale-125 dark:ring-gray-900"
+          className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 cursor-pointer items-center justify-center rounded-full bg-green-500 ring-2 ring-white transition-transform hover:scale-125 dark:ring-gray-900"
           title={t("settings.sync.status.synced")}
         >
-          <svg className="h-2 w-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+          <svg
+            className="h-2 w-2 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="4"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
-        </button>
+        </div>
       );
     }
     if (state === "error") {
       return (
-        <button
+        <div
           onClick={handleBadgeClick}
-          className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 ring-2 ring-white transition-transform hover:scale-125 dark:ring-gray-900"
+          className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 cursor-pointer items-center justify-center rounded-full bg-red-500 ring-2 ring-white transition-transform hover:scale-125 dark:ring-gray-900"
           title={t("settings.sync.status.error")}
         >
-          <svg className="h-2 w-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="4">
+          <svg
+            className="h-2 w-2 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="4"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </button>
+        </div>
       );
     }
     return null;
   };
 
-  const ProfileImage = () => (
-    <button
-      onClick={handleProfileClick}
-      className="relative rounded-full ring-2 ring-transparent transition-all hover:ring-blue-400 focus:outline-none focus:ring-blue-500"
-    >
-      {profile?.pictureUrl ? (
-        <Image
-          src={profile.pictureUrl}
-          alt={profile.name || "Profile"}
-          width={28}
-          height={28}
-          className="rounded-full border border-gray-200 dark:border-gray-700"
-        />
-      ) : (
-        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-400">
-          {profile?.name?.[0]?.toUpperCase() || "?"}
-        </div>
-      )}
-      <StatusBadge />
-    </button>
-  );
-
   return (
     <div className="relative flex items-center gap-1" ref={menuRef}>
-      <ProfileImage />
+      {/* Profile Image Button */}
+      <button
+        onClick={handleProfileClick}
+        className="relative rounded-full ring-2 ring-transparent transition-all hover:ring-blue-400 focus:outline-none focus:ring-blue-500"
+      >
+        {profile?.pictureUrl ? (
+          <Image
+            src={profile.pictureUrl}
+            alt={profile.name || "Profile"}
+            width={28}
+            height={28}
+            className="rounded-full border border-gray-200 dark:border-gray-700"
+          />
+        ) : (
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+            {profile?.name?.[0]?.toUpperCase() || "?"}
+          </div>
+        )}
+        <StatusBadge />
+      </button>
 
       {/* Profile menu dropdown */}
       {showProfileMenu && (
@@ -170,9 +210,7 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
               {profile?.name || t("settings.sync.status.signed_in")}
             </p>
             {profile?.email && (
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {profile.email}
-              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{profile.email}</p>
             )}
             {lastSyncedAt && (
               <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
@@ -189,8 +227,18 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
                 onClick={handleSignOut}
                 className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/50"
               >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
                 </svg>
                 {t("settings.sync.signOut")}
               </button>
@@ -203,8 +251,18 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
       {state === "error" && showErrorTooltip && (
         <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-lg border border-red-200 bg-white p-3 shadow-lg dark:border-red-800 dark:bg-gray-900">
           <div className="flex items-start gap-2">
-            <svg className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            <svg
+              className="mt-0.5 h-4 w-4 flex-shrink-0 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
             </svg>
             <div>
               <p className="text-sm font-medium text-red-800 dark:text-red-300">
@@ -229,7 +287,13 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
         <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-lg border border-green-200 bg-white p-3 shadow-lg dark:border-green-800 dark:bg-gray-900">
           <div className="flex items-start gap-3">
             <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/50">
-              <svg className="h-5 w-5 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <svg
+                className="h-5 w-5 text-green-600 dark:text-green-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
@@ -260,4 +324,3 @@ export function SyncStatusIndicator({ state, profile, errorMessage, onErrorClick
     </div>
   );
 }
-

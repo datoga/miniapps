@@ -1,6 +1,7 @@
 "use client";
 
 import { trackEvent } from "@miniapps/analytics";
+import { ConfirmDialog, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useState } from "react";
 import {
@@ -12,10 +13,8 @@ import {
   toBrandedPNGBlob,
 } from "../lib/qrGenerator";
 import type { QrItem } from "../lib/types";
-import { ConfirmDialog } from "./ConfirmDialog";
 import { DownloadDropdown } from "./DownloadDropdown";
 import { FullscreenModal } from "./FullscreenModal";
-import { Modal } from "./Modal";
 import { PrintDialog } from "./PrintDialog";
 import { QrCanvas } from "./QrCanvas";
 
@@ -222,7 +221,7 @@ export const DetailModal = memo(function DetailModal({
 
   return (
     <>
-      <Modal open={open} onClose={onClose} title={editableTitle} maxWidth="max-w-2xl">
+      <Modal open={open} onClose={onClose} title={editableTitle} size="max-w-2xl">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left: QR Preview */}
           <div className="flex-shrink-0 flex flex-col items-center">

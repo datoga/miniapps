@@ -3,13 +3,15 @@ import type { UnitsUI } from "@/lib/schemas";
 interface CustomTooltipProps {
   active?: boolean;
   payload?: Array<{ name: string; value: number; color: string; dataKey: string }>;
-  label?: string;
+  label?: string | number;
   unitsUI: UnitsUI;
   t: (key: string) => string;
 }
 
 export function CustomTooltip({ active, payload, label, unitsUI, t }: CustomTooltipProps) {
-  if (!active || !payload || payload.length === 0) {return null;}
+  if (!active || !payload || payload.length === 0) {
+    return null;
+  }
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white/95 p-3 shadow-xl backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/95">
@@ -21,13 +23,8 @@ export function CustomTooltip({ active, payload, label, unitsUI, t }: CustomTool
           const isReps = entry.name.toLowerCase().includes("reps");
           return (
             <div key={idx} className="flex items-center gap-2">
-              <div
-                className="h-3 w-3 rounded-full"
-                style={{ backgroundColor: entry.color }}
-              />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                {entry.name}:
-              </span>
+              <div className="h-3 w-3 rounded-full" style={{ backgroundColor: entry.color }} />
+              <span className="text-sm text-gray-600 dark:text-gray-300">{entry.name}:</span>
               <span className="font-semibold text-gray-900 dark:text-white">
                 {entry.value} {isReps ? "" : unitsUI}
               </span>
@@ -38,4 +35,3 @@ export function CustomTooltip({ active, payload, label, unitsUI, t }: CustomTool
     </div>
   );
 }
-

@@ -1,7 +1,7 @@
 "use client";
 
 import { trackEvent } from "@miniapps/analytics";
-import { Button } from "@miniapps/ui";
+import { Button, ConfirmDialog } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { downloadJPG, downloadPNG, downloadSVG, downloadWebP, toBrandedPNGBlob } from "../lib/qrGenerator";
@@ -16,7 +16,6 @@ import { detectKind, isValidUrl, suggestName } from "../lib/search";
 import { createItem } from "../lib/storage";
 import type { ContentMode, EditorMode, QrItem, QrOptions } from "../lib/types";
 import { DEFAULT_QR_OPTIONS } from "../lib/types";
-import { ConfirmDialog } from "./ConfirmDialog";
 import { DownloadDropdown } from "./DownloadDropdown";
 import { FullscreenModal } from "./FullscreenModal";
 import { PrintDialog } from "./PrintDialog";

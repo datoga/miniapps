@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { ConfirmDialog } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import type { Tournament, Participant, Match } from "@/lib/schemas";
-import { LadderView } from "./LadderView";
-import { BracketView } from "./BracketView";
-import { DoubleElimBracketView } from "./DoubleElimBracketView";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { hasAnyResults, regenerateBracket } from "@/lib/domain/bracket";
 import { hasAnyDoubleElimResults, regenerateDoubleElimBracket } from "@/lib/domain/doubleElim";
 import { hasAnyScores } from "@/lib/domain/ladder";
 import { revertToDraft } from "@/lib/domain/tournaments";
+import type { Match, Participant, Tournament } from "@/lib/schemas";
+import { BracketView } from "./BracketView";
+import { DoubleElimBracketView } from "./DoubleElimBracketView";
+import { LadderView } from "./LadderView";
 
 interface TournamentActiveProps {
   tournament: Tournament;
@@ -26,7 +26,7 @@ export function TournamentActive({ tournament, participants, matches, locale }: 
   const [reverting, setReverting] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Regenerate state (for bracket modes)
   const [canRegenerate, setCanRegenerate] = useState<boolean | null>(null);
   const [showRegenerateConfirm, setShowRegenerateConfirm] = useState(false);

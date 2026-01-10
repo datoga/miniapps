@@ -1,29 +1,28 @@
 "use client";
 
-import { useBilboData } from "@/lib/hooks/useBilboData";
-import { ExerciseIcon } from "@/lib/icons";
-import { format2, formatWeight, fromKg } from "@/lib/math";
-import type { Cycle, Exercise, Session, UnitsUI } from "@/lib/schemas";
-import { Button, Footer } from "@miniapps/ui";
+import { Button, ConfirmDialog, Footer } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  signOut,
-  signInWithGoogle,
-  performSync,
   checkFirstConnectionConflict,
+  performSync,
   resolveConflictKeepLocal,
   resolveConflictKeepRemote,
+  signInWithGoogle,
+  signOut,
   type FirstConnectionConflict,
 } from "@/lib/drive";
+import { useBilboData } from "@/lib/hooks/useBilboData";
+import { ExerciseIcon } from "@/lib/icons";
+import { format2, formatWeight, fromKg } from "@/lib/math";
+import type { Cycle, Exercise, Session, UnitsUI } from "@/lib/schemas";
 import { AppHeader } from "./AppHeader";
-import { ConfirmDialog } from "./ConfirmDialog";
 import { CycleCompletedModal } from "./CycleCompletedModal";
 import { EditCycleModal } from "./EditCycleModal";
 import { ExerciseCalendar } from "./ExerciseCalendar";
-import { FirstConnectionConflictModal } from "./FirstConnectionConflictModal";
 import { ExerciseChart } from "./ExerciseChart";
+import { FirstConnectionConflictModal } from "./FirstConnectionConflictModal";
 import { NewCycleModal } from "./NewCycleModal";
 import { PRBanner } from "./PRBanner";
 import { SessionModal } from "./SessionModal";

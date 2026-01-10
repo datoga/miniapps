@@ -62,7 +62,7 @@ export function ProfessionContent({ profession, locale }: ProfessionContentProps
 
     const element = document.getElementById(sectionId);
     if (!element) {
-      setOpenSectionId(sectionId);
+    setOpenSectionId(sectionId);
       return;
     }
 

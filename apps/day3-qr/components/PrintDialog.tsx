@@ -1,11 +1,10 @@
 "use client";
 
-import { memo, useState, useCallback, useRef, useEffect } from "react";
+import { Button, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
-import type { QrItem } from "../lib/types";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { toDataURL } from "../lib/qrGenerator";
+import type { QrItem } from "../lib/types";
 
 interface PrintDialogProps {
   open: boolean;

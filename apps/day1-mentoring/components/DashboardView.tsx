@@ -1,13 +1,13 @@
 "use client";
 
 import { trackEvent } from "@miniapps/analytics";
+import { ConfirmDialog } from "@miniapps/ui";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { useFilteredMentees, useMentoringData } from "../lib/hooks/useMentoringData";
 import type { Mentee, MenteeFormInput, Session } from "../lib/schemas";
 import { buildMenteeSlug } from "../lib/slug";
-import { ConfirmDialog } from "./ConfirmDialog";
 import { EditableField } from "./EditableField";
 import { MenteeCard } from "./MenteeCard";
 

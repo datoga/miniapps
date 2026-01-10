@@ -1,11 +1,11 @@
 "use client";
 
+import { Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useState } from "react";
 import { getTodayDate } from "../lib/repos/sessionsRepo";
 import type { Session, SessionFormInput } from "../lib/schemas";
 import { SessionFormSchema } from "../lib/schemas";
-import { Modal } from "./Modal";
 
 interface SessionModalProps {
   open: boolean;

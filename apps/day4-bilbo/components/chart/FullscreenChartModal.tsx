@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import type { Cycle, UnitsUI } from "@/lib/schemas";
 import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useRef } from "react";
 import {
-  ComposedChart,
   Area,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
   Line,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
 } from "recharts";
-import type { Cycle, UnitsUI } from "@/lib/schemas";
 import { ChartGradients } from "./ChartGradients";
 import { CustomTooltip } from "./CustomTooltip";
 import { getCycleColor } from "./colors";
@@ -43,18 +43,52 @@ export function FullscreenChartModal({
   setShowSeries,
 }: FullscreenChartModalProps) {
   const t = useTranslations();
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Close on ESC key
+  // Exit fullscreen and close
+  const handleClose = useCallback(() => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+    onClose();
+  }, [onClose]);
+
+  // Enter browser fullscreen on mount
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container && document.fullscreenEnabled) {
+      container.requestFullscreen().catch(() => {
+        // Fullscreen not supported or blocked, modal still works
+      });
+    }
+
+    // Handle fullscreen change (user presses ESC in fullscreen mode)
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    };
+  }, [onClose]);
+
+  // Close on ESC key (fallback for non-fullscreen mode)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
+      if (e.key === "Escape" && !document.fullscreenElement) {
+        handleClose();
       }
     };
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [handleClose]);
 
   const data = type === "load" ? loadRepsRmData : workData;
 
@@ -88,7 +122,13 @@ export function FullscreenChartModal({
           tick={{ fill: "#9ca3af", fontSize: 13 }}
           tickLine={false}
           axisLine={{ stroke: "#e5e7eb" }}
-          label={{ value: t("charts.sessionNumber"), position: "insideBottom", offset: -10, fill: "#9ca3af", fontSize: 13 }}
+          label={{
+            value: t("charts.sessionNumber"),
+            position: "insideBottom",
+            offset: -10,
+            fill: "#9ca3af",
+            fontSize: 13,
+          }}
         />
         <YAxis
           yAxisId="left"
@@ -108,65 +148,90 @@ export function FullscreenChartModal({
         />
         <Tooltip
           content={({ active, payload, label }) => (
-            <CustomTooltip active={active} payload={payload as never} label={label} unitsUI={unitsUI} t={t} />
+            <CustomTooltip
+              active={active}
+              payload={payload as never}
+              label={label}
+              unitsUI={unitsUI}
+              t={t}
+            />
           )}
         />
         <Legend
           wrapperStyle={{ paddingTop: 20 }}
-          formatter={(value) => <span className="text-sm text-gray-600 dark:text-gray-400">{value}</span>}
+          formatter={(value) => (
+            <span className="text-sm text-gray-600 dark:text-gray-400">{value}</span>
+          )}
         />
 
         {/* Main metric areas (filled, left axis) */}
-        {(showSeries === "both" || showSeries === mainSeriesKey) && selectedCycles.map((cycle, idx) => {
-          const color = getCycleColor(idx);
-          return (
-            <Area
-              key={`main_${cycle.id}`}
-              yAxisId="left"
-              type="monotone"
-              dataKey={`cycle_${cycle.index}`}
-              stroke={color.main}
-              strokeWidth={3}
-              fill={color.gradient}
-              dot={{ fill: color.main, strokeWidth: 0, r: 6, cursor: "pointer" }}
-              activeDot={{ r: 10, fill: color.main, stroke: "#fff", strokeWidth: 3, cursor: "pointer" }}
-              name={`${type === "work" ? t("charts.work") : t("charts.loadUsed")} C${cycle.index}`}
-              connectNulls
-              animationDuration={800}
-              animationEasing="ease-out"
-            />
-          );
-        })}
+        {(showSeries === "both" || showSeries === mainSeriesKey) &&
+          selectedCycles.map((cycle, idx) => {
+            const color = getCycleColor(idx);
+            return (
+              <Area
+                key={`main_${cycle.id}`}
+                yAxisId="left"
+                type="monotone"
+                dataKey={`cycle_${cycle.index}`}
+                stroke={color.main}
+                strokeWidth={3}
+                fill={color.gradient}
+                dot={{ fill: color.main, strokeWidth: 0, r: 6, cursor: "pointer" }}
+                activeDot={{
+                  r: 10,
+                  fill: color.main,
+                  stroke: "#fff",
+                  strokeWidth: 3,
+                  cursor: "pointer",
+                }}
+                name={`${type === "work" ? t("charts.work") : t("charts.loadUsed")} C${cycle.index}`}
+                connectNulls
+                animationDuration={800}
+                animationEasing="ease-out"
+              />
+            );
+          })}
 
         {/* Reps lines (dashed, right axis) */}
-        {(showSeries === "both" || showSeries === "reps") && selectedCycles.map((cycle, idx) => {
-          const color = getCycleColor(idx);
-          return (
-            <Line
-              key={`reps_${cycle.id}`}
-              yAxisId="right"
-              type="monotone"
-              dataKey={`cycle_${cycle.index}_reps`}
-              stroke={color.reps}
-              strokeWidth={3}
-              strokeDasharray={showSeries === "both" ? "8 4" : undefined}
-              dot={{ fill: color.reps, strokeWidth: 0, r: 6, cursor: "pointer" }}
-              activeDot={{ r: 9, fill: color.reps, stroke: "#fff", strokeWidth: 2, cursor: "pointer" }}
-              name={`${t("charts.reps")} C${cycle.index}`}
-              connectNulls
-              animationDuration={800}
-              animationEasing="ease-out"
-            />
-          );
-        })}
+        {(showSeries === "both" || showSeries === "reps") &&
+          selectedCycles.map((cycle, idx) => {
+            const color = getCycleColor(idx);
+            return (
+              <Line
+                key={`reps_${cycle.id}`}
+                yAxisId="right"
+                type="monotone"
+                dataKey={`cycle_${cycle.index}_reps`}
+                stroke={color.reps}
+                strokeWidth={3}
+                strokeDasharray={showSeries === "both" ? "8 4" : undefined}
+                dot={{ fill: color.reps, strokeWidth: 0, r: 6, cursor: "pointer" }}
+                activeDot={{
+                  r: 9,
+                  fill: color.reps,
+                  stroke: "#fff",
+                  strokeWidth: 2,
+                  cursor: "pointer",
+                }}
+                name={`${t("charts.reps")} C${cycle.index}`}
+                connectNulls
+                animationDuration={800}
+                animationEasing="ease-out"
+              />
+            );
+          })}
       </ComposedChart>
     </ResponsiveContainer>
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-gradient-to-br from-white to-gray-100 dark:from-gray-950 dark:to-gray-900">
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-50 flex flex-col bg-gradient-to-br from-white to-gray-100 pt-[env(safe-area-inset-top,0px)] dark:from-gray-950 dark:to-gray-900"
+    >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 bg-white/80 px-6 py-4 backdrop-blur-sm dark:border-gray-800 dark:bg-gray-950/80">
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-950">
         <h2 className="text-xl font-bold text-gray-900 dark:text-white">{getTitle()}</h2>
         <div className="flex items-center gap-4">
           {/* Series toggle */}
@@ -203,11 +268,16 @@ export function FullscreenChartModal({
             </button>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="rounded-xl bg-gray-100 p-3 text-gray-600 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -215,11 +285,8 @@ export function FullscreenChartModal({
 
       {/* Chart */}
       <div className="flex-1 overflow-auto p-6">
-        <div className="h-full">
-          {renderChart(data)}
-        </div>
+        <div className="h-full">{renderChart(data)}</div>
       </div>
     </div>
   );
 }
-

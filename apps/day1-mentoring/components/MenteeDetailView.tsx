@@ -1,13 +1,13 @@
 "use client";
 
 import { trackEvent } from "@miniapps/analytics";
+import { ConfirmDialog } from "@miniapps/ui";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMenteeSessions, useMentoringData } from "../lib/hooks/useMentoringData";
 import type { Mentee, Session, SessionFormInput } from "../lib/schemas";
 import { extractMenteeId } from "../lib/slug";
-import { ConfirmDialog } from "./ConfirmDialog";
 import { MenteeDetail } from "./MenteeDetail";
 
 // Track first session creation

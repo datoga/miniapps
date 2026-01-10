@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { ConfirmDialog, Footer } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Footer } from "@miniapps/ui";
-import { AppHeader } from "./AppHeader";
-import { AuthGate } from "./AuthGate";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { useRef, useState } from "react";
 import { clearAllData, exportData, importData } from "@/lib/db";
 import { trackSettingsChanged } from "@/lib/ga";
+import { AppHeader } from "./AppHeader";
+import { AuthGate } from "./AuthGate";
 
 interface SettingsPageProps {
   locale: string;
@@ -204,7 +203,7 @@ function SettingsPageContent({ locale }: SettingsPageProps) {
         message={t("settings.backup.importConfirmMessage")}
         confirmText={t("settings.backup.importConfirm")}
         cancelText={t("common.cancel")}
-        variant="warning"
+        variant="danger"
         isLoading={isLoading}
       />
 

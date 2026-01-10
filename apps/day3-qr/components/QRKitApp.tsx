@@ -1,6 +1,7 @@
 "use client";
 
 import { trackAppView, trackEvent } from "@miniapps/analytics";
+import { ConfirmDialog } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { searchItems, sortItems } from "../lib/search";
@@ -8,7 +9,6 @@ import type { EditorMode, QrItem, SortBy, SortDir } from "../lib/types";
 import { useQrLibrary } from "../lib/useQrLibrary";
 import { AddCard } from "./AddCard";
 import { AddModeModal } from "./AddModeModal";
-import { ConfirmDialog } from "./ConfirmDialog";
 import { DetailModal } from "./DetailModal";
 import { EditorModal } from "./EditorModal";
 import { QrCard } from "./QrCard";

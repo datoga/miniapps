@@ -3,9 +3,9 @@
 import { computeLadderStandings, reorderTieGroup, reportLadderScore } from "@/lib/domain/ladder";
 import { updateTournamentStatus } from "@/lib/domain/tournaments";
 import type { Match, Participant, Tournament } from "@/lib/schemas";
+import { ConfirmDialog } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ConfirmDialog } from "./ConfirmDialog";
 
 interface LadderViewProps {
   tournament: Tournament;

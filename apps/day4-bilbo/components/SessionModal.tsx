@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Button, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
-import { Button } from "@miniapps/ui";
-import { Modal } from "./Modal";
-import type { Exercise, Cycle, Session, SessionPhase, UnitsUI } from "@/lib/schemas";
-import { formatWeight, format2, fromKg, toKg, estimate1RM, computeWork } from "@/lib/math";
-import { useBilboData } from "@/lib/hooks/useBilboData";
-import { formatSessionShare, shareContent } from "@/lib/share";
+import { useEffect, useState } from "react";
 import * as db from "@/lib/db";
+import { useBilboData } from "@/lib/hooks/useBilboData";
+import { computeWork, estimate1RM, format2, formatWeight, fromKg, toKg } from "@/lib/math";
+import type { Cycle, Exercise, Session, SessionPhase, UnitsUI } from "@/lib/schemas";
+import { formatSessionShare, shareContent } from "@/lib/share";
 
 interface SessionModalProps {
   isOpen: boolean;

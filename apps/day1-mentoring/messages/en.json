@@ -4,7 +4,10 @@
     "description": "Track your mentoring sessions, set goals, and help your mentees grow"
   },
   "common": {
-    "appTitle": "MentorFlow"
+    "appTitle": "MentorFlow",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "nav": {
     "dashboard": "Dashboard",

@@ -12,7 +12,20 @@ export function ServiceWorkerRegister() {
     navigator.serviceWorker
       .register("/sw.js")
       .then((registration) => {
-        // Check for updates periodically
+        // Check for updates on page load
+        registration.update();
+
+        // Check for updates periodically (every 60 seconds)
+        const intervalId = setInterval(() => {
+          registration.update();
+        }, 60 * 1000);
+
+        // Clean up interval on unmount
+        window.addEventListener("beforeunload", () => {
+          clearInterval(intervalId);
+        });
+
+        // Handle update found
         registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (newWorker) {
@@ -21,7 +34,9 @@ export function ServiceWorkerRegister() {
                 newWorker.state === "installed" &&
                 navigator.serviceWorker.controller
               ) {
-                // New content available - silent update
+                // New content available - immediately activate
+                // This triggers skipWaiting in the new SW
+                newWorker.postMessage("skipWaiting");
               }
             });
           }

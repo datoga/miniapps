@@ -144,7 +144,7 @@
     "import": "Importar datos",
     "importDescription": "Reemplazar todos los datos desde un archivo de respaldo",
     "importConfirmTitle": "Importar respaldo",
-    "importConfirmMessage": "Esto reemplazará todos tus datos actuales. ¿Estás seguro?",
+    "importConfirmMessage": "Esto reemplazará todos tus datos actuales. Todos los mentees y sesiones existentes se perderán si procedes. ¿Estás seguro?",
     "importSuccess": "Datos importados correctamente",
     "importError": "Error al importar datos. Formato de archivo inválido.",
     "selectFile": "Seleccionar archivo"

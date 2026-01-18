@@ -144,7 +144,7 @@
     "import": "Import Data",
     "importDescription": "Replace all data from a backup file",
     "importConfirmTitle": "Import Backup",
-    "importConfirmMessage": "This will replace all your current data. Are you sure?",
+    "importConfirmMessage": "This will replace all your current data. All existing mentees and sessions will be lost if you proceed. Are you sure?",
     "importSuccess": "Data imported successfully",
     "importError": "Failed to import data. Invalid file format.",
     "selectFile": "Select file"

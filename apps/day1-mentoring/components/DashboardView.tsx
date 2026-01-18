@@ -4,7 +4,8 @@ import { trackEvent } from "@miniapps/analytics";
 import { ConfirmDialog } from "@miniapps/ui";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { downloadBackup, importBackup, readBackupFile } from "../lib/backup";
 import { useFilteredMentees, useMentoringData } from "../lib/hooks/useMentoringData";
 import type { Mentee, MenteeFormInput, Session } from "../lib/schemas";
 import { buildMenteeSlug } from "../lib/slug";
@@ -144,6 +145,59 @@ export function DashboardView() {
     [data, t]
   );
 
+  // Backup/Import handlers
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExportBackup = useCallback(async () => {
+    try {
+      await downloadBackup();
+      trackEvent("mf_backup_exported");
+    } catch (error) {
+      console.error("Export failed:", error);
+    }
+  }, []);
+
+  const handleImportClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleImportFile = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      try {
+        const backup = await readBackupFile(file);
+        setConfirmDialog({
+          open: true,
+          title: t("backup.importConfirmTitle"),
+          message: t("backup.importConfirmMessage"),
+          onConfirm: async () => {
+            try {
+              await importBackup(backup);
+              await data.refresh(); // Refresh data after import
+              trackEvent("mf_backup_imported");
+              setConfirmDialog((prev) => ({ ...prev, open: false }));
+            } catch (error) {
+              console.error("Import failed:", error);
+              alert(t("backup.importError"));
+              setConfirmDialog((prev) => ({ ...prev, open: false }));
+            }
+          },
+        });
+      } catch (error) {
+        console.error("Failed to read backup file:", error);
+        alert(t("backup.importError"));
+      } finally {
+        // Reset input
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
+      }
+    },
+    [data, t]
+  );
+
   // Loading state
   if (data.isLoading) {
     return (
@@ -241,7 +295,52 @@ export function DashboardView() {
                 {t("dashboard.newMenteeLabel")}
               </p>
             </button>
+
+            {/* Backup/Import card */}
+            <div className="group relative min-h-[280px] rounded-3xl border-2 border-gray-200 dark:border-gray-800 bg-white/30 dark:bg-gray-900/30 flex flex-col items-center justify-center p-8 text-center">
+              <div className="mb-4 w-14 h-14 rounded-2xl bg-white dark:bg-gray-800 flex items-center justify-center shadow-sm">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="text-gray-400"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </div>
+              <p className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                {t("backup.title")}
+              </p>
+              <div className="flex flex-col gap-2 w-full mt-4">
+                <button
+                  onClick={handleExportBackup}
+                  className="px-4 py-2 rounded-xl bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium transition-colors"
+                >
+                  {t("backup.export")}
+                </button>
+                <button
+                  onClick={handleImportClick}
+                  className="px-4 py-2 rounded-xl border-2 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-medium transition-colors"
+                >
+                  {t("backup.import")}
+                </button>
+              </div>
+            </div>
           </div>
+
+          {/* Hidden file input for import */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            onChange={handleImportFile}
+            className="hidden"
+          />
         </div>
       </div>
 

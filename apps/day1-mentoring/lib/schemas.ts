@@ -53,10 +53,8 @@ export const MenteeSchema = z.object({
   location: z.string().optional(), // Location (city, country)
   inPersonAvailable: z.boolean().optional(), // Available for in-person meetings
   availabilityNotes: z.string().optional(), // Availability notes (schedule, preferences)
-  // Keep inPersonNotes for backward compatibility, maps to location
-  inPersonNotes: z.string().optional(),
-  // Keep goal for backward compatibility, will be migrated to goals array
-  goal: z.string().optional(),
+  inPersonNotes: z.string().optional(), // Legacy field - maps to location
+  goal: z.string().optional(), // Legacy field - use goals array instead
   goals: z.array(GoalSchema).default([]), // Multiple goals
   notes: z.array(NoteSchema).default([]),
   tags: z.array(z.string()).default([]),

@@ -31,15 +31,6 @@ export const EditableField = memo(function EditableField({
     setEditValue(value);
   }, [value]);
 
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-      // Move cursor to end
-      const length = editValue.length;
-      inputRef.current.setSelectionRange(length, length);
-    }
-  }, [isEditing, editValue.length]);
-
   const handleClick = useCallback(() => {
     setIsEditing(true);
   }, []);

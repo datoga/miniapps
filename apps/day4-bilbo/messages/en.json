@@ -269,6 +269,18 @@
       "errorDetails": "Could not connect to Google Drive. Check your internet connection and try again.",
       "sessionExpired": "Session expired. Please reconnect to Google Drive."
     },
+    "backup": {
+      "title": "Local Backup",
+      "description": "Export or import your data as a JSON file",
+      "export": "Export",
+      "import": "Import",
+      "exportSuccess": "Backup exported successfully",
+      "importConfirmTitle": "Import data?",
+      "importConfirmMessage": "This will replace all your current data with the file contents. {exercises} exercises and {sessions} sessions will be imported. This action cannot be undone.",
+      "importSuccess": "Data imported successfully",
+      "importErrorInvalid": "The file is not a valid Bilbo Tracker backup.",
+      "importErrorRead": "Could not read the file."
+    },
     "help": {
       "title": "Help & Information"
     },

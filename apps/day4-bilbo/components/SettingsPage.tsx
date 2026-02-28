@@ -3,9 +3,10 @@
 import { Footer, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   checkFirstConnectionConflict,
+  createBackup,
   deleteBackupFromDrive,
   ensureValidToken,
   performSync,
@@ -15,6 +16,8 @@ import {
   signOut,
   type FirstConnectionConflict,
 } from "@/lib/drive";
+import * as db from "@/lib/db";
+import { BackupSchema } from "@/lib/schemas";
 import { trackSettingsChanged } from "@/lib/ga";
 import { useBilboData } from "@/lib/hooks/useBilboData";
 import { format2, fromKg, toKg } from "@/lib/math";
@@ -52,6 +55,13 @@ export function SettingsPage({ locale }: SettingsPageProps) {
   } | null>(null);
   const [isResolvingConflict, setIsResolvingConflict] = useState(false);
   const [syncErrorMessage, setSyncErrorMessage] = useState<string | undefined>();
+
+  // Backup state
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showImportConfirm, setShowImportConfirm] = useState(false);
+  const [importPreview, setImportPreview] = useState<{ exercises: number; sessions: number } | null>(null);
+  const [pendingImportData, setPendingImportData] = useState<{ exercises: unknown[]; cycles: unknown[]; sessions: unknown[]; settings?: Record<string, unknown> } | null>(null);
+  const [backupMessage, setBackupMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   // Initialize values when settings load
   useEffect(() => {
@@ -303,6 +313,76 @@ export function SettingsPage({ locale }: SettingsPageProps) {
     trackSettingsChanged("sync");
     setShowDisconnectConfirm(false);
     setDisconnectDeleteBackup(false);
+  };
+
+  // Backup handlers
+  const handleExport = async () => {
+    try {
+      const backup = await createBackup();
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `bilbotracker-backup-${new Date().toISOString().split("T")[0]}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      setBackupMessage({ type: "success", text: t("settings.backup.exportSuccess") });
+    } catch (error) {
+      console.error("Export failed:", error);
+      setBackupMessage({ type: "error", text: String(error) });
+    }
+  };
+
+  const handleImportFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Reset input so the same file can be selected again
+    e.target.value = "";
+
+    try {
+      const text = await file.text();
+      const json = JSON.parse(text);
+      const parsed = BackupSchema.safeParse(json);
+
+      if (!parsed.success) {
+        setBackupMessage({ type: "error", text: t("settings.backup.importErrorInvalid") });
+        return;
+      }
+
+      const data = parsed.data;
+      setImportPreview({
+        exercises: data.data.exercises.length,
+        sessions: data.data.sessions.length,
+      });
+      setPendingImportData({
+        exercises: data.data.exercises,
+        cycles: data.data.cycles,
+        sessions: data.data.sessions,
+        settings: data.data.settings,
+      });
+      setShowImportConfirm(true);
+    } catch {
+      setBackupMessage({ type: "error", text: t("settings.backup.importErrorRead") });
+    }
+  };
+
+  const handleImportConfirm = async () => {
+    if (!pendingImportData) return;
+
+    try {
+      await db.importData(pendingImportData as Parameters<typeof db.importData>[0]);
+      setShowImportConfirm(false);
+      setPendingImportData(null);
+      setImportPreview(null);
+      setBackupMessage({ type: "success", text: t("settings.backup.importSuccess") });
+      // Reload to refresh all state
+      window.location.reload();
+    } catch (error) {
+      console.error("Import failed:", error);
+      setBackupMessage({ type: "error", text: String(error) });
+      setShowImportConfirm(false);
+    }
   };
 
   if (loading) {
@@ -565,6 +645,48 @@ export function SettingsPage({ locale }: SettingsPageProps) {
               )}
             </div>
 
+            {/* Local Backup */}
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+              <h3 className="mb-1 font-semibold text-gray-900 dark:text-white">
+                {t("settings.backup.title")}
+              </h3>
+              <p className="mb-3 text-sm text-gray-600 dark:text-gray-400">
+                {t("settings.backup.description")}
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={handleExport}
+                  className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  {t("settings.backup.export")}
+                </button>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                  </svg>
+                  {t("settings.backup.import")}
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".json"
+                  onChange={handleImportFileChange}
+                  className="hidden"
+                />
+              </div>
+              {backupMessage && (
+                <p className={`mt-2 text-sm ${backupMessage.type === "success" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                  {backupMessage.text}
+                </p>
+              )}
+            </div>
+
             {/* Danger Zone */}
             <div className="rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-900 dark:bg-red-950/30">
               <h3 className="mb-1 font-semibold text-red-800 dark:text-red-300">
@@ -676,6 +798,43 @@ export function SettingsPage({ locale }: SettingsPageProps) {
             className="rounded-lg bg-gray-600 px-4 py-2 text-white hover:bg-gray-700"
           >
             {t("settings.sync.disconnect")}
+          </button>
+        </div>
+      </Modal>
+
+      {/* Import Confirmation Modal */}
+      <Modal
+        isOpen={showImportConfirm}
+        onClose={() => {
+          setShowImportConfirm(false);
+          setPendingImportData(null);
+          setImportPreview(null);
+        }}
+        title={t("settings.backup.importConfirmTitle")}
+        size="sm"
+      >
+        <p className="mb-4 text-gray-600 dark:text-gray-400">
+          {t("settings.backup.importConfirmMessage", {
+            exercises: importPreview?.exercises ?? 0,
+            sessions: importPreview?.sessions ?? 0,
+          })}
+        </p>
+        <div className="flex justify-end gap-3">
+          <button
+            onClick={() => {
+              setShowImportConfirm(false);
+              setPendingImportData(null);
+              setImportPreview(null);
+            }}
+            className="rounded-lg px-4 py-2 text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+          >
+            {t("common.cancel")}
+          </button>
+          <button
+            onClick={handleImportConfirm}
+            className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          >
+            {t("settings.backup.import")}
           </button>
         </div>
       </Modal>

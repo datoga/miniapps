@@ -164,7 +164,7 @@ async function uploadBackup(
 /**
  * Create a backup object from local data
  */
-async function createBackup(): Promise<Backup> {
+export async function createBackup(): Promise<Backup> {
   const data = await db.exportData();
 
   return {

@@ -353,6 +353,24 @@ export async function performSync(
       };
     }
 
+    // If local is empty but remote has data, import remote instead of overwriting
+    const hasLocalData = localData.exercises.length > 0 || localData.sessions.length > 0;
+    const hasRemoteData = remoteBackup.data.exercises.length > 0 || remoteBackup.data.sessions.length > 0;
+
+    if (!hasLocalData && hasRemoteData) {
+      await db.importData({
+        exercises: remoteBackup.data.exercises,
+        cycles: remoteBackup.data.cycles,
+        sessions: remoteBackup.data.sessions,
+        settings: remoteBackup.data.settings,
+      });
+      await db.saveSettings({
+        driveSyncState: "synced",
+        lastSyncedAt: Date.now(),
+      });
+      return null;
+    }
+
     // No conflict - upload local
     const backup = await createBackup();
     const success = await uploadBackup(accessToken, backup, remoteFile.id);

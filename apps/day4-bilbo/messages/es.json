@@ -266,7 +266,8 @@
         "error": "Error de sincronización"
       },
       "lastSynced": "Última sync",
-      "errorDetails": "No se pudo conectar con Google Drive. Comprueba tu conexión a internet e inténtalo de nuevo."
+      "errorDetails": "No se pudo conectar con Google Drive. Comprueba tu conexión a internet e inténtalo de nuevo.",
+      "sessionExpired": "Sesión expirada. Por favor, reconecta con Google Drive."
     },
     "help": {
       "title": "Ayuda e Información"

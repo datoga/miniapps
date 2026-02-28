@@ -8,7 +8,7 @@ import * as db from "../db";
 import type { Session } from "../schemas";
 import { calculateSuggestedLoad, computeWork, estimate1RM } from "../math";
 import { trackExerciseCreated, trackCycleStarted, trackCycleFinished, trackWorkoutLogged, trackPRRecorded, trackWizardCompleted, trackSettingsChanged, trackSessionUpdated } from "../ga";
-import { getAccessToken, performSync } from "../drive";
+import { ensureValidToken, performSync } from "../drive";
 
 export interface BilboDataState {
   settings: UserSettings;
@@ -46,7 +46,7 @@ export function useBilboData() {
     syncTimeoutRef.current = setTimeout(async () => {
       const settings = await db.getSettings();
       if (settings.driveSyncEnabled && settings.driveSyncState !== "signed_out") {
-        const token = getAccessToken();
+        const token = await ensureValidToken();
         if (token) {
           try {
             const result = await performSync(token);

@@ -7,6 +7,10 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   ...sharedNextConfig,
+  transpilePackages: [
+    ...(sharedNextConfig.transpilePackages ?? []),
+    "@miniapps/drive",
+  ],
   turbopack: {
     root: path.join(__dirname, "../.."),
   },

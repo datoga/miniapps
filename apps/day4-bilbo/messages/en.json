@@ -266,7 +266,8 @@
         "error": "Sync error"
       },
       "lastSynced": "Last sync",
-      "errorDetails": "Could not connect to Google Drive. Check your internet connection and try again."
+      "errorDetails": "Could not connect to Google Drive. Check your internet connection and try again.",
+      "sessionExpired": "Session expired. Please reconnect to Google Drive."
     },
     "help": {
       "title": "Help & Information"

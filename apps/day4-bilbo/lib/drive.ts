@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  signInWithGoogle as driveSignIn,
+  getAccessToken as driveGetAccessToken,
+  requestAccessToken,
+  clearAuth,
+} from "@miniapps/drive";
 import * as db from "./db";
 import { trackSettingsChanged } from "./ga";
 import type { Backup, DriveProfile, DriveSyncState } from "./schemas";
@@ -7,155 +13,53 @@ import { BackupSchema } from "./schemas";
 
 // Google Drive API constants
 const DRIVE_FILE_NAME = "bilbotracker-backup.json";
-const DRIVE_SCOPE = "https://www.googleapis.com/auth/drive.appdata";
-
-// Get Google client ID from environment
-const getClientId = () => process.env["NEXT_PUBLIC_GOOGLE_CLIENT_ID"] || "";
-
-// Type for Google Identity Services
-interface TokenResponse {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-  scope: string;
-  error?: string;
-}
-
-interface GoogleUser {
-  name?: string;
-  email?: string;
-  picture?: string;
-}
-
-// Store for current access token (in-memory only)
-let currentAccessToken: string | null = null;
-
-/**
- * Initialize Google Identity Services
- */
-export async function initGoogleAuth(): Promise<boolean> {
-  if (typeof window === "undefined") {
-    return false;
-  }
-
-  const clientId = getClientId();
-  if (!clientId) {
-    console.warn("Google Client ID not configured");
-    return false;
-  }
-
-  // Check if GIS is already loaded
-  if ((window as unknown as { google?: unknown }).google) {
-    return true;
-  }
-
-  // Load GIS script
-  return new Promise((resolve) => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.head.appendChild(script);
-  });
-}
 
 /**
  * Sign in with Google and get access token
+ * Wraps @miniapps/drive's signInWithGoogle to match local DriveProfile type
  */
 export async function signInWithGoogle(): Promise<{ profile: DriveProfile; token: string } | null> {
-  const initialized = await initGoogleAuth();
-  if (!initialized) {
-    console.error("Failed to initialize Google Auth");
-    return null;
-  }
+  const result = await driveSignIn();
+  if (!result) return null;
 
-  const clientId = getClientId();
-  if (!clientId) {
-    console.error("Google Client ID not configured");
-    return null;
-  }
+  return {
+    profile: {
+      name: result.profile.name,
+      email: result.profile.email,
+      pictureUrl: result.profile.pictureUrl,
+    },
+    token: result.token,
+  };
+}
 
-  return new Promise((resolve) => {
-    // Timeout after 60 seconds (user might take time to select account)
-    const timeout = setTimeout(() => {
-      console.warn("Google sign-in timed out");
-      resolve(null);
-    }, 60000);
+/**
+ * Get current access token (from memory or localStorage via @miniapps/drive)
+ */
+export function getAccessToken(): string | null {
+  return driveGetAccessToken();
+}
 
-    try {
-      const google = (
-        window as unknown as {
-          google: {
-            accounts: {
-              oauth2: {
-                initTokenClient: (config: {
-                  client_id: string;
-                  scope: string;
-                  callback: (response: TokenResponse) => void;
-                  error_callback?: (error: { type: string; message?: string }) => void;
-                }) => { requestAccessToken: () => void };
-              };
-            };
-          };
-        }
-      ).google;
+/**
+ * Ensure a valid access token is available.
+ * Tries cached token first, then attempts silent refresh.
+ * Returns null if user needs to sign in again.
+ */
+export async function ensureValidToken(): Promise<string | null> {
+  // Try cached/localStorage token first
+  const cached = driveGetAccessToken();
+  if (cached) return cached;
 
-      const tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: clientId,
-        scope: `${DRIVE_SCOPE} https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email`,
-        callback: async (response: TokenResponse) => {
-          clearTimeout(timeout);
-
-          if (response.error) {
-            console.error("Token error:", response.error);
-            resolve(null);
-            return;
-          }
-
-          currentAccessToken = response.access_token;
-
-          // Get user profile
-          try {
-            const profileRes = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
-              headers: { Authorization: `Bearer ${response.access_token}` },
-            });
-            const profile: GoogleUser = await profileRes.json();
-
-            resolve({
-              profile: {
-                name: profile.name,
-                email: profile.email,
-                pictureUrl: profile.picture,
-              },
-              token: response.access_token,
-            });
-          } catch {
-            resolve(null);
-          }
-        },
-        error_callback: (error) => {
-          clearTimeout(timeout);
-          console.error("Google sign-in error:", error.type, error.message);
-          resolve(null);
-        },
-      });
-
-      tokenClient.requestAccessToken();
-    } catch (error) {
-      clearTimeout(timeout);
-      console.error("Error initializing token client:", error);
-      resolve(null);
-    }
-  });
+  // Token expired or missing — try silent refresh (5s timeout)
+  const refreshed = await requestAccessToken("");
+  return refreshed;
 }
 
 /**
  * Sign out and clear token
  */
 export async function signOut(): Promise<void> {
-  currentAccessToken = null;
+  // Clear token from memory and localStorage
+  clearAuth();
 
   // Clear drive settings but keep other settings
   await db.saveSettings({
@@ -521,13 +425,6 @@ export async function resolveConflictKeepRemote(remoteBackup: Backup): Promise<b
     await setSyncState("error");
     return false;
   }
-}
-
-/**
- * Get current access token (for auto-sync after session save)
- */
-export function getAccessToken(): string | null {
-  return currentAccessToken;
 }
 
 /**

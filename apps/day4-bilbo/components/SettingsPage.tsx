@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import {
   checkFirstConnectionConflict,
   deleteBackupFromDrive,
-  getAccessToken,
+  ensureValidToken,
   performSync,
   resolveConflictKeepLocal,
   resolveConflictKeepRemote,
@@ -51,6 +51,7 @@ export function SettingsPage({ locale }: SettingsPageProps) {
     token: string;
   } | null>(null);
   const [isResolvingConflict, setIsResolvingConflict] = useState(false);
+  const [syncErrorMessage, setSyncErrorMessage] = useState<string | undefined>();
 
   // Initialize values when settings load
   useEffect(() => {
@@ -99,7 +100,7 @@ export function SettingsPage({ locale }: SettingsPageProps) {
   const handleDeleteAllData = async () => {
     // If connected to Google Drive and user wants to delete backup too
     if (syncState !== "signed_out" && deleteBackupToo) {
-      const accessToken = getAccessToken();
+      const accessToken = await ensureValidToken();
       if (accessToken) {
         try {
           await deleteBackupFromDrive(accessToken);
@@ -243,18 +244,21 @@ export function SettingsPage({ locale }: SettingsPageProps) {
   };
 
   const handleManualSync = async () => {
-    const token = getAccessToken();
-    if (!token) {
-      setSyncState("error");
-      return;
-    }
-
     setIsSyncing(true);
     setSyncState("syncing");
+
+    const token = await ensureValidToken();
+    if (!token) {
+      setSyncState("error");
+      setSyncErrorMessage(t("settings.sync.sessionExpired"));
+      setIsSyncing(false);
+      return;
+    }
     try {
       // null result means success (no conflict)
       const result = await performSync(token);
       setSyncState("synced");
+      setSyncErrorMessage(undefined);
       setLastSynced(Date.now());
       await updateSettings({
         driveSyncState: "synced",
@@ -275,7 +279,7 @@ export function SettingsPage({ locale }: SettingsPageProps) {
   const handleDisconnect = async () => {
     // If user wants to delete backup too
     if (disconnectDeleteBackup) {
-      const accessToken = getAccessToken();
+      const accessToken = await ensureValidToken();
       if (accessToken) {
         try {
           await deleteBackupFromDrive(accessToken);
@@ -324,6 +328,7 @@ export function SettingsPage({ locale }: SettingsPageProps) {
           <SyncStatusIndicator
             state={syncState}
             profile={syncProfile}
+            errorMessage={syncErrorMessage}
             lastSyncedAt={lastSynced}
             onConnect={handleGoogleSignIn}
             isConnecting={isSyncing}

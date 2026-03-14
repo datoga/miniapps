@@ -35,7 +35,8 @@ export async function findFileByName(
   fileName: string
 ): Promise<DriveResult<DriveFileInfo | null>> {
   try {
-    const url = `https://www.googleapis.com/drive/v3/files?spaces=${APP_DATA_FOLDER}&q=name='${fileName}'&fields=files(id,modifiedTime)`;
+    const escapedName = fileName.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    const url = `https://www.googleapis.com/drive/v3/files?spaces=${APP_DATA_FOLDER}&q=name='${escapedName}'&fields=files(id,modifiedTime)`;
 
     const res = await fetch(url, {
       headers: { Authorization: `Bearer ${accessToken}` },

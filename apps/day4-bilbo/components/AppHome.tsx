@@ -14,7 +14,7 @@ import { useBilboData } from "@/lib/hooks/useBilboData";
 import { ExerciseIcon } from "@/lib/icons";
 import { formatWeight } from "@/lib/math";
 import type { Cycle, Exercise, Session } from "@/lib/schemas";
-import { Button, Footer } from "@miniapps/ui";
+import { Button, Footer, Modal } from "@miniapps/ui";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -49,7 +49,10 @@ export function AppHome({ locale }: AppHomeProps) {
     loading,
     initialized,
     prDetected,
+    autoSyncConflict,
     clearPRDetected,
+    resolveAutoSyncKeepRemote,
+    resolveAutoSyncKeepLocal,
     updateSettings,
     createExercise,
     createCycle,
@@ -309,6 +312,44 @@ export function AppHome({ locale }: AppHomeProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-gray-950">
+      {/* Auto-sync conflict modal */}
+      {autoSyncConflict && (
+        <Modal
+          open
+          onClose={resolveAutoSyncKeepLocal}
+          title={t("conflict.title")}
+        >
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            {t("conflict.description")}
+          </p>
+          <div className="grid grid-cols-2 gap-3 text-sm mb-4">
+            <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
+              <div className="font-medium mb-1">{t("conflict.local.title")}</div>
+              <div className="text-gray-500">{autoSyncConflict.localSessionCount} {t("conflict.sessions")}</div>
+            </div>
+            <div className="rounded-lg bg-gray-50 dark:bg-gray-800 p-3">
+              <div className="font-medium mb-1">{t("conflict.remote.title")}</div>
+              <div className="text-gray-500">{autoSyncConflict.remoteSessionCount} {t("conflict.sessions")}</div>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Button
+              className="flex-1"
+              variant="secondary"
+              onClick={resolveAutoSyncKeepLocal}
+            >
+              {t("conflict.local.title")}
+            </Button>
+            <Button
+              className="flex-1"
+              onClick={resolveAutoSyncKeepRemote}
+            >
+              {t("conflict.remote.title")}
+            </Button>
+          </div>
+        </Modal>
+      )}
+
       {/* PR Banner */}
       {prDetected && (
         <PRBanner

@@ -17,6 +17,14 @@ export interface BilboDataState {
   initialized: boolean;
 }
 
+export interface AutoSyncConflict {
+  localLastUpdated: number;
+  remoteLastModified: string;
+  localSessionCount: number;
+  remoteSessionCount: number;
+  remoteBackup: import("../schemas").Backup;
+}
+
 export interface PRDetectedInfo {
   previous1RMKg: number;
   new1RMKg: number;
@@ -33,6 +41,7 @@ export function useBilboData() {
   });
 
   const [prDetected, setPRDetected] = useState<PRDetectedInfo | null>(null);
+  const [autoSyncConflict, setAutoSyncConflict] = useState<AutoSyncConflict | null>(null);
   const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Trigger sync after data changes (debounced)
@@ -99,6 +108,49 @@ export function useBilboData() {
 
     loadData();
   }, []);
+
+  // Auto-sync with Google Drive on mount if connected
+  useEffect(() => {
+    if (!state.initialized || !state.settings.driveSyncEnabled) return;
+    if (state.settings.driveSyncState === "signed_out") return;
+
+    async function autoSync() {
+      const token = await ensureValidToken();
+      if (!token) return;
+
+      try {
+        const result = await performSync(token);
+        if (result !== null) {
+          // Conflict detected — expose it so UI can ask the user
+          setAutoSyncConflict({
+            localLastUpdated: result.conflict.localLastUpdated,
+            remoteLastModified: result.conflict.remoteLastModified,
+            localSessionCount: result.conflict.localSessionCount,
+            remoteSessionCount: result.conflict.remoteSessionCount,
+            remoteBackup: result.remoteBackup,
+          });
+          // Reset sync state since user needs to decide
+          await db.saveSettings({ driveSyncState: "synced" });
+        } else {
+          // Sync completed — refresh local data
+          const [newSettings, newExercises] = await Promise.all([
+            db.getSettings(),
+            db.getAllExercises(),
+          ]);
+          setState((prev) => ({
+            ...prev,
+            settings: newSettings,
+            exercises: newExercises,
+          }));
+        }
+      } catch (error) {
+        console.error("Auto-sync on mount failed:", error);
+      }
+    }
+
+    autoSync();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.initialized]);
 
   // Refresh exercises
   const refreshExercises = useCallback(async () => {
@@ -375,6 +427,32 @@ export function useBilboData() {
     setPRDetected(null);
   }, []);
 
+  // Resolve auto-sync conflict: keep remote
+  const resolveAutoSyncKeepRemote = useCallback(async () => {
+    if (!autoSyncConflict) return;
+    const { resolveConflictKeepRemote: resolve } = await import("../drive");
+    const success = await resolve(autoSyncConflict.remoteBackup);
+    if (success) {
+      const [newSettings, newExercises] = await Promise.all([
+        db.getSettings(),
+        db.getAllExercises(),
+      ]);
+      setState((prev) => ({ ...prev, settings: newSettings, exercises: newExercises }));
+    }
+    setAutoSyncConflict(null);
+  }, [autoSyncConflict]);
+
+  // Resolve auto-sync conflict: keep local
+  const resolveAutoSyncKeepLocal = useCallback(async () => {
+    if (!autoSyncConflict) return;
+    const token = await ensureValidToken();
+    if (token) {
+      const { resolveConflictKeepLocal: resolve } = await import("../drive");
+      await resolve(token);
+    }
+    setAutoSyncConflict(null);
+  }, [autoSyncConflict]);
+
   // Get exercise detail data
   const getExerciseData = useCallback(async (exerciseId: string) => {
     const [exercise, cycles, sessions] = await Promise.all([
@@ -420,6 +498,9 @@ export function useBilboData() {
   return {
     ...state,
     prDetected,
+    autoSyncConflict,
+    resolveAutoSyncKeepRemote,
+    resolveAutoSyncKeepLocal,
     refreshExercises,
     updateSettings,
     createExercise,

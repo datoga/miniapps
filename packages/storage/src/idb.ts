@@ -47,31 +47,33 @@ export async function getJSON<T>(key: string): Promise<T | null> {
 /**
  * Set a JSON value in IndexedDB
  */
-export async function setJSON<T>(key: string, value: T): Promise<void> {
+export async function setJSON<T>(key: string, value: T): Promise<boolean> {
   if (typeof window === "undefined") {
-    return;
+    return false;
   }
 
   try {
     const db = await initDB();
     await db.put(STORE_NAME, value, key);
+    return true;
   } catch {
-    // Silently fail
+    return false;
   }
 }
 
 /**
  * Remove a value from IndexedDB
  */
-export async function remove(key: string): Promise<void> {
+export async function remove(key: string): Promise<boolean> {
   if (typeof window === "undefined") {
-    return;
+    return false;
   }
 
   try {
     const db = await initDB();
     await db.delete(STORE_NAME, key);
+    return true;
   } catch {
-    // Silently fail
+    return false;
   }
 }

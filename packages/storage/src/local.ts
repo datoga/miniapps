@@ -24,30 +24,32 @@ export const local = {
   /**
    * Set a JSON value in localStorage
    */
-  setJSON<T>(key: string, value: T): void {
+  setJSON<T>(key: string, value: T): boolean {
     if (typeof window === "undefined") {
-      return;
+      return false;
     }
 
     try {
       localStorage.setItem(key, JSON.stringify(value));
+      return true;
     } catch {
-      // Silently fail (quota exceeded, etc.)
+      return false;
     }
   },
 
   /**
    * Remove a value from localStorage
    */
-  remove(key: string): void {
+  remove(key: string): boolean {
     if (typeof window === "undefined") {
-      return;
+      return false;
     }
 
     try {
       localStorage.removeItem(key);
+      return true;
     } catch {
-      // Silently fail
+      return false;
     }
   },
 };

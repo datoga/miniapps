@@ -23,9 +23,18 @@ export const sharedNextConfig: Partial<NextConfig> = {
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year
   },
 
-  // Headers for caching static assets
+  // Security and caching headers
   async headers() {
     return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
       {
         source: "/:all*(svg|jpg|jpeg|png|gif|ico|webp|avif)",
         headers: [

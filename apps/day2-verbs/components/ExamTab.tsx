@@ -378,7 +378,6 @@ export const ExamTab = memo(function ExamTab() {
   const { share: shareResults } = useShare({
     text: shareText,
     url: typeof window !== "undefined" ? window.location.origin : "",
-    clipboardMessage: "¡Resultados copiados al portapapeles!",
     onSuccess: (method) => {
       trackEvent("vm_exam_share", {
         method,

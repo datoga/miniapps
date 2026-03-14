@@ -13,8 +13,6 @@ export interface ShareOptions {
   onSuccess?: (method: "native" | "clipboard") => void;
   /** Callback when share fails or is cancelled */
   onError?: (error: unknown) => void;
-  /** Custom message to show when copied to clipboard (default: "Copied to clipboard!") */
-  clipboardMessage?: string;
 }
 
 export interface UseShareResult {
@@ -48,7 +46,7 @@ export function useShare(options: ShareOptions): UseShareResult {
   const method = canShare ? "native" : "clipboard";
 
   const share = useCallback(async () => {
-    const { title, text, url, onSuccess, onError, clipboardMessage = "Copied to clipboard!" } = options;
+    const { title, text, url, onSuccess, onError } = options;
 
     if (canShare) {
       try {
@@ -67,7 +65,6 @@ export function useShare(options: ShareOptions): UseShareResult {
       try {
         const fullText = url ? `${text}\n\n${url}` : text;
         await navigator.clipboard.writeText(fullText);
-        window.alert(clipboardMessage);
         onSuccess?.("clipboard");
       } catch (error) {
         onError?.(error);

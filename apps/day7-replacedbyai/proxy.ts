@@ -18,7 +18,9 @@ export const config = {
     // - /data (data files for professions)
     // - /icon, /apple-icon, /manifest.webmanifest (PWA assets)
     // - /sw.js (service worker)
+    // - /og-image.png (OG image)
+    // - /sitemap.xml, /robots.txt (SEO files)
     // - files with extensions (e.g. favicon.ico)
-    "/((?!api|_next|_vercel|static|data|icon|apple-icon|manifest\\.webmanifest|sw\\.js|.*\\..*).*)",
+    "/((?!api|_next|_vercel|static|data|icon|apple-icon|manifest\\.webmanifest|sw\\.js|og-image\\.png|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
   ],
 };

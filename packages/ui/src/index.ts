@@ -14,5 +14,6 @@ export {
   type ModalLabelsProviderProps,
 } from "./ModalLabelsContext";
 export { ModalLabelsWrapper, type ModalLabelsWrapperProps } from "./ModalLabelsWrapper";
+export { ErrorFallback } from "./ErrorFallback";
 export { cn } from "./utils";
 export { useShare, buildShareText, type ShareOptions, type UseShareResult } from "./useShare";

@@ -3,6 +3,18 @@
     "title": "record.me",
     "description": "Graba vídeos con webcam directamente a disco"
   },
+  "landing": {
+    "heading": "Graba vídeos con tu webcam directamente a tu disco",
+    "subheading": "Sin subidas a la nube, sin registro, sin límites. Tus grabaciones se quedan en tu dispositivo.",
+    "features": {
+      "private": "100% Privado",
+      "privateDesc": "Los vídeos se guardan directamente en tu disco. No se sube nada a ningún servidor.",
+      "unlimited": "Sin Límite de Tamaño",
+      "unlimitedDesc": "Graba durante horas sin preocuparte por el tamaño del archivo.",
+      "formats": "MP4 y WebM",
+      "formatsDesc": "Elige tu formato preferido. Calidad ajustable de 480p a 1080p."
+    }
+  },
   "nav": {
     "settings": "Ajustes"
   },

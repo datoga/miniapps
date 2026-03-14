@@ -3,6 +3,18 @@
     "title": "record.me",
     "description": "Record webcam videos directly to disk"
   },
+  "landing": {
+    "heading": "Record webcam videos directly to your disk",
+    "subheading": "No cloud uploads, no registration, no limits. Your recordings stay on your device.",
+    "features": {
+      "private": "100% Private",
+      "privateDesc": "Videos are saved directly to your disk. Nothing is uploaded to any server.",
+      "unlimited": "No Size Limits",
+      "unlimitedDesc": "Record for hours without worrying about file size or storage quotas.",
+      "formats": "MP4 & WebM",
+      "formatsDesc": "Choose your preferred format. Adjustable quality from 480p to 1080p."
+    }
+  },
   "nav": {
     "settings": "Settings"
   },

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-01-10",
+  "generatedAt": "2026-03-14",
   "contentLocale": "en",
   "uiLocales": [
     "en",
@@ -429,7 +429,7 @@
       "id": "p002",
       "slug": {
         "en": "nurse",
-        "es": "enfermero-a"
+        "es": "enfermero"
       },
       "name": {
         "en": "Nurse",
@@ -1650,7 +1650,7 @@
       "id": "p005",
       "slug": {
         "en": "pharmacist",
-        "es": "farmaceutico-a"
+        "es": "farmaceutico"
       },
       "name": {
         "en": "Pharmacist",
@@ -2057,7 +2057,7 @@
       "id": "p006",
       "slug": {
         "en": "psychologist",
-        "es": "psicologo-a"
+        "es": "psicologo"
       },
       "name": {
         "en": "Psychologist",
@@ -2871,7 +2871,7 @@
       "id": "p008",
       "slug": {
         "en": "veterinarian",
-        "es": "veterinario-a"
+        "es": "veterinario"
       },
       "name": {
         "en": "Veterinarian",

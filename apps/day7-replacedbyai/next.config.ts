@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
       { source: "/profession/:slug", destination: "/en/p/:slug", permanent: true },
       { source: "/profesion/:slug", destination: "/es/p/:slug", permanent: true },
 
+      // Old "-a" slugs → new base form (Spanish)
+      { source: "/es/p/enfermero-a", destination: "/es/p/enfermero", permanent: true },
+      { source: "/es/p/farmaceutico-a", destination: "/es/p/farmaceutico", permanent: true },
+      { source: "/es/p/psicologo-a", destination: "/es/p/psicologo", permanent: true },
+      { source: "/es/p/veterinario-a", destination: "/es/p/veterinario", permanent: true },
+
       // Feminine → canonical masculine form (Spanish)
       { source: "/es/p/enfermera", destination: "/es/p/enfermero", permanent: true },
       { source: "/es/p/medica", destination: "/es/p/medico", permanent: true },

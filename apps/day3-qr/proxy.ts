@@ -16,7 +16,9 @@ export const config = {
     // - /_vercel (Vercel internals)
     // - /static (static files)
     // - /icon, /apple-icon, /manifest.webmanifest (PWA assets)
+    // - /og-image.png (OG image)
+    // - /sitemap.xml, /robots.txt (SEO files)
     // - files with extensions (e.g. favicon.ico)
-    "/((?!api|_next|_vercel|static|icon|apple-icon|manifest\\.webmanifest|.*\\..*).*)",
+    "/((?!api|_next|_vercel|static|icon|apple-icon|manifest\\.webmanifest|og-image\\.png|sitemap\\.xml|robots\\.txt|.*\\..*).*)",
   ],
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback, useEffect, type ReactNode } from "react";
+import { memo, useCallback, useEffect, useRef, type ReactNode } from "react";
 import { useModalLabels } from "./ModalLabelsContext";
 import { cn } from "./utils";
 
@@ -56,6 +56,7 @@ export const Modal = memo(function Modal({
 }: ModalProps) {
   const labels = useModalLabels();
   const resolvedCloseLabel = closeLabel ?? labels.close ?? "Close";
+  const modalRef = useRef<HTMLDivElement>(null);
   // Support both `open` and `isOpen` for backward compatibility
   const isModalOpen = open ?? isOpen ?? false;
   // Close on escape key
@@ -80,6 +81,39 @@ export const Modal = memo(function Modal({
     };
   }, [isModalOpen, handleKeyDown]);
 
+  // Focus trap
+  useEffect(() => {
+    if (!isModalOpen || !modalRef.current) return;
+
+    const modal = modalRef.current;
+    const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const focusable = modal.querySelectorAll<HTMLElement>(focusableSelector);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    const focusable = modal.querySelectorAll<HTMLElement>(focusableSelector);
+    if (focusable.length > 0) {
+      focusable[0]!.focus();
+    }
+
+    modal.addEventListener("keydown", handleTab);
+    return () => modal.removeEventListener("keydown", handleTab);
+  }, [isModalOpen]);
+
   if (!isModalOpen) {
     return null;
   }
@@ -98,6 +132,7 @@ export const Modal = memo(function Modal({
 
       {/* Modal content */}
       <div
+        ref={modalRef}
         className={cn(
           "relative max-h-[85vh] sm:max-h-[90vh] w-full overflow-y-auto overscroll-contain rounded-t-xl sm:rounded-xl bg-white p-6 shadow-2xl dark:bg-gray-900 border border-gray-100 dark:border-gray-800 transition-all",
           sizeClass,

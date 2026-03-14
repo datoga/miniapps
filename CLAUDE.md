@@ -83,6 +83,9 @@ Every app layout uses `generateSEOMetadata`, `generateViewport`, and `generateJs
 ### PWA
 Every app has `app/manifest.ts` with `start_url: "/?utm_source=pwa&utm_medium=installed"` for GA tracking, plus dynamic icons via `next/og` `ImageResponse`.
 
+### Proxy (locale routing)
+Every app has a `proxy.ts` (NOT `middleware.ts`) at its root. Next.js 16 renamed middleware to proxy — never create `middleware.ts`, it will conflict and break the build. The proxy uses `next-intl/middleware` with `localePrefix: "always"` and `localeDetection: true`.
+
 ### App Configuration
 Shared Next.js config from `@miniapps/config/next.shared` is extended in each app's `next.config.ts` with `withNextIntl`. Tailwind config extends `@miniapps/config/tailwind` with `primary` and `accent` color scales.
 
@@ -96,6 +99,8 @@ Shared Next.js config from `@miniapps/config/next.shared` is extended in each ap
 ## Deployment
 
 Each app is its own Vercel project. The `vercel.json` runs `npm install` and `npm run build --workspace=<pkg-name>` from the repo root. The `--workspace` value must match the package name in `package.json`.
+
+**Staggered deploys:** When pushing changes that affect multiple apps, commit and push one app at a time with ~1 minute between pushes to avoid saturating the Vercel API. All apps deploy on every push to main.
 
 ## New App Checklist
 

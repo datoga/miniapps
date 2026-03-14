@@ -48,7 +48,7 @@ function loadFromStorage(): void {
     const expiry = localStorage.getItem(STORAGE_KEY_TOKEN_EXPIRY);
     const profile = localStorage.getItem(STORAGE_KEY_PROFILE);
 
-    console.log("[GIS] Loading from storage:", {
+    console.debug("[GIS] Loading from storage:", {
       hasToken: !!token,
       hasExpiry: !!expiry,
       hasProfile: !!profile
@@ -56,27 +56,49 @@ function loadFromStorage(): void {
 
     if (token && expiry) {
       const expiryTime = parseInt(expiry, 10);
-      const timeUntilExpiry = expiryTime - Date.now();
-      console.log("[GIS] Token expiry check:", {
-        expiresIn: Math.round(timeUntilExpiry / 1000 / 60) + " minutes"
-      });
-
-      // Check if token is still valid (with 5 min buffer)
-      if (Date.now() < expiryTime - 5 * 60 * 1000) {
-        currentAccessToken = token;
-        tokenExpiry = expiryTime;
-        console.log("[GIS] Token loaded successfully");
-      } else {
-        // Token expired, clear it
-        console.log("[GIS] Token expired, clearing");
+      if (isNaN(expiryTime)) {
+        console.warn("[GIS] Invalid expiry in storage, clearing");
         localStorage.removeItem(STORAGE_KEY_TOKEN);
         localStorage.removeItem(STORAGE_KEY_TOKEN_EXPIRY);
+      } else {
+        const timeUntilExpiry = expiryTime - Date.now();
+        console.debug("[GIS] Token expiry check:", {
+          expiresIn: Math.round(timeUntilExpiry / 1000 / 60) + " minutes"
+        });
+
+        // Check if token is still valid (with 5 min buffer)
+        if (Date.now() < expiryTime - 5 * 60 * 1000) {
+          currentAccessToken = token;
+          tokenExpiry = expiryTime;
+          console.debug("[GIS] Token loaded successfully");
+        } else {
+          // Token expired, clear it
+          console.debug("[GIS] Token expired, clearing");
+          localStorage.removeItem(STORAGE_KEY_TOKEN);
+          localStorage.removeItem(STORAGE_KEY_TOKEN_EXPIRY);
+        }
       }
     }
 
     if (profile) {
-      currentProfile = JSON.parse(profile);
-      console.log("[GIS] Profile loaded:", currentProfile?.name || currentProfile?.email);
+      try {
+        const parsed: unknown = JSON.parse(profile);
+        if (
+          parsed &&
+          typeof parsed === "object" &&
+          "email" in parsed &&
+          typeof (parsed as Record<string, unknown>)["email"] === "string"
+        ) {
+          currentProfile = parsed as GoogleProfile;
+          console.debug("[GIS] Profile loaded:", currentProfile.name || currentProfile.email);
+        } else {
+          console.warn("[GIS] Invalid profile in storage, clearing");
+          localStorage.removeItem(STORAGE_KEY_PROFILE);
+        }
+      } catch {
+        console.warn("[GIS] Corrupted profile in storage, clearing");
+        localStorage.removeItem(STORAGE_KEY_PROFILE);
+      }
     }
   } catch (error) {
     console.warn("Failed to load auth from storage:", error);
@@ -93,7 +115,7 @@ function saveToStorage(): void {
     if (currentAccessToken && tokenExpiry) {
       localStorage.setItem(STORAGE_KEY_TOKEN, currentAccessToken);
       localStorage.setItem(STORAGE_KEY_TOKEN_EXPIRY, tokenExpiry.toString());
-      console.log("[GIS] Token saved to storage");
+      console.debug("[GIS] Token saved to storage");
     } else {
       localStorage.removeItem(STORAGE_KEY_TOKEN);
       localStorage.removeItem(STORAGE_KEY_TOKEN_EXPIRY);
@@ -101,7 +123,7 @@ function saveToStorage(): void {
 
     if (currentProfile) {
       localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(currentProfile));
-      console.log("[GIS] Profile saved to storage:", currentProfile.name || currentProfile.email);
+      console.debug("[GIS] Profile saved to storage:", currentProfile.name || currentProfile.email);
     } else {
       localStorage.removeItem(STORAGE_KEY_PROFILE);
     }

@@ -39,7 +39,7 @@ All apps use `next dev --turbo --port <port>`.
 - **Theming:** `next-themes` — light/dark/system
 - **Validation:** Zod — schema-first, infer types with `z.infer<typeof Schema>`
 - **Storage:** IndexedDB (via `idb`) + localStorage through `@miniapps/storage`
-- **Linting:** ESLint 9 flat config + Prettier
+- **Linting:** ESLint 10 flat config + Prettier
 - **Monorepo:** Turborepo 2, npm 11
 
 ## Repository Structure
@@ -48,7 +48,7 @@ All apps use `next dev --turbo --port <port>`.
 apps/
   whitelabel-demo/       # Reference template — copy for new apps (port 3000)
   day1-mentoring/        # Mentoring Tracker (3001)
-  day2-verbs/            # VerbMaster (3002), pkg: verbmaster
+  day2-verbs/            # VerbMaster (3002), pkg: verbmaster, flat app/ (no [locale] routing)
   day3-qr/              # QR Library (3003)
   day4-bilbo/           # BilboTracker (3004), pkg: bilbotracker, has Google Drive sync
   day5-gamemaster/      # GameMaster (3005), pkg: tournament-manager
@@ -75,10 +75,10 @@ Note: some apps use a different package name than directory name (e.g., `day2-ve
 All user-facing strings go in `messages/{locale}.json`. Common messages live in `packages/i18n/messages/common/`. Each app's `i18n/request.ts` merges common + app messages via `mergeMessages`. Use `useTranslations("namespace")` in components — never hardcode strings.
 
 ### Shared UI (`@miniapps/ui`)
-Exports source TypeScript directly — apps transpile via `transpilePackages`. Always check here before creating new UI components. Key exports: `AppShell`, `Header`, `Footer`, `Button`, `Modal`, `ConfirmDialog`, `ThemeProvider`, `ThemeToggle`, `LocaleSwitcher`, `cn`.
+Exports source TypeScript directly — apps transpile via `transpilePackages`. Always check here before creating new UI components. Key exports: `AppShell`, `Header`, `Footer`, `Button`, `Modal`, `ConfirmDialog`, `ErrorFallback`, `ThemeProvider`, `ThemeToggle`, `LocaleSwitcher`, `useShare`, `cn`.
 
 ### SEO
-Every app layout uses `generateSEOMetadata`, `generateViewport`, and `generateJsonLd` from `@miniapps/seo`. Each app has `sitemap.ts`, `og-image.png/route.tsx` (edge runtime), `icon.tsx`, and `apple-icon.tsx`.
+Every app layout uses `generateSEOMetadata`, `generateViewport`, and `generateJsonLd` from `@miniapps/seo`. Each app has `sitemap.ts`, `og-image.png/route.tsx` (edge runtime), `icon.tsx`, and `apple-icon.tsx`. Landing pages must include server-rendered content (h1, description) — client-only pages cause Google soft 404s.
 
 ### PWA
 Every app has `app/manifest.ts` with `start_url: "/?utm_source=pwa&utm_medium=installed"` for GA tracking, plus dynamic icons via `next/og` `ImageResponse`.
@@ -102,13 +102,21 @@ Each app is its own Vercel project. The `vercel.json` runs `npm install` and `np
 
 **Staggered deploys:** When pushing changes that affect multiple apps, commit and push one app at a time with ~1 minute between pushes to avoid saturating the Vercel API. All apps deploy on every push to main.
 
+### Error Handling
+Every app has `app/[locale]/error.tsx` and `app/global-error.tsx` using the shared `ErrorFallback` component from `@miniapps/ui`. Always include these when creating new apps.
+
+### Security Headers
+Shared security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy) are defined in `packages/config/next.shared.ts`. Apps that need camera/microphone (day6-recordme) must override Permissions-Policy in their own `next.config.ts`.
+
 ## New App Checklist
 
 1. Copy `apps/whitelabel-demo` to `apps/my-new-app`
 2. Update `package.json`: name and dev port (next available)
 3. Update messages, layout metadata, manifest, icons, OG image, sitemap, robots.txt
-4. Run `npm install` from repo root
-5. Run `npm run dev --workspace=my-new-app`
+4. Ensure `proxy.ts` exists (copied from template) — never create `middleware.ts`
+5. Ensure `app/[locale]/error.tsx` and `app/global-error.tsx` exist
+6. Run `npm install` from repo root
+7. Run `npm run dev --workspace=my-new-app`
 
 ## Agent Team Mode
 

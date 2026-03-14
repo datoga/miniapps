@@ -12,6 +12,8 @@ Turborepo + npm workspaces monorepo — "one mini app per day". Each app is a st
 nvm use 24    # Required — .nvmrc specifies Node 24
 ```
 
+**Node 24 is the target runtime. Never upgrade to Node 25 or change `@types/node` to v25.** The `engines` field in root `package.json` enforces `24.x`.
+
 ## Common Commands
 
 ```bash

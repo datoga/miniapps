@@ -1,12 +1,37 @@
 import { defaultLocale, locales } from "@miniapps/i18n";
 import createMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
 
-export default createMiddleware({
+const intlMiddleware = createMiddleware({
   locales,
   defaultLocale,
   localePrefix: "always",
-  localeDetection: true, // Detect browser's Accept-Language header
+  localeDetection: true,
 });
+
+/**
+ * Normalize accented characters in profession slugs.
+ * Users type "/es/p/auxiliar-de-enfermería" but the slug is "auxiliar-de-enfermeria".
+ */
+function stripAccents(str: string): string {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+export default function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Check if this is a profession page with accented characters
+  if (/^\/(?:es|en)\/p\//.test(pathname)) {
+    const normalized = stripAccents(pathname);
+    if (normalized !== pathname) {
+      const url = request.nextUrl.clone();
+      url.pathname = normalized;
+      return NextResponse.redirect(url, 301);
+    }
+  }
+
+  return intlMiddleware(request);
+}
 
 export const config = {
   matcher: [

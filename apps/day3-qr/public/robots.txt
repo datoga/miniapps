@@ -1,6 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Allow: /
+Disallow: /cgi-bin/
 
 # Sitemaps
 Sitemap: https://qrkit.pro/sitemap.xml

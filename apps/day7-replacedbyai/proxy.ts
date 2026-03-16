@@ -20,6 +20,13 @@ function stripAccents(str: string): string {
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Rewrite root "/" to default locale instead of redirecting (SEO: avoids 307)
+  if (pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${defaultLocale}`;
+    return NextResponse.rewrite(url);
+  }
+
   // Check if this is a profession page with accented characters
   if (/^\/(?:es|en)\/p\//.test(pathname)) {
     const normalized = stripAccents(pathname);
